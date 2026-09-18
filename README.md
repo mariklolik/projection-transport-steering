@@ -5,7 +5,6 @@ Minimal reproducibility package for **Projection-Transport Steering: Conditional
 - [Paper PDF](paper/paper.pdf)
 - [LaTeX source](paper/paper.tex)
 - [Reproducibility guide](REPRODUCIBILITY.md)
-- [Post-review evidence](rebuttal/)
 
 ## Results
 
