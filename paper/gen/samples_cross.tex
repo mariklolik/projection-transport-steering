@@ -1,0 +1,25 @@
+
+\subsection*{One question, four methods}
+The most instructive comparison holds the question fixed
+(\texttt{mmlu-4592}, gold \texttt{C}; baseline answers \texttt{A},
+overconfident-wrong). Our gated ablation produces the clean definitional trace
+shown above and lands on \texttt{C}. The additive-action methods do something
+qualitatively different --- their traces \emph{degenerate into verbatim
+repetition loops}, the signature of support violation (Remark~6): the constant
+shift pushes activations off the data manifold and generation cycles. Trace
+length balloons from 351 to $\sim$1500 characters of looped text; this is not
+deliberation but decoding pathology, invisible in aggregate confidence numbers
+yet obvious in the rollouts. MiMiC (distribution-matched, unconditional) stays
+fluent but keeps the wrong answer.
+
+\noindent\textbf{additive $-0.75$ \cite{rimsky2024caa}} ($\to$ \texttt{A}):
+\begin{quote}\scriptsize\ttfamily \textless{}think\textgreater{}The cross-price elasticity of the cell phone service is equal to the price of the cell phone service of the firm A and the quantity of the cell phone service of the firm B. The cross-price elasticity of the cell phone service is equal to the price of the cell phone service of the firm A and the quantity of the cell phone service of\end{quote}
+
+\noindent\textbf{CAST-style gate$+$add \cite{lee2024cast}} ($\to$ \texttt{A}):
+\begin{quote}\scriptsize\ttfamily \textless{}think\textgreater{}The cross-price elasticity of demand for firm B is (10/5) = 2. The cross-price elasticity of demand for firm A is (10/5) = 2. The cross-price elasticity of demand for firm A is (10/5) = 2. The cross-price elasticity of demand for firm B is (10/5) = 2. The cross-price elasticity of demand for firm A is (10/5) = 2. The cross-price el\end{quote}
+
+\noindent\textbf{MiMiC \cite{singh2024mimic}} ($\to$ \texttt{A}):
+\begin{quote}\scriptsize\ttfamily \textless{}think\textgreater{}The question asks about the relationship between the price of firm A's service and the quantity demanded for firm B's service. We know that the price of firm A's service increased and the quantity demanded for firm B's service increased. This suggests that the demand for firm B's service is\end{quote}
+
+\noindent\textbf{gated ablation (ours)} ($\to$ \texttt{C}):
+\begin{quote}\scriptsize\ttfamily \textless{}think\textgreater{}The cross-price elasticity of demand measures the percentage change in the quantity demanded of one good in response to a percentage change in the price of another good. Since the price of firm A's service increased and the quantity demanded for firm B increased, the cross-price elasticity is positive. We can conclude that the tw\end{quote}

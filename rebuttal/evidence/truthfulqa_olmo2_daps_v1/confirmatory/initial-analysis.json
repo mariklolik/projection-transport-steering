@@ -1,0 +1,84 @@
+{
+  "adjusted": {
+    "gate_pass": true,
+    "mc1_difference": {
+      "estimate": 0.10548523206751055,
+      "lower": 0.02531645569620253,
+      "upper": 0.17721518987341772
+    },
+    "mc2_difference": {
+      "estimate": 0.13719237918049743,
+      "lower": 0.10486814030201073,
+      "upper": 0.16815147530642177
+    }
+  },
+  "benchmark": "research/benchmark-freeze-v16.md",
+  "candidate_calibrated": {
+    "mc1": 0.5738396624472574,
+    "mc2": 0.7470003485528117,
+    "mc3": 0.5771750050231064
+  },
+  "candidate_raw": {
+    "mc1": 0.5738396624472574,
+    "mc2": 0.8006109189774163,
+    "mc3": 0.5771750050231064
+  },
+  "confirmatory_questions": 237,
+  "control_stage_authorized": true,
+  "id_questions": 50,
+  "layer": 21,
+  "matched_spherical_calibrated": {
+    "mc1": 0.46835443037974683,
+    "mc2": 0.6098079693723143,
+    "mc3": 0.4162648181635523
+  },
+  "matched_spherical_raw": {
+    "mc1": 0.46835443037974683,
+    "mc2": 0.6848796638535521,
+    "mc3": 0.4162648181635523
+  },
+  "method": "research/method-hypotheses-v10.md",
+  "model": "allenai/OLMo-2-1124-7B-Instruct@470b1fba1ae01581f270116362ee4aa1b97f4c84",
+  "shift_questions": 187,
+  "strata": {
+    "id": {
+      "gate_pass": false,
+      "mc1_difference": {
+        "estimate": 0.04,
+        "lower": -0.12,
+        "upper": 0.16
+      },
+      "mc2_difference": {
+        "estimate": 0.1140912883404992,
+        "lower": 0.07236814785241717,
+        "upper": 0.1603242636873353
+      }
+    },
+    "shift": {
+      "gate_pass": true,
+      "mc1_difference": {
+        "estimate": 0.12299465240641712,
+        "lower": 0.0481283422459893,
+        "upper": 0.1925133689839572
+      },
+      "mc2_difference": {
+        "estimate": 0.14336914143718146,
+        "lower": 0.11280779387370654,
+        "upper": 0.1740990716911552
+      }
+    }
+  },
+  "unadjusted": {
+    "gate_pass": true,
+    "mc1_difference": {
+      "estimate": 0.10548523206751055,
+      "lower": 0.0379746835443038,
+      "upper": 0.16455696202531644
+    },
+    "mc2_difference": {
+      "estimate": 0.13719237918049743,
+      "lower": 0.110735181025875,
+      "upper": 0.1625678998733977
+    }
+  }
+}

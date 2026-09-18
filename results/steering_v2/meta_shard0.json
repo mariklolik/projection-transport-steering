@@ -1,0 +1,28 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 7,
+    "layer": 14,
+    "direction": "m4_conf",
+    "conditions": "all",
+    "methods": "m2,m4",
+    "think_only": "clamp_q50,otq_cal",
+    "batch_size": 64,
+    "outdir": "steering_v2"
+  },
+  "norm": 181.75591639200846,
+  "n_records": 300,
+  "clamp_thresholds": {
+    "0.7": 40.84108352661133,
+    "0.5": 29.280153274536133,
+    "0.3": 14.496381759643555
+  },
+  "src_moments": {
+    "mu": 27.394081115722656,
+    "sig": 22.01616859436035
+  },
+  "tgt_cal_moments": {
+    "mu": 26.237884521484375,
+    "sig": 22.626567840576172
+  }
+}

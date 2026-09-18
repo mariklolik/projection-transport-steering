@@ -1,0 +1,846 @@
+{
+  "baselines": {
+    "m2": {
+      "accuracy": 0.76,
+      "ece": 0.22830139756202694,
+      "mean_confidence": 0.9861116739114125,
+      "mean_rank": 2.28,
+      "mean_reasoning_chars": 650.17,
+      "mean_reasoning_tokens": 149.10666666666665,
+      "states": {
+        "confident_right": 228,
+        "overconfident_wrong": 72
+      },
+      "selective": {
+        "aurc": 0.0977,
+        "e_aurc": 0.0659,
+        "coverage_at_risk10": 0.5667
+      }
+    },
+    "m4": {
+      "accuracy": 0.6666666666666666,
+      "ece": 0.12996387233344167,
+      "mean_confidence": 0.702785119792442,
+      "mean_rank": 2.04,
+      "mean_reasoning_chars": 1459.3633333333332,
+      "mean_reasoning_tokens": 326.06333333333333,
+      "states": {
+        "overconfident_wrong": 52,
+        "confident_right": 164,
+        "nonconfident_wrong": 48,
+        "nonconfident_right": 36
+      },
+      "selective": {
+        "aurc": 0.1701,
+        "e_aurc": 0.1065,
+        "coverage_at_risk10": 0.3333
+      }
+    }
+  },
+  "conditions": {
+    "cast_gate-cr_q50_add-0.75_m2": {
+      "summary": {
+        "accuracy": 0.6733333333333333,
+        "ece": 0.13482736984888716,
+        "mean_confidence": 0.7940370504061381,
+        "mean_rank": 2.1066666666666665,
+        "mean_reasoning_chars": 1052.64,
+        "mean_reasoning_tokens": 241.19666666666666,
+        "states": {
+          "nonconfident_wrong": 39,
+          "confident_right": 189,
+          "nonconfident_right": 13,
+          "overconfident_wrong": 59
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": -0.1921,
+          "lo": -0.2186,
+          "hi": -0.1666
+        },
+        "d_acc": {
+          "point": -0.0867,
+          "lo": -0.1333,
+          "hi": -0.0433
+        },
+        "d_rank": {
+          "point": -0.1733,
+          "lo": -0.2967,
+          "hi": -0.0566
+        },
+        "d_ocw_rate": {
+          "point": -0.0433,
+          "lo": -0.0867,
+          "hi": -0.0033
+        }
+      },
+      "surgical": {
+        "n_ocw": 72,
+        "n_cr": 228,
+        "ocw_removal": 0.4167,
+        "cr_retention": 0.7851,
+        "selectivity": 0.2018
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 42,
+          "nonconfident_wrong": 17,
+          "nonconfident_right": 3,
+          "confident_right": 10
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "confident_right": {
+          "overconfident_wrong": 17,
+          "nonconfident_wrong": 22,
+          "nonconfident_right": 10,
+          "confident_right": 179
+        }
+      },
+      "selective": {
+        "aurc": 0.1353,
+        "e_aurc": 0.0744,
+        "coverage_at_risk10": 0.3667
+      },
+      "selectivity_ci": [
+        0.0719,
+        0.3266
+      ]
+    },
+    "cast_gate-cr_q50_add-0.75_m4": {
+      "summary": {
+        "accuracy": 0.5166666666666667,
+        "ece": 0.09732828523841357,
+        "mean_confidence": 0.444278531700853,
+        "mean_rank": 1.72,
+        "mean_reasoning_chars": 2582.9866666666667,
+        "mean_reasoning_tokens": 587.4666666666667,
+        "states": {
+          "nonconfident_wrong": 136,
+          "nonconfident_right": 85,
+          "confident_right": 70,
+          "overconfident_wrong": 9
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": -0.2585,
+          "lo": -0.29,
+          "hi": -0.227
+        },
+        "d_acc": {
+          "point": -0.15,
+          "lo": -0.21,
+          "hi": -0.0867
+        },
+        "d_rank": {
+          "point": -0.32,
+          "lo": -0.4401,
+          "hi": -0.2
+        },
+        "d_ocw_rate": {
+          "point": -0.1433,
+          "lo": -0.1867,
+          "hi": -0.1033
+        }
+      },
+      "surgical": {
+        "n_ocw": 52,
+        "n_cr": 164,
+        "ocw_removal": 0.8269,
+        "cr_retention": 0.4268,
+        "selectivity": 0.2538
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 9,
+          "nonconfident_wrong": 32,
+          "nonconfident_right": 11,
+          "confident_right": 0
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 35,
+          "nonconfident_right": 13,
+          "confident_right": 0
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 16,
+          "nonconfident_right": 20,
+          "confident_right": 0
+        },
+        "confident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 53,
+          "nonconfident_right": 41,
+          "confident_right": 70
+        }
+      },
+      "selective": {
+        "aurc": 0.277,
+        "e_aurc": 0.134,
+        "coverage_at_risk10": 0.2467
+      },
+      "selectivity_ci": [
+        0.1216,
+        0.3842
+      ]
+    },
+    "m4_conf_add_a-0.75_m2": {
+      "summary": {
+        "accuracy": 0.6033333333333334,
+        "ece": 0.11555803447961807,
+        "mean_confidence": 0.6991747783621153,
+        "mean_rank": 1.9166666666666667,
+        "mean_reasoning_chars": 1324.3633333333332,
+        "mean_reasoning_tokens": 301.48333333333335,
+        "states": {
+          "nonconfident_wrong": 52,
+          "confident_right": 161,
+          "overconfident_wrong": 67,
+          "nonconfident_right": 20
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": -0.2869,
+          "lo": -0.3113,
+          "hi": -0.2635
+        },
+        "d_acc": {
+          "point": -0.1567,
+          "lo": -0.21,
+          "hi": -0.1
+        },
+        "d_rank": {
+          "point": -0.3633,
+          "lo": -0.5068,
+          "hi": -0.2199
+        },
+        "d_ocw_rate": {
+          "point": -0.0167,
+          "lo": -0.0667,
+          "hi": 0.0367
+        }
+      },
+      "surgical": {
+        "n_ocw": 72,
+        "n_cr": 228,
+        "ocw_removal": 0.4861,
+        "cr_retention": 0.6623,
+        "selectivity": 0.1484
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 37,
+          "nonconfident_wrong": 21,
+          "nonconfident_right": 4,
+          "confident_right": 10
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "confident_right": {
+          "overconfident_wrong": 30,
+          "nonconfident_wrong": 31,
+          "nonconfident_right": 16,
+          "confident_right": 151
+        }
+      },
+      "selective": {
+        "aurc": 0.2303,
+        "e_aurc": 0.1378,
+        "coverage_at_risk10": 0.0067
+      },
+      "selectivity_ci": [
+        0.0212,
+        0.2815
+      ]
+    },
+    "m4_conf_add_a-0.75_m4": {
+      "summary": {
+        "accuracy": 0.48,
+        "ece": 0.19923184462964189,
+        "mean_confidence": 0.28076815537035815,
+        "mean_rank": 1.48,
+        "mean_reasoning_chars": 3182.3233333333333,
+        "mean_reasoning_tokens": 722.5566666666666,
+        "states": {
+          "nonconfident_wrong": 156,
+          "nonconfident_right": 144
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": -0.422,
+          "lo": -0.4508,
+          "hi": -0.3908
+        },
+        "d_acc": {
+          "point": -0.1867,
+          "lo": -0.26,
+          "hi": -0.1167
+        },
+        "d_rank": {
+          "point": -0.56,
+          "lo": -0.6967,
+          "hi": -0.4133
+        },
+        "d_ocw_rate": {
+          "point": -0.1733,
+          "lo": -0.22,
+          "hi": -0.1333
+        }
+      },
+      "surgical": {
+        "n_ocw": 52,
+        "n_cr": 164,
+        "ocw_removal": 1.0,
+        "cr_retention": 0.0,
+        "selectivity": 0.0
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 32,
+          "nonconfident_right": 20,
+          "confident_right": 0
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 33,
+          "nonconfident_right": 15,
+          "confident_right": 0
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 18,
+          "nonconfident_right": 18,
+          "confident_right": 0
+        },
+        "confident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 73,
+          "nonconfident_right": 91,
+          "confident_right": 0
+        }
+      },
+      "selective": {
+        "aurc": 0.4646,
+        "e_aurc": 0.2961,
+        "coverage_at_risk10": 0.01
+      },
+      "selectivity_ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "m4_conf_clamp_q50_m2": {
+      "summary": {
+        "accuracy": 0.75,
+        "ece": 0.23475127955277764,
+        "mean_confidence": 0.981777212023735,
+        "mean_rank": 2.25,
+        "mean_reasoning_chars": 678.4766666666667,
+        "mean_reasoning_tokens": 155.61,
+        "states": {
+          "confident_right": 225,
+          "overconfident_wrong": 75
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": -0.0043,
+          "lo": -0.0112,
+          "hi": 0.0029
+        },
+        "d_acc": {
+          "point": -0.01,
+          "lo": -0.0433,
+          "hi": 0.0233
+        },
+        "d_rank": {
+          "point": -0.03,
+          "lo": -0.13,
+          "hi": 0.07
+        },
+        "d_ocw_rate": {
+          "point": 0.01,
+          "lo": -0.0233,
+          "hi": 0.0433
+        }
+      },
+      "surgical": {
+        "n_ocw": 72,
+        "n_cr": 228,
+        "ocw_removal": 0.1389,
+        "cr_retention": 0.943,
+        "selectivity": 0.0819
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 62,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 10
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "confident_right": {
+          "overconfident_wrong": 13,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 215
+        }
+      },
+      "selective": {
+        "aurc": 0.1083,
+        "e_aurc": 0.0737,
+        "coverage_at_risk10": 0.5133
+      },
+      "selectivity_ci": [
+        0.0017,
+        0.1717
+      ]
+    },
+    "m4_conf_clamp_q50_m4": {
+      "summary": {
+        "accuracy": 0.6866666666666666,
+        "ece": 0.12271518783566132,
+        "mean_confidence": 0.7111873121271598,
+        "mean_rank": 2.0866666666666664,
+        "mean_reasoning_chars": 1551.7433333333333,
+        "mean_reasoning_tokens": 347.7966666666667,
+        "states": {
+          "overconfident_wrong": 45,
+          "confident_right": 165,
+          "nonconfident_right": 41,
+          "nonconfident_wrong": 49
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": 0.0084,
+          "lo": -0.0103,
+          "hi": 0.0274
+        },
+        "d_acc": {
+          "point": 0.02,
+          "lo": -0.02,
+          "hi": 0.06
+        },
+        "d_rank": {
+          "point": 0.0467,
+          "lo": -0.0433,
+          "hi": 0.1367
+        },
+        "d_ocw_rate": {
+          "point": -0.0233,
+          "lo": -0.0567,
+          "hi": 0.01
+        }
+      },
+      "surgical": {
+        "n_ocw": 52,
+        "n_cr": 164,
+        "ocw_removal": 0.3077,
+        "cr_retention": 0.872,
+        "selectivity": 0.1796
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 36,
+          "nonconfident_wrong": 7,
+          "nonconfident_right": 1,
+          "confident_right": 8
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 2,
+          "nonconfident_wrong": 34,
+          "nonconfident_right": 7,
+          "confident_right": 5
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 4,
+          "nonconfident_wrong": 4,
+          "nonconfident_right": 19,
+          "confident_right": 9
+        },
+        "confident_right": {
+          "overconfident_wrong": 3,
+          "nonconfident_wrong": 4,
+          "nonconfident_right": 14,
+          "confident_right": 143
+        }
+      },
+      "selective": {
+        "aurc": 0.1568,
+        "e_aurc": 0.101,
+        "coverage_at_risk10": 0.3467
+      },
+      "selectivity_ci": [
+        0.0427,
+        0.3152
+      ]
+    },
+    "sweep_ocwcr-crq50_ablate_m2": {
+      "summary": {
+        "accuracy": 0.75,
+        "ece": 0.23950379848480224,
+        "mean_confidence": 0.9833208680152893,
+        "mean_rank": 2.2533333333333334,
+        "mean_reasoning_chars": 640.1933333333334,
+        "mean_reasoning_tokens": 147.59666666666666,
+        "states": {
+          "overconfident_wrong": 74,
+          "confident_right": 225,
+          "nonconfident_wrong": 1
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": -0.0028,
+          "lo": -0.0082,
+          "hi": 0.0026
+        },
+        "d_acc": {
+          "point": -0.01,
+          "lo": -0.0367,
+          "hi": 0.0167
+        },
+        "d_rank": {
+          "point": -0.0267,
+          "lo": -0.1067,
+          "hi": 0.05
+        },
+        "d_ocw_rate": {
+          "point": 0.0067,
+          "lo": -0.02,
+          "hi": 0.0333
+        }
+      },
+      "surgical": {
+        "n_ocw": 72,
+        "n_cr": 228,
+        "ocw_removal": 0.0972,
+        "cr_retention": 0.9605,
+        "selectivity": 0.0577
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 65,
+          "nonconfident_wrong": 1,
+          "nonconfident_right": 0,
+          "confident_right": 6
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "confident_right": {
+          "overconfident_wrong": 9,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 219
+        }
+      },
+      "selective": {
+        "aurc": 0.1075,
+        "e_aurc": 0.0729,
+        "coverage_at_risk10": 0.5367
+      },
+      "selectivity_ci": [
+        -0.0089,
+        0.1358
+      ]
+    },
+    "sweep_ocwcr-crq50_ablate_m4": {
+      "summary": {
+        "accuracy": 0.6866666666666666,
+        "ece": 0.11659645834662449,
+        "mean_confidence": 0.7048506910968168,
+        "mean_rank": 2.066666666666667,
+        "mean_reasoning_chars": 1428.2666666666667,
+        "mean_reasoning_tokens": 320.69666666666666,
+        "states": {
+          "nonconfident_wrong": 45,
+          "confident_right": 163,
+          "nonconfident_right": 43,
+          "overconfident_wrong": 49
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": 0.0021,
+          "lo": -0.0136,
+          "hi": 0.0176
+        },
+        "d_acc": {
+          "point": 0.02,
+          "lo": -0.0167,
+          "hi": 0.06
+        },
+        "d_rank": {
+          "point": 0.0267,
+          "lo": -0.0633,
+          "hi": 0.1267
+        },
+        "d_ocw_rate": {
+          "point": -0.01,
+          "lo": -0.0467,
+          "hi": 0.0233
+        }
+      },
+      "surgical": {
+        "n_ocw": 52,
+        "n_cr": 164,
+        "ocw_removal": 0.3077,
+        "cr_retention": 0.8963,
+        "selectivity": 0.204
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 36,
+          "nonconfident_wrong": 7,
+          "nonconfident_right": 2,
+          "confident_right": 7
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 6,
+          "nonconfident_wrong": 31,
+          "nonconfident_right": 9,
+          "confident_right": 2
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 1,
+          "nonconfident_wrong": 3,
+          "nonconfident_right": 25,
+          "confident_right": 7
+        },
+        "confident_right": {
+          "overconfident_wrong": 6,
+          "nonconfident_wrong": 4,
+          "nonconfident_right": 7,
+          "confident_right": 147
+        }
+      },
+      "selective": {
+        "aurc": 0.1597,
+        "e_aurc": 0.1039,
+        "coverage_at_risk10": 0.3533
+      },
+      "selectivity_ci": [
+        0.0675,
+        0.342
+      ]
+    },
+    "sweep_ocwcr-crq50_clamp_q50_m2": {
+      "summary": {
+        "accuracy": 0.7433333333333333,
+        "ece": 0.23646657168865198,
+        "mean_confidence": 0.9797999050219853,
+        "mean_rank": 2.2333333333333334,
+        "mean_reasoning_chars": 664.87,
+        "mean_reasoning_tokens": 152.43333333333334,
+        "states": {
+          "confident_right": 223,
+          "overconfident_wrong": 76,
+          "nonconfident_wrong": 1
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": -0.0063,
+          "lo": -0.0134,
+          "hi": 0.0005
+        },
+        "d_acc": {
+          "point": -0.0167,
+          "lo": -0.0433,
+          "hi": 0.01
+        },
+        "d_rank": {
+          "point": -0.0467,
+          "lo": -0.1233,
+          "hi": 0.0333
+        },
+        "d_ocw_rate": {
+          "point": 0.0133,
+          "lo": -0.0133,
+          "hi": 0.04
+        }
+      },
+      "surgical": {
+        "n_ocw": 72,
+        "n_cr": 228,
+        "ocw_removal": 0.0833,
+        "cr_retention": 0.9561,
+        "selectivity": 0.0395
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 66,
+          "nonconfident_wrong": 1,
+          "nonconfident_right": 0,
+          "confident_right": 5
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 0,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 0
+        },
+        "confident_right": {
+          "overconfident_wrong": 10,
+          "nonconfident_wrong": 0,
+          "nonconfident_right": 0,
+          "confident_right": 218
+        }
+      },
+      "selective": {
+        "aurc": 0.0989,
+        "e_aurc": 0.0623,
+        "coverage_at_risk10": 0.4933
+      },
+      "selectivity_ci": [
+        -0.023,
+        0.1113
+      ]
+    },
+    "sweep_ocwcr-crq50_clamp_q50_m4": {
+      "summary": {
+        "accuracy": 0.6733333333333333,
+        "ece": 0.11793375512794957,
+        "mean_confidence": 0.6995200454465774,
+        "mean_rank": 2.066666666666667,
+        "mean_reasoning_chars": 1522.2766666666666,
+        "mean_reasoning_tokens": 339.9766666666667,
+        "states": {
+          "overconfident_wrong": 45,
+          "confident_right": 163,
+          "nonconfident_wrong": 53,
+          "nonconfident_right": 39
+        }
+      },
+      "deltas": {
+        "n_pairs": 300,
+        "d_conf": {
+          "point": -0.0033,
+          "lo": -0.0201,
+          "hi": 0.014
+        },
+        "d_acc": {
+          "point": 0.0067,
+          "lo": -0.0267,
+          "hi": 0.04
+        },
+        "d_rank": {
+          "point": 0.0267,
+          "lo": -0.0567,
+          "hi": 0.1067
+        },
+        "d_ocw_rate": {
+          "point": -0.0233,
+          "lo": -0.0567,
+          "hi": 0.0067
+        }
+      },
+      "surgical": {
+        "n_ocw": 52,
+        "n_cr": 164,
+        "ocw_removal": 0.3077,
+        "cr_retention": 0.9146,
+        "selectivity": 0.2223
+      },
+      "transitions": {
+        "overconfident_wrong": {
+          "overconfident_wrong": 36,
+          "nonconfident_wrong": 9,
+          "nonconfident_right": 1,
+          "confident_right": 6
+        },
+        "nonconfident_wrong": {
+          "overconfident_wrong": 2,
+          "nonconfident_wrong": 39,
+          "nonconfident_right": 3,
+          "confident_right": 4
+        },
+        "nonconfident_right": {
+          "overconfident_wrong": 3,
+          "nonconfident_wrong": 2,
+          "nonconfident_right": 28,
+          "confident_right": 3
+        },
+        "confident_right": {
+          "overconfident_wrong": 4,
+          "nonconfident_wrong": 3,
+          "nonconfident_right": 7,
+          "confident_right": 150
+        }
+      },
+      "selective": {
+        "aurc": 0.1618,
+        "e_aurc": 0.1009,
+        "coverage_at_risk10": 0.3467
+      },
+      "selectivity_ci": [
+        0.089,
+        0.3583
+      ]
+    }
+  }
+}

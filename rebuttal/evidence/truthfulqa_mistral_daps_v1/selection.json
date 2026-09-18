@@ -1,0 +1,95 @@
+{
+  "benchmark": "research/benchmark-freeze-v16.md",
+  "candidate": {
+    "config": {
+      "strength": 1.0,
+      "threshold": 0.5
+    },
+    "kind": "hard_posterior_spherical",
+    "observer_calibrated": {
+      "mc1": 0.6375,
+      "mc2": 0.7299251245335421,
+      "mc3": 0.5826785714285714
+    },
+    "observer_raw": {
+      "mc1": 0.6375,
+      "mc2": 0.7513539027773255,
+      "mc3": 0.5826785714285714
+    },
+    "output_name": "daps",
+    "temperature": 9.999994871845992
+  },
+  "layer": 21,
+  "matched_spherical": {
+    "config": {
+      "alpha": 1.0,
+      "beta": 0.6,
+      "kappa": 20.0
+    },
+    "kind": "spherical",
+    "observer_calibrated": {
+      "mc1": 0.525,
+      "mc2": 0.5787378676397562,
+      "mc3": 0.45897321428571425
+    },
+    "observer_raw": {
+      "mc1": 0.525,
+      "mc2": 0.6548840205854219,
+      "mc3": 0.45897321428571425
+    },
+    "output_name": "spherical_a1_b0p6",
+    "temperature": 9.999993273725288
+  },
+  "method": "research/method-hypotheses-v10.md",
+  "model": "mistralai/Mistral-7B-Instruct-v0.3@c170c708c41dac9275d15a8fff4eca08d52bab71",
+  "observer_fit_questions": 160,
+  "observer_screen_pass": true,
+  "representation_fit_questions": 300,
+  "spherical_conditions": {
+    "spherical_a0p6_b0p6": {
+      "mc1": 0.41875,
+      "mc2": 0.6266988713099745,
+      "mc3": 0.39901785714285715
+    },
+    "spherical_a0p6_b0p9": {
+      "mc1": 0.40625,
+      "mc2": 0.6216052926190889,
+      "mc3": 0.38985119047619043
+    },
+    "spherical_a0p6_b0p99": {
+      "mc1": 0.40625,
+      "mc2": 0.6160912994933276,
+      "mc3": 0.3870386904761905
+    },
+    "spherical_a0p9_b0p6": {
+      "mc1": 0.50625,
+      "mc2": 0.643947243085873,
+      "mc3": 0.4443303571428571
+    },
+    "spherical_a0p9_b0p9": {
+      "mc1": 0.43125,
+      "mc2": 0.6293779511982043,
+      "mc3": 0.39808035714285717
+    },
+    "spherical_a0p9_b0p99": {
+      "mc1": 0.40625,
+      "mc2": 0.6205572243283625,
+      "mc3": 0.3870386904761905
+    },
+    "spherical_a1_b0p6": {
+      "mc1": 0.525,
+      "mc2": 0.6548840205854219,
+      "mc3": 0.45897321428571425
+    },
+    "spherical_a1_b0p9": {
+      "mc1": 0.43125,
+      "mc2": 0.6176226690470866,
+      "mc3": 0.40589285714285717
+    },
+    "spherical_a1_b0p99": {
+      "mc1": 0.40625,
+      "mc2": 0.623890713900765,
+      "mc3": 0.38828869047619047
+    }
+  }
+}

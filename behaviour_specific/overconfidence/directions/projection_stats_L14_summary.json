@@ -1,0 +1,67 @@
+{
+  "n_records": 400,
+  "layer": 14,
+  "m2_states": {
+    "confident_right": 224,
+    "overconfident_wrong": 169,
+    "nonconfident_wrong": 7
+  },
+  "m4_states": {
+    "nonconfident_wrong": 121,
+    "confident_right": 101,
+    "overconfident_wrong": 70,
+    "nonconfident_right": 108
+  },
+  "directions": {
+    "m4_conf": {
+      "auroc_traceproj_vs_m4conf": 0.7392,
+      "groups": {
+        "src_all": 50543,
+        "prompt": 74664,
+        "tgt_calibrated": 28126,
+        "tgt_non_ocw": 41758,
+        "tgt_cr": 10544
+      }
+    },
+    "conf_split": {
+      "auroc_traceproj_vs_m4conf": 0.6681,
+      "groups": {
+        "src_all": 50543,
+        "prompt": 74664,
+        "tgt_calibrated": 28126,
+        "tgt_non_ocw": 41758,
+        "tgt_cr": 10544
+      }
+    },
+    "ocw_vs_rest": {
+      "auroc_traceproj_vs_m4conf": 0.6796,
+      "groups": {
+        "src_all": 50543,
+        "prompt": 74664,
+        "tgt_calibrated": 28126,
+        "tgt_non_ocw": 41758,
+        "tgt_cr": 10544
+      }
+    },
+    "ocw_vs_cr": {
+      "auroc_traceproj_vs_m4conf": 0.3819,
+      "groups": {
+        "src_all": 50543,
+        "prompt": 74664,
+        "tgt_calibrated": 28126,
+        "tgt_non_ocw": 41758,
+        "tgt_cr": 10544
+      }
+    },
+    "consensus_conf": {
+      "auroc_traceproj_vs_m4conf": 0.6526,
+      "groups": {
+        "src_all": 50543,
+        "prompt": 74664,
+        "tgt_calibrated": 28126,
+        "tgt_non_ocw": 41758,
+        "tgt_cr": 10544
+      }
+    }
+  }
+}

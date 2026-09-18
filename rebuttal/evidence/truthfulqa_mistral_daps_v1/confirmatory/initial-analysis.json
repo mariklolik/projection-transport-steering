@@ -1,0 +1,84 @@
+{
+  "adjusted": {
+    "gate_pass": false,
+    "mc1_difference": {
+      "estimate": 0.03375527426160337,
+      "lower": -0.05907172995780591,
+      "upper": 0.12236286919831224
+    },
+    "mc2_difference": {
+      "estimate": 0.15303323302427393,
+      "lower": 0.10794863470718531,
+      "upper": 0.1971836060883413
+    }
+  },
+  "benchmark": "research/benchmark-freeze-v16.md",
+  "candidate_calibrated": {
+    "mc1": 0.510548523206751,
+    "mc2": 0.7293168711596951,
+    "mc3": 0.5265822784810127
+  },
+  "candidate_raw": {
+    "mc1": 0.510548523206751,
+    "mc2": 0.7505845062543195,
+    "mc3": 0.5265822784810127
+  },
+  "confirmatory_questions": 237,
+  "control_stage_authorized": false,
+  "id_questions": 50,
+  "layer": 21,
+  "matched_spherical_calibrated": {
+    "mc1": 0.4767932489451477,
+    "mc2": 0.5762836381354214,
+    "mc3": 0.3881153305203938
+  },
+  "matched_spherical_raw": {
+    "mc1": 0.4767932489451477,
+    "mc2": 0.6837648564079041,
+    "mc3": 0.3881153305203938
+  },
+  "method": "research/method-hypotheses-v10.md",
+  "model": "mistralai/Mistral-7B-Instruct-v0.3@c170c708c41dac9275d15a8fff4eca08d52bab71",
+  "shift_questions": 187,
+  "strata": {
+    "id": {
+      "gate_pass": false,
+      "mc1_difference": {
+        "estimate": -0.04,
+        "lower": -0.24,
+        "upper": 0.12
+      },
+      "mc2_difference": {
+        "estimate": 0.13878781465118975,
+        "lower": 0.043876044945252435,
+        "upper": 0.21461976399406082
+      }
+    },
+    "shift": {
+      "gate_pass": false,
+      "mc1_difference": {
+        "estimate": 0.053475935828877004,
+        "lower": -0.0374331550802139,
+        "upper": 0.12834224598930483
+      },
+      "mc2_difference": {
+        "estimate": 0.15684216841814672,
+        "lower": 0.11572175923815176,
+        "upper": 0.19519369116783275
+      }
+    }
+  },
+  "unadjusted": {
+    "gate_pass": false,
+    "mc1_difference": {
+      "estimate": 0.03375527426160337,
+      "lower": -0.046413502109704644,
+      "upper": 0.10548523206751055
+    },
+    "mc2_difference": {
+      "estimate": 0.15303323302427393,
+      "lower": 0.1161948987061015,
+      "upper": 0.1889194856940238
+    }
+  }
+}

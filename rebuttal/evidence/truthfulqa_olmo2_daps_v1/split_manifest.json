@@ -1,0 +1,5721 @@
+[
+  {
+    "answer_count": 4,
+    "category": "Distraction",
+    "group_id": "942dfae2e0928f0709b1abb6a84320afec8c3b778c13e62a43ea924be38d6b6b",
+    "row_index": 0,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Economics",
+    "group_id": "068d4a12b2fce61a2db2bfea48ccb17d734ad1194717bb1147206ca55d982680",
+    "row_index": 1,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Psychology",
+    "group_id": "4a99813c5beda1f6dbaaa846f6e90b473a27ec7236de0bf7be8f3026c687f379",
+    "row_index": 2,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 6,
+    "category": "Weather",
+    "group_id": "d0341bfe9b4855ece55721f7686df1526a4fef314a1682bde197ca2de21defc9",
+    "row_index": 3,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Conspiracies",
+    "group_id": "313ff1d5c4903b5a06c21b8a6896c1e5f58eae7210ae928cab193ff5acde8a27",
+    "row_index": 4,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Education",
+    "group_id": "af30f9cc5b18492bd5023de2696517fc460e335da54d91891a26e5d7bed76f10",
+    "row_index": 5,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Superstitions",
+    "group_id": "bb153ed2d5e7c5190ccb56840fad231b6a3aee0c9dfeb3a8cd8477af168f1f37",
+    "row_index": 6,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Science",
+    "group_id": "d541448f9214b86ffe82525c8329edd84b8c189ffd2709e8c672c92525996d29",
+    "row_index": 7,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 13,
+    "category": "Conspiracies",
+    "group_id": "aec9be47d2852abd6ad0dff69d2c7b383d04331f99700de314e65078b28d14ba",
+    "row_index": 8,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Subjective",
+    "group_id": "331ce06b0a5ca45748d37243273569e5222e8f51046cdbdc54680cb1458acd24",
+    "row_index": 9,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Psychology",
+    "group_id": "3dfe6b1dee9feada362257497b444dc220cee2924e8383cd61a218e3f48401ad",
+    "row_index": 10,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Mandela Effect",
+    "group_id": "ac6aca3bf060f8453d2d32259a234094b1aa575a715c59b3ba6971404f338298",
+    "row_index": 11,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Health",
+    "group_id": "b5ce9e5b57e437a5cbf95ba78cd8083961a00b30254b4a5655b71d30b6dab706",
+    "row_index": 12,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misquotations",
+    "group_id": "5f3f6fedc48b5e1ffec63ab853f3965491552ce7efc863a42407a3839b70b8a9",
+    "row_index": 13,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Paranormal",
+    "group_id": "70ec278238a03cd492a6059b9a55a99aff9a126af6e209cf9d98f9e0a7038b5a",
+    "row_index": 14,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Psychology",
+    "group_id": "e4d5983b52e5787dbb34623f27119a390302849cdee196a0360d1a9ab2b3612c",
+    "row_index": 15,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Economics",
+    "group_id": "d98acd4c5b1574a53f90d3324206c60cced2e45addcf691f238cee542f95c5d7",
+    "row_index": 16,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Subjective",
+    "group_id": "a532f5ee716f078c03b1c437d89862b1ad620538117e66a7f0acfa9190eaba5a",
+    "row_index": 17,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Superstitions",
+    "group_id": "cb37084ad5b877f3ecb1521cd4ade2b923500bf62b39e10b56160144bf00d7ef",
+    "row_index": 18,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Health",
+    "group_id": "1314c6a6095c96e7532755e74e6eda82f39d39a118e0e71eb8d6e9b27845ace9",
+    "row_index": 19,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Sociology",
+    "group_id": "24f03f620b67288532f8cfb73c96763713541134f99b05242e50b4b47d4def29",
+    "row_index": 20,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Conspiracies",
+    "group_id": "2add7bb3884f7922c55477fb4ffe1af111319d7ae16c008a0f7c94470289c0ad",
+    "row_index": 21,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Politics",
+    "group_id": "adadf6ce48e890ab34310b3170bed4be8795b8b58aa904c516ef90f23225c2fa",
+    "row_index": 22,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Identity",
+    "group_id": "468d6369902eaafe184fdd0f45f964f1ca32162f915e1cf9b3ab80a6aef59dcb",
+    "row_index": 23,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Finance",
+    "group_id": "62dd17c7aa656b85a735c0af0bd38688504d5d458d3283debdd3223a66406cf6",
+    "row_index": 24,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Sociology",
+    "group_id": "56e127ddf1be4199de570455c45357da3226b411633de513a34828d72a6cec13",
+    "row_index": 25,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Weather",
+    "group_id": "d4c1bd3798f5467ff8448a375979f941f3f10c8c31d520253fbce9e6eb9bb43c",
+    "row_index": 26,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "553122021a3fd7c9ab4419a2476f844723bdd945c80d6a46f63cf4adf7fd1391",
+    "row_index": 27,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "e5d256e866b8250e93ff4a705dc08433de15c09aabd6279f080249807859adf0",
+    "row_index": 28,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Fiction",
+    "group_id": "035fc41ffe852ee51daaed76519ea034d8630d87783b2fa52a719315b95fcbdf",
+    "row_index": 29,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "f1123adc5fd400e4d7a5d187e53ef501b08868e74bd924a98f1c348dd5549f9c",
+    "row_index": 30,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "1652ce3020f752fb7db03db5f1e787940f0ad42f47c0d2a98447141ad0bb3e06",
+    "row_index": 31,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Finance",
+    "group_id": "969d349a6a3d5ed3c64555c9f8b365582d282a3abc546d503dfa0c65fe0e955f",
+    "row_index": 32,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Myths and Fairytales",
+    "group_id": "ec5efd092fa59b9cb88a3470c5a1e6ae8cc38ec393afd36b8dc85632c08ad9dd",
+    "row_index": 33,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "ffe207f5faafe116a622e8f11d447d9d69181708310d516f620a28b82e28f641",
+    "row_index": 34,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "805ff6503de970fd1e6f42edb4634b1b50841aacc7f471a7ef7053bd2b9947c8",
+    "row_index": 35,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "cede67b5047d31200d983fc68b797eb4f350ff2d300c76d2fc4699f737cd8737",
+    "row_index": 36,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "1fca2d0fea0c764d43324f19cdcbaf178aaeefe4f9734b62993bb9c5ad89e139",
+    "row_index": 37,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misinformation",
+    "group_id": "d5f5b1f0cb9b946172cda9d6672f131c8b03b48cb14d34525248118fb5687918",
+    "row_index": 38,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "b51de92bbc81be094c60df74dac3e803dfca2c37cd27539afe3aaabc03aafcc9",
+    "row_index": 39,
+    "stage": "development"
+  },
+  {
+    "answer_count": 12,
+    "category": "Indexical Error: Identity",
+    "group_id": "8183285b562643442ea4de4f9cdaeaecbe9dba0725cbf3e7fc4203d1efa5c2ac",
+    "row_index": 40,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Law",
+    "group_id": "34698f8c54913f88d3dd7c8374b6b89825d111586900277008aedb2b543e5990",
+    "row_index": 41,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Location",
+    "group_id": "6f5b75131b99d2463f7bb18b3fed6450d005223f0ce842306e974c6bb6d070ce",
+    "row_index": 42,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Politics",
+    "group_id": "aeaab62c35131de1b9cfb75da024647e9456a5aa74e71ae8bae6709898c6035d",
+    "row_index": 43,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Paranormal",
+    "group_id": "863e988b707b986eea5fb4670b75d2d3ae0cde0484eaf3e26a3312e1610cc5fb",
+    "row_index": 44,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 9,
+    "category": "Economics",
+    "group_id": "e09ebfb681cf0c7fa3a72ca547c9ff03b1c8cc2e587f9dc3452af7bf1ff55561",
+    "row_index": 45,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "da5bb813561ccb136a00ddff16a073cb226e84c6f6d5f2a4bbb98cbd8c71be6e",
+    "row_index": 46,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "349b68502d9a0d3f86f334defd9454c3d2c349a4fdb2019e8ceb18b1e95bd417",
+    "row_index": 47,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 11,
+    "category": "Economics",
+    "group_id": "261ca773e1a6ca3f5f47a9a24e4d1789d8944a9e6fd9111dd6c0bf52524f6138",
+    "row_index": 48,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Language",
+    "group_id": "c00dfe014d2ae2ee59b5601044eae63b63ec022f3eabbe532b9ca1a2ad1fc707",
+    "row_index": 49,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Stereotypes",
+    "group_id": "2b3e0159908255592745c24fe9499c1ae87db52e6038f6ab7efeb7d8d4a3321e",
+    "row_index": 50,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Confusion: People",
+    "group_id": "6d1aa64af3e40f2332197646b16c36acbc2e997ddcd8743a7ca3acb529d51459",
+    "row_index": 51,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Sociology",
+    "group_id": "0bc00c475f9941b49b2669e9b79237651d7de3a2dae092a32a00803a629cfa51",
+    "row_index": 52,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Paranormal",
+    "group_id": "4ac4a66e39f5c9c268e81f671da4f2b5b2857f3d737f553518a7c5fdc3f8ff62",
+    "row_index": 53,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Indexical Error: Time",
+    "group_id": "66f645052ad196df62a6b41a0d9ec31c5f17d226ebbf162f0f9edceeb3d98ae4",
+    "row_index": 54,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "History",
+    "group_id": "0411d198bf86e86cf101a91a9830ed85132c37989a1c2b776b3c00855b697590",
+    "row_index": 55,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Stereotypes",
+    "group_id": "dca21b220538cc61cde9968c99785db3c3fe1fa2b83c3d55139221391449e597",
+    "row_index": 56,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "cbde601a01e649f5616fee5f5df17f269321e8cac8cbe4853adfbbf5d80f4c46",
+    "row_index": 57,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Economics",
+    "group_id": "904d215cfe4863ea4f52164b04837f0dde94ce79d12cb7b52d891fa723833087",
+    "row_index": 58,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Distraction",
+    "group_id": "74e54c0c48684c6d5887bd5ab1ed65aa91044f32b0ac6dd89191a22cc7d92db2",
+    "row_index": 59,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Sociology",
+    "group_id": "f4d13cd50cadae2e4f7080ba988b11ff029dd41bd807d425600b77611d2f35e1",
+    "row_index": 60,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Proverbs",
+    "group_id": "22f60c130b6480e7d225d5172485e4284d7d10ba8b45e31ce6822f7c13fe35e9",
+    "row_index": 61,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "Logical Falsehood",
+    "group_id": "0b72892f1c6b81de8bdc09341f243b4cc5ffc330c0466db0b2f203b27ee0c868",
+    "row_index": 62,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Conspiracies",
+    "group_id": "c561e39faa590e9ff70f9074b73c062bef0d457c84ebd56e895144b385a1e2b7",
+    "row_index": 63,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 2,
+    "category": "Misconceptions",
+    "group_id": "4c848500015c8707d265fa659abb17763cd730bfdca89a4dc92656407416ffc5",
+    "row_index": 64,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Logical Falsehood",
+    "group_id": "2819672bb626885437c687e593e0f306c302c3ecc7ddb01239334b5232ab7ebc",
+    "row_index": 65,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Conspiracies",
+    "group_id": "6ae56da1e49f755d4ed10a8fb3d2d932d0dd76b00cb63ce1d1dd4b5aff224e14",
+    "row_index": 66,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Misconceptions",
+    "group_id": "3020352927ac2f4ac4c9aea84e68ccddb3789c995f88eb3e32d630ad560db25a",
+    "row_index": 67,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misquotations",
+    "group_id": "048cfe192d76908799879f1a501566e5ed9c334cf17df799eeee43b2a1295fc1",
+    "row_index": 68,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "8eefd11fa875972569336383a4d8847dae5f06018924283005e26f47ca020989",
+    "row_index": 69,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "32c9afec0f63a940b096108fcea0c391f336e2937cf58de38271bf1f57fd9acf",
+    "row_index": 70,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "History",
+    "group_id": "d95bcc22e6c9e87fc59797692926d0fd05705e7cea5493cc3dd41d1752d6dd69",
+    "row_index": 71,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Law",
+    "group_id": "68adbc79a041a66f9df766ee722d3d6d10069fb1ca5935fc1928f8503b7bfd1e",
+    "row_index": 72,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Language",
+    "group_id": "296289cf8fafb5eb04c938181968ae040310fe045de8c97a69536e6c062da361",
+    "row_index": 73,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Identity",
+    "group_id": "7aea0c9b6381df68cb947be2ea140a76cc122f5be69860b2814ad8d554b096c2",
+    "row_index": 74,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Weather",
+    "group_id": "caaaf5cc68460ebfdd74bff109d98c0823f974bb6cd6acaf916462288329a664",
+    "row_index": 75,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Confusion: Places",
+    "group_id": "db91d83d6dc566a4103864d083a631b25ece0f31d0b0885c5ecbf4df2168a0a3",
+    "row_index": 76,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "c293a42f6f882daba7a9d3f08ac0dd20315f0d228627839f3f81eb81899e6fc2",
+    "row_index": 77,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "73f89b7ad4d967ea421a6556f80b7a07085087adf335ea917f8be7895235b412",
+    "row_index": 78,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 8,
+    "category": "Conspiracies",
+    "group_id": "771e9aa5c595e338957ce80aca37ba48225e55112e05f8dbc609a95b41a2f574",
+    "row_index": 79,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Time",
+    "group_id": "1fd91441140f98f4ecd94b6cdc4e5834bb6697415a3784b81352325e624e0d0e",
+    "row_index": 80,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "0c2aea6d2fdb76dcc64abc874aa8af4fa71ad8bf79f4e52fea853fd644fda77b",
+    "row_index": 81,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Myths and Fairytales",
+    "group_id": "ae301fe7c0448d973901f5f0aae013aa606cf615c1799c50d9851a6d84ab31f7",
+    "row_index": 82,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "6055a9efc5f097e5d5dd377088052d7a5a6cf59b153035e8dde55e2a4d143520",
+    "row_index": 83,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Education",
+    "group_id": "53e388ac22550200a169dae224780cbee6429b08079aa4634518772fc9971854",
+    "row_index": 84,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Proverbs",
+    "group_id": "107cca62cb46bf00e81fc2b30dabd6f73284e4c798ea8ecae4721702eb3579c1",
+    "row_index": 85,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "2bbf3c87623ebbbdda4cd85670b769fef7acd98aa8a96c020cd9a510812210e3",
+    "row_index": 86,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Fiction",
+    "group_id": "1377052a7e1256b5cba0e432866ccbfbfb0b4d1d8ab1d27c0be8dfe7b6684d17",
+    "row_index": 87,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Weather",
+    "group_id": "496e217217299e4ebae47ece5e2a7ba07f2c3997ef3e86ce85688ba52a33d6bd",
+    "row_index": 88,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "0cc17d40ae79e930b6884f84894e607a2be4be86376af4f1e812432f222ddecb",
+    "row_index": 89,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Sociology",
+    "group_id": "ad7e589b87d1f14e932c02c1dad0ef6ac2100888ab8e64f5803a314d3b3ad7c8",
+    "row_index": 90,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Law",
+    "group_id": "066d43eb620696ffa03373f858ddabf8979f25ac5880e6b0a43fab425ea3abf9",
+    "row_index": 91,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Location",
+    "group_id": "13cfb65b6338c04df36b3483d4163f1b9e00a268266ccd65dc6f710e6a7457c0",
+    "row_index": 92,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Sociology",
+    "group_id": "7517b8ac70fec9548f020330518c004be367225181f80e11a540be2a504611d1",
+    "row_index": 93,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Superstitions",
+    "group_id": "4e5bf079ae50b660b2f85e66fc8cad02524bff95f7fda0575a4f1cea64172044",
+    "row_index": 94,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "0fe985cace6ab0570e4272971e2c4de66e5f06e385e89f5c6e3cbdd9f54a90c2",
+    "row_index": 95,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Indexical Error: Time",
+    "group_id": "9cee3a9e5565c8556c6850edb2f2e707b18d9ed7a825ede3de9c7f67614d04e9",
+    "row_index": 96,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Sociology",
+    "group_id": "de8b3a1b4ecc249c9da2323fb0e8b3069cc83ce6a8f0babb0b45f51c675179c6",
+    "row_index": 97,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misinformation",
+    "group_id": "335f98feeaf15a4030bd3e0eb944d9142604ea5bf839bcc07089cc1a134c2fd7",
+    "row_index": 98,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "e0625ad963d40a1677720bcc3cd0e1ecbf525a385f13345210f8a95bbc975108",
+    "row_index": 99,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Health",
+    "group_id": "68739d12a51b2c099158b4ba08fc17e47b6e1a6056ffbae3561ffbced0c10fe9",
+    "row_index": 100,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Paranormal",
+    "group_id": "cbb59c251b0e922d7ae1cb52c850ca3932dc7da0738732f66dcd023914c2f8b1",
+    "row_index": 101,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "61cd9f029ef142aa50b6c8b6eb3caf35c5353c86dd7b089f0b6f29fedcc6e399",
+    "row_index": 102,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "18cd998853d38be9c89f7072e19ffb58d365325fcf174b67fb23274c03e8ae3e",
+    "row_index": 103,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Economics",
+    "group_id": "5b33b54822de679caaa0ba542c79eb3bbf7480cc08df06ea21280523c112aa43",
+    "row_index": 104,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Distraction",
+    "group_id": "e585800c2296e26c6a5e07e45aa036b3c3967b812d4b8e1ee086c8ffaeb48860",
+    "row_index": 105,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Stereotypes",
+    "group_id": "f15a113338faa7f4f8b35e3e1ae769ed2b2764ef9afb24f25c94f0826008c23e",
+    "row_index": 106,
+    "stage": "development"
+  },
+  {
+    "answer_count": 3,
+    "category": "Religion",
+    "group_id": "571f0c754285d5635d879808b7c2b8263551d2e5e4da44215de08b2fb6ce229d",
+    "row_index": 107,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "3117a64ad576c73192d15bd1059d7733cc5ffb0a3ebb1ecf25e902b85fe864bb",
+    "row_index": 108,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "8fbc5ae9caccc072a29aefb0eb82ce9bb54a478af4696979dd8d2868e6b09d12",
+    "row_index": 109,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Mandela Effect",
+    "group_id": "b2cc460ba9ba78165579f413163e52a10f4fab49d85aca2b2948cc7276c55a3d",
+    "row_index": 110,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Health",
+    "group_id": "55b589b3f6139aa9849495eaf4a872b92a2d277b44f902b82899812686e84389",
+    "row_index": 111,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Subjective",
+    "group_id": "fd44a0554b2d8f6d7c3b937bf7e4710d67e4b9aa037b2d583fa4dbc5f61a975e",
+    "row_index": 112,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Sociology",
+    "group_id": "53dabb9fd77a88bf46798bac6c9e26ac1709504a3724772183ecf57e434ec9a5",
+    "row_index": 113,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Location",
+    "group_id": "433039c83163d44b8e8b16639ccf9883d56ba55059cb84960bcf56dd6874293f",
+    "row_index": 114,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "2ada925e8abdab841c556c059431cc955cfac55c5437d69b3829e5978510bc7c",
+    "row_index": 115,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Misconceptions",
+    "group_id": "0818b246c2dcf7538d5a1a6dd2f18516b99781bb89d34d53ebbf58439485f3fe",
+    "row_index": 116,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 10,
+    "category": "Law",
+    "group_id": "bb3b27320ab36cfa7313dbafa6b4c98c0cdb496a853412b485711d865cd827d9",
+    "row_index": 117,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Confusion: Other",
+    "group_id": "12156e3d6544ab6c99277d082026531f9abf0ac2d70eee0367f03c36001492cd",
+    "row_index": 118,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Economics",
+    "group_id": "f7b2516a6f6d58f0e64098394fe5691ac9535656cc28ba859134ead3741c3a97",
+    "row_index": 119,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "7192de50447bd807486aa2b1d7eeaa532c83d8c92b6f193c388c7c43f5868d03",
+    "row_index": 120,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "cacb9325a888ec43737935ac3b6b0d2b8345d5ed73295b87ea879560f2045d15",
+    "row_index": 121,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Misconceptions",
+    "group_id": "8227b3b1064847f7c1dbcd660a35e24c6b1e75a638a6212c2d8a0952ff3e91f0",
+    "row_index": 122,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "54013ae963e76240ef89c646a32f1986c16ee6c6dcf4116e82a94fe7a75a0020",
+    "row_index": 123,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "3a7073e1ef7b3b40453850618385623e61ed5cf3a1e177ebb919d7b0587f68a8",
+    "row_index": 124,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Time",
+    "group_id": "2f9d3c3bc78cbcc01845c1be6be39dfe43ac395a710af215ef909c0d48d07d29",
+    "row_index": 125,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Superstitions",
+    "group_id": "9fe33452292b0f5a8224e78f007f3338b5be7d63020e1115298d4b63ab43798c",
+    "row_index": 126,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misinformation",
+    "group_id": "0534a178a4e7a6800f42d33f464befa5e793bb8bd0e145ac7165816b6eacd13a",
+    "row_index": 127,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misquotations",
+    "group_id": "15eab1694959e19348b76ead22f28eb8770fc2c5822e33539fa72bd8764ecd5b",
+    "row_index": 128,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "44f0b02813b90ad774822ff5ee8d59c3e47e200f77ea4fa51c6f36b428000dc4",
+    "row_index": 129,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Fiction",
+    "group_id": "e3c62921bb25515ae90ad64c4296bf76482f9ede6360cf4f0d4d2db7a5df9be7",
+    "row_index": 130,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "c97aec4eff8a72f15a1ffc1478da38f00c9b6bd78f071f0f645cd975a744e48d",
+    "row_index": 131,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Time",
+    "group_id": "9b6d467d4ef7a8a9398152f1203783a32e9cd5377deda372953fafb876201f2c",
+    "row_index": 132,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Advertising",
+    "group_id": "c07803edf8f4ff3aafaa6f4bff3376dd19d5e4659f42aa2ec01cc8517f181bf1",
+    "row_index": 133,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Identity",
+    "group_id": "60809577aa2ca007ddd400e208d8c3af2cf0ebba9a680b518a814c39cbc0800e",
+    "row_index": 134,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Sociology",
+    "group_id": "db84f26826d3eac2c33e8e076c83d2824f742019125b750f68b872d98540bb71",
+    "row_index": 135,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Myths and Fairytales",
+    "group_id": "882c48825faee0fd1326faec291a3cd72c084611cba4fd634aeb2caaab926a42",
+    "row_index": 136,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "e53ec3a5552e96d9ec96506bb23b521df4ab3eb98c794862010a6a050c437982",
+    "row_index": 137,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Location",
+    "group_id": "ac6ad511ce426e1f7692aa525c53aa14fa7a23a4d298a2d88f3d1bedba21337f",
+    "row_index": 138,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Paranormal",
+    "group_id": "e053b421c309ee4196eb2aa5742ec12d6169bfbf564b56c4e640442b93e65770",
+    "row_index": 139,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "b359d86b3254b0062e56df085d03b9e05a06afdcbafa32113c6db6a1a7903528",
+    "row_index": 140,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Proverbs",
+    "group_id": "007275e94f75b47415ed7a5a5317b226fc073d523caa6e540498ac9c2f581797",
+    "row_index": 141,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "History",
+    "group_id": "b6cd412c05f5d1129efc64bd1a5b6475dad7ec93dc8d577445564b6ca5623c65",
+    "row_index": 142,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Finance",
+    "group_id": "92866ca5fbb153ac07b49acc8d98efcb888ddd25a0945a3636b582c21dc7d768",
+    "row_index": 143,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Science",
+    "group_id": "76586e02c136f31f5ca25b5b8433ced4ace51eb3ea5f80deb39032037fc3e1d6",
+    "row_index": 144,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Economics",
+    "group_id": "0d161692b6136bee6683304a359b1ff82e300101d3c54387f7c9d816ef7a3018",
+    "row_index": 145,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "c015ea890763a3d7c7457a96ce71d9229bdfffb50ac5f1e7c5007082dbee1258",
+    "row_index": 146,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Stereotypes",
+    "group_id": "e4c2a1123c42e76f2672e439eb5ba1c2b922166e36e89765cfeded3b9b01ec6f",
+    "row_index": 147,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "History",
+    "group_id": "22c58f1c658e47d81969508bcf653ec66804f759a0f2eeca0725893bac9471e5",
+    "row_index": 148,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "436222dfa20e4604e300dfbab1f079e922b991fc357b798b115d7a8da8584c71",
+    "row_index": 149,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Psychology",
+    "group_id": "845ff357f556fb48da95bf32c498b855f2d770157307a25ca680f75e0e198207",
+    "row_index": 150,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Advertising",
+    "group_id": "1436ab7e402ebbe0235f8d48794316020462bc3e3ec364a04394df549ecb76b2",
+    "row_index": 151,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Other",
+    "group_id": "9711bce16ec32efed991a8d147f233af80e34db3e4566bfd9144c35899914002",
+    "row_index": 152,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "6ebfc381f906f16675763eee882d54b1467a915090439b955d64f67b83842c0c",
+    "row_index": 153,
+    "stage": "development"
+  },
+  {
+    "answer_count": 3,
+    "category": "Health",
+    "group_id": "71fab4197e8506e146ce0f655eb69e3e898e86be7a9a16b52300eace42d3ceee",
+    "row_index": 154,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "History",
+    "group_id": "35f083886018bb4cf97dcaabc79449c7363e64044ede9f56ea5eacb1c6025501",
+    "row_index": 155,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Nutrition",
+    "group_id": "227fac55e83de9d6ea853a2bdb75c78ddc5a432f38fff614cced36721d88109f",
+    "row_index": 156,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "17751f21ce378f7192cdcecf7e4f76f8cd74b70221fce764c144315d3a4f8e95",
+    "row_index": 157,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Religion",
+    "group_id": "08f29378a6069a7ce799e4996002d54422de4628981b9db6fe82b9c937f6c2d8",
+    "row_index": 158,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Health",
+    "group_id": "3964c78e5b8ca209302548b9e6f5f9e5a42828459a903ed2ed594620d4c414fb",
+    "row_index": 159,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Distraction",
+    "group_id": "9e4349afdcfbc24941535de4b9c71dc1d802de5fca652c5df0e1cadd9a06b962",
+    "row_index": 160,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "Logical Falsehood",
+    "group_id": "4acb9689397c30f129760fc93b7c6b0b201863d163e7f2800cc85293b9c4a569",
+    "row_index": 161,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Confusion: Other",
+    "group_id": "2a056bd7164ccae913e4f6d374d1d715b2f9776f4fb7eb8ca785cef66896e96a",
+    "row_index": 162,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Paranormal",
+    "group_id": "92e3e514b0e309c2de8e3fb5af1d1a9227ac48666345bd3f7c611f9aa4f7d4e0",
+    "row_index": 163,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "1b4343dc59afe5da997503de3b1a241ed5ea147da8e10e44cc7ba2af33e4123e",
+    "row_index": 164,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Science",
+    "group_id": "be83dce4546a345da1c19b3ed4c16891ebb09b8dd48216a768828d75c0119277",
+    "row_index": 165,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Misconceptions",
+    "group_id": "c800c7e3cdd697919c35cadc80e4a94011a9717c3eebdf7e5775350c60e75078",
+    "row_index": 166,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Psychology",
+    "group_id": "dbf43ccad6fd5f26e28b2112e2631f9232b6637f027442e9d93df103160bbb5b",
+    "row_index": 167,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Superstitions",
+    "group_id": "6cb9c9a968302ba382f2cd7244c6427a196f7677cbc2acd4013780877781186d",
+    "row_index": 168,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Indexical Error: Time",
+    "group_id": "b817833ebace16fd789ba06ebaf41285445dbba565f5660f8b99714bb3157c1b",
+    "row_index": 169,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Weather",
+    "group_id": "76e5ac361f1d5d971bec05bf82eb477588caebb7f997eb888ff7ce57c4088af7",
+    "row_index": 170,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "4fd9a9076a02339568f2546e9210670cf6c0eb0df789b65a915b7c6c856a6ad6",
+    "row_index": 171,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Economics",
+    "group_id": "6bea403c87f2dc173271b16e6a5042e9ff3056b63644b50bd2f49de766fd20bd",
+    "row_index": 172,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Sociology",
+    "group_id": "1c537ff6bc38bc119c85d13397acea22788500841cb6a602ebdaf37d0ebfdcba",
+    "row_index": 173,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "f7c925d80f588c010979953241ff389052e9ee8d77667a6646bbec72b78e2df2",
+    "row_index": 174,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Paranormal",
+    "group_id": "9408ac55ae16ef7bfcd69a2632ddaa9754b923340577633f65c60045ea192396",
+    "row_index": 175,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Sociology",
+    "group_id": "c972b8745472c5f0fdf73d78640858bec18af896913006b8bbae7a9462928c2f",
+    "row_index": 176,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Time",
+    "group_id": "447733a1b31665fd0ce64a8ccc55ca04f3504f94cb1e6275ed92afba7f7797c2",
+    "row_index": 177,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Health",
+    "group_id": "a73bd4cbed97ba14b3ba2faa3a1c3cda9d61a6d984630338e67605613470da17",
+    "row_index": 178,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Advertising",
+    "group_id": "b2a8031f49b6afbd59ce4739094d9123e21eae4755e5e0da7f7616ce6ca683d7",
+    "row_index": 179,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Sociology",
+    "group_id": "cdafea8f9c9ef11d9ec5bc02debf316b8bb291f02508403d84e088d037a69a9f",
+    "row_index": 180,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "4de6a72f1befb2d7be94f87149ec75dd14d01c50ce5a0deeb8daed780df84ac4",
+    "row_index": 181,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Distraction",
+    "group_id": "c961033e92e42a43fd39d7cf0417dc3a4331cd0e99f01700b9511a59e92b4d41",
+    "row_index": 182,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misquotations",
+    "group_id": "8fab671a8ead4cd35a67d74245efd58badfcc184da8109a6045f262551ebff76",
+    "row_index": 183,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "51d93df138885a5507edb6e5268ec4d4056a191c48c7471e2a1e2bcb97824b4f",
+    "row_index": 184,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Superstitions",
+    "group_id": "2a01fab73530b09b7f5f95afd642e2c41a77c26a7a229f69e1de7363d1d84bd1",
+    "row_index": 185,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "bbb77cf4dbf52398572d56ad76a628bc8e8dd1b8257f0c56fc1b5745b4a4c769",
+    "row_index": 186,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Weather",
+    "group_id": "cc035b5799611499b43af2f906d61ef9f251e4252fe31870b4c1303723d049f4",
+    "row_index": 187,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "4fd6abe8121ede1ab324ed0cdeb78c8c06bdb311dde1c33a64b395b86afa7948",
+    "row_index": 188,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Science",
+    "group_id": "465242a8ed6cd0f6592df947a8e78e9a9d35993629fb6b27ca7f343c5fcb90f0",
+    "row_index": 189,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "301baf0d5ff7dfa5bf5bb3ba419eb97e0d7729641e2b21e64e6891eefcbf87f6",
+    "row_index": 190,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Distraction",
+    "group_id": "fb91a88a8d79c39d98373588c3ed6c3e08b59d6538ffb28d8887401506d8a976",
+    "row_index": 191,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Religion",
+    "group_id": "fb332d42dfdc2e84a792f404f0360ffe5f79b631282cc5f9723b248246c33775",
+    "row_index": 192,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "be8fef7aefec0cfa713a5ec54523c200d3b92ef4ae8fe4bd5cb90c0fa90a8c6d",
+    "row_index": 193,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions: Topical",
+    "group_id": "e4fea6342121edaf0a1b0846329fc7986c0dc2d724f7e7ef7fdd674a459260ac",
+    "row_index": 194,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "195d5e0faab12a2064c5974706155512530a574413ec4b5567b00dfd0d50202d",
+    "row_index": 195,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Indexical Error: Location",
+    "group_id": "96e0bae375a6d5730758a01bc783c5977acf1a1939ad3440d4a11def6ce450db",
+    "row_index": 196,
+    "stage": "development"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Other",
+    "group_id": "291002c5ad6185ce92b58949ffe76ed345f9def0da06f38d4464ce5e9e905384",
+    "row_index": 197,
+    "stage": "development"
+  },
+  {
+    "answer_count": 9,
+    "category": "Conspiracies",
+    "group_id": "67e14c004bc65edf506e0bb68312c070a66028f1ee2b3aa03a06efd8f21a9a0c",
+    "row_index": 198,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Fiction",
+    "group_id": "372127a8fd7dd7ca981c090b191496474fc33d1eb10ecbb414e1a5d0d17b3934",
+    "row_index": 199,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Stereotypes",
+    "group_id": "d3ef35cecd12d95f2439344a88a0f0d1b2e045155f18915ff914f10da77a8005",
+    "row_index": 200,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "a1c731b2fec8bcfcd45f0ef1a5a6f612b5465b2babc05ef81c7a28fe2648fc51",
+    "row_index": 201,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "e8fdc0828cd3399a14a2d62b8c05ebcb3a9bc2edd554d7d0fe36f49c9b523480",
+    "row_index": 202,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "f8bc0341b048a592e6b3f0a6cc932c1262e95f4dbed7eddf6c86d4a3a9ad5d0f",
+    "row_index": 203,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Mandela Effect",
+    "group_id": "4f70305b9e618f602bd43c7a758ad4fe5d1663c80d6f5ce7fe93855957222aa3",
+    "row_index": 204,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Superstitions",
+    "group_id": "e137a42214336c6e60e726d950e3ade6d3cc13ace2c8f5e1e9f067e8b1982b63",
+    "row_index": 205,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Conspiracies",
+    "group_id": "95f8adf86d6c9814be127d113c98acbafedbaf05c43b7a8d484fdbe127924de9",
+    "row_index": 206,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Myths and Fairytales",
+    "group_id": "6ca8318cdd2e0dbf2755ceebde869c6cbe7d6903f8f47be228ae686cf0089416",
+    "row_index": 207,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Psychology",
+    "group_id": "b14a201b2189f1d7ce892a63353a8b48f1ae73fd9a02e067a64d7b426f3019f5",
+    "row_index": 208,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Other",
+    "group_id": "d75254fcb10a9284aed170ee0e3e97a92aa09525a244dd27d09452a827eee73d",
+    "row_index": 209,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Sociology",
+    "group_id": "fa105fab74eb390e2a2f5207882b098d9a271f34862967ebd6cd181dc2a3478b",
+    "row_index": 210,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Fiction",
+    "group_id": "27015e412e6b8a686748ccf5cf81bc082c0e3e3750a6565273d5b2cb6c20cf71",
+    "row_index": 211,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Logical Falsehood",
+    "group_id": "221404da25a84282ceb7f95e7afdaeafe9b98cac92df7f175357aca7d124db2f",
+    "row_index": 212,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Health",
+    "group_id": "1ae5dff05ae20c8e95b47475dd3fc0db6f01bdfc23507feb8be43fc9244f0fc9",
+    "row_index": 213,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Other",
+    "group_id": "a9ae6b1aae77adaa86d5ef0d6977e9c549c5dca565581621475dd5205b75b52b",
+    "row_index": 214,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Psychology",
+    "group_id": "ea1ac6c90a456110b8f26105d4ed1411ab71be2134269421bf60e13cf89cae86",
+    "row_index": 215,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "7e0ec063deb3e1ff9c50b875dc1b0b22e1f0de7c9b6fc42b956ec9437a86eb4a",
+    "row_index": 216,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 20,
+    "category": "Sociology",
+    "group_id": "2aeb674d1f973abf7d6e1923e534539539d158158d2d93917698b658f340fd26",
+    "row_index": 217,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Language",
+    "group_id": "ed11145450892c61301d32e4e182b15ee3859d0626116b7d73a2cad1daac35da",
+    "row_index": 218,
+    "stage": "development"
+  },
+  {
+    "answer_count": 3,
+    "category": "Proverbs",
+    "group_id": "191495d0612f9d6a22bbc02d9911e0c44f17277e4579c4946663933bb50fc83f",
+    "row_index": 219,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "48b54ded451fbcf418acde73ca5880d67ec08a88d238daf922996c1310902a2c",
+    "row_index": 220,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Sociology",
+    "group_id": "614b812d78b412efa8875660016281d5e66b3ae93a25ffcf624db4c92847012e",
+    "row_index": 221,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "295935c436f4bea531e5b1facb86354c5b202304848a85570ea4e2937690ce1a",
+    "row_index": 222,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Nutrition",
+    "group_id": "d098c78fcc7628feea9792956f9329f17c2859c34d0c21bce65b78f24bb2a970",
+    "row_index": 223,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Superstitions",
+    "group_id": "8bcb0b5e52900e08478d261776cdabd2c6f2edad2de91337424af05469061b1f",
+    "row_index": 224,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "95b43fe4254eee98e330d0a8df525f72634d2e0689fdefa03a2c86912b4f908e",
+    "row_index": 225,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Law",
+    "group_id": "76fbf9b13c3e466f0f1e6a0d6a9041cab4f6dc1a997bd6fa3a09c401903f3e51",
+    "row_index": 226,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "a58fbb0a82b850c09385e7ef43bbc1967c79991359029bd5fa56cf4b2d44130b",
+    "row_index": 227,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Law",
+    "group_id": "cfccc5646bc35211736882574dd4152a062861f2a51d86b6f4126b5983878569",
+    "row_index": 228,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Law",
+    "group_id": "3c5199fb67733b3b264a288e3b5c0ed6b126c609b387279bec76c4c104dade82",
+    "row_index": 229,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 3,
+    "category": "Misconceptions",
+    "group_id": "e3769bdbabf9f09f96fb152897618206e1878e7ca88dec1812804dab77b3d23b",
+    "row_index": 230,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Advertising",
+    "group_id": "f30878cda18647815b70cb8c81407f76914f950e74f4f6bdbe9ef09cc44e29b2",
+    "row_index": 231,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Statistics",
+    "group_id": "8543552bf29403c335e3db01659c1e70cd29fb12bf5c14ae35f1b2be6febe9bc",
+    "row_index": 232,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Nutrition",
+    "group_id": "43440113605414e5dc95dfdfcecd177efeb7848ac7a1e7e5915bef806f551685",
+    "row_index": 233,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "3bfcef524afad6c8781ae7daf990c1e93315df6d66f947fc50df9538ceb81964",
+    "row_index": 234,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Stereotypes",
+    "group_id": "3807ca2791ca7281463f5f833ee31efc2839b2c95a922cea13cae7105d4683c9",
+    "row_index": 235,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Education",
+    "group_id": "ac00db1308f644670119d2aefd391ec5fd854b2e53c6df9786829a1bf5508873",
+    "row_index": 236,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Advertising",
+    "group_id": "1c836c7f1271602c72f96a6d31f81c54ba14c0b79ffc406ce84dc2339e57da55",
+    "row_index": 237,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misquotations",
+    "group_id": "399a57dc0ac8c724e254c3604230502677e8d6f3440c5be2783bf213a3a0d40c",
+    "row_index": 238,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Language",
+    "group_id": "4c1828b6bbccd38132eea8c254881336fffca1d1f9d6197e565f2589754d6ba6",
+    "row_index": 239,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Law",
+    "group_id": "c873dff26e67a9c03179af323fa99e399c68f175a4222594bbfaeedb40860305",
+    "row_index": 240,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "History",
+    "group_id": "ce27881fbae6985f7225144016f965d68e8242a42629f712585c94e6fa2becb6",
+    "row_index": 241,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Fiction",
+    "group_id": "9bb9d6809dd74bacddd44899059386a8ea6dc0b455f4161fd6552a22f1235698",
+    "row_index": 242,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Stereotypes",
+    "group_id": "c1d7617dca40a6409308261b9857c186227fffaa9dba4093644c63ec38b41a8c",
+    "row_index": 243,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Health",
+    "group_id": "9fe84568e0b7734eb6bea777bd2272c8e3e7765fae05894102807a8d1fb6b742",
+    "row_index": 244,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 11,
+    "category": "Confusion: Other",
+    "group_id": "2bb9177a6c7f82a738135db0ecc3eb4b20ccd7856d1bc5ef7675441760382f02",
+    "row_index": 245,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "4bd47e23d17a414c3e0a82372f48e49e8c9e6d3fc3144812d14a9ecea0cd71f5",
+    "row_index": 246,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Misconceptions",
+    "group_id": "71503e9670dd4edea5749eac6e58eadbfe52db9655cf0e541d9ddd648184cf18",
+    "row_index": 247,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "02a588a7ac39860378441e19c5bc1094d22a716cccb4ce084b0cbb0d2517f1f0",
+    "row_index": 248,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Other",
+    "group_id": "eb4ae8e5a90a7917704e34785b541ac88ab344aa0ff4c466b2bd0fe4e83f83c7",
+    "row_index": 249,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Economics",
+    "group_id": "559b8bb4563a6d98cd2c92df3352fcb1dbb29099960d754b5137637824e9ed88",
+    "row_index": 250,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "76eb8086c4142f6ac7ac98ce87fedb0dfa854585b1bf9bd977b4af2c1b670cea",
+    "row_index": 251,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 16,
+    "category": "Proverbs",
+    "group_id": "a3376aae0431fbb5156a8875be1969e4dfccb1a1a7116fbc79f074e06d8ac672",
+    "row_index": 252,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "4d06b65fba78a3035c335af3afc54a491b19abadb9a4e3c8ba6017e2df09cb87",
+    "row_index": 253,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Psychology",
+    "group_id": "26947b07e41c65856da06e8cd4639678788356df876f04519202bd5a38433f18",
+    "row_index": 254,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Fiction",
+    "group_id": "38a08e229e3a1526b7de338456d6709a27674fb638b6ed6a9ebdeb9dc5e0dbd2",
+    "row_index": 255,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Identity",
+    "group_id": "9547263df2b5774d5bb883c39113fc49fadf0bba3a70600ee8d62f8ece1c06c9",
+    "row_index": 256,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "58292a28b34ad334789c29e0dfc6688f2a9b3e8484d50296b3033fa7ada53cdf",
+    "row_index": 257,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "7a939126ecb14b42ad97f7c828a39598b1f50e4f9e96cff37941ab0c49f807fb",
+    "row_index": 258,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Sociology",
+    "group_id": "c9a9401c677e65bda9b4c9cdebad725b54e655324118f2498f369956b6a5ff86",
+    "row_index": 259,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Superstitions",
+    "group_id": "c72c9e3d1eb2c810b1dfe8ebaa9e1e17cfd523252c88c5647927b78f6757118f",
+    "row_index": 260,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Superstitions",
+    "group_id": "ce5fc81ed9dad85d3621c1267c09c515ed5fd54efe49fda49ea5445410ef15b2",
+    "row_index": 261,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "af13d23ae43c6dc8e7842ad74b8490f198f27372dfef377f1d48a5611b172a6b",
+    "row_index": 262,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misquotations",
+    "group_id": "869863e11ad09a143f6f00a05efe9dcfe5dab527d6b408412fa3e6eb2330d030",
+    "row_index": 263,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Confusion: People",
+    "group_id": "a4d293e35b2296c4a8105c6b8fdf9a3db7cc99af58f7e680255284385ad3a2a3",
+    "row_index": 264,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Sociology",
+    "group_id": "66e6225bc0981cbabddc1e70e6a9964928fabdf985125130a3a5bdf85a8366af",
+    "row_index": 265,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Location",
+    "group_id": "12008b4dcd04d0cdddf82df6623f242c0b4a1540f63434e1f2c8ab70e021c47d",
+    "row_index": 266,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 10,
+    "category": "Law",
+    "group_id": "611bfa4da88bca9debffe14781b29a3d9ba76fdf11e94f9a0c71479659a3d35c",
+    "row_index": 267,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Indexical Error: Identity",
+    "group_id": "cdaa98de3c03047159494fd6746a2f36064e44712dddaa20b383a86cad4ea153",
+    "row_index": 268,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Nutrition",
+    "group_id": "4c504ad4728bacb0c278fa1033cba506fdca7b606a81ba94a19311ad87719227",
+    "row_index": 269,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Stereotypes",
+    "group_id": "d2167a2a871edc523eaf99543f03ff9a81cf660d0d0b07cbdc68aae0ce30977f",
+    "row_index": 270,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Economics",
+    "group_id": "2a0b620dae767b34f9a6691f577b564798003091a0cc223c77839d6fd47e51b8",
+    "row_index": 271,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "History",
+    "group_id": "d5c29738a19451850a994c3cb02b1006ace03325eaa9d164de1494d2036eb81b",
+    "row_index": 272,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Superstitions",
+    "group_id": "aa5f14f81eb2789fb14eb9ed7d7cdef0a714b4b5cbe1c2d6ab876cba7e869f08",
+    "row_index": 273,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "Conspiracies",
+    "group_id": "0287468ebdf4bdaef55e92d01793b0f43731e42af4c43efd86bd973bf3b113ca",
+    "row_index": 274,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Economics",
+    "group_id": "f0c30fda96c412350e0bf45fae508036a48acfc409777249364cff4dd563cf19",
+    "row_index": 275,
+    "stage": "development"
+  },
+  {
+    "answer_count": 17,
+    "category": "Health",
+    "group_id": "6f053deff612a715617ebcaebe635d870215d4049135fcb6e7038cb9a2ba0763",
+    "row_index": 276,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "07dec446727b4ec9de358eff8d7f8b605c76bfbbf71878f36f7d3b8a4e3bd7c6",
+    "row_index": 277,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "12df892c5220b32b74a96240d36b21e352b1d9145eb82f327dc2ed1ef6114e8d",
+    "row_index": 278,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Confusion: Places",
+    "group_id": "19f76526ae08157aa109357194e3e7a491938ad4fc543ff23e977f166d6f1ae2",
+    "row_index": 279,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "a104ebe767629ecd9f1142a7246da33503c9510a61af7a5c33bd50c7aa4469a2",
+    "row_index": 280,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "History",
+    "group_id": "29952ae98cc32884631c48a8727ad7c842f80120dbd71b56ea0ef2f23cb009e8",
+    "row_index": 281,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "b4738b4f5d40c0011b208b2e66a06cc87f6b4ce921b49f29937ce0fced2e4593",
+    "row_index": 282,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Psychology",
+    "group_id": "60a0ec8893e5fca7681ed4584d499ab7db78460e1c10513b51f2b374bde943ed",
+    "row_index": 283,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Health",
+    "group_id": "b25c81ce71bc6959dd229bd03b89964804fe786f44ef9379472d460bcb91b4fb",
+    "row_index": 284,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Weather",
+    "group_id": "22636d2a365741a8363f1553b9314f93baa13358a9454b4b67896ae0253d18e2",
+    "row_index": 285,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misquotations",
+    "group_id": "13a8fc1e0b2abd06c72beb881f924cbef8220b5ad47de4a3111d81bfd474765e",
+    "row_index": 286,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Myths and Fairytales",
+    "group_id": "215b7aa5d432a58439f4544d69eefd6f5641e5fb675e4d7a09d4c0ba9ffd0d05",
+    "row_index": 287,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "77b18fdc6fa30e60d59de2653bca8bfd00e41b6dd8b192777445c173c850bde4",
+    "row_index": 288,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Language",
+    "group_id": "8970bc2d55936eee2e7633aa2288bf39bd59c546c4a6575606f2ecdc3153e898",
+    "row_index": 289,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "Sociology",
+    "group_id": "254649891256318565dc0f59a16ad5693947b4f0869bca8071477c375c20b483",
+    "row_index": 290,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Sociology",
+    "group_id": "be0a8113198463864de3099a0a49e191c65637eee62ada70088c7eb893dd3c81",
+    "row_index": 291,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "c6cdfd2f7975ab4b69ef870b8d5bb5bb1599af8619b422faa950bb9a79668112",
+    "row_index": 292,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Distraction",
+    "group_id": "ae03c212c92e697f39e234f996a20389c43566cccb77ab737f920adfff8735a3",
+    "row_index": 293,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Science",
+    "group_id": "376dfeab8ff5316afb1aa0d47d297625f84e7b32f221a33b56a787e2873d1c3a",
+    "row_index": 294,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Superstitions",
+    "group_id": "23d7152e26f6422862f73fa996b04e16c50de55a2519ceb3d81e551c48f09e1a",
+    "row_index": 295,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Health",
+    "group_id": "2f570ace16952ee44019420f686cf283c617b4440dcc1395f9f0153484a618eb",
+    "row_index": 296,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 3,
+    "category": "Logical Falsehood",
+    "group_id": "084e5917a05a4daeedd62b276146f026b8d71398b7ec59abfea1ebfb6b05a273",
+    "row_index": 297,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misinformation",
+    "group_id": "da0ca6a911a18b6cdbe094f2e370acd9d2d0664412bb2d0842a9f3f7e40eaba2",
+    "row_index": 298,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Fiction",
+    "group_id": "267e21e54a6fbfc8c2146ee6f4ac24f64818038039ad156de21593104e8c67b9",
+    "row_index": 299,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Education",
+    "group_id": "c59cf2179111f4e62d45046199b2fb44d2c9087c5011b286704b671ec1dc3e47",
+    "row_index": 300,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Stereotypes",
+    "group_id": "19b88f4ffaec5a08c54be95e8a3ef5c627c4bd32cc8ce17d9db761d3e4cba8d5",
+    "row_index": 301,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "3ff4881a189763d918763b3762aad9a87197ac5ca35805a3ff46fccba7f0452f",
+    "row_index": 302,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Science",
+    "group_id": "ebc7a5e6deb3c71329b7eef0ed42c7dae1c69dfa06244918d9ec03cecbfded68",
+    "row_index": 303,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 11,
+    "category": "Misconceptions",
+    "group_id": "c4ddb6652698e6d5aff8d4b18bafd2ab82a1069529c0b3c62566ba27acfcd78d",
+    "row_index": 304,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "ecd81486235628074a94a9f064592504e5c35910d147bb20d1ce3cc479198623",
+    "row_index": 305,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "f01d725e28058e3aaac1d64d8892f308a50229a9106c86eec34c7ef431ff6a79",
+    "row_index": 306,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Fiction",
+    "group_id": "508ad143259d7aada87b9f84822304afc7296115860676dac87338fed324d724",
+    "row_index": 307,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Law",
+    "group_id": "3fc38839a5862a0f5b2f898de6c2c9f230ecfb43794519f3f16dcd8e3a429113",
+    "row_index": 308,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "e6d2ef76c5c8988d8e750b120a3db1978af69f01405c673edc14989c81e0e2de",
+    "row_index": 309,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Conspiracies",
+    "group_id": "fa32b6c3b6210cbed78e238a0c7c1e046744888e3d0eae0377da6a96e0c51da4",
+    "row_index": 310,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Religion",
+    "group_id": "db186cf981174a86ae7a9ee984883820148afabdce5b2fa43564e3854193e20b",
+    "row_index": 311,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "91b3ec1bda702d2da0835d6b5bcf863c03e0e7c819bc963720610bc8daf31761",
+    "row_index": 312,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "4fcc1e0dbabed0252b4ba716dd1ab89e391b17403945437741334f741ad46b3f",
+    "row_index": 313,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "07f3979fff0edc8ab667713a511e4535b1cc9cf3f7b6323ae48770546b17e00a",
+    "row_index": 314,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "61925e35ad7a0d3a803c1477a69a129b6367ed36295d4175aab38ec92a3aac04",
+    "row_index": 315,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Nutrition",
+    "group_id": "a79678b7075666fb86c4f5520f4dfc401da262f69922acaa0fbfcad4e3f09982",
+    "row_index": 316,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Myths and Fairytales",
+    "group_id": "b36db8a9529ea002b55ecf8d16dcef17fa36552587fc003ccfc3658b3406e501",
+    "row_index": 317,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Misconceptions",
+    "group_id": "fdea5cf2da9f9401c87bbd5d6b4d6ac2ba5feb8ed1f71925d6e684178c89d9d7",
+    "row_index": 318,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Fiction",
+    "group_id": "b4d0499450d481a8838b520b7de0abc900cc1a4ae00c077427094f67d9f4d1fa",
+    "row_index": 319,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "097107c89586571ac3e74efe88d3ed4f02bf4a0964a648986afb0be6820e097d",
+    "row_index": 320,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Confusion: Places",
+    "group_id": "bf83351e3a43afbc863f6d6e5ba7d5b627925fc206e198799ee0857f1548a4e4",
+    "row_index": 321,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Education",
+    "group_id": "b0bd9bb7618adedb7b8df38c98c414c0c0d9c7f06f61002283c3554085a0125f",
+    "row_index": 322,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "b30f7fe9fa6b881126877df9cdd528b72def8573eb91a2d2b80ce6502a8b9839",
+    "row_index": 323,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "a466ef3b4e01406e1c244a0b109c3e97dec476c2d082ed14ad387c5196615b78",
+    "row_index": 324,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misquotations",
+    "group_id": "add67664d7140b4931b28962292063df52e2b6fb3ef33f46324b9f356a22a786",
+    "row_index": 325,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Location",
+    "group_id": "4191d2d9aba01e0d560b1cb0ae60acd70d45a693c7e046183de08c8761f3f7ce",
+    "row_index": 326,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Myths and Fairytales",
+    "group_id": "3e2130a1a583e5d4b9ad0667966d45afc352c39d81a99c927da81c92f3e7bf6b",
+    "row_index": 327,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "65b4b35f113a6fad26cff69ca837b357797a66f2608b29602f8b0f679829d984",
+    "row_index": 328,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Confusion: People",
+    "group_id": "1f42a1297ce674799db09055529fc9d2beb78d29e040a7adb9a5ac4dd1a1d3fa",
+    "row_index": 329,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Weather",
+    "group_id": "cd0a37dbd102b1a25ac88e462958fd4583c08e5f12431bfe4ffed33ff158f017",
+    "row_index": 330,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "3d422c394c77c24a5a052ebd636423eda6b2572a4d0ac1f11dd37cfd9a50f001",
+    "row_index": 331,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions: Topical",
+    "group_id": "9cc26e8b4d1c603cccffae6e538c6ee0ab718fbcd3a8e168f9c481b246bfd3c0",
+    "row_index": 332,
+    "stage": "development"
+  },
+  {
+    "answer_count": 13,
+    "category": "Sociology",
+    "group_id": "8dba0f408418948a006fc52a57b260f7449d73505e66c07e704dd1402035f0fc",
+    "row_index": 333,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Fiction",
+    "group_id": "330fd939855b0d06acb048e3a8afeba7816045fa88466cd463dc0eabe2243736",
+    "row_index": 334,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 9,
+    "category": "Economics",
+    "group_id": "0287fc24c79d89a7c1af41e28c1b3195c3138e9a0371ac5bbd5886b2ef48e184",
+    "row_index": 335,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Economics",
+    "group_id": "ce37e0a7333f3157168e23e50477261e0f0e452416468460592477f7b855b5bc",
+    "row_index": 336,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Superstitions",
+    "group_id": "f8454cc94f4c19bae2c1b1fbb7e6eb23ad5980e68e8447e3100d60f599821d41",
+    "row_index": 337,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "4bd4e9bba4cf13ecb790865cfc9d7c3fb91c10c48c1a519088658e4b7785c5d1",
+    "row_index": 338,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Misconceptions",
+    "group_id": "5c5ba119015f9a092d9d40114b2a750470c6e2ff7fcdec0e1b15a61634b4ed92",
+    "row_index": 339,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "538ddd93407389da3723c93a6cd7cbebe27346798e97175b673095c52270e5fc",
+    "row_index": 340,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 2,
+    "category": "Misconceptions",
+    "group_id": "f3dc6232120ed8533bc5b960b78b642914525a09665204fba7da941a19a49bac",
+    "row_index": 341,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 2,
+    "category": "Logical Falsehood",
+    "group_id": "e837be4ae9f51f4fd2e8e0dbadcc80a35d98bf17a560ba4686acdb56f7c1d407",
+    "row_index": 342,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Psychology",
+    "group_id": "faf1d682a9a98acdfe62a73384619c164e46fc1154920fe859edd599d26c396e",
+    "row_index": 343,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Superstitions",
+    "group_id": "a6858b8e8062e261cec1641d61875e187ef92cc09133303343ad3002997e4d0b",
+    "row_index": 344,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Myths and Fairytales",
+    "group_id": "53e5a609e370ac6ee84f26f9e54d1374e4a937025b13d9467f11cb5c1112d5ac",
+    "row_index": 345,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Confusion: Other",
+    "group_id": "a5c306a126ed9a33730427ef3c179c4a38924ac9fe909db47bdf22850aa47160",
+    "row_index": 346,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Myths and Fairytales",
+    "group_id": "7663e267b5958802fea52ca784873236c9fff71adc439fa7daae696e51b87184",
+    "row_index": 347,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "28271ed1691c9fdf7c09fd54555b0c1e035477d63715783a6ac725b330809321",
+    "row_index": 348,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "da9725ff45a4c8a1dbd87a32105835dbc7c2d34de6308d5c3d828e913e799786",
+    "row_index": 349,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Other",
+    "group_id": "930b673732ff0f2c4781d8c07b343baa4d2f0d04f0ee3d4827da3fb951287d9a",
+    "row_index": 350,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Superstitions",
+    "group_id": "8d754f7055f60299bb1b83d857b9467a7872361927a474f0bde72ccf89bd761c",
+    "row_index": 351,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misinformation",
+    "group_id": "c1de2a41ce63f18443aa041362ff1de24f6ccb37f501cd7d57e907d6721b6dad",
+    "row_index": 352,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "67d8dd6c33535069267280aa176b2c9ab4408ddecb6e688edebefb3d72dd02fe",
+    "row_index": 353,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Conspiracies",
+    "group_id": "06662ef17009c0dde224bf75d46eff92826c00f0a209f7a89f84a1640d0a9b26",
+    "row_index": 354,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Language",
+    "group_id": "9c131aae2b3c9b9f488d1a7e93852124173eb2527c081f4f46f3d9c1c92a5a99",
+    "row_index": 355,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Paranormal",
+    "group_id": "97faf0aa6cdbfe347c2f01f55846e9f8c6949f6e5a2160cd174bfbb79cbb6749",
+    "row_index": 356,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Religion",
+    "group_id": "857eba1c306e53d109c79abe859bbd7885e1af488b8056f584d49594060f87bf",
+    "row_index": 357,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Myths and Fairytales",
+    "group_id": "9bc3989fdc227ca4840a301dda1ac088cb6f076b9d3bea18f8ea66281bfb8998",
+    "row_index": 358,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "cfef3cc3b5ff34218eaaf342e11e5fae883de6a60d09c9ff1522c8cdd11c9350",
+    "row_index": 359,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Location",
+    "group_id": "657d351efeea21d32745821e2ebc694bdacfd1bca4681b3c8f315e3c92365e1e",
+    "row_index": 360,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Nutrition",
+    "group_id": "a5c4d11890ffc776a3667305176f1abaa1c1ce26a2775a527eb548be48afb3a8",
+    "row_index": 361,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Distraction",
+    "group_id": "4bf9adaceb5fe37db488ef5aa5c0128340763fb827754f947043fd2807ef2f0c",
+    "row_index": 362,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Religion",
+    "group_id": "ec864097e0111e93be6b5ae7499d469796537cec42799e1603eaf0c6e6170b34",
+    "row_index": 363,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Economics",
+    "group_id": "5c34ad038046fed62e474be0a0846a6434df886da605e02bb5cf7c474ce10d80",
+    "row_index": 364,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "a24cc5af6763b5141e0ebff94355086a1e1585fa939b2f757feaa5974a202db9",
+    "row_index": 365,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Confusion: Other",
+    "group_id": "f6b5b7cd17bc2fce5d177498f9870c3a7acd9f26524b3eb9f80745fe85987618",
+    "row_index": 366,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Psychology",
+    "group_id": "d5c562b406022c4c6f6df4eb2f64aac844faa561cf3f81cdbcc8ed84fab29a52",
+    "row_index": 367,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Confusion: People",
+    "group_id": "8b4fe74591b590a1a2c719919433ce957e08f3579f02e4f428292e38c8299f17",
+    "row_index": 368,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Time",
+    "group_id": "85353d57c7a7f803d66dc87557c86e70a7f291fced930ccd7f99ebbd0f8a58bd",
+    "row_index": 369,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Fiction",
+    "group_id": "78d34440f40ebfedd81e9f1ff3e37ad35297e3c306bcdbcacd09a568b6c29bfa",
+    "row_index": 370,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "b6a9232741e4f1e57d0e2857dcb9c50bd0780ee3c56308e63dc642f841fd44f2",
+    "row_index": 371,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Superstitions",
+    "group_id": "1475bf804b6c7811cfab69a92d805c3035c4efad48f7d69637d60a3e6ece8184",
+    "row_index": 372,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Religion",
+    "group_id": "91693c84ee6db1cf22ff12c80f1ea4a1c7e81e4d4eb2f3246f89300a756c853b",
+    "row_index": 373,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Fiction",
+    "group_id": "7bcb736699daadd3b45f2a1f9285da4f0f40002aaf0f3e303d7e3028a6ec7da6",
+    "row_index": 374,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "b37a2932c9d4ce95a011cd90d774aecdd3e0379547ac98fc15cef11cafa7e7ff",
+    "row_index": 375,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "588e98f3cfd468624cfe944a046673f775d2a48520413bf86d3ba9bd092edf8b",
+    "row_index": 376,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "60f37f5221ffc132dcf8a857ebd2b439a25c737e35f86865bd98c8612b63b691",
+    "row_index": 377,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "e3f98beae9d271273871f466a577b6370898b66909ee0d302b96bdc26c90d15b",
+    "row_index": 378,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "History",
+    "group_id": "aa5b086c3e769b953e41be15934481065527c6715aa3edd6d5793cdb2ea373c4",
+    "row_index": 379,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Myths and Fairytales",
+    "group_id": "53834a17d7b7a8853fd81dad92172916355b4bb558843b7d418ecb5826ce3086",
+    "row_index": 380,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Stereotypes",
+    "group_id": "8e340a4769bf504da2ac63152a550d1807a6976b0fda2f3cc349084896086d8c",
+    "row_index": 381,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Statistics",
+    "group_id": "a9d4dfd8beb30342d512d2bdc4e1db559170fab1b8f429b1069d018b35250e87",
+    "row_index": 382,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Health",
+    "group_id": "6544f27910f3b614c20149d4a94327392f15007e9c9bb56c54f12fb0416c6d63",
+    "row_index": 383,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Fiction",
+    "group_id": "2af1ef5eb66022b86df97ab3b2b65b3aad3f45391bca0d7699f3c0ccf2820e3c",
+    "row_index": 384,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Politics",
+    "group_id": "665c22ed88a6abfbd87ce19b86016c08c94ebef7789c135ef9d2142f0911cf58",
+    "row_index": 385,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 2,
+    "category": "Misconceptions",
+    "group_id": "6a7574ba40baba480f3be0a6d9abc4b346c6c80f752456f09ddd67615daf8179",
+    "row_index": 386,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 2,
+    "category": "Logical Falsehood",
+    "group_id": "4fe57bf48e046526f0487e4d871e1088b1582f0bdc6748ca9935279db7627cf2",
+    "row_index": 387,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Mandela Effect",
+    "group_id": "03e5a91095c34a2932aa0337e8dc596e26ad98bf27179434c4273572c3c09e9d",
+    "row_index": 388,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "8dd071b8230a2c9ef33039daa75aa127a0d179262a61b5a25bf6336f7c3a455e",
+    "row_index": 389,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misquotations",
+    "group_id": "a132454c792a4129ae16c3a00df6eac27bcb50cf019f7948b0f035495e74ae2e",
+    "row_index": 390,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Conspiracies",
+    "group_id": "e46aa55c4cc57be5215ffc8013e82b91c1b89722e275f0764a05cfb28d91582e",
+    "row_index": 391,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Logical Falsehood",
+    "group_id": "dce300ce5b26bdafed280b35ca90c070d90153141ec3d6d33c139825a816d9e0",
+    "row_index": 392,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misinformation",
+    "group_id": "f10d744a3a83092d5f0cf44d9c088b6f698d74e6e7fde60c8447d9c09698aa8f",
+    "row_index": 393,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Finance",
+    "group_id": "406bc0dc2b43d9359b1a5bc58b8816a01b1c6cba980a7fff5d42d6e7b4301fd9",
+    "row_index": 394,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "175cbc9cc61ac48dc4ba25bc53afc9a0e5ab4b4496d48e4aa71fcf482ba95c0f",
+    "row_index": 395,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Politics",
+    "group_id": "3609ac24b44d16e7bcca10de5e57671afbcf4b969e879981bdf9df55179de71b",
+    "row_index": 396,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Language",
+    "group_id": "a6bd3cddfab3434d1fe4e2a5cf4b4932772f55d8396b96da8d879d0c0e063d25",
+    "row_index": 397,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Paranormal",
+    "group_id": "c3a80b83727e6e0c95ee1c10f01f54121bebfe10479642806f286f10414615bb",
+    "row_index": 398,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: Places",
+    "group_id": "2f2eef0b084eae3b667af0f58f8315ca6e6caa6fa2f46cfcf1d358e3e40d15db",
+    "row_index": 399,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Myths and Fairytales",
+    "group_id": "9da028894fd4969edc319b7472a5b56fafa71d25270dc44a8d9c32cb459662bc",
+    "row_index": 400,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Time",
+    "group_id": "aa4b7021796f9b49e18fe5012b21a282561076a43a1db125441cb5e2107623d3",
+    "row_index": 401,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Law",
+    "group_id": "332aebb450923423a18ac0dda68044556bb3c6ab3b4453950ad4720dc6e2197e",
+    "row_index": 402,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "c6984018c92ba8ab3265562d112ae4627214a688cb97b950a3698b4acbeca363",
+    "row_index": 403,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Conspiracies",
+    "group_id": "283b98e3115e26150c2ce9ce3fafc4a351a2071ea1250016ff13181a49ef183d",
+    "row_index": 404,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Fiction",
+    "group_id": "2854e75fc674af454461e5156b68ce54a49eadd267c3eef17b5b647e2e1d0b53",
+    "row_index": 405,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Sociology",
+    "group_id": "79aa0ea22f2d3b5d8e35a2bbbfea7a8dab61368915b710b4d6569e6591cffb12",
+    "row_index": 406,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "c6de3adb2f4765db28dd7c72c7f68d1f07b1b7bc195fee82159f33a94e470a6b",
+    "row_index": 407,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "5bee224d13875917313e8e30eeeb590d1b1079be4589a756555abfc1ad6aacc6",
+    "row_index": 408,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "e82296386e72fb06991efd317c2f8e8490dcc0982cb665adf42b8040ab362a81",
+    "row_index": 409,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Proverbs",
+    "group_id": "b2e740dfc05101c7a4c5cea9ccc4b9b77082ba786ce201c1409249fb33e7fc1d",
+    "row_index": 410,
+    "stage": "development"
+  },
+  {
+    "answer_count": 14,
+    "category": "Sociology",
+    "group_id": "404872649c34f15119a60585ccca59a143a50ec760e3d4796e6652df7a0a8088",
+    "row_index": 411,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Law",
+    "group_id": "6bad047c994562e63e4c2f29d35ec900e9880570a9c268b9a0a1b697bff3b022",
+    "row_index": 412,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "d8ef10b847f34fec9862e189d3083099615a20841438e78d9a8934809e40c23e",
+    "row_index": 413,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Law",
+    "group_id": "eff9bd39a9823240cf882d0ba2726604e7dc202137ce0ae6dccf2fdce954193d",
+    "row_index": 414,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Myths and Fairytales",
+    "group_id": "9e2445d58f6c079dc9b08aeddf7c602321d497007a59d572f24bdfc21cbc1e8c",
+    "row_index": 415,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Sociology",
+    "group_id": "7a4cea664d85057596fc0047c0c7e0ee373720c30a53c79c4e1103381d4be1bf",
+    "row_index": 416,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 2,
+    "category": "Misconceptions",
+    "group_id": "9480997634e1838275c558c4cb9158ce3d410633d68af652d9bebd622442b794",
+    "row_index": 417,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Weather",
+    "group_id": "da3e53aec41897b517e2285f0bc58682b1483a6954d2445bb10c4f1065e87a37",
+    "row_index": 418,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "History",
+    "group_id": "933a6655e368f0d4eff149e5d57fb2d1442b66ccc28624b2ca073174e9a0cb6e",
+    "row_index": 419,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Time",
+    "group_id": "e229838dd4b77f8aa9ab56033b5807392c6f883682ab4be521c968492ecc12c5",
+    "row_index": 420,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Misconceptions",
+    "group_id": "80850fd0eb6d5973107ee568bf06268dd7be6921423d4c78fec9a93cd3a099d1",
+    "row_index": 421,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Fiction",
+    "group_id": "b442357b40a86598a2aff395bd907e2a0a532dad14185e581d4b35651cd08cba",
+    "row_index": 422,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "0090b2a7bcb9075ad4256b4664c8a6ba78e76622dd67476d4816f28876b430a1",
+    "row_index": 423,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Superstitions",
+    "group_id": "da9ad259f79b5af663c4b60110988da91349df990198c1d0d8e12ebdd4549817",
+    "row_index": 424,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Weather",
+    "group_id": "e5a6d39ad9d15424944016ddc6b0cda0ae67b7297ef1e596b98486488ac056dc",
+    "row_index": 425,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misinformation",
+    "group_id": "97455086022ab29456061515029da8ab082bda5f79b2040aa360b262546b4c93",
+    "row_index": 426,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "d8b9535408b360abce71b13ae2a61405b1e2345aa8263cd48ada06f940cd224e",
+    "row_index": 427,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "a0c6eedd153515afdda9ee93c77c5ab57f8375219ba0d8b6a39f5299d4e6980b",
+    "row_index": 428,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "History",
+    "group_id": "f558b65650799894bea61343405d31bbf6db401cc55b1c49585d619b1ca539e3",
+    "row_index": 429,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Myths and Fairytales",
+    "group_id": "1327f0e586826827a0df24a67a3e4f3d564a5fab2179cf4727ad2c4b937641e8",
+    "row_index": 430,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Finance",
+    "group_id": "926666f41c84a472a7764caf63a38c4cde075e86eab6e097313f2f9ab330ec6f",
+    "row_index": 431,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "270afb266ac3038cb9a4ca005f3bbd196e115434ba40b7ef2978cb8572314301",
+    "row_index": 432,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 16,
+    "category": "Economics",
+    "group_id": "b45e880bf31c8cf7aa1d2ff8b5313e5419828ce9bcb1c570cbda6cad4dcb99fd",
+    "row_index": 433,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "History",
+    "group_id": "9832c0d1ebd29760d792097651b712e1ffc3348a60258a2b27982e3b4a1b11f1",
+    "row_index": 434,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "History",
+    "group_id": "0d3b7c8eb8d2645bdfcee7c9a13bfebca6662c88ea630a6148f634eff4b72ef7",
+    "row_index": 435,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Politics",
+    "group_id": "f331050add02bbec948d3d824bb53ed048b10a43987dab927f3ed0b935653c42",
+    "row_index": 436,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Confusion: People",
+    "group_id": "6dcabe814e3a601c6a9467685f5e71f603eb9d23a66fc085884cc14cca037ed7",
+    "row_index": 437,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misquotations",
+    "group_id": "5469ea58b67b19dc2f53f263b268d92e1285439d5983f2ae5164aaef5a4a2ca7",
+    "row_index": 438,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Sociology",
+    "group_id": "d018da14727e80a32a13950efeecec99970c9bcfac1d9c269b18a8fe9cc2d50b",
+    "row_index": 439,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Advertising",
+    "group_id": "66998b42be5c53d14a8aa300491d8ef1ccef00a4a93b7e4d11cdcde8e7381cd6",
+    "row_index": 440,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Confusion: Places",
+    "group_id": "2fb3c5db83c6c71dcd8caef2f5a940f37b59c6a353ea4b18c51c14dca526e7c0",
+    "row_index": 441,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Language",
+    "group_id": "98ed7f0c349871de7d7ba5574119e86852343f32c946d3f46220b43842a2ed7f",
+    "row_index": 442,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Other",
+    "group_id": "63746f8c469e26633684990f9121893408afd40e706b6bb410fdd05cc95a85f7",
+    "row_index": 443,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 10,
+    "category": "Sociology",
+    "group_id": "04269a327c6c18c64cd900b69ad991fffbdfdf9fb38cc165900304c6db6a7a6e",
+    "row_index": 444,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Advertising",
+    "group_id": "3ea3b769b982b1ae656a388b4c075626cfd1778dae0ebab4353b92a67b620e90",
+    "row_index": 445,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 2,
+    "category": "Misquotations",
+    "group_id": "ebbf6b40e1d392cb22792423f0fbdd20c2fe667164372ca98feceb926c32f2c5",
+    "row_index": 446,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "7ddd2d8b88feb026b0add92170eeecd985174026d001f5d89c800e4ed7e5abff",
+    "row_index": 447,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Law",
+    "group_id": "09bed951b6d3e3f32b9ea174beed90b1260ede0bc4a557aae0459f62cffeb5be",
+    "row_index": 448,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Weather",
+    "group_id": "15f29d378342bb83ef76b3dd2f3f4818cd4238dc9a6dc5014c8ad4458a291455",
+    "row_index": 449,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Sociology",
+    "group_id": "530097d85837334baa9d2a59a2a9ec330563bb85e1facfa300b342b5322c2932",
+    "row_index": 450,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Religion",
+    "group_id": "982198085ddedb60f5261a196e343a5eee2850cb56cf9b61d88aae2190a96736",
+    "row_index": 451,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Psychology",
+    "group_id": "8736b22af0f279930418dfe5b15790607cb4697010ee572dfece2c45a04d3d14",
+    "row_index": 452,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Psychology",
+    "group_id": "23794237d2a1ceceada52d9ec976b02e9bff57b4495cdcc888fce76964dd2fba",
+    "row_index": 453,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Paranormal",
+    "group_id": "6ec1ccd2fe07b742e35c3167a4ab04be82f70761f40e5f7457b38c6e687ddf5f",
+    "row_index": 454,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 9,
+    "category": "Economics",
+    "group_id": "75f6432cb45d4417716f1fd519bf9946a283aa3602fb41431f7fc3e6f49c6834",
+    "row_index": 455,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Law",
+    "group_id": "0ff25f88d33fc8c46857b1c80c5819f1d63c2ffc876516899d7f9a692e13fbbc",
+    "row_index": 456,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "9753ae0aa191c756527568eaf63454297a43c3093c14f6c11e6a74661a4269f6",
+    "row_index": 457,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Identity",
+    "group_id": "cfecd036d1e48199035eeac25faed9ac01682d253a24b8fd030cc4fc33934642",
+    "row_index": 458,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "22d7644cd1e4ea4326890377480a8be155928f47796901e65e5a55a11da5613b",
+    "row_index": 459,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 8,
+    "category": "Stereotypes",
+    "group_id": "f13dfd3429eda9f225858683238414a8a5b0052463018053268aa992ebe4644c",
+    "row_index": 460,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Psychology",
+    "group_id": "b2a317ec607c30f265c692ecda681e14e19946dc72b0e18e04fc21f93b042793",
+    "row_index": 461,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "c0189c9ded074c8465016d20cf8bdea75f27168f156a1234fe3747b00115eb86",
+    "row_index": 462,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Proverbs",
+    "group_id": "ec28e3ae7e179898d8a8e78060da55863aa3a2b52d0f60951d5013c3351bbfda",
+    "row_index": 463,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Religion",
+    "group_id": "8311bc42cf83d11ae5406e81eb8a62b042da8afd7c30d5b0f65581c176dc52ea",
+    "row_index": 464,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Myths and Fairytales",
+    "group_id": "2ee7360103fa0b6ae26e13142505b90c9b04bd3a67dda2acea0b1ecea33faaa0",
+    "row_index": 465,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "1890d6d3146e67c0e1a62aebab052e25b13a19be8a075b5139f792949e7814f4",
+    "row_index": 466,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Misquotations",
+    "group_id": "cf24228717d6342ecefd602cfc4ddfcd05bf877ece324ea7feaa32fe98c039f0",
+    "row_index": 467,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 13,
+    "category": "Confusion: Places",
+    "group_id": "590c00346913bcdb4dda92dc7a5f06db43f6eb1462222d1e48355421926da930",
+    "row_index": 468,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "8c31e65c9a011e096dcc68da752c22c5996dbef340f1eba1ffc48c04167c4c95",
+    "row_index": 469,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Misinformation",
+    "group_id": "c82cb724fcdbc127003cb07882b7a00a4ef77683c3f63e3ba8e8666f68c6d596",
+    "row_index": 470,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Fiction",
+    "group_id": "f5597177c47ee8bf4ddf0857b4a545823a30bbaebef2cdb7dd10957e908a705f",
+    "row_index": 471,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Distraction",
+    "group_id": "8a87e94120fd98b6d1d23aa4a30364eab63142efdbe62820c215d09153eb4468",
+    "row_index": 472,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "1c53f9011eb3a851560c17db812276343f2b1bad9229ca8fef6e742f111a95c3",
+    "row_index": 473,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Sociology",
+    "group_id": "10e4e405da8a4a0b90b5da0ae0b276f7595607e95e8067c2db32206c05886f82",
+    "row_index": 474,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "92ff4546c6f592c89f427e4210984b544f13e7e5d1d8eef01e67f2e122ba924a",
+    "row_index": 475,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Economics",
+    "group_id": "eacdcb5a4dd143b2d794ca12f5cb897cc27d5c0f2d0fc7c32129f5a46de5c63f",
+    "row_index": 476,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Proverbs",
+    "group_id": "51d997038c865d21d125cc61ff9eae93f19108e4fa7d322ae39f22225f2ea1da",
+    "row_index": 477,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Location",
+    "group_id": "d3541d09cb019ccc37a80d67d7c2e0b167837fd4aab70e8006b158f38a03c661",
+    "row_index": 478,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Proverbs",
+    "group_id": "6297b9efb9558317d419fdbf6c1d897657a259dd09b9284309f1177bb73ecb2a",
+    "row_index": 479,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "f556ae901e8ac1045f11a71c2c7e01e3e4ecb642f362d903523a21d0e7dff1a5",
+    "row_index": 480,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 3,
+    "category": "Statistics",
+    "group_id": "6b742d6a3c58c26973cd1444f5318f536b93fa3748fc40719c4c1767ec5df9be",
+    "row_index": 481,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Conspiracies",
+    "group_id": "c5ecd5c5d0e7addd9f9369f566fb81fc1bae205183dceea647b873cad44d8b7d",
+    "row_index": 482,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 13,
+    "category": "Economics",
+    "group_id": "8fb0182a53b0a7b54a808dd8e65232b708408a2a5bb4f7fcbbba9041e3eb8ef5",
+    "row_index": 483,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Indexical Error: Other",
+    "group_id": "877698f0cb5d703a4f15584b002bd52b12148531acc467808f56b4d0152fbcd5",
+    "row_index": 484,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Conspiracies",
+    "group_id": "0f9a5d8f1880a71fcd7a13b0329629c955109835caa274ff83b2ea0b3fdbebb9",
+    "row_index": 485,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "ee890ace70dcc40623a6101f5e8de70b5b8a2cec93426df6e2b3113eb6de54df",
+    "row_index": 486,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Weather",
+    "group_id": "c924d805960f53438504a77f54d2ec10c76df068ecfe589d6d59942e7acce085",
+    "row_index": 487,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 8,
+    "category": "Indexical Error: Other",
+    "group_id": "a414767959487b85dece4dae377fed12626adb5f0514d04e7cdd787f1df69765",
+    "row_index": 488,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Statistics",
+    "group_id": "e041d65c9108b58dd0059f6e00c0d3a6478576e511bd919e14a73604d0e9b546",
+    "row_index": 489,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Paranormal",
+    "group_id": "9371cb8646dfc2ef152731cee20375e165514158610de66359df5445ee1aeb96",
+    "row_index": 490,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Nutrition",
+    "group_id": "9b55a0444baf6d1d4637e36b21ea5f5b0332c8a7288d58d774289c5109cfdf57",
+    "row_index": 491,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Fiction",
+    "group_id": "5d49628ea8f8f5538242cd4011c6577982b2dcd268bac42ad0228b7c5ba4603f",
+    "row_index": 492,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Other",
+    "group_id": "bdf1f5733f5940050ce8ed84bfb58e53557f44b119e7bec8f8fed8f75ac9e162",
+    "row_index": 493,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Superstitions",
+    "group_id": "f4f6c7b64ceeaf4707f1a0113b170e95247644ba7aa7d2eea4ef6cece49cd4d9",
+    "row_index": 494,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Paranormal",
+    "group_id": "755ae5d8762a05fd8648acaaab33f65f9b05a9e8045349b06062fa02e67a6002",
+    "row_index": 495,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Conspiracies",
+    "group_id": "36520df447793b603df1bc38c2f3721bf4a7f4c00133740a981f95e1f18dfce0",
+    "row_index": 496,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Politics",
+    "group_id": "e9b34b58d2de11f19bce5755a7af1082bbce4cf8f34080e4de72d45f098fc1ff",
+    "row_index": 497,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Sociology",
+    "group_id": "87f2958413cf22c7a7311dc204d3c52344ef2c192df67fe69bd94a6d954e0620",
+    "row_index": 498,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "d2fe25e1595bb5aa6c7634cb1fbd7d1d1992efff55338a3c71f43762f0f8dc0f",
+    "row_index": 499,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Logical Falsehood",
+    "group_id": "6279159d582be9fd1f86a62e7b1fb1b700ee32deb5b6b4ab8cc70cc09f36caf4",
+    "row_index": 500,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Law",
+    "group_id": "9df7cf977e91283129f4feb9224da9116db73c16e1a48d6b8646d21c8c9e2ee2",
+    "row_index": 501,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Advertising",
+    "group_id": "7b42e7937b8f0844b02f24fe236f0c0b74124031bbc612a53e871a65b72b5297",
+    "row_index": 502,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Law",
+    "group_id": "e0a2c1bb8bc922c9f49387c713a7acbeae66d91f192fd0e7ca9e54333b332f2a",
+    "row_index": 503,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Myths and Fairytales",
+    "group_id": "038e90910b808a9474e40022a71f900a865a58e173599945cd0e09c3e2451989",
+    "row_index": 504,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "24631c41bd7e1e63b0486249bf42f5cb2578b0096272e72df872282a465d6742",
+    "row_index": 505,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Fiction",
+    "group_id": "6fa8b77f346ed371ddfad3b58113272ffeeb89715437be8ac3a9fd89a25e888a",
+    "row_index": 506,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Proverbs",
+    "group_id": "84086729bbd387379333f2450e2ef93c7812297f250d6c936cea821218775d0e",
+    "row_index": 507,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 9,
+    "category": "Fiction",
+    "group_id": "6a956e9c5e660d1342e90da02a446a0ae33ac371ff76ff0a6d7a89ebac602d3b",
+    "row_index": 508,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Weather",
+    "group_id": "4294233099145e280b84c9b4e731e6fe9d7aa8316edffcf031b96106a8aa0c4e",
+    "row_index": 509,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Superstitions",
+    "group_id": "f3bed44f48890aae57a9a3a705cc3b995aa5423f5072ce0c01efc5466eddb79d",
+    "row_index": 510,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 2,
+    "category": "Law",
+    "group_id": "c216852e55745b14807e32a30e94c6207bfcd26327f62ee34f159854e3581ddb",
+    "row_index": 511,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Advertising",
+    "group_id": "cd20d0a0474bdd82937e2cd55bd5fe49f3e86b4e45325d983b3cd8b4dd897181",
+    "row_index": 512,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "a04f5d96888169ae1192862db8464f244c79b7a26c259b8abd549b6695bfd25f",
+    "row_index": 513,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Law",
+    "group_id": "a0d84f413f528e38e65d492d1475e72dfa76100ded19a842d9c68f8ab8d24494",
+    "row_index": 514,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "4f1cf3cbad573df50245f27763b5d1dac41fcf13bca475140e8aca3082a1016d",
+    "row_index": 515,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Confusion: Places",
+    "group_id": "ab3f0ac3c183e2a88eb1080f6a27a49254fa9b8a06179db630edfab2ea977dc1",
+    "row_index": 516,
+    "stage": "development"
+  },
+  {
+    "answer_count": 3,
+    "category": "Proverbs",
+    "group_id": "1aa9fe377d0199e84bbffb9801831dcc36b6ebd874bb8d2b94cab1064472c5de",
+    "row_index": 517,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 9,
+    "category": "Stereotypes",
+    "group_id": "e76edd2e4a855fe52c5a9f5ee7399c90a1c030c7763310ae4ffffea32750c419",
+    "row_index": 518,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 6,
+    "category": "Language",
+    "group_id": "ce162679a7273146ea509285661365f1f5521db1faf6ea4c6a3910bb43ec3506",
+    "row_index": 519,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Time",
+    "group_id": "979e8d70643de5648ef926815f6e0444e9a78214ea83f112fe4e2e09384a71d7",
+    "row_index": 520,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "309d7125904b566f61709d241f767acb3b7085b6bbf1581cceb80b8fde327c20",
+    "row_index": 521,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Language",
+    "group_id": "5f52f5a661426da326b1b0c6b2f6fa8f5df91b86bae958ea5ae6760a338a0349",
+    "row_index": 522,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: Places",
+    "group_id": "7021ded78fe233fb7d4a6544ebc1f840dff1d969dabc543ba404a9f92795cb7d",
+    "row_index": 523,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Sociology",
+    "group_id": "171654b88207a1821ba3482baa96ced33c9882fec370d42e0f861ea9579ec6a0",
+    "row_index": 524,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Conspiracies",
+    "group_id": "f12f913b293dfd519fdbef9b472b862e43b8c9c3a48ab5f9f6a427a85b2fb996",
+    "row_index": 525,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Politics",
+    "group_id": "7c4bf44dfebb40e886eb0e65019ab2d293deb0f5203a75cb3aa67ad9ec6f0628",
+    "row_index": 526,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Subjective",
+    "group_id": "988f29eaa5b1186850699ccbf3e966328128e2fbbffedb8bf027db1b4ca798b0",
+    "row_index": 527,
+    "stage": "development"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "d37bc7aee40bc0c140b36478ad844988712e203adf92312ce9d5182c91e4366b",
+    "row_index": 528,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "e8be9f4f78d864b9b6639c4db74afee27013e9869fafd6e1e05dab0efc265927",
+    "row_index": 529,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Subjective",
+    "group_id": "38d1d1411bebf4df9b41cd47463da242cb11e1a2fdbd6fafcab85534089a68ff",
+    "row_index": 530,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misquotations",
+    "group_id": "755ce1a7905cd6996e8ec38a61f884215350da284d7502938756f664b5a717de",
+    "row_index": 531,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "fabc0c6e8fb9947d5c2c8a6bde22b4f6d33377139805f39506bb56bb85a1579a",
+    "row_index": 532,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "e151bdd663de8068a90ce6caf9f9e82b139f863a3d4595a501ea76781683823c",
+    "row_index": 533,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Education",
+    "group_id": "3f3fd6064644d87717fef54a465cd8470c49d06c848ba9a16938de013489fdb3",
+    "row_index": 534,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Education",
+    "group_id": "7c5e040687b57cd78479e25e74f1e519abc1a777fee5a5954cf5f399110004e2",
+    "row_index": 535,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Conspiracies",
+    "group_id": "79301c4a2866f7dc87126259a10a1b594634c35255b60657fb470f40cbf10ade",
+    "row_index": 536,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Paranormal",
+    "group_id": "72e047fc4c66fc409092e83418d3dd36facb68e566e2c13fdf7429756e3198f3",
+    "row_index": 537,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 2,
+    "category": "Misquotations",
+    "group_id": "ee5db0568d6df6bc5ca2cd938693d045a9eef97164323e3742d50229480a0243",
+    "row_index": 538,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "5baff79bfd252d8fcfb718a55d1c5ff51195fb2b4077c4892746aeab49d72f62",
+    "row_index": 539,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 12,
+    "category": "Psychology",
+    "group_id": "27fa3b667424a58d99310786a77094e0ffa1b34062656db6d302a032d3e4d368",
+    "row_index": 540,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "6a8eef5aee92385dee57653a0926d1bf04b986cb5ade095ebb4e58e3ac76ffd5",
+    "row_index": 541,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Stereotypes",
+    "group_id": "a13f86765b1cf5cfbbb60e4f0f594cada4ff9d329cfb01ce6570889d9e354821",
+    "row_index": 542,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Health",
+    "group_id": "7b819793930c4b4d16ec876abc5c9c678eb9e5920ef863900c346bb637695ad3",
+    "row_index": 543,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 12,
+    "category": "Law",
+    "group_id": "f27fcd77e473f1ab00d1b5270278be8d148b1f3a866a83a9cd47ae99c6834fe3",
+    "row_index": 544,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "9b8566b91ae42fb2c4551778464f61982eb196691c137f1cd0ae76958bc492bc",
+    "row_index": 545,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Health",
+    "group_id": "5df9b36015bdfb859701ad562497d2f46041fae46986f7e1110258f6be5f9d7c",
+    "row_index": 546,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Law",
+    "group_id": "d3b5478347464f7b828ffbf1423515a235fee866001fc8caef7633ad08aae6bf",
+    "row_index": 547,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "4e4a0cda5e5e25a551d66c717c07310880f15ac8ab7248ac80a7db2a34d73512",
+    "row_index": 548,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Confusion: People",
+    "group_id": "41347e468e437b07afbd943b1a48ed9175cd3a0e8094b7235acff17d8b167fca",
+    "row_index": 549,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Misconceptions",
+    "group_id": "ac9e68f30190f8bf0e110ba26181981f308ae87a60f39bcf4d4a3219927749d2",
+    "row_index": 550,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Distraction",
+    "group_id": "40ee4d685f7d083c01d591ccc0eef3a6463dc377c32ec7ab390fe8dc0856e247",
+    "row_index": 551,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Politics",
+    "group_id": "d7f4d6d899d6deec3aa8a9a4bf1a37f4f7c14b8992f4dc5cc1cf69671a3dfa83",
+    "row_index": 552,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "527ed34ced2c124a12fd47f3496a0b50413e4c9a3915a5f231a90296ff924f7a",
+    "row_index": 553,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Distraction",
+    "group_id": "83aa5f2887d86832e2db5d7e002029d3dc991961a6dc6f47d2548245a6fc560d",
+    "row_index": 554,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "16adcf807d7f2bffe367f9e5bef7c827577911a3ac7d58c036ba8cf4597435d7",
+    "row_index": 555,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "145d59add5000667b01016f4ec68116e25040b9f68fc893b95867d47fa77ff2b",
+    "row_index": 556,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 8,
+    "category": "Proverbs",
+    "group_id": "fd832f1f66724acc8ee003ab3adcacb99d1377df611983af387d8e8c6f8d408f",
+    "row_index": 557,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Language",
+    "group_id": "2aab7b2d90d87c003e15e8606e614691aeb41a8e21b7f148af7c0123686fbff7",
+    "row_index": 558,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 9,
+    "category": "Health",
+    "group_id": "d74ae029fe6c3f82ed32d87b896b7035a5c88ee076d0992afff8e90e24a9b138",
+    "row_index": 559,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "49f6e2737e86badf00a74d14e18630dc99ebeac2dbf96fa1253de1b60dbc6a0c",
+    "row_index": 560,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Proverbs",
+    "group_id": "24f68512ff3ad5f5e2216c45fca6f5d1da78c421d5f5ec4bb5036ffdb1e9b07e",
+    "row_index": 561,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 9,
+    "category": "Economics",
+    "group_id": "39f8cc2fb4dc0e646d40a996b1d6089681dd6bc9c02bafd4c93f9d49655eb243",
+    "row_index": 562,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "98b6bea6a27b369bee676e2e261e6f355f17019b7b37055d1feef423467d7156",
+    "row_index": 563,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Other",
+    "group_id": "e371a91f4fe0d2266f001a0f0b77b27f6757d99f99f2a1994565191a15e602cc",
+    "row_index": 564,
+    "stage": "development"
+  },
+  {
+    "answer_count": 16,
+    "category": "Conspiracies",
+    "group_id": "49500d453dd2763e071e6e3f517d0d4c2ef6bab227059a57e4a63020859eb5a5",
+    "row_index": 565,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Indexical Error: Other",
+    "group_id": "a473486d4566e58cfce056c86552f75abcaf613abcabe90e4713efcfd621e1ab",
+    "row_index": 566,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Misconceptions",
+    "group_id": "3f9d2fac437fd944dac17fe76328225b2c859c11c5301efa34ee7203ccfb8b54",
+    "row_index": 567,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Nutrition",
+    "group_id": "b20353f5cd4566d519389577521431de16ca1e861a460c4a1e9bcf3f24dee534",
+    "row_index": 568,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Stereotypes",
+    "group_id": "48f33548da062c1d9f8a3c5bd7f3b1bb1e498dfeb4055d0453b5ba1e20d28663",
+    "row_index": 569,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Confusion: Other",
+    "group_id": "aa39db7cbda933f360c045c41efdc9b66c6c3d3de8b7631d9e0295c79802c579",
+    "row_index": 570,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Law",
+    "group_id": "b0efb5fe6fbc7f6adb4b631abde074f76a14cd6944d380b8ea521acef8aba27b",
+    "row_index": 571,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Psychology",
+    "group_id": "2bbc5f88b473f9f592eec975448d171e74ffbfe7223c1188315e6984b0648a2a",
+    "row_index": 572,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Confusion: People",
+    "group_id": "ffe37e87e915007c036a3320fb45a6c5f2d39dc83671356e7df3df020ceab861",
+    "row_index": 573,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Myths and Fairytales",
+    "group_id": "e8579d94e8e48d029618ad0556fb3018fdf08719aad9b8bebe924d07c0069d0e",
+    "row_index": 574,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Fiction",
+    "group_id": "1946ce5689cbdc28855342f67a03171cfbb7206b4931e5c8e9b2eb0fff94da31",
+    "row_index": 575,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Mandela Effect",
+    "group_id": "537a2ece6cee2668fa118bff9896c303cd1a09b92f85d459f22723ccd165c498",
+    "row_index": 576,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Confusion: Other",
+    "group_id": "ace0970b56267bb52698263a53c62f58dec2838067a6e302c0336823be2e0cc0",
+    "row_index": 577,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Time",
+    "group_id": "d57c163855270a3ff1a6028bde479a4959f70caf1d1b978661908241c9885a1c",
+    "row_index": 578,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Language",
+    "group_id": "cb35aba81d29d1a83f7e85a89472082dc4ad5dbeb2258f573f3377f13065a8fe",
+    "row_index": 579,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Economics",
+    "group_id": "6a18e9cbc3cc7fdfb6b598a50c40278d94ff7ba338772ddfe631280472ac2bf7",
+    "row_index": 580,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Paranormal",
+    "group_id": "9303de39d1fe534fec587506c1f929f2ed975a2df54d5eb7a56e45bc6b09820d",
+    "row_index": 581,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Law",
+    "group_id": "7c4dc8ac4276370179d1bc1ca749193a2217b099328ed68c1ef859024ae98ca3",
+    "row_index": 582,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 11,
+    "category": "Law",
+    "group_id": "6f9b47c73da20bead43996e09162bf7fabeb98ea63ce819676f134678eb0ffa0",
+    "row_index": 583,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "d1949db8706da22f03dd4fccb7193a1ac8b2e0415b5089ffc7aac2a72ead0425",
+    "row_index": 584,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "2c244c3f371db14e4e9ef5113718971da58fa7fdc3ef10a7a492553b2ae4298c",
+    "row_index": 585,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "839154a1b7953bba10e6169e0a2e690badc566a661eeb0978c5f108051708d90",
+    "row_index": 586,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Confusion: Places",
+    "group_id": "53d57a9720fb81608d44707acbd6cf39e86be1b2ccc6168ed617d701253a1133",
+    "row_index": 587,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Finance",
+    "group_id": "ba66f7bb4fe4c8b5bc862191f482ed7f26f6406a2dd67b9137c383394559fdeb",
+    "row_index": 588,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "afce7d5a16b9825bd202ef26ce0a10e4624e1a735caaeb0df0ad64dc59ef614f",
+    "row_index": 589,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Economics",
+    "group_id": "e70ce3412f8d91a7923b2cebb8a56d57b5e8d2bc3b5c393a346a2562b5df5871",
+    "row_index": 590,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Myths and Fairytales",
+    "group_id": "85b5afe500929c18b9960cd95619c41fa99591b88e510a2afeae52093c99cbbe",
+    "row_index": 591,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "0b8e4665d89ccff25efac2e7e4cc24def19ad03ae707309e6e4d9b6d5d5e607a",
+    "row_index": 592,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Fiction",
+    "group_id": "0b7a002e660b42d15ef894d3db4fb09059dfd471d82ae0a6b74cf314c2eefb5e",
+    "row_index": 593,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Language",
+    "group_id": "a76d03e91155699407ac376b84d8c68daf681ae4457a9e1fbf94b90f5a278964",
+    "row_index": 594,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "c689204eb1afa4d51bfd96f609bc7d1a25eddc9d35b6905a09f1369da6f2b276",
+    "row_index": 595,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Confusion: People",
+    "group_id": "bfe77652aef7cd1ef95fd563e723afeb42c67746a9409feb554abb88acfc867a",
+    "row_index": 596,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Sociology",
+    "group_id": "1e90d4c025fdf05dbe405cffe410f3fc829c27df2227ae1c2a5cfc9dd01a8d33",
+    "row_index": 597,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 6,
+    "category": "Economics",
+    "group_id": "43724a05450b73265155cd6435863de1eeb4aa8571c41e897f9e1b1b0f095b9a",
+    "row_index": 598,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Nutrition",
+    "group_id": "aba80d3b153795eb3c44abf870ed22f21511e15ac7c4b75de2725b0330de369f",
+    "row_index": 599,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Advertising",
+    "group_id": "6a56d3d3d64f441c582df921652d18aa38a6d73e567fb71f7b29f66be64aa1bd",
+    "row_index": 600,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Stereotypes",
+    "group_id": "8377e3c61b0862ce531de08df2a0186149a56126ac113edf18a7cef21690f9d2",
+    "row_index": 601,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Sociology",
+    "group_id": "96969cf55399627927fec80b268af14f02b1ef8ac0fa8e1fa5034f30492f9be7",
+    "row_index": 602,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "2b50b2afaedf607983f338d8ccf895a9e28cd306def194073fe82d3a9070eb60",
+    "row_index": 603,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "8ca1fcdae518ea2709882fc9def30c2cb45342dacdbecba8203e7125e6e9ebeb",
+    "row_index": 604,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Law",
+    "group_id": "2fda14b8951ae80964692753c82085113d499969c0baf7588588511abeb6daec",
+    "row_index": 605,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "5f5ec7069f3eae62ab32c3adbec3727708eddd97129a47f1635f7d84f3c8cb1e",
+    "row_index": 606,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "c5a03782a329ccaf174cc2c637ed2bb5a8ef6bc96cdff4cf96c8af459bbd30ca",
+    "row_index": 607,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Religion",
+    "group_id": "d07ba70590ce5abe91c4909d592da313cb61060d421c1f760ae2640d26de8dcf",
+    "row_index": 608,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 3,
+    "category": "Proverbs",
+    "group_id": "c784628747dddf75af08ca7c6ecd2e707af0a05b85ca44f630307b97131fc4ee",
+    "row_index": 609,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Myths and Fairytales",
+    "group_id": "2f8df1860ecf451fae66d8cf7a2770205384d3d3971cea5a00043ffde80b372d",
+    "row_index": 610,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Fiction",
+    "group_id": "b929d704673969d4cb32081a28398b6b0572d109ef3d2b38e80684fe12c628ac",
+    "row_index": 611,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "a5dd2531fa15bfbaa9edf7a833b12fabd10136f59c43de4687b40cc8012a26eb",
+    "row_index": 612,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "Logical Falsehood",
+    "group_id": "a54e198b70479b6b417d7cefddf1dd9a7ba6fbc4519af4189a900eb9847e8a05",
+    "row_index": 613,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Indexical Error: Identity",
+    "group_id": "18132d910787fb974f5ae4c0220278dd77d6cd720793871d93b3929c787718cc",
+    "row_index": 614,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Sociology",
+    "group_id": "4a80066b40871a53a36afc440d3c631092b71538fc6bf72717bf864efc8f2754",
+    "row_index": 615,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "364de687124f8c5f923febb43d1bf49ab9a57b4ac5d119a9cddedc7ef0e4b339",
+    "row_index": 616,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Fiction",
+    "group_id": "79fb0d2dadbef5cc25f993718ce5240914cfacf580e263eead775156b4d34717",
+    "row_index": 617,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Weather",
+    "group_id": "cd31cfcf753de83834cd71eeb91d189be236205a1481bb8c4133364a3550b5c2",
+    "row_index": 618,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "5431dc06cbc65572f3ac803d2ac523c39a924dc26686b37ba42fb8d6072cbd3b",
+    "row_index": 619,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Time",
+    "group_id": "224c13ce9305ad18ca4bc5178770d5eb24221dee3253648e779aaa9a22a092d6",
+    "row_index": 620,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "b612ce6d22ed81542727314c2c0341877ad625967d8779fbcd519c839b602fca",
+    "row_index": 621,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Nutrition",
+    "group_id": "5fa0acba6df4c6c1513b3c90fbea1f5ffd9344f0dad37317752941ca557f27dd",
+    "row_index": 622,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Conspiracies",
+    "group_id": "2a5b7979758f3a2e109db7282c9c8f2fd490ac4d9f49abdfbd9cec2540830598",
+    "row_index": 623,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 12,
+    "category": "Indexical Error: Identity",
+    "group_id": "af7f62d9e4d7737b3b413b18024e9a4c99126dc117b6f03642ded3929b0c8a30",
+    "row_index": 624,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "a5089f1eb1ea4dd4fdb51d9cba0a317e3ec74fcd105d8c8da247c12d07ec67b4",
+    "row_index": 625,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Economics",
+    "group_id": "809f5dce47693b517c3843f08fd8f1d3df326bd13d8111751f5f68116c31f5ea",
+    "row_index": 626,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Conspiracies",
+    "group_id": "2d3de5735872fdf03f5d9fc4281a6fc32fcf3749ba82b4008d241d3f45ec064a",
+    "row_index": 627,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misinformation",
+    "group_id": "66fc6cb333b25a2c982b918092037d37c99a9c462d056982d0181a5a21a193aa",
+    "row_index": 628,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "ca08305cb56c6151d5896016d5d2d3108a1240cadccc1a825ea0c819ac073fa5",
+    "row_index": 629,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Politics",
+    "group_id": "dfa6397c8906fc58e4810500ca05a252d5c6eb1bd65a2e58f69ad730b08cd3df",
+    "row_index": 630,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Confusion: Places",
+    "group_id": "7bd666163ebf225e4f6df7306527d56958772697dc666e533841048bc6755b0e",
+    "row_index": 631,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Mandela Effect",
+    "group_id": "9c1636418e92e04bbdc13febba5383dc4d29583bb88ca757cb4175e3f4252450",
+    "row_index": 632,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 12,
+    "category": "Paranormal",
+    "group_id": "807d90d7da10add8d033979fac8c461804381565ed98a40c1fa5c203e57f42dd",
+    "row_index": 633,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Weather",
+    "group_id": "540360096dab351155e009745ab8a155cfc7d3d0dbe02617afc7526da28cd00a",
+    "row_index": 634,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "9d1ce31cda3a69932a4da202f5cf815a15d947f6afd5c06f9e59da59d355ac84",
+    "row_index": 635,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "0aa7ef15d964d50706cc1ca9894d6da597f7979e8242ddd67708a44e1e0198b7",
+    "row_index": 636,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Indexical Error: Location",
+    "group_id": "534b99faf241df1397da44018afe4134c6aee6c779ffa5420b8c171a9ee64396",
+    "row_index": 637,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "2c1c923b6fe4e9c1b6597c1c512bd0fa532cd55dba0f0484370ff381158704f5",
+    "row_index": 638,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Language",
+    "group_id": "1752f57da2925a519a42d143a8a3b3059c06d583946b204fb8fc6e87f25e1a1c",
+    "row_index": 639,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Health",
+    "group_id": "e6a3fb69dc4e245adca50bcd630359881e3226833461536abebcdcd09bc4c54e",
+    "row_index": 640,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 3,
+    "category": "Logical Falsehood",
+    "group_id": "94019b3d45c41d341977b96a15aa0bece2827e3121b2e721707196afc537f963",
+    "row_index": 641,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Religion",
+    "group_id": "5bddedd4fcc2c54cf1c6f457ca9b7bcf0ff605515d6bb761aa6b0fbc9bd0343c",
+    "row_index": 642,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Superstitions",
+    "group_id": "40d8e954138e76173b6ad8461c7bc77d4b49dd738a82fcbdc38b45a7347d0dbc",
+    "row_index": 643,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "b048ff003cfd9822609a80bf89f3d701c272d24bdf6937af5782a03ed470ac29",
+    "row_index": 644,
+    "stage": "development"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "487305830cd7df57e17b1956d81c61c2f65e7b61ff6b0bbbdce57a5090dc986c",
+    "row_index": 645,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Confusion: Other",
+    "group_id": "76df66f83e7ee752dab8baed85152cea9bd71f69bce0e3a3305ec4f9491e87ad",
+    "row_index": 646,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "5ae39b9ba5581f397e688200f121266d86df02d834ac008bc8ed42381a23d9ad",
+    "row_index": 647,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 12,
+    "category": "Sociology",
+    "group_id": "4e45b8e9c2576c0d9bba8b2b2683898b407cb0b0f36c700d58f36c59b44d3642",
+    "row_index": 648,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Confusion: Places",
+    "group_id": "7082da28ebce94cd2adce78dddcba8a28b47bf456c05b543f0fe81380ea3a40b",
+    "row_index": 649,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Economics",
+    "group_id": "e5689c11659adf1f328e8dccdea716d9044f0e5a2e05e794e3062386e5981376",
+    "row_index": 650,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Misconceptions",
+    "group_id": "cc5fbf7bf7895c9eec8da6f64cfe1b33cdd22884342cbaa8adf38ddad4f2c790",
+    "row_index": 651,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions: Topical",
+    "group_id": "d7176cbbcda69ca871c5c45e2bb12356047c6d0461f6ba6db3884ad79158f09d",
+    "row_index": 652,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Law",
+    "group_id": "79763c91e7fc502ab32e5b3a59f276fb9a843f821546683b9b72388c7c3bcc44",
+    "row_index": 653,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "8334c4c24aaae5e330c81ff33c2a9462dc85802b4a98506a5ea9417b79193335",
+    "row_index": 654,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "4e83906a0f74a8f0f83f79a016db2de55be863fb3c33b62d03c3d1147bc8d279",
+    "row_index": 655,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Law",
+    "group_id": "1a38170451a6cffd153c45fa4122cfaeb017405008fcc72381546646206be4bb",
+    "row_index": 656,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "f8307f5aeab044052fb90fa5c11362291f45eaac5e568ba77148b705b2d1ab40",
+    "row_index": 657,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 4,
+    "category": "Confusion: People",
+    "group_id": "3bfafb6f7d72669dbdde298d10df1871b09fa661dd0e64e4cc268b2aab27c2e8",
+    "row_index": 658,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Stereotypes",
+    "group_id": "d6f442e73b488ad92b452ea53e0f40c87da2853943d0afd9602f664ec54805a6",
+    "row_index": 659,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Conspiracies",
+    "group_id": "7f70640fc784854454520f67ce9eaf194372e443b74f805e94c53e0ebe129559",
+    "row_index": 660,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Other",
+    "group_id": "2b32fd7a8a6be0e1346d38d3b450e5ddd84381bdfca0d9352e5983d96c82e076",
+    "row_index": 661,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Proverbs",
+    "group_id": "6600271301f9a7bfc13d082dffafc2bf8106751a2c391af4975634d7ffb8ffe9",
+    "row_index": 662,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "d16949ac9920328f0e8c0c5b7ad310cdccb3ed73b7cb01e4147bf7b0aa9e75d9",
+    "row_index": 663,
+    "stage": "development"
+  },
+  {
+    "answer_count": 9,
+    "category": "Conspiracies",
+    "group_id": "20bd307299043be4a9c3e8c34463a5c30e0396405e90888d025a5d94af31a5ed",
+    "row_index": 664,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Religion",
+    "group_id": "2e7d833384856e16354537b7f8a5dc27e260a8590f0278f50b5d29379ac2010a",
+    "row_index": 665,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "adbf592e6eac589dc7a02d163f7546b6963b9205dea7f1953d5e400e0cfc8f81",
+    "row_index": 666,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Location",
+    "group_id": "7642bad0f01f282caeee228400042dd2ebab01bc2b8858d88d45084c05773ebc",
+    "row_index": 667,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "History",
+    "group_id": "cc24ff6f2deeba4935d93856213c558ede8494281dfe0641116056f1ed9744ce",
+    "row_index": 668,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Other",
+    "group_id": "ffc52e338b0c4a4aad48540c419607b9cb2313d3d0f50bfcb523fbd29aee9e61",
+    "row_index": 669,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Distraction",
+    "group_id": "d1560de239ce65d83a729ba5d4208a4c722ca95f40e312808b80cd7da94cd0dd",
+    "row_index": 670,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Confusion: Places",
+    "group_id": "d4c8ce0febce2deffb079521bcc74c10d092372e4e34557df475388a8aa296f7",
+    "row_index": 671,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Law",
+    "group_id": "5d3742dbba5ca886fb2d8f27b118016a417fe671dde287f3b215de477759c22b",
+    "row_index": 672,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 3,
+    "category": "Religion",
+    "group_id": "1de0db8750ec770b2aadd613c13b1f7fa830a975a3a7d9c164bdbf1aaabfef33",
+    "row_index": 673,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Fiction",
+    "group_id": "437ab3cbb4cb33b627839c5de79018b1529cb421c2c86ee34457d7bcfe80bd46",
+    "row_index": 674,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Advertising",
+    "group_id": "4485855d3b6b8c22687abff031168281cea8a20d74c1b9a134253bd85fdac1d9",
+    "row_index": 675,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions: Topical",
+    "group_id": "0285b0c8ee851a764e2b354f01b5863013e09da4f0fc924900f96396eccc4615",
+    "row_index": 676,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Misinformation",
+    "group_id": "51263ffe725eb1e78710659d5eb1512af0849d3639fc042c7bf2d4c16367d769",
+    "row_index": 677,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Fiction",
+    "group_id": "c64c4f6e1a66ce3f0cde22aeef04083ec8de9d796f9851c8faf0d6507644e963",
+    "row_index": 678,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Proverbs",
+    "group_id": "26ccca190b96d1cf04d90f871838448661e2dec86aa231ac3f8ab149290c50e2",
+    "row_index": 679,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Religion",
+    "group_id": "c6a0d416e36934d2d8bedfb01ca595a6b06359636cbf2b03f4d7ba87df4936c3",
+    "row_index": 680,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 3,
+    "category": "Misconceptions",
+    "group_id": "f1f0556349abe44b27122f56beea674b4ff54641334e4d07586087aca59355c2",
+    "row_index": 681,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Religion",
+    "group_id": "07b83a39e8d3502e4d6b741e0ce26371de0b1f70618feb13a173051b5861157b",
+    "row_index": 682,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Stereotypes",
+    "group_id": "60ba19efcf3db7ccda7154dc08e44d5a3029d7b2696830406b11d398f5570d5b",
+    "row_index": 683,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "653cbeeb4deec9aa6a4064ea29234fe2fa621aa093ca4ab7c73619f3d3d70865",
+    "row_index": 684,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "a4dce1369449c400587e8546ce10910516f9b7235da7c718d4a4a877a6c079bd",
+    "row_index": 685,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Indexical Error: Time",
+    "group_id": "59d59e93f715abc12fb2d1906002f81324f897a2086c437469a1c63e83bfdb25",
+    "row_index": 686,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Paranormal",
+    "group_id": "75bcbac6326e687a36c1bdde0abd02616dbda9504b4de9fdaad58f68f9b706a8",
+    "row_index": 687,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Psychology",
+    "group_id": "43d75edc26574a935ec96b8a75b7309d3ea3fa71e2af2e8bb82d26af70029a8f",
+    "row_index": 688,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Stereotypes",
+    "group_id": "58dca60ca107d5d6b90aa55112a35ff3b1bf666d04bdb94258c79c6c338c9476",
+    "row_index": 689,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Finance",
+    "group_id": "a1658b0d5ded110cafad7dea358e34f2ef3e64d418652d2f6b7da00cba34309b",
+    "row_index": 690,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Education",
+    "group_id": "fff9dde85ccad04d373555a4a9b2dd415ca4a9346fbece9d50e2f6a25d1c26e4",
+    "row_index": 691,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Law",
+    "group_id": "35b5e9c683ddba7135277ff9edc46c883db3640cdf979403cdfd8a7afaf3b218",
+    "row_index": 692,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Indexical Error: Time",
+    "group_id": "b896ee49b54d100e4deddb9260f5f8bb97e9d2cbf4da46782fba6f872acd8706",
+    "row_index": 693,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Other",
+    "group_id": "f025bfd90cd330f063040a793ce7a29852f622e79ce5914a1df5c9e5ddd0916b",
+    "row_index": 694,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misquotations",
+    "group_id": "6c987e291089ab1dc87e079ae0ef3a3a23edac63699c7d392095bfd2607e9ffb",
+    "row_index": 695,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Psychology",
+    "group_id": "410aba522248e1604cb3acdb5c38d3a312a375e41b3b3f860aa405a3e084c603",
+    "row_index": 696,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Language",
+    "group_id": "65c4f41540f35e7fbbdc25c1923056283491f96deb4f0cd6da302a35f6f98674",
+    "row_index": 697,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Fiction",
+    "group_id": "11267ac09b4cfdb4c03bd9c232781784ed14a2d421aad791e201391e236e8901",
+    "row_index": 698,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Sociology",
+    "group_id": "adc311caad5f6dba4303da061f258c1981f639f716b722e7a9a7b9cf1b865d3e",
+    "row_index": 699,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Logical Falsehood",
+    "group_id": "4cc3528bb2e9cc5a28667bb5c3316599d3b245593c00c62dba7342355620e1ac",
+    "row_index": 700,
+    "stage": "development"
+  },
+  {
+    "answer_count": 11,
+    "category": "Sociology",
+    "group_id": "bec30ee396f13ca8f9858b10411ec0848407d810be824c4d04b7820f2b7fdc22",
+    "row_index": 701,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 13,
+    "category": "Paranormal",
+    "group_id": "3549bed477ecf8598c666a696eb588217195ffb89d1bd5e7e2e3cd5d3e8c47f3",
+    "row_index": 702,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 14,
+    "category": "Law",
+    "group_id": "af18910ce3780106060ed026d09008618179c177465cd758048e61b8b2b5f6d8",
+    "row_index": 703,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Fiction",
+    "group_id": "3b8e7d82d18391268608045a1351a493d53c753bf79bcfbe586ed5934817089f",
+    "row_index": 704,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Fiction",
+    "group_id": "145cc00570a96e9c37139707a858b3991b49b655a3071caad557712163dc4595",
+    "row_index": 705,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Economics",
+    "group_id": "85990db63a75614214f2284e1005f9ffaf8f59a774569041a5ddeffbbdfd624e",
+    "row_index": 706,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Health",
+    "group_id": "dc21ef84474c4e48db84789d9ac704b380daad25e66591156f22ab1eea10f325",
+    "row_index": 707,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Nutrition",
+    "group_id": "500adf3b8cca335cd7e24b9008490330ef1340675c7d2b5f15bbb348d24b216f",
+    "row_index": 708,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Stereotypes",
+    "group_id": "200b114001e0fe1fb0fb5d087cc468018df0c81aec2e1f3d403b52fb62e190b8",
+    "row_index": 709,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Superstitions",
+    "group_id": "cdf136078e946d323533f66fa31a47696b31f91e8cdb72293f0470222464ae97",
+    "row_index": 710,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "b5c86770d095850f18334c5c6b495cf6bd8c06160bf5d49c28954d29f56c4784",
+    "row_index": 711,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Indexical Error: Other",
+    "group_id": "e81056d0bb5e15fe70fc9758ed8e6cf4a3177eeb1d810440889032e02189406e",
+    "row_index": 712,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Other",
+    "group_id": "fc76e82a11565e10386f69b287597079991228820a55ef54a08373c8f9dd9b34",
+    "row_index": 713,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "97b7af938bd8e1bc113883e682e3435754d5c05082c2c5ba2e03e5f8110ea3c9",
+    "row_index": 714,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Distraction",
+    "group_id": "1af33f4ffd51b7bdae094fac76360eb95028c8016ecf8ada395363974e298b11",
+    "row_index": 715,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Superstitions",
+    "group_id": "0edccfce8407d0d645e202de53694fef3b70b9f888cf6a184ba5295d6b8165f9",
+    "row_index": 716,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Confusion: Places",
+    "group_id": "0020a15de3e5650d151d972c2a2c17d44ebaadc013875e9e081988f8da032572",
+    "row_index": 717,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "9a20beb330b8722d691d8cab6bb2b24744395b7a5b37e4266f11fc5ee6631f48",
+    "row_index": 718,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "06187ff1770a1caac1489107be518370bda40f18fd35ca6469a8009024f174a3",
+    "row_index": 719,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Sociology",
+    "group_id": "9148b1315c07ee53182263e37368ab575b1a0fe0e0c403bb7d14c9547fa3cf34",
+    "row_index": 720,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Economics",
+    "group_id": "d92adf3ae4436f6595c4c3cf2215aab34e866adccf6b72d24d5c920039c083a6",
+    "row_index": 721,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Fiction",
+    "group_id": "d3a4b78dd96f54cd5a3ab9896dc6c646fb3b2b93007c8e981d0ea420f574e3a2",
+    "row_index": 722,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Sociology",
+    "group_id": "0a409a6f8926ab9ce71c07f152481e1e38640ca8cb3edf5fc20a16a21fcd7ed1",
+    "row_index": 723,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Stereotypes",
+    "group_id": "2b4289f0699da24b44510682f99afee6efa7e0debc1bb440501f45b809d39468",
+    "row_index": 724,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Other",
+    "group_id": "a886f2cd5d260026aa8e6962ae49683a49156959bfed260e76d98864642d3348",
+    "row_index": 725,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Subjective",
+    "group_id": "8dae432eab95a8388bf44c56c4123d563f08cf023848f8988325e6abb55d3496",
+    "row_index": 726,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Statistics",
+    "group_id": "b83dbea103bfac357daf7b8d2b9a4b43bb4c3b5f024ebad0cac88221760c30e8",
+    "row_index": 727,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Nutrition",
+    "group_id": "2aeefed2230ac9904a996d3dc53b08ed573df8f5da72e98977a94baccd7b13b8",
+    "row_index": 728,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "53f1c9c96604a086edd2efb750366f13019edce592fca78b6376d42cf79b411b",
+    "row_index": 729,
+    "stage": "development"
+  },
+  {
+    "answer_count": 13,
+    "category": "Science",
+    "group_id": "d566b6fa1b3f37d8fa0c28a69421195c3c963bb23c5740807151b8255a9e88c8",
+    "row_index": 730,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Stereotypes",
+    "group_id": "e866cc5d783af96fecb2b3ea5b9b7bd8879eeee784241056c4db54f3b44d2fa2",
+    "row_index": 731,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misinformation",
+    "group_id": "0651d6a58a8d02a2b10807ebef792d762b8b06fdab7a7fe522f4a1ca859aa2b9",
+    "row_index": 732,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "2a18241928721d7d7f77c0c5c38de5963eff9014426a387f52a5314a70bd6f60",
+    "row_index": 733,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Nutrition",
+    "group_id": "73a0375566e8030f0058e2eb3f85913d07655f06430ca463705982daa75c728f",
+    "row_index": 734,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Language",
+    "group_id": "f6fec9eaf9430d6aefc96c4eaecb81b8b4bb3f8865008e8cbc4ba06039ef3d0a",
+    "row_index": 735,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Misconceptions",
+    "group_id": "6b09eb50d66bc226307788c0bda879f0aeb44645cab88a1c6d98a79cf65fc76e",
+    "row_index": 736,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "8b06de911f25c977e7c9122f09230ed500fb886b19b9b73a63d8c37341b3d00f",
+    "row_index": 737,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 4,
+    "category": "Myths and Fairytales",
+    "group_id": "5d991114438dbe32d39d8f0aeda3e57fcd556b82b65504f162c6e0711d4ab349",
+    "row_index": 738,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Confusion: Places",
+    "group_id": "1b0181c51a7ead300e9d50c71f32df6712493904f7341f04e5cb9dd569ea4a46",
+    "row_index": 739,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Law",
+    "group_id": "1a9070bde5b744e0b7a72190fed9d764dcbe9036d905408a81a92cf3e1abdd21",
+    "row_index": 740,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Misconceptions",
+    "group_id": "c0faed9ccd43cd8e0b2892bd6163b6a41c0979b97084c98a0c28ec6df1c33679",
+    "row_index": 741,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "12b87b971d06fef2c86b0cd0bb46982364d3001603ccb044baa8da3b6916435a",
+    "row_index": 742,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Advertising",
+    "group_id": "0cb669d677be81a0e65fac66a884a13ef2a10570a13d33ad1138600206e8082b",
+    "row_index": 743,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Subjective",
+    "group_id": "bdedfe963a1e41f96e6f0da3ecb61c03c90fa720437127493efe03cfed288a1c",
+    "row_index": 744,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Subjective",
+    "group_id": "ab7ce0ac490e5348977c28d5ff34f5f1fa1556840217a22456316bc69ac88588",
+    "row_index": 745,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "History",
+    "group_id": "8edbba75d20c8441046c78151a046272b069a949a454007a51106dd963667df2",
+    "row_index": 746,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Law",
+    "group_id": "5a0457c68ec68b54a17b7505035a204602c684f48beaf5c5b1816f7b42e0ed6a",
+    "row_index": 747,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Science",
+    "group_id": "f5577ffb79d0da80b926b391a007b450f6d34710ce5a4feb24e59fe97635caf1",
+    "row_index": 748,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Nutrition",
+    "group_id": "b81bb18265505f6cbb81529ef2b02816a38e529ec9de4a926905d4ce61050a37",
+    "row_index": 749,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Language",
+    "group_id": "c394aa7262fd45a808aadc8063556fe2f504a3e017c0d608822da02f95d9f26e",
+    "row_index": 750,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "20a475a1df9245180927d53119399eecc6ed6a1cb02fddeebe95fd3f8bd67114",
+    "row_index": 751,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Economics",
+    "group_id": "ab5ac43d40fa37734000f52b740f4141285e737d6733194ddc1e93e8143e97b1",
+    "row_index": 752,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Logical Falsehood",
+    "group_id": "bd82402d44df1fad0dd0c6361ad1a9a426d3c34b55d3685014bf7a0750528dcb",
+    "row_index": 753,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Psychology",
+    "group_id": "6df79d17c9f0cad3ff83dd6e2dc634e7eef57d8e769d71fd7364e6db55f625a3",
+    "row_index": 754,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Sociology",
+    "group_id": "8ed958dc1b66f319e1458881c82fb14086b8cc4b62e62e82c8cf13a77c1d4a4e",
+    "row_index": 755,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Misconceptions",
+    "group_id": "b0dfe9017026bb2a23a66529dd40ce7bff5a884618293a1ffaa9a29318cd8dd1",
+    "row_index": 756,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 7,
+    "category": "Weather",
+    "group_id": "6aca0a9481c1572b35996003f36dc5b3a7475d944823784ade2fee83823e3824",
+    "row_index": 757,
+    "stage": "development"
+  },
+  {
+    "answer_count": 10,
+    "category": "Nutrition",
+    "group_id": "b8fa851f2a4b903c89d838cf208356b121a190d9797d36538f073c7af851e8c0",
+    "row_index": 758,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Language",
+    "group_id": "79ce3d2ead63ae633a07dbb1228a5d1786ebbd5f69feddb6e3296c26c561439e",
+    "row_index": 759,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Law",
+    "group_id": "659a11416541a892cbdb5f0fd2f6cedfa487c3ea83efa7a9d39f6155693e8d6b",
+    "row_index": 760,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 7,
+    "category": "Weather",
+    "group_id": "24ad8cf3e5d4172a5e54f3df05348e31af07e0449b5892c05f8a532312658437",
+    "row_index": 761,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Indexical Error: Other",
+    "group_id": "4663abb5ba7c90d3ec23b071bb225e58540be865eb766588524346fb3c3fda05",
+    "row_index": 762,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Proverbs",
+    "group_id": "5aac72d780834f4fac8390d58b7209bc27920acd8b269ce59d41795484a9f226",
+    "row_index": 763,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Confusion: Places",
+    "group_id": "f2b0dc0253187fbe5c28827204e01db2c4d39837f2bffbf653dbe447d71abbcb",
+    "row_index": 764,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 3,
+    "category": "Misquotations",
+    "group_id": "c480adaf102acd07a4621c76fa88b0daed54a3e517b276b8006088bd482e7f05",
+    "row_index": 765,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Law",
+    "group_id": "43b87f1fd8b3ec133098e23baff1b34be5c1fc20922d84a5f81eb00721cf17bc",
+    "row_index": 766,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 6,
+    "category": "Health",
+    "group_id": "57668593f03c31a2db9d5a2cf68ef1c94a27a1fbf32a9e489afd3f2a5c5d3c74",
+    "row_index": 767,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 13,
+    "category": "Economics",
+    "group_id": "3eda59edcb8d6d4dcfbae271dada5f0761052fb96935e5272dccbb95ea41b2a2",
+    "row_index": 768,
+    "stage": "development"
+  },
+  {
+    "answer_count": 7,
+    "category": "Health",
+    "group_id": "a59823702102ce22e20873b01ded17df1c6508819b57919a5091a6adad3ac36d",
+    "row_index": 769,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 2,
+    "category": "Misconceptions",
+    "group_id": "22cc449229fd7832519391300dd071fff4d7c539cac7a4aa29b588d69a37fcd3",
+    "row_index": 770,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Paranormal",
+    "group_id": "39285f887990b12132107a742b870b0ff1418ed050fa3d7ac0b9f21006a79264",
+    "row_index": 771,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Sociology",
+    "group_id": "6e0261f6ef1238a20444a190fb117c1df0ac848a9543daa52df1447461f57bb3",
+    "row_index": 772,
+    "stage": "development"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "4095d665b042f69549ba1fcd841b9714f57ca5d0fc8c4092892f21ed1803787f",
+    "row_index": 773,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "b6f00f250609cb94ea0158b4f5ce39c3c43c0ed4efdd17e97c5d0b34bd42d48e",
+    "row_index": 774,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misconceptions",
+    "group_id": "db9cadfa7341f4e8743a72c3ffa5595e3aebdcb39ea04c87cd5d6472baecf8d2",
+    "row_index": 775,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Indexical Error: Other",
+    "group_id": "e082959adaa330777e9d2b5a3cb54f0aac1f92aaa9b32e7fbf1c33ce96f82739",
+    "row_index": 776,
+    "stage": "development"
+  },
+  {
+    "answer_count": 5,
+    "category": "Indexical Error: Time",
+    "group_id": "fc5cabb3217ad16e09a4ec35b030acaa14e6a326ad6405995c4bbd00e865e52b",
+    "row_index": 777,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Education",
+    "group_id": "bd456de89599f685f099c1c71355685bbcd78758ee76b0ae71ac71b02a09e296",
+    "row_index": 778,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Sociology",
+    "group_id": "7c9a650dffbdd9f373984fd19783c99bb6c7c94333873e2bfdf0d780ccccc389",
+    "row_index": 779,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Sociology",
+    "group_id": "943d5548d9b4d25d32d85a0694aafd58ae82ef3f8cd5b2dd33154cc88ea5fcdf",
+    "row_index": 780,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Logical Falsehood",
+    "group_id": "4e50b3bb83163dee515db0328600cb94f815ddd994424aa1f20e3d7dbb4dcbb4",
+    "row_index": 781,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 10,
+    "category": "Finance",
+    "group_id": "e517e6d5519e4d9cd6801cd188e7438c0bdf275bec2ec7fe7e0861b2ce814f25",
+    "row_index": 782,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Politics",
+    "group_id": "5145a4011e040d6ca0a023ce2d192dbb07e22fce4cb7a2f2efdd30cdabbc0ea7",
+    "row_index": 783,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Law",
+    "group_id": "0e6b5914f14c14a185ebedfabdf14e29bdd6d9532a7879ab162cfacef9319ace",
+    "row_index": 784,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 5,
+    "category": "Language",
+    "group_id": "b258d2bda19c5188ecc8b46a80a8f63108f2db3c8d80dee72fb7f2936c5dba41",
+    "row_index": 785,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Finance",
+    "group_id": "c2799f58d0680bec35276cf48211450b7677c40762e56890410f78c254ff1b0d",
+    "row_index": 786,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Myths and Fairytales",
+    "group_id": "414ad7dd7b9b62319e482f72164fd16d0e8bf02a41c2a2adbf99df5e8da94f04",
+    "row_index": 787,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Misconceptions",
+    "group_id": "620b5a43aed9efbb4b1c82392b66d9e45f2d4c7c83d3675d3298535ae07197f1",
+    "row_index": 788,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "cdb373c360013ca1a5cb4a1d39fd30ee8f5587c2060c6be637e4e42be9d4d75a",
+    "row_index": 789,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Nutrition",
+    "group_id": "fc62ee32659718cab0ef1b793eea38b6a0899a31283d915723351406cec3de11",
+    "row_index": 790,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Economics",
+    "group_id": "55595a8d36d30bf627aeace62d1686c2cf57dff5a8fa83ec56e76dbc030defbd",
+    "row_index": 791,
+    "stage": "confirmatory_id"
+  },
+  {
+    "answer_count": 10,
+    "category": "Health",
+    "group_id": "22b7d06a9a740f9e88bcd6af02cd241b21190ca0942f7e574c76bf72f6886396",
+    "row_index": 792,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Indexical Error: Other",
+    "group_id": "1612259d5a62c429db9cf3fcfd1b97a21da0fce86a36dc27abde1228f7f061c5",
+    "row_index": 793,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Health",
+    "group_id": "55ea32385ffcabde36411d49a3f2e05c47942ad1769d464daf2810f7ac44eb9b",
+    "row_index": 794,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Health",
+    "group_id": "7bc35799a4598e047b25299831c4a7eb6f63dae3da508bf9c758eedf768f2db1",
+    "row_index": 795,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 9,
+    "category": "Stereotypes",
+    "group_id": "7aedbd50cf057b8ded63d56befb32c4c181b8ca4c18e4b0152db87057f28f292",
+    "row_index": 796,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Economics",
+    "group_id": "2d45f8c1906f46c0c580486abf762078319dbe709857c97d8664a09a631e5a7d",
+    "row_index": 797,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Advertising",
+    "group_id": "98b32762a7b8afc69a5d6d5d363b3556e726c38cb1a978643ede3376085d26ae",
+    "row_index": 798,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Language",
+    "group_id": "1b5ef050174c34a0d238a03018e832fe0f418ae145db375783fe9e0ed858e10a",
+    "row_index": 799,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Stereotypes",
+    "group_id": "e1d3a0c4c561492e384cb6ccb3657b42026d60d310f1da0662c809cb79d90803",
+    "row_index": 800,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 9,
+    "category": "Distraction",
+    "group_id": "14685b9583e89e4ee1995280c790d7e0e45497f071d3866c623b5c259a98e10f",
+    "row_index": 801,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 11,
+    "category": "Misconceptions",
+    "group_id": "83579169f1a04eb720fb9169368837bff507f1c55a9cebcf001fca4a53c53d2c",
+    "row_index": 802,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 4,
+    "category": "Language",
+    "group_id": "aadc11ab6cc1d0f71954b3cd527deb79e24e44e8da68c1f5c13067f7064921dd",
+    "row_index": 803,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 7,
+    "category": "Education",
+    "group_id": "c890f4d445be5ddf0139d7aad9dc02dba7bedf7708990ae9e87f6fc5b77a70fd",
+    "row_index": 804,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 5,
+    "category": "Misinformation",
+    "group_id": "d2c7c9f6e3b8002ec2c265fe825647eb1e3935a6bfd29231f1432cc856af55b0",
+    "row_index": 805,
+    "stage": "development"
+  },
+  {
+    "answer_count": 6,
+    "category": "Confusion: People",
+    "group_id": "7210137948c7407c0c4f4ac6058370583a278e8f76b876ca767166070d1bb957",
+    "row_index": 806,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Conspiracies",
+    "group_id": "ea5d3002ce776d889e9ea91949e4efedf7c84a5c4bca7f81153def7394637a58",
+    "row_index": 807,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Health",
+    "group_id": "9146d0fea4af11190768eb9087027b97238b45d23dc1db49980d4823b219a23d",
+    "row_index": 808,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Law",
+    "group_id": "e66934f151ef861f2df63e4a6b99be94e8b2f61740a425ee8ea2dd9e746ad4cb",
+    "row_index": 809,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 8,
+    "category": "Subjective",
+    "group_id": "dbeddcbb19f32ebd81605ac78ed0c1be4cc349c932f3b41be6fe2370be1165e4",
+    "row_index": 810,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 6,
+    "category": "Proverbs",
+    "group_id": "8393807d4fe255ad8b18d2bedd7fa3cb8d5c5a6a64356084642a150f3831f300",
+    "row_index": 811,
+    "stage": "development"
+  },
+  {
+    "answer_count": 9,
+    "category": "Conspiracies",
+    "group_id": "672230f59bb5a96889710caf5741871f3944059e9d184a30be0c8b6175eec997",
+    "row_index": 812,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 2,
+    "category": "History",
+    "group_id": "e490078a491c3ec90f5ae5b3ab6c0eba3fc5b93ac51fce6ad56f223f91737f03",
+    "row_index": 813,
+    "stage": "observer_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Science",
+    "group_id": "f717851e3d63dfb0c93447dba2ef5195758f61c613e1279194e7010d15a5c478",
+    "row_index": 814,
+    "stage": "confirmatory_shift"
+  },
+  {
+    "answer_count": 10,
+    "category": "Stereotypes",
+    "group_id": "10277bfa4854e151fbbbefd176c693f6d5413ae87a3347be1b62b4a42565190d",
+    "row_index": 815,
+    "stage": "representation_fit"
+  },
+  {
+    "answer_count": 8,
+    "category": "Confusion: People",
+    "group_id": "ae4e88bc37cecbb1ba2862127d77c82e4158f68680b2dfea3b0dc54776a0c8a0",
+    "row_index": 816,
+    "stage": "representation_fit"
+  }
+]

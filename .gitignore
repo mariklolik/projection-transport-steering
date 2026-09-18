@@ -1,0 +1,10 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+*.aux
+*.log
+*.out
+paper/fig_preview.*
+data_cache/
+models_specific/*/weights/

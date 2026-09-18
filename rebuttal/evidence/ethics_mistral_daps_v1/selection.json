@@ -1,0 +1,327 @@
+{
+  "baseline_families": {
+    "act": {
+      "config": {
+        "strength": 1.0
+      },
+      "kind": "act",
+      "observer_calibrated": {
+        "mc1": 0.8566666666666667,
+        "mc2": 0.7673173055445828,
+        "mc3": 0.8566666666666667
+      },
+      "observer_raw": {
+        "mc1": 0.8566666666666667,
+        "mc2": 0.8495990745763948,
+        "mc3": 0.8566666666666667
+      },
+      "output_name": "act_s1",
+      "temperature": 5.910521900687905
+    },
+    "caa": {
+      "config": {
+        "strength": 1.0
+      },
+      "kind": "caa",
+      "observer_calibrated": {
+        "mc1": 0.8566666666666667,
+        "mc2": 0.769251860811029,
+        "mc3": 0.8566666666666667
+      },
+      "observer_raw": {
+        "mc1": 0.8566666666666667,
+        "mc2": 0.8504262208995548,
+        "mc3": 0.8566666666666667
+      },
+      "output_name": "caa_s1",
+      "temperature": 5.76317949705617
+    },
+    "mimic": {
+      "config": {
+        "strength": 0.5
+      },
+      "kind": "mimic",
+      "observer_calibrated": {
+        "mc1": 0.8466666666666667,
+        "mc2": 0.7582226698108777,
+        "mc3": 0.8466666666666667
+      },
+      "observer_raw": {
+        "mc1": 0.8466666666666667,
+        "mc2": 0.8447014519680528,
+        "mc3": 0.8466666666666667
+      },
+      "output_name": "mimic_s0p5",
+      "temperature": 6.523245718387231
+    },
+    "spherical": {
+      "config": {
+        "alpha": 0.6,
+        "beta": 0.99,
+        "kappa": 20.0
+      },
+      "kind": "spherical",
+      "observer_calibrated": {
+        "mc1": 0.8533333333333334,
+        "mc2": 0.771898732904379,
+        "mc3": 0.8533333333333334
+      },
+      "observer_raw": {
+        "mc1": 0.8533333333333334,
+        "mc2": 0.8502934665891257,
+        "mc3": 0.8533333333333334
+      },
+      "output_name": "spherical_a0p6_b0p99",
+      "temperature": 5.585123712054217
+    },
+    "transport": {
+      "config": {
+        "strength": 0.5
+      },
+      "kind": "transport",
+      "observer_calibrated": {
+        "mc1": 0.8533333333333334,
+        "mc2": 0.7694031592913715,
+        "mc3": 0.8533333333333334
+      },
+      "observer_raw": {
+        "mc1": 0.8533333333333334,
+        "mc2": 0.8496691904030933,
+        "mc3": 0.8533333333333334
+      },
+      "output_name": "transport_s0p5",
+      "temperature": 5.631921970527984
+    }
+  },
+  "benchmark": "research/benchmark-freeze-v18.md",
+  "candidate": {
+    "config": {
+      "strength": 1.0,
+      "threshold": 0.5
+    },
+    "kind": "hard_posterior_spherical",
+    "observer_calibrated": {
+      "mc1": 0.91,
+      "mc2": 0.8969236113445987,
+      "mc3": 0.91
+    },
+    "observer_raw": {
+      "mc1": 0.91,
+      "mc2": 0.9088003632390096,
+      "mc3": 0.91
+    },
+    "output_name": "daps",
+    "temperature": 9.999994871845992
+  },
+  "conditions": {
+    "act_s0p5": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8495243468686232,
+      "mc3": 0.8533333333333334
+    },
+    "act_s1": {
+      "mc1": 0.8566666666666667,
+      "mc2": 0.8495990745763948,
+      "mc3": 0.8566666666666667
+    },
+    "act_s1p5": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8490658023504659,
+      "mc3": 0.8533333333333334
+    },
+    "caa_s0p25": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8502225387688287,
+      "mc3": 0.8533333333333334
+    },
+    "caa_s0p5": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8502639124774947,
+      "mc3": 0.8533333333333334
+    },
+    "caa_s1": {
+      "mc1": 0.8566666666666667,
+      "mc2": 0.8504262208995548,
+      "mc3": 0.8566666666666667
+    },
+    "caa_s2": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8499625503772661,
+      "mc3": 0.8533333333333334
+    },
+    "mimic_s0p5": {
+      "mc1": 0.8466666666666667,
+      "mc2": 0.8447014519680528,
+      "mc3": 0.8466666666666667
+    },
+    "mimic_s1": {
+      "mc1": 0.55,
+      "mc2": 0.5594141099162104,
+      "mc3": 0.55
+    },
+    "mimic_s1p5": {
+      "mc1": 0.45666666666666667,
+      "mc2": 0.4598718363738764,
+      "mc3": 0.45666666666666667
+    },
+    "spherical_a0p6_b0p6": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8470625732628596,
+      "mc3": 0.8533333333333334
+    },
+    "spherical_a0p6_b0p9": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8493187635373107,
+      "mc3": 0.8533333333333334
+    },
+    "spherical_a0p6_b0p99": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8502934665891257,
+      "mc3": 0.8533333333333334
+    },
+    "spherical_a0p9_b0p6": {
+      "mc1": 0.85,
+      "mc2": 0.8452807577144816,
+      "mc3": 0.85
+    },
+    "spherical_a0p9_b0p9": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8475648242080084,
+      "mc3": 0.8533333333333334
+    },
+    "spherical_a0p9_b0p99": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8502768578638953,
+      "mc3": 0.8533333333333334
+    },
+    "spherical_a1_b0p6": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8467072413041469,
+      "mc3": 0.8533333333333334
+    },
+    "spherical_a1_b0p9": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8473602776644477,
+      "mc3": 0.8533333333333334
+    },
+    "spherical_a1_b0p99": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8502735256578569,
+      "mc3": 0.8533333333333334
+    },
+    "transport_s0p5": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8496691904030933,
+      "mc3": 0.8533333333333334
+    },
+    "transport_s1": {
+      "mc1": 0.8566666666666667,
+      "mc2": 0.8492925958716481,
+      "mc3": 0.8566666666666667
+    },
+    "transport_s1p5": {
+      "mc1": 0.8566666666666667,
+      "mc2": 0.848739462388733,
+      "mc3": 0.8566666666666667
+    },
+    "transport_s2": {
+      "mc1": 0.8533333333333334,
+      "mc2": 0.8486140395620664,
+      "mc3": 0.8533333333333334
+    }
+  },
+  "layer": 21,
+  "matched_baseline": {
+    "config": {
+      "strength": 1.0
+    },
+    "family": "caa",
+    "kind": "caa",
+    "observer_calibrated": {
+      "mc1": 0.8566666666666667,
+      "mc2": 0.769251860811029,
+      "mc3": 0.8566666666666667
+    },
+    "observer_raw": {
+      "mc1": 0.8566666666666667,
+      "mc2": 0.8504262208995548,
+      "mc3": 0.8566666666666667
+    },
+    "output_name": "caa_s1",
+    "temperature": 5.76317949705617
+  },
+  "method": "research/method-hypotheses-v11.md",
+  "model": "mistralai/Mistral-7B-Instruct-v0.3@c170c708c41dac9275d15a8fff4eca08d52bab71",
+  "observer_fit_clusters": 300,
+  "observer_fit_questions": 300,
+  "observer_screen_pass": true,
+  "panel": "ethics",
+  "representation_fit_clusters": 600,
+  "representation_fit_questions": 600,
+  "runtime": {
+    "component_cached": false,
+    "condition_cached": {
+      "act_s0p5": false,
+      "act_s1": false,
+      "act_s1p5": false,
+      "caa_s0p25": false,
+      "caa_s0p5": false,
+      "caa_s1": false,
+      "caa_s2": false,
+      "daps": false,
+      "mimic_s0p5": false,
+      "mimic_s1": false,
+      "mimic_s1p5": false,
+      "spherical_a0p6_b0p6": false,
+      "spherical_a0p6_b0p9": false,
+      "spherical_a0p6_b0p99": false,
+      "spherical_a0p9_b0p6": false,
+      "spherical_a0p9_b0p9": false,
+      "spherical_a0p9_b0p99": false,
+      "spherical_a1_b0p6": false,
+      "spherical_a1_b0p9": false,
+      "spherical_a1_b0p99": false,
+      "transport_s0p5": false,
+      "transport_s1": false,
+      "transport_s1p5": false,
+      "transport_s2": false
+    },
+    "condition_seconds": {
+      "act_s0p5": 1.5269540026783943,
+      "act_s1": 1.5261305756866932,
+      "act_s1p5": 1.5284983739256859,
+      "caa_s0p25": 1.5230503678321838,
+      "caa_s0p5": 1.5210673213005066,
+      "caa_s1": 1.5229102596640587,
+      "caa_s2": 1.5226175710558891,
+      "daps": 1.564779695123434,
+      "mimic_s0p5": 1.5291253626346588,
+      "mimic_s1": 1.5285834968090057,
+      "mimic_s1p5": 1.5276478417217731,
+      "spherical_a0p6_b0p6": 1.5394129790365696,
+      "spherical_a0p6_b0p9": 1.5387471467256546,
+      "spherical_a0p6_b0p99": 1.5387037321925163,
+      "spherical_a0p9_b0p6": 1.5394555479288101,
+      "spherical_a0p9_b0p9": 1.538488082587719,
+      "spherical_a0p9_b0p99": 1.5392868295311928,
+      "spherical_a1_b0p6": 1.5389230251312256,
+      "spherical_a1_b0p9": 1.5396509394049644,
+      "spherical_a1_b0p99": 1.6085448637604713,
+      "transport_s0p5": 1.5474535450339317,
+      "transport_s1": 1.5388939082622528,
+      "transport_s1p5": 1.5366473607718945,
+      "transport_s2": 1.5384461358189583
+    },
+    "cuda": "12.1",
+    "fit_cached": false,
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "host": "avi-gn-fsk42",
+    "model_load_seconds": 15.833052426576614,
+    "offline_fit_seconds": 11.307641942054033,
+    "peak_gpu_allocated_bytes": 15931226112,
+    "peak_gpu_reserved_bytes": 17221812224,
+    "platform": "Linux-6.1.0-32-amd64-x86_64-with-glibc2.36",
+    "torch": "2.4.1+cu121",
+    "total_seconds": 70.56218555569649
+  }
+}

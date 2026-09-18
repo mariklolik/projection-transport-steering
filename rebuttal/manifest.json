@@ -1,0 +1,34 @@
+{
+  "paper_pdf": {
+    "path": "paper/paper.pdf",
+    "sha256": "dcce6f9eda01ecaed6ec53bbd81d768d7a7faa210aa7d9cdc32c34265d946c0b"
+  },
+  "paper_source": {
+    "path": "paper/paper.tex",
+    "sha256": "59b22d5fa4dd57a75d1e6efcc551ad5b8a8c7c64ae8f3174b359c02c59f2cb1b"
+  },
+  "main_analysis": {
+    "path": "results/steering_v2/analysis_v2.json",
+    "sha256": "785ab043e3eefd02b1d00c47ace79e5c032280223281a48976234bb1b12ae79b"
+  },
+  "main_rollouts": {
+    "path": "results/steering_v2_rollouts.tgz",
+    "sha256": "d73f0f051e3e789e330d470f0d364a5b6e3aa972d2bec347ba62f43e3c2f953c"
+  },
+  "olmo2_confirmatory_analysis": {
+    "path": "rebuttal/evidence/truthfulqa_olmo2_daps_v1/confirmatory/initial-analysis.json",
+    "sha256": "1e1f87fd18ae88ab816267d63dc5b3a1685bb7d95c9d6db7f16cc9d2b38bca43"
+  },
+  "olmo2_control_analysis": {
+    "path": "rebuttal/evidence/truthfulqa_olmo2_daps_v1/confirmatory/control-analysis.json",
+    "sha256": "35387e19a51107d3c45de6084d44176de321392c3ab87b2eb45aef686f720f92"
+  },
+  "mistral_truthfulqa_analysis": {
+    "path": "rebuttal/evidence/truthfulqa_mistral_daps_v1/confirmatory/initial-analysis.json",
+    "sha256": "697263c59184172af22a6c4949416af79063e4e99d4caf0d98a9b113af07754d"
+  },
+  "mistral_ethics_analysis": {
+    "path": "rebuttal/evidence/ethics_mistral_daps_v1/confirmatory/initial-analysis.json",
+    "sha256": "c611ff4517d850b461844a28fce5f93d90545b52ab7e350c2b300a91cf4f42b0"
+  }
+}

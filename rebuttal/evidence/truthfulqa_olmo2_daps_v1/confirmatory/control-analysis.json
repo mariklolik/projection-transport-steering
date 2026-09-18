@@ -1,0 +1,424 @@
+{
+  "benchmark": "research/benchmark-freeze-v17.md",
+  "candidate_calibrated": {
+    "mc1": 0.5738396624472574,
+    "mc2": 0.7470003485528117,
+    "mc3": 0.5771750050231064
+  },
+  "candidate_raw": {
+    "mc1": 0.5738396624472574,
+    "mc2": 0.8006109189774163,
+    "mc3": 0.5771750050231064
+  },
+  "comparisons": {
+    "isotropic_1": {
+      "adjusted": {
+        "gate_pass": true,
+        "mc1_difference": {
+          "estimate": 0.22362869198312235,
+          "lower": 0.11814345991561181,
+          "upper": 0.31645569620253167
+        },
+        "mc2_difference": {
+          "estimate": 0.24849451896386296,
+          "lower": 0.20734803323868073,
+          "upper": 0.2888147445235867
+        }
+      },
+      "strata": {
+        "id": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.34,
+            "lower": 0.16,
+            "upper": 0.48
+          },
+          "mc2_difference": {
+            "estimate": 0.2638621414651116,
+            "lower": 0.1904602066594521,
+            "upper": 0.3308710345334004
+          }
+        },
+        "shift": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.1925133689839572,
+            "lower": 0.10695187165775401,
+            "upper": 0.2620320855614973
+          },
+          "mc2_difference": {
+            "estimate": 0.24438552899026708,
+            "lower": 0.21132088475907887,
+            "upper": 0.27560648354109
+          }
+        }
+      }
+    },
+    "isotropic_2": {
+      "adjusted": {
+        "gate_pass": true,
+        "mc1_difference": {
+          "estimate": 0.22784810126582278,
+          "lower": 0.1308016877637131,
+          "upper": 0.32489451476793246
+        },
+        "mc2_difference": {
+          "estimate": 0.2375776953672296,
+          "lower": 0.19809982760445802,
+          "upper": 0.2754440593402794
+        }
+      },
+      "strata": {
+        "id": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.36,
+            "lower": 0.18,
+            "upper": 0.5
+          },
+          "mc2_difference": {
+            "estimate": 0.24780279527894358,
+            "lower": 0.17849943043337102,
+            "upper": 0.31344331720415897
+          }
+        },
+        "shift": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.1925133689839572,
+            "lower": 0.11229946524064172,
+            "upper": 0.26737967914438504
+          },
+          "mc2_difference": {
+            "estimate": 0.23484371143361626,
+            "lower": 0.20238823621370144,
+            "upper": 0.2653438687461029
+          }
+        }
+      }
+    },
+    "isotropic_3": {
+      "adjusted": {
+        "gate_pass": true,
+        "mc1_difference": {
+          "estimate": 0.1940928270042194,
+          "lower": 0.0970464135021097,
+          "upper": 0.2869198312236287
+        },
+        "mc2_difference": {
+          "estimate": 0.21956081981631034,
+          "lower": 0.17968359872032774,
+          "upper": 0.25750599918446027
+        }
+      },
+      "strata": {
+        "id": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.26,
+            "lower": 0.08,
+            "upper": 0.4
+          },
+          "mc2_difference": {
+            "estimate": 0.2520064062259125,
+            "lower": 0.17856862116185485,
+            "upper": 0.32045610180433365
+          }
+        },
+        "shift": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.17647058823529413,
+            "lower": 0.0962566844919786,
+            "upper": 0.25133689839572193
+          },
+          "mc2_difference": {
+            "estimate": 0.21088552933245952,
+            "lower": 0.1801424738939469,
+            "upper": 0.24004836841842586
+          }
+        }
+      }
+    },
+    "isotropic_4": {
+      "adjusted": {
+        "gate_pass": true,
+        "mc1_difference": {
+          "estimate": 0.20253164556962025,
+          "lower": 0.10548523206751055,
+          "upper": 0.288916736172727
+        },
+        "mc2_difference": {
+          "estimate": 0.22044669528815586,
+          "lower": 0.18021744448570112,
+          "upper": 0.2584843229127941
+        }
+      },
+      "strata": {
+        "id": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.28,
+            "lower": 0.1,
+            "upper": 0.42
+          },
+          "mc2_difference": {
+            "estimate": 0.23347177365949,
+            "lower": 0.16401465240240343,
+            "upper": 0.2974053143872601
+          }
+        },
+        "shift": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.18181818181818182,
+            "lower": 0.10160427807486631,
+            "upper": 0.25133689839572193
+          },
+          "mc2_difference": {
+            "estimate": 0.2169640540123981,
+            "lower": 0.18496013272591916,
+            "upper": 0.24734141145599509
+          }
+        }
+      }
+    },
+    "isotropic_5": {
+      "adjusted": {
+        "gate_pass": true,
+        "mc1_difference": {
+          "estimate": 0.16877637130801687,
+          "lower": 0.07172995780590717,
+          "upper": 0.2616033755274262
+        },
+        "mc2_difference": {
+          "estimate": 0.2209343299547944,
+          "lower": 0.18008537738418354,
+          "upper": 0.26058744109202014
+        }
+      },
+      "strata": {
+        "id": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.26,
+            "lower": 0.08,
+            "upper": 0.4
+          },
+          "mc2_difference": {
+            "estimate": 0.24536930756835212,
+            "lower": 0.1709804127738208,
+            "upper": 0.3137270530711432
+          }
+        },
+        "shift": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.1443850267379679,
+            "lower": 0.058823529411764705,
+            "upper": 0.21390374331550802
+          },
+          "mc2_difference": {
+            "estimate": 0.21440091348058113,
+            "lower": 0.18256157929964142,
+            "upper": 0.24504111377409665
+          }
+        }
+      }
+    },
+    "noop": {
+      "adjusted": {
+        "gate_pass": true,
+        "mc1_difference": {
+          "estimate": 0.2869198312236287,
+          "lower": 0.17721518987341772,
+          "upper": 0.38396624472573837
+        },
+        "mc2_difference": {
+          "estimate": 0.2986915233364391,
+          "lower": 0.25076450691518337,
+          "upper": 0.3450513847906796
+        }
+      },
+      "strata": {
+        "id": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.36,
+            "lower": 0.14,
+            "upper": 0.52
+          },
+          "mc2_difference": {
+            "estimate": 0.31483196645814954,
+            "lower": 0.23410558890601166,
+            "upper": 0.3920107230203902
+          }
+        },
+        "shift": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.26737967914438504,
+            "lower": 0.17647058823529413,
+            "upper": 0.34759358288770054
+          },
+          "mc2_difference": {
+            "estimate": 0.29437589683330806,
+            "lower": 0.2543146248086072,
+            "upper": 0.3306520231988049
+          }
+        }
+      }
+    },
+    "unprompted_last_token": {
+      "adjusted": {
+        "gate_pass": true,
+        "mc1_difference": {
+          "estimate": 0.2869198312236287,
+          "lower": 0.17721518987341772,
+          "upper": 0.38396624472573837
+        },
+        "mc2_difference": {
+          "estimate": 0.2954342011595778,
+          "lower": 0.24675572986151995,
+          "upper": 0.34285767458095656
+        }
+      },
+      "strata": {
+        "id": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.36,
+            "lower": 0.14,
+            "upper": 0.52
+          },
+          "mc2_difference": {
+            "estimate": 0.3148549832320861,
+            "lower": 0.2341417523254932,
+            "upper": 0.3921287000276036
+          }
+        },
+        "shift": {
+          "gate_pass": true,
+          "mc1_difference": {
+            "estimate": 0.26737967914438504,
+            "lower": 0.17647058823529413,
+            "upper": 0.34759358288770054
+          },
+          "mc2_difference": {
+            "estimate": 0.29024147868029754,
+            "lower": 0.25027579341678335,
+            "upper": 0.3267390858046573
+          }
+        }
+      }
+    }
+  },
+  "controls": {
+    "isotropic_1": {
+      "calibrated": {
+        "mc1": 0.350210970464135,
+        "mc2": 0.49850582958894873,
+        "mc3": 0.2981414506730962
+      },
+      "raw": {
+        "mc1": 0.350210970464135,
+        "mc2": 0.6133545505504743,
+        "mc3": 0.2981414506730962
+      },
+      "temperature": 9.999994208919581
+    },
+    "isotropic_2": {
+      "calibrated": {
+        "mc1": 0.3459915611814346,
+        "mc2": 0.5094226531855821,
+        "mc3": 0.3037371910789632
+      },
+      "raw": {
+        "mc1": 0.3459915611814346,
+        "mc2": 0.6219262354145746,
+        "mc3": 0.3037371910789632
+      },
+      "temperature": 9.999993520646923
+    },
+    "isotropic_3": {
+      "calibrated": {
+        "mc1": 0.379746835443038,
+        "mc2": 0.5274395287365014,
+        "mc3": 0.3208860759493671
+      },
+      "raw": {
+        "mc1": 0.379746835443038,
+        "mc2": 0.6327067140110031,
+        "mc3": 0.3208860759493671
+      },
+      "temperature": 9.999996318117299
+    },
+    "isotropic_4": {
+      "calibrated": {
+        "mc1": 0.37130801687763715,
+        "mc2": 0.5265536532646559,
+        "mc3": 0.3360156720916215
+      },
+      "raw": {
+        "mc1": 0.37130801687763715,
+        "mc2": 0.636075493738071,
+        "mc3": 0.3360156720916215
+      },
+      "temperature": 9.99999425599662
+    },
+    "isotropic_5": {
+      "calibrated": {
+        "mc1": 0.4050632911392405,
+        "mc2": 0.5260660185980174,
+        "mc3": 0.3426059875426964
+      },
+      "raw": {
+        "mc1": 0.4050632911392405,
+        "mc2": 0.6543440807441003,
+        "mc3": 0.3426059875426964
+      },
+      "temperature": 9.999993881582782
+    },
+    "noop": {
+      "calibrated": {
+        "mc1": 0.2869198312236287,
+        "mc2": 0.44830882521637255,
+        "mc3": 0.22381957002210162
+      },
+      "raw": {
+        "mc1": 0.2869198312236287,
+        "mc2": 0.49503736220500216,
+        "mc3": 0.22381957002210162
+      },
+      "temperature": 9.999996000514155
+    },
+    "unprompted_last_token": {
+      "calibrated": {
+        "mc1": 0.2869198312236287,
+        "mc2": 0.4515661473932338,
+        "mc3": 0.22909383162547717
+      },
+      "raw": {
+        "mc1": 0.2869198312236287,
+        "mc2": 0.4993505369104417,
+        "mc3": 0.22909383162547717
+      },
+      "temperature": 9.999996103260058
+    }
+  },
+  "family_size": 7,
+  "layer": 21,
+  "method": "research/method-hypotheses-v10.md",
+  "model": "allenai/OLMo-2-1124-7B-Instruct@470b1fba1ae01581f270116362ee4aa1b97f4c84",
+  "null_seeds": [
+    2026090501,
+    2026090502,
+    2026090503,
+    2026090504,
+    2026090505
+  ],
+  "per_comparison_alpha": 0.0071428571428571435,
+  "resamples": 10000,
+  "seed": 20260905,
+  "specificity_stage_pass": true
+}

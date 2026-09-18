@@ -1,0 +1,25 @@
+[project]
+name = "project-smiles"
+version = "0.1.0"
+description = "Projection-Transport Steering for conditional control of reasoning behavior"
+requires-python = ">=3.11"
+dependencies = [
+    "torch==2.10.0",           # remote H100: 2.10.0 is the known-good max
+    "transformers>=4.53",
+    "datasets>=2.20",
+    "numpy>=1.26",
+    "scikit-learn>=1.4",
+    "accelerate>=0.30",
+    "sae-lens>=6.0",           # pretrained SAE zoo (Gemma Scope JumpReLU, SAEBench TopK/vanilla)
+]
+
+# Run scripts as modules from the repo root, e.g.
+#   uv run python -m behaviour_specific.overconfidence.compare_methods --n 100
+# The Makefile wraps these. `uv sync` creates the environment from the lock.
+
+[tool.uv]
+package = false          # this is an application (a tree of scripts), not a library to build
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
