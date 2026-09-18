@@ -7,13 +7,13 @@ Minimal reproducibility package for **Projection-Transport Steering: Conditional
 - [Reproducibility guide](REPRODUCIBILITY.md)
 - [Post-review evidence](rebuttal/)
 
-## Result
+## Results
 
-Projection-Transport Steering rewrites only a low-dimensional behavioral projection and composes the action with a trace-level detector. In the main Gemma/MMLU evaluation, the gated action improves the joint selectivity/accuracy trade-off over additive steering, prompting, CAST-style steering, Linear-AcT, and MiMiC under the same records and readouts.
+Projection-Transport Steering separates two decisions that fixed-vector methods conflate: when the model should be changed and how its activations should move. Across five resampled MMLU subsets, gated ablation reaches **+0.266 selectivity with no detectable accuracy change**. The fixed additive edit is essentially nonselective and lowers accuracy, showing that stronger global steering is not a substitute for targeted control.
 
-The post-review held-out experiment extends the detector-axis result to OLMo-2-7B on 237 TruthfulQA questions. Against a norm-matched spherical action, calibrated MC2 improves by +0.137 with adjusted 95% CI [+0.105, +0.168], and MC1 improves by +0.105 with adjusted 95% CI [+0.025, +0.177]. All seven pre-frozen construction and specificity controls pass.
+The held-out confirmation reaches the same conclusion beyond Gemma. On OLMo-2/TruthfulQA, the detector-axis action improves calibrated truthfulness by **+0.137** over a norm-matched action, also improves correct-answer selection, and passes all seven predeclared construction controls.
 
-The paper limits the claim to the evaluated settings. Full stress-test outcomes remain available in the appendix and evidence packet.
+The practical result is simple: detect whether intervention is warranted, then apply an input-dependent edit confined to the behavioral projection. Claims remain limited to the evaluated settings; the appendix and rebuttal packet preserve the full stress-test boundary.
 
 ## Repository map
 

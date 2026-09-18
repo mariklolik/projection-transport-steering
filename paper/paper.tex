@@ -125,38 +125,26 @@
 \email{irapiont@yandex.ru}
 
 \begin{abstract}
-Additive activation steering; adding a fixed vector $\alpha v$ to the residual
-stream; is the standard tool for controlling LLM behavior, but when applied to
-reasoning-time overconfidence it acts as a \emph{global hedging knob}: at the dose
-that removes all overconfident-wrong answers it also destroys $98.7\%$ of
-confident-right ones. We explain and repair this failure. First, we recast every
-linear steering intervention as a scalar \emph{transfer function} acting on the
-projection $p=\langle h,\hat v\rangle$ and prove that, among all interventions
-supported on a behavioral subspace that achieve a target projection distribution,
-the (quantile / Bures--Wasserstein) optimal-transport map minimizes the expected
-intervention norm; additive steering being its degenerate pure-shift case.
-Second, we prove an impossibility result: selectivity along an axis is bounded
-by subpopulation separability on it; the measured $d=0.049$ between
-overconfident-wrong and confident-right states forces any one-dimensional
-method; including the additive baseline; to hedge indiscriminately. Third, we combine a Neyman--Pearson
-optimal (LDA) gate on a second, detection axis (trace-level AUROC $0.773$) with the
-optimal transport map, yielding a conditional method that is optimal in each
-factor. Empirically on MMLU (five evaluation seeds, all methods on the
-identical protocol) our gated ablation attains selectivity $+0.266\pm0.112$
-where additive steering measures $+0.003\pm0.006$ and prompting $+0.066$;
-at \emph{no accuracy cost} ($+0.009\pm0.036$) and with the best calibration
-(ECE $0.093$) and selective-prediction (AURC $0.387$) scores in the
-comparison. Faithful reimplementations of the strongest published methods are
-beaten simultaneously on every reported axis in this setting: $+24\%$ relative selectivity over
-CAST-style conditional steering (which loses $4.3\pm2.9$ accuracy points) and
-$+37\%$ over MiMiC's full-space affine map (winning on all five seeds) at
-$1/2304$ of its per-token cost. A post-review held-out experiment confirms
-the detector-axis action on OLMo-2/TruthfulQA against a norm-matched action and
-seven pre-frozen construction controls. The
-action operators cost one dot product per
-token ($<10^{-4}$ of a forward pass, provably the optimal order) and 19~KB of
-state per behavior; the evaluated trace gate is two-pass. We
-release code, directions, and full per-question rollouts.
+Activation steering can change language-model behavior, but global
+residual-stream shifts may suppress useful and harmful behavior together. For
+reasoning confidence, the standard additive edit removes overconfident errors
+only by collapsing justified confidence, so apparent calibration gains can
+reflect indiscriminate hedging rather than better control. We introduce
+Projection-Transport Steering, which treats steering as a projection-dependent
+transport problem and applies an action only when a separate trace-level
+detector fires. This separates the decision to intervene from the intervention
+itself, allowing abnormal activation tails to move while typical states remain
+largely untouched. Across five resampled MMLU subsets, gated ablation reaches
+selectivity $+0.266$ with no detectable accuracy change; additive steering
+provides essentially no selectivity and lowers accuracy. In a held-out
+OLMo-2/TruthfulQA evaluation, the detector-axis action improves calibrated
+truthfulness and correct-answer selection over a norm-matched action, with all
+seven predeclared construction controls passing. Formal results characterize
+the minimum projection-local intervention cost and detector-score separability
+under stated assumptions. These findings show that selective behavior control
+depends less on pushing activations harder than on separating detection from
+action. Steering systems should first determine when intervention is warranted,
+then use an input-dependent, projection-local edit.
 \end{abstract}
 
 \keywords{activation steering \and optimal transport \and calibration \and overconfidence \and mechanistic interpretability \and inference-time intervention.}

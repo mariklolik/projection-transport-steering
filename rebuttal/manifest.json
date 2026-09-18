@@ -1,11 +1,11 @@
 {
   "paper_pdf": {
     "path": "paper/paper.pdf",
-    "sha256": "dcce6f9eda01ecaed6ec53bbd81d768d7a7faa210aa7d9cdc32c34265d946c0b"
+    "sha256": "f37476f7e7cc239c79b4b50cb37186d89d0ea40c9f3ee5089c385dfa7f37fa84"
   },
   "paper_source": {
     "path": "paper/paper.tex",
-    "sha256": "59b22d5fa4dd57a75d1e6efcc551ad5b8a8c7c64ae8f3174b359c02c59f2cb1b"
+    "sha256": "05dc23a8a304e1306adc4fdb851f7f94e2762757e72fc2c07d93aa45706bae90"
   },
   "main_analysis": {
     "path": "results/steering_v2/analysis_v2.json",
