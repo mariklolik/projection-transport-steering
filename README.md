@@ -6,7 +6,7 @@ Minimal reproducibility package for **Projection-Transport Steering: Conditional
 - [LaTeX source](paper/paper.tex)
 - [Reproducibility guide](REPRODUCIBILITY.md)
 
-## Method in one picture
+## Method
 
 ![Measured activation movement under additive steering and gated ablation](docs/assets/measured-trace-movement.png)
 
@@ -18,7 +18,7 @@ Projection-Transport Steering separates two decisions that fixed-vector methods 
 
 ![Selectivity and accuracy trade-off across steering methods](docs/assets/selectivity-accuracy-frontier.png)
 
-*Selectivity--accuracy trade-off on the representative MMLU subset; right and up are better. Gated ablation achieves the strongest observed selectivity without the accuracy loss of additive and CAST-style actions. The paragraph above reports the five-subset mean.*
+*Selectivity-accuracy trade-off on the representative MMLU subset; right and up are better. Gated ablation achieves the strongest observed selectivity without the accuracy loss of additive and CAST-style actions. The paragraph above reports the five-subset mean.*
 
 The held-out confirmation reaches the same conclusion beyond Gemma. On OLMo-2/TruthfulQA, the detector-axis action improves calibrated truthfulness by **+0.137** over a norm-matched action, also improves correct-answer selection, and passes all seven predeclared construction controls.
 
