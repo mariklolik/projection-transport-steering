@@ -8,3 +8,9 @@ __pycache__/
 paper/fig_preview.*
 data_cache/
 models_specific/*/weights/
+artifacts/
+tmp/
+.external/
+output/
+.pytest_cache/
+.ruff_cache/

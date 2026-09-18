@@ -1,0 +1,684 @@
+{
+  "schema": "irc-baseline-dispatch-receipt-v2",
+  "status": "eight_workers_running_at_snapshot",
+  "config_sha256": "207e37dd9a7bf977378db65e41db53177451ee36a037e8d347beaa99c34a9acf",
+  "host": "avi-gn-fsk42",
+  "fresh_gpu_preflight": {
+    "status": "pass",
+    "gpu_rows": [
+      [
+        "0",
+        " GPU-988dde5b-1ad3-d864-244f-e0ffe6693cb6",
+        " 1",
+        " 0"
+      ],
+      [
+        "1",
+        " GPU-d632b062-2f86-7682-7e63-317347af5c84",
+        " 1",
+        " 0"
+      ],
+      [
+        "2",
+        " GPU-f666bb5e-f9e7-5ed1-458c-8ac103cd56f5",
+        " 1",
+        " 0"
+      ],
+      [
+        "3",
+        " GPU-28c6ca21-6f29-4c42-1990-04181256fe69",
+        " 1",
+        " 0"
+      ],
+      [
+        "4",
+        " GPU-c6f16b20-0db2-f335-7f1d-69b437de78a4",
+        " 1",
+        " 0"
+      ],
+      [
+        "5",
+        " GPU-65af5f4b-3576-0b2b-d60c-ba572b4e1fd6",
+        " 1",
+        " 0"
+      ],
+      [
+        "6",
+        " GPU-c41d19e6-5c03-b8af-b341-28118b5dc827",
+        " 1",
+        " 0"
+      ],
+      [
+        "7",
+        " GPU-6ca2a253-ebb0-dd33-2d24-6d05a60ca292",
+        " 1",
+        " 0"
+      ]
+    ],
+    "candidate_names_absent": true
+  },
+  "dispatch": [
+    {
+      "index": 0,
+      "name": "pts-irc-baseline-v2-c00",
+      "container_id": "32977ab148f1d68caf93976ad3246b70c340d6cf8e2109acc44156b3099fc256",
+      "dispatch_exit_code": 0
+    },
+    {
+      "index": 1,
+      "name": "pts-irc-baseline-v2-c01",
+      "container_id": "e0f45caef63d3959b6cb04616b5496c570c3aca1b6f7e9a4cfa2b5703bed6938",
+      "dispatch_exit_code": 0
+    },
+    {
+      "index": 2,
+      "name": "pts-irc-baseline-v2-c02",
+      "container_id": "56857eec580fc62ced81d55992d976258917559c84c203fe15bfe19e059de4c6",
+      "dispatch_exit_code": 0
+    },
+    {
+      "index": 3,
+      "name": "pts-irc-baseline-v2-c03",
+      "container_id": "ebcca23083306f3e59860db0ec2e63d0c6aba408ae3bdfae80a88a1bca7b7f5b",
+      "dispatch_exit_code": 0
+    },
+    {
+      "index": 4,
+      "name": "pts-irc-baseline-v2-c04",
+      "container_id": "9ec4441303fe7ea2cde9af5d5b295df47584b7253d3ebd5ee6652abf3197bffb",
+      "dispatch_exit_code": 0
+    },
+    {
+      "index": 5,
+      "name": "pts-irc-baseline-v2-c05",
+      "container_id": "92bb6ba82575061195283c60e1e5495fa42aaf428e51b81b87fd1d649bd6af52",
+      "dispatch_exit_code": 0
+    },
+    {
+      "index": 6,
+      "name": "pts-irc-baseline-v2-c06",
+      "container_id": "92a9fc88f49604bec6c989f44c070dfc229082a058870621db46996e7f6c99bf",
+      "dispatch_exit_code": 0
+    },
+    {
+      "index": 7,
+      "name": "pts-irc-baseline-v2-c07",
+      "container_id": "4713ff1151b0224abcb6114776806a427079b8767125df1885c35e1dd21826a5",
+      "dispatch_exit_code": 0
+    }
+  ],
+  "snapshot": {
+    "containers": [
+      {
+        "gpu": [
+          "0"
+        ],
+        "id": "32977ab148f1d68caf93976ad3246b70c340d6cf8e2109acc44156b3099fc256",
+        "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+        "mounts": [
+          {
+            "Destination": "/overlay",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/model",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v2/candidate_00",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/warm",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-static-native-cache-v1",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/work",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v2",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Type": "bind"
+          }
+        ],
+        "name": "/pts-irc-baseline-v2-c00",
+        "state": {
+          "Dead": false,
+          "Error": "",
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "OOMKilled": false,
+          "Paused": false,
+          "Pid": 3474706,
+          "Restarting": false,
+          "Running": true,
+          "StartedAt": "2026-09-07T22:40:18.63115092Z",
+          "Status": "running"
+        }
+      },
+      {
+        "gpu": [
+          "1"
+        ],
+        "id": "e0f45caef63d3959b6cb04616b5496c570c3aca1b6f7e9a4cfa2b5703bed6938",
+        "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+        "mounts": [
+          {
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/overlay",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/model",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v2/candidate_01",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/warm",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-static-native-cache-v1",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/work",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v2",
+            "Type": "bind"
+          }
+        ],
+        "name": "/pts-irc-baseline-v2-c01",
+        "state": {
+          "Dead": false,
+          "Error": "",
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "OOMKilled": false,
+          "Paused": false,
+          "Pid": 3474842,
+          "Restarting": false,
+          "Running": true,
+          "StartedAt": "2026-09-07T22:40:18.748950392Z",
+          "Status": "running"
+        }
+      },
+      {
+        "gpu": [
+          "2"
+        ],
+        "id": "56857eec580fc62ced81d55992d976258917559c84c203fe15bfe19e059de4c6",
+        "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+        "mounts": [
+          {
+            "Destination": "/warm",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-static-native-cache-v1",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/work",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v2",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/overlay",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/model",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v2/candidate_02",
+            "Type": "bind"
+          }
+        ],
+        "name": "/pts-irc-baseline-v2-c02",
+        "state": {
+          "Dead": false,
+          "Error": "",
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "OOMKilled": false,
+          "Paused": false,
+          "Pid": 3474773,
+          "Restarting": false,
+          "Running": true,
+          "StartedAt": "2026-09-07T22:40:18.679615783Z",
+          "Status": "running"
+        }
+      },
+      {
+        "gpu": [
+          "3"
+        ],
+        "id": "ebcca23083306f3e59860db0ec2e63d0c6aba408ae3bdfae80a88a1bca7b7f5b",
+        "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+        "mounts": [
+          {
+            "Destination": "/model",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v2/candidate_03",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/warm",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-static-native-cache-v1",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/work",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v2",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/overlay",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Type": "bind"
+          }
+        ],
+        "name": "/pts-irc-baseline-v2-c03",
+        "state": {
+          "Dead": false,
+          "Error": "",
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "OOMKilled": false,
+          "Paused": false,
+          "Pid": 3474928,
+          "Restarting": false,
+          "Running": true,
+          "StartedAt": "2026-09-07T22:40:18.814542119Z",
+          "Status": "running"
+        }
+      },
+      {
+        "gpu": [
+          "4"
+        ],
+        "id": "9ec4441303fe7ea2cde9af5d5b295df47584b7253d3ebd5ee6652abf3197bffb",
+        "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+        "mounts": [
+          {
+            "Destination": "/overlay",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/model",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v2/candidate_04",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/warm",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-static-native-cache-v1",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/work",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v2",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Type": "bind"
+          }
+        ],
+        "name": "/pts-irc-baseline-v2-c04",
+        "state": {
+          "Dead": false,
+          "Error": "",
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "OOMKilled": false,
+          "Paused": false,
+          "Pid": 3474999,
+          "Restarting": false,
+          "Running": true,
+          "StartedAt": "2026-09-07T22:40:18.872954835Z",
+          "Status": "running"
+        }
+      },
+      {
+        "gpu": [
+          "5"
+        ],
+        "id": "92bb6ba82575061195283c60e1e5495fa42aaf428e51b81b87fd1d649bd6af52",
+        "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+        "mounts": [
+          {
+            "Destination": "/model",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v2/candidate_05",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/warm",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-static-native-cache-v1",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/work",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v2",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/overlay",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Type": "bind"
+          }
+        ],
+        "name": "/pts-irc-baseline-v2-c05",
+        "state": {
+          "Dead": false,
+          "Error": "",
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "OOMKilled": false,
+          "Paused": false,
+          "Pid": 3475053,
+          "Restarting": false,
+          "Running": true,
+          "StartedAt": "2026-09-07T22:40:18.932948334Z",
+          "Status": "running"
+        }
+      },
+      {
+        "gpu": [
+          "6"
+        ],
+        "id": "92a9fc88f49604bec6c989f44c070dfc229082a058870621db46996e7f6c99bf",
+        "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+        "mounts": [
+          {
+            "Destination": "/warm",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-static-native-cache-v1",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/work",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v2",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/overlay",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/model",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v2/candidate_06",
+            "Type": "bind"
+          }
+        ],
+        "name": "/pts-irc-baseline-v2-c06",
+        "state": {
+          "Dead": false,
+          "Error": "",
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "OOMKilled": false,
+          "Paused": false,
+          "Pid": 3475211,
+          "Restarting": false,
+          "Running": true,
+          "StartedAt": "2026-09-07T22:40:19.142081857Z",
+          "Status": "running"
+        }
+      },
+      {
+        "gpu": [
+          "7"
+        ],
+        "id": "4713ff1151b0224abcb6114776806a427079b8767125df1885c35e1dd21826a5",
+        "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+        "mounts": [
+          {
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/overlay",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/model",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/out",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": true,
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v2/candidate_07",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/warm",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-static-native-cache-v1",
+            "Type": "bind"
+          },
+          {
+            "Destination": "/work",
+            "Mode": "",
+            "Propagation": "rprivate",
+            "RW": false,
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v2",
+            "Type": "bind"
+          }
+        ],
+        "name": "/pts-irc-baseline-v2-c07",
+        "state": {
+          "Dead": false,
+          "Error": "",
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "OOMKilled": false,
+          "Paused": false,
+          "Pid": 3475162,
+          "Restarting": false,
+          "Running": true,
+          "StartedAt": "2026-09-07T22:40:19.070289083Z",
+          "Status": "running"
+        }
+      }
+    ],
+    "gpu": "0, GPU-988dde5b-1ad3-d864-244f-e0ffe6693cb6, 16824, 0\n1, GPU-d632b062-2f86-7682-7e63-317347af5c84, 16560, 0\n2, GPU-f666bb5e-f9e7-5ed1-458c-8ac103cd56f5, 16542, 0\n3, GPU-28c6ca21-6f29-4c42-1990-04181256fe69, 18412, 0\n4, GPU-c6f16b20-0db2-f335-7f1d-69b437de78a4, 18612, 0\n5, GPU-65af5f4b-3576-0b2b-d60c-ba572b4e1fd6, 18250, 6\n6, GPU-c41d19e6-5c03-b8af-b341-28118b5dc827, 18172, 0\n7, GPU-6ca2a253-ebb0-dd33-2d24-6d05a60ca292, 18172, 0\n"
+  },
+  "scope": "Running is not completed; zero reference, fit and selection coverage pending. Current State.ExitCode0 on a running container is not a terminal success."
+}

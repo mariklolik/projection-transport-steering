@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "record_id": "irc-data-and-cuda-receipt-v1",
+  "timestamp": "2026-09-07T13:59:18Z",
+  "repository": "git@github.com:mariklolik/projection-transport-steering.git",
+  "working_directory": "/Users/mekashirskiy/projection-transport-steering",
+  "scientific_maturity": "EVIDENCE_AVAILABLE",
+  "workflow_mode": "DRAFT_FROM_EVIDENCE audit notes",
+  "persistent_goal_status": "active",
+  "fair_strong_gate": "BLOCKED",
+  "input_sha256": {
+    "research/benchmark-reset-v1.md": "1fa58add808f961cadc1c5e18770021d6bd746ba57f4f058c4a3dde6fe772af1",
+    "research/irc-integration-receipt-v1.json": "64f775cdb0cdbd9c56570ed5719ee07ce963023f9e394309751f930384cd585c",
+    "research/irc-measurement-and-allocation-v1.md": "d20f998f79ddbf2ae1457538723acbebcdef2839ee0c4ad7e0b705b571e19788",
+    "research/irc-exposure-spec-v1.json": "a568cc15b416530cf80e5ae932fac995e79136fcaae6589cb0db19e5d195cbb9",
+    "artifacts/data/irc_v1_allocations/manifest.json": "e489f1273b1c667ac5f5bbc35963a5ed480a01224f155cf52ee56bbd79083156",
+    "tests/test_reft_conformance.py": "13cdd07b9d77d0f048ab1fbdb2090423848a8c7eb6ee06d8f411478b59600d1f",
+    "scripts/audit_irc_sources.py": "dde134f8ddaef23145b46432939e1a94656fa2f15c8e8cdeda3cb38633e3a009",
+    "scripts/materialize_irc_data.py": "808f82f1bccec789b69785f979f46bf76e6db8c53bc093a50de27a2f0dee361f",
+    "src/projection_transport_steering/outcome_score.py": "a4497fc2777f433fdefbabd684f1b4643e8b23bb90a2993ad6812e6e068817d7",
+    "src/projection_transport_steering/splits.py": "9886bc031fe6a89c719ac645bd0fdfab24fb282e776085a018bc8087b69c5446"
+  },
+  "output_sha256": {
+    "research/irc-data-and-cuda-audit-v1.md": "9122d1cf5c22877f635902bf72d58510e77b984b2e76de9de50c64b5c90de88a",
+    "research/irc-cuda-runtime-check-v1.json": "898343a101eb2cf2b2190ab4829bb7027c23ce2efadc761b28c55140bf92bdce",
+    "research/research-reset-plan-v1.md": "e0862612d229ffb562b1afe3b7c30a3e605bf28d449df419a6fe58a3b4dfa690",
+    "research/claim-ledger.md": "8bca63388a16d5d88c7d47d5a5ebf940546a3adae1da2d1bd498eae30a413332",
+    "research/evidence-manifest.md": "69ba2a037d17d6c92f002f73912a0ebd5329252e7bf615aa5cd5daf5c4c7ab67",
+    "README.md": "23033471208523c4eb3ac929c136218f55be06cc67f4c3069bb70b96e8019fe8",
+    "tests/test_math_outcomes.py": "f2ad6d3da213f37b026e632f2037c0fc7edaecabea2cb74c504bb0602d2bad01",
+    "tests/test_problem_clusters.py": "b0e33036d554f897407523f54ed30dc5248cb39f5142b7c0432197cd91cc2bfc",
+    "tests/test_materialize_irc_data.py": "83a3238ec2e506405a140bdce8dd4ee866c463d4c445c6585bfa0440c1baf1da",
+    "research/run-manifest.jsonl": "9fe9f4abddfa61a171ccd25d9dc41aa7833826541d946f8502cebd0b314c28f8",
+    "research/ai-assistance-ledger.jsonl": "bdba30fe001c7211f5c601e263fd6eb1511cf41649fcc5c5483e0e34c91f0f7b",
+    "artifacts/engineering/irc_native_branch_probe_v1/batch8.json": "f36d824a9162a77313f55085aadb25ab8ca354b19f9202dd77c23936c08bb9d3",
+    "artifacts/engineering/irc_oldruntime_reft_branch_v1/batch8.json": "4427203a4a213c8e285a4b6d9124d07679359e40d3ba588bd84186c4ab4f8095"
+  },
+  "packet_files_sha256": {
+    "development.json": "9548a94e5e8c5d3595f71101365cefa08a748e25ee3b75f3f6c944f9f59d1b76",
+    "fit.json": "2585bc810dc0089f342a1e578f37f4372f9c103090be0bba1932c56fdca6e4eb",
+    "reserve.json": "8479d1cb9bd77b47d5014a7dec6f859e9a40c0fc9c31ce3845577a86c1f3e9da",
+    "response.json": "b2a330be77ccc4173bd2cd5c2d905926cb257abc25fc2cf1d58a0a8d4b03c3e1",
+    "sealed_test.json": "e430b313fb73c6afbbd0cbd0509ab2646cca1e774f13a6a2798da2ab358577c4",
+    "selection.json": "e8e6d62b20f1a4fc6c10c177a223e2deecf6de99cda84bedb509940e648a58bc"
+  },
+  "gate_receipts": [
+    {
+      "skill": "research-paper-writing",
+      "result": "PASS",
+      "scope": "Current-state routing and audit-only prose boundary",
+      "checked_contract": "Earliest unmet dependencies are scientific runtime and useful fixed action; no evidence or paper promotion from engineering checks."
+    },
+    {
+      "skill": "scientific-claim-evidence",
+      "result": "PASS",
+      "scope": "C70 data-admission claim; engine-specific C69; C67 remains unverified",
+      "checked_contract": "Counts/source hashes and retained failures support only the recorded scope."
+    },
+    {
+      "skill": "scientific-results-and-figures",
+      "result": "PASS",
+      "scope": "Audit of allocation census, reference support, timing and planning examples",
+      "checked_contract": "No confidence interval on one timing; matched sensitivity populations; partial cost exclusions; no behavioral estimates; explicit discordance assumptions."
+    },
+    {
+      "skill": "scientific-research-strengthening",
+      "result": "BLOCKED",
+      "scope": "Fair-strong contribution gate, not inability to continue research",
+      "checked_contract": "Independent measurement/source critic resolved the present admission gap; empirical effects, strong comparators, causal controls and replication remain absent."
+    },
+    {
+      "skill": "experimental-setup-writer",
+      "result": "BLOCKED",
+      "scope": "Executable scientific setup",
+      "checked_contract": "Prospective evaluator/exposure contracts and source allocation are complete; real-question engine, training recipe and comparator execution freeze remain."
+    },
+    {
+      "skill": "scientific-avoid-ai-writing",
+      "result": "PASS",
+      "scope": "New audit notes and plan/ledger updates only",
+      "checked_contract": "DRAFT_FROM_EVIDENCE; no unmeasured superlative, answer-byte independence or universal contamination guarantee; adverse stack result retained."
+    },
+    {
+      "skill": "section-self-check",
+      "result": "PASS",
+      "scope": "Local audit-note self-check only",
+      "checked_contract": "Every result paragraph maps to recorded artifacts; known populations, exclusions, uncertainty, cost scope and unanswered questions are explicit."
+    }
+  ],
+  "passed_prior_gates_reused": [
+    {
+      "artifact": "research/irc-source-audit-v1.json",
+      "sha256": "8c0d0c6cfe2f0bd95e0455f3995cf63b30598415e427f30202ce5827ec7c6b07",
+      "scope": "Pinned full-record source reconciliation; original training-reference failure counts remain historical evidence."
+    },
+    {
+      "artifact": "research/literature-reset-v1.md",
+      "sha256": "8332d547593e1e1bad2ce4db77e22cd9244ce22fda1af9a6017f362a77cd24df",
+      "scope": "Unchanged primary-source contribution boundary; no new priority claim."
+    },
+    {
+      "artifact": "src/projection_transport_steering/branch_runtime.py",
+      "sha256": "bc90229eff21434b01bb238c117c56e423dbf213804fff4656ad44d8b97ece8b",
+      "scope": "Unchanged isolated continuation contract and its CPU tests."
+    }
+  ],
+  "invalidated_downstream_receipts": "Any future setup/result/prose claim using the old primary metric or assuming unresolved allocation/CUDA state must consume this amendment and receipt. Old experiment receipts remain immutable and valid only in their original scope.",
+  "downstream_not_reached": [
+    "Useful fixed-adapter gate",
+    "Action-response pilot and head fitting",
+    "Full-rollout development",
+    "Simultaneous sealed strong-comparator comparisons",
+    "Independent models and three behavior constructs",
+    "Evidence-locked skeleton and section production",
+    "Global and independent final review",
+    "Current venue submission compliance"
+  ],
+  "author_decisions_required": [],
+  "author_approval": "unverified",
+  "ai_assistance_ledger": "research/ai-assistance-ledger.jsonl",
+  "new_controller_fitted": false,
+  "new_behavioral_output": false,
+  "scientific_runtime_frozen": false,
+  "sota_achieved": false
+}

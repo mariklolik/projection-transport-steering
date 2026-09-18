@@ -1,0 +1,300 @@
+{
+  "schema": "irc-baseline-fit-closure-v3",
+  "recorded_at_utc": "2026-09-08 07:04:05 UTC",
+  "status": "complete_all8_fit_components_native_CPU_and_independent_audit_pass_selection_running",
+  "goal": {
+    "status": "active",
+    "SOTA_achieved": false,
+    "objective_file": "/Users/mekashirskiy/.codex/attachments/322808f2-1bda-44c4-bb66-c9855b21a266/goal-objective.md",
+    "objective_sha256": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a",
+    "scope_unchanged": "Full empirical steering efficacy against strongest resource-matched methods,3architecture families/3constructs,protected uncertainty/mechanism/utility evidence and ICLR-ready paper with proofs in appendix"
+  },
+  "previous_goal_turn": "progress: complete zero256 reference natively regraded, independently audited and failure-stratified",
+  "this_goal_turn": "progress: all8 complete fit packets and raw checkpoints captured/source-audited, online training diagnostics interpreted and independently reviewed; same8 GPU jobs now generate selection",
+  "artifact_sha256": {
+    "README.md": "9919f154f7d45b255ba5c70c8f1487ef54ff4c02512ab538ba873da5ca9c008e",
+    "research/research-reset-plan-v1.md": "4d6a224948f49f98c41c5dd4f4d8d1b4f8caeded784310cb66276500934d24b0",
+    "research/claim-ledger.md": "2b01cec8f604d595c7bb00d2067497a147caed1b4c1a797aa63aa44576e1a796",
+    "research/evidence-manifest.md": "f4b6bf85b801fb97db908be4ef1b8f9637f3c0476671c33736f2fe2a3ec26fa4",
+    "research/irc-baseline-fit-audit-v3.json": "6dc8af845bf18224fab9d9eb3382a7b5d7bddb0c420c4df68fa68cfd61c17e40",
+    "research/irc-baseline-fit-cpu-execution-v3.json": "f70657bd83c08c5498027903572c1ce62ad672941cb14f677c4942cb0c0dbb42",
+    "research/irc-baseline-fit-analysis-v3.md": "5e1b7dc213ec96f6e7e44b89c71a094ddfa91046423b7c525640217b801ecd6e",
+    "research/irc-baseline-fit-independent-review-v3.json": "eca00a4fd828f85f66f9ca183fccce1c68cf2e1e21eb5040202933f1aad8af0a",
+    "research/irc-baseline-config-v3.json": "61529de3e7cf2e865d147ca11e54388590bb50e12d8702c388adb2ed7702f7be",
+    "research/irc-baseline-launch-v3.json": "a7a465f6666ca147f04c6fc997ade95797fe76fc9b32157a2409b81d27ae59bd",
+    "research/irc-baseline-dispatch-receipt-v3.json": "ccd6313a0860c7b794a1b455a9d645a3716014c9750c922148886e11ff65562d",
+    "research/irc-baseline-execution-protocol-v3.md": "5d708e9bf2b55df4a328196f9b922faffbacdfaa23f5fe1359272bf2dd5d9907",
+    "research/irc-baseline-analysis-contract-v2.md": "84d9607df875b37cd8b41a69ba7cccecb81bf02a09c64cdc1f182fe0ce474ed4",
+    "research/irc-baseline-analysis-cpu-preflight-v2.json": "ce7739abd3a207146b9c631515728e20c12af35bcc3bd7b4ac493445e3c5ebc0",
+    "research/irc-fit-bridge-independent-review-v9.json": "0f6414f7744b04b519e99ad2aabbe14a2a75ea13d618bb92cdfff6e21a824074",
+    "scripts/irc_baseline_audit.py": "74f446d955d48097ff68b451f0e13ffc9cd3db66280527761417ebcfb9c376ce",
+    "scripts/irc_baseline_support.py": "0daeae4170b315dc69a8f547bf4fff13e3a7e931623864bc2caefdc6a91067b2",
+    "scripts/analyze_irc_baseline.py": "797e32fa1489832ae161f51ebbe33696e3426a66fb237a0e2f54bee35db7d1a3",
+    "scripts/audit_irc_baseline.py": "3da4c8f252c5c3992379b2fdce258e5683dbfb37e61bafc027b8d09bb4576b38",
+    "artifacts/data/irc_v1_allocations/fit.json": "2585bc810dc0089f342a1e578f37f4372f9c103090be0bba1932c56fdca6e4eb",
+    "artifacts/data/irc_v1_allocations/selection.json": "e8e6d62b20f1a4fc6c10c177a223e2deecf6de99cda84bedb509940e648a58bc",
+    "artifacts/selection/irc_baseline_v3/fit-complete-v1.tar": "0237ddfdbc119af2a942f1debc48c33ca9a41807ba8f7c1433c3c3c09175e3da",
+    "artifacts/selection/irc_baseline_v3/fit-complete-v1-inventory.jsonl": "4fde669e02cad87609df0fd52b735e322e0448c6d5f7e68001ba794af29f32d5",
+    "artifacts/selection/irc_baseline_v3/fit-audit-v1/result.json": "79f9fed0f91da13de053a8e74caf7d287d8d6b79506aac6f7564f5c69deca267",
+    "artifacts/selection/irc_baseline_v3/fit-audit-v1/terminal.json": "172982c707badf0b0245e965e59c4c3c39f29fe59514fea351767804aad6cf49",
+    "artifacts/selection/irc_baseline_v3/fit-audit-v1/inspect.json": "38c18fb72cddfe10a94a2167b5bd610bb6d179da692eaccede6a09191d39afa5",
+    "artifacts/selection/irc_baseline_v3/fit-audit-v1/stdout.log": "416edc6e3c0805a71311e1f04d0f1af93fe292100e275b1f9a3d5c9643d3c604",
+    "artifacts/selection/irc_baseline_v3/fit-audit-v1/stderr.log": "867ea661c1104942f26006b234e37a66da4f7b2becaa4517c57bfc380494819e",
+    "artifacts/selection/irc_baseline_v3/zero-audit-v1/result.json": "14e1bc01402e39ff25a90fd160e0cd2606add34ff38a1cce992cc203ca8000ac",
+    "research/irc-baseline-zero-closure-v3.json": "b2060e06b0f7c8f8f31987cd8181a094782763bb7417a435dd21ec43ba0f041f",
+    "research/run-manifest.jsonl": "f69c62c68e0a72d03ec90eb1bf00787a2542bc2e76ad2b8550c32b16a1e32772",
+    "research/ai-assistance-ledger.jsonl": "80b5259e83597fc3aff969ce020041597bc92d327a818b17201f81498a2b6c2b"
+  },
+  "source_precedence": "Original objective/frozen contracts; immutable source and actual raw fit/checkpoint/archive; exact native CPU audit; independent archive/claim review; descriptive analysis. No narrative substitutes for pending producer/selection outcomes.",
+  "preserved_creation_time_snapshots": {
+    "protocol": "research/irc-baseline-fit-audit-v3.json",
+    "CPU_execution": "research/irc-baseline-fit-cpu-execution-v3.json",
+    "ready_statuses_preserved": true,
+    "current_execution_status_superseded_by_this_receipt": true,
+    "original_dispatch_receipt_unchanged": true,
+    "old_zero_closure_doc_hashes": "Historical snapshot; current README/plan/claim/evidence/ledger hashes superseded here, not silently rewritten"
+  },
+  "complete_fit_component": {
+    "candidates": 8,
+    "fit_questions_unique": 1500,
+    "epochs_each": 12,
+    "optimizer_updates_each": 564,
+    "total_updates": 4512,
+    "total_microbatches": 72000,
+    "target_tokens_each_epoch": 356743,
+    "total_target_token_exposures": 34247328,
+    "all_stdout_JSONL_joins": 4512,
+    "independent_units": "Same1500 fitting questions reused by all8 candidates and12epochs; not144000 independent questions or34247328 independent tokens",
+    "all_six_raw_tensor_key_shape_dtype_scalar_finite_contracts_pass": true,
+    "base_model_loaded_by_audit": false,
+    "raw_adapter_loaded_by_audit": "weights_only CPU; no restore, forward or generation",
+    "real_producer_fit_receipt_verified": false,
+    "real_fit_duration_seconds": null,
+    "base_final_versions_verified": false,
+    "whole_candidate_comparison_complete": false
+  },
+  "native_CPU": {
+    "result_status": "pass_complete_fit_component_only",
+    "result_sha256": "79f9fed0f91da13de053a8e74caf7d287d8d6b79506aac6f7564f5c69deca267",
+    "returncode": 0,
+    "CPU_audit_seconds": 18.527369648218155,
+    "controller_seconds": 19.649426262825727,
+    "container_seconds": "19.551475247",
+    "analysis_source_SHA": "74f446d955d48097ff68b451f0e13ffc9cd3db66280527761417ebcfb9c376ce",
+    "exact_analysis_code_SHA": "45982ec0a77003d20842fbebb815d0b99d548b4119db669146d7cc06db77833f",
+    "source_files": 67,
+    "native_versions": 11,
+    "GPU_requested": false,
+    "network": "none",
+    "tests_rerun": 0,
+    "zero_regrading": 0,
+    "selection_scoring": 0,
+    "automatic_retry": false,
+    "exact_command_and_controller": "research/irc-baseline-fit-cpu-execution-v3.json:native_CPU",
+    "controller_completion_stdout": "{\"terminal\": {\"returncode\": 0, \"controller_seconds\": 19.649426262825727, \"GPU\": false, \"automatic_retry\": false}, \"stdout\": \"{\\\"event\\\": \\\"fit_component_audited\\\", \\\"index\\\": 0, \\\"updates\\\": 564, \\\"target_tokens\\\": 4280916, \\\"epochs\\\": 12}\\n{\\\"event\\\": \\\"fit_component_audited\\\", \\\"index\\\": 1, \\\"updates\\\": 564, \\\"target_tokens\\\": 4280916, \\\"epochs\\\": 12}\\n{\\\"event\\\": \\\"fit_component_audited\\\", \\\"index\\\": 2, \\\"updates\\\": 564, \\\"target_tokens\\\": 4280916, \\\"epochs\\\": 12}\\n{\\\"event\\\": \\\"fit_component_audited\\\", \\\"index\\\": 3, \\\"updates\\\": 564, \\\"target_tokens\\\": 4280916, \\\"epochs\\\": 12}\\n{\\\"event\\\": \\\"fit_component_audited\\\", \\\"index\\\": 4, \\\"updates\\\": 564, \\\"target_tokens\\\": 4280916, \\\"epochs\\\": 12}\\n{\\\"event\\\": \\\"fit_component_audited\\\", \\\"index\\\": 5, \\\"updates\\\": 564, \\\"target_tokens\\\": 4280916, \\\"epochs\\\": 12}\\n{\\\"event\\\": \\\"fit_component_audited\\\", \\\"index\\\": 6, \\\"updates\\\": 564, \\\"target_tokens\\\": 4280916, \\\"epochs\\\": 12}\\n{\\\"event\\\": \\\"fit_component_audited\\\", \\\"index\\\": 7, \\\"updates\\\": 564, \\\"target_tokens\\\": 4280916, \\\"epochs\\\": 12}\\n{\\\"event\\\": \\\"fit_audit_terminal\\\", \\\"status\\\": \\\"pass_complete_fit_component_only\\\", \\\"CPU_seconds\\\": 18.527369648218155, \\\"workers\\\": 8, \\\"totals\\\": {\\\"candidates\\\": 8, \\\"unique_fit_questions\\\": 1500, \\\"question_epoch_exposures_per_candidate\\\": 18000, \\\"updates\\\": 4512, \\\"target_tokens\\\": 34247328, \\\"microbatches\\\": 72000}, \\\"failure\\\": null}\\n\", \"stderr\": \"/work/.external/math-author-source/modeling/math_equivalence.py:104: SyntaxWarning: invalid escape sequence '\\\\%'\\n  string = string.replace(\\\"\\\\%\\\", \\\"\\\")\\n<unknown>:51: SyntaxWarning: invalid escape sequence '\\\\l'\\n<unknown>:53: SyntaxWarning: invalid escape sequence '\\\\s'\\n\", \"result_sha256\": \"79f9fed0f91da13de053a8e74caf7d287d8d6b79506aac6f7564f5c69deca267\"}\n"
+  },
+  "capture": {
+    "timestamp": "2026-09-08T06:38:01.629339+00:00",
+    "archive": "artifacts/selection/irc_baseline_v3/fit-complete-v1.tar",
+    "bytes": 541716480,
+    "archive_sha256": "0237ddfdbc119af2a942f1debc48c33ca9a41807ba8f7c1433c3c3c09175e3da",
+    "payloads": 42,
+    "fit_checkpoint_files": 16,
+    "capture_log_dispatch_files": 26,
+    "local_transfer_exit": 0,
+    "transfer_completed_before_local_verification": true,
+    "extraction_required": false,
+    "fit_file_hashes_before_after_capture_and_CPU_match": true,
+    "all_original8workers_running_at_capture": true,
+    "terminal_producer_receipts_at_capture": 0
+  },
+  "constructed_expected_inputs": {
+    "coverage": "Original frozen recipe and exact native target examples, not values invented from fitting logs",
+    "checkpoint": "Actual captured raw checkpoint hash",
+    "time": "Same-FSK capture timestamp minus original Docker StartedAt; elapsed wall-clock envelope contains zero/loading/potential selection",
+    "helper_fit_seconds_removed": true,
+    "output_field": "fit_duration_upper_bound_seconds",
+    "measured_fit_duration_field": null,
+    "used_in_component_cost": false,
+    "used_as_GPU_charge": false,
+    "final_producer_joins_still_required": true
+  },
+  "descriptive_results": {
+    "analysis_path": "research/irc-baseline-fit-analysis-v3.md",
+    "all8_online_epoch_losses_monotonically_decrease": true,
+    "online_loss_is_fixed_checkpoint_postepoch_eval": false,
+    "online_loss_is_heldout_endpoint": false,
+    "full_minus_prompt_final_online_loss": [
+      -0.014751941947162395,
+      -0.02318963308484745,
+      -0.027449847841623798,
+      -0.036949745071700624
+    ],
+    "preclip_norm_above1_updates": 183,
+    "preclip_norm_maximum": 5.8837456703186035,
+    "clipping_failure_inferred": false,
+    "first_zero_lr_update_no_changes_each_candidate": true,
+    "training_seeds": 1,
+    "training_loss_selection_used": false,
+    "convergence_or_extra_epochs_admitted": false
+  },
+  "cost": {
+    "summed_update_timer_seconds": 18890.589395914227,
+    "summed_update_component_H100_hours": 5.247385943309507,
+    "nested_components_added_to_terminal_cost": false,
+    "actual_complete_fit_or_serving_cost_claimed": false,
+    "baseline_v2_H100_hours_preserved": 7.605374254722222,
+    "baseline_H100_hours_available_before_v3": 40.39462574527778,
+    "v3_initial_reservation_H100_hours": 40,
+    "v3_inclusive_seconds_each_worker": 18000,
+    "deadlines_changed": false,
+    "new_GPU_runs": 0,
+    "engineering_pool_reallocated": false,
+    "actual_v3_terminal_cost": null
+  },
+  "independent_review": {
+    "path": "research/irc-baseline-fit-independent-review-v3.json",
+    "sha256": "eca00a4fd828f85f66f9ca183fccce1c68cf2e1e21eb5040202933f1aad8af0a",
+    "status": "PASS_COMPLETE_FIT_COMPONENT_ONLY",
+    "archive_record_checks": 32126,
+    "native_CPU_and_analysis_checks": 112,
+    "counts_are_independent_replicates": false,
+    "reviewer_model_grader_GPU_test_remote_calls": 0,
+    "reviewer_tensor_loads": 0,
+    "reviewer_checker_failure": "One invalid local zero-capture locator; corrected by reading existing zero tar. Both executed code/raw attempts retained. No output/label/generation change.",
+    "provenance_correction": "Ambiguous human_review metadata renamed to explicit AI critic review; no human author approval is claimed. Numerical checks and raw traces preserved.",
+    "prior_reviews_preserved": 5
+  },
+  "runtime_observation": {
+    "timestamp": "2026-09-08T06:57:30.481934+00:00",
+    "same_original_workers": 8,
+    "all_running": true,
+    "fit_updates": [
+      564,
+      564,
+      564,
+      564,
+      564,
+      564,
+      564,
+      564
+    ],
+    "selection_completed_counts_only": [
+      88,
+      72,
+      112,
+      72,
+      56,
+      136,
+      232,
+      128
+    ],
+    "required_selection_questions_each": 256,
+    "no_OOM": true,
+    "restarts": 0,
+    "actual_command_env_mounts_GPU_binding_match": true,
+    "observation_exit_code": 0,
+    "source_readonly_observer": "research/irc-baseline-dispatch-receipt-v3.json:trace.postdispatch.code, extended only with last-fit/selection/file-size fields",
+    "observer_code": "import hashlib,json,subprocess\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nbase=Path(\"/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v3\")\nsource=Path(\"/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v3\")\nd=json.loads((source/\"research/irc-baseline-launch-v3.json\").read_text())\nc=json.loads((source/\"research/irc-baseline-config-v3.json\").read_text())\nrecords=[json.loads(line) for line in (base/\"dispatch.jsonl\").read_text().splitlines()]\nrows=[]\nfor record,item in zip(records,d[\"launches\"],strict=True):\n    info=json.loads(subprocess.check_output([\"sudo\",\"-n\",\"docker\",\"inspect\",record[\"container_id\"]],text=True))[0]\n    argv=item[\"command\"]\n    image_at=argv.index(c[\"runtime_identity\"][\"image\"])\n    assert info[\"Image\"]==c[\"runtime_identity\"][\"image\"]\n    assert info[\"Config\"][\"Entrypoint\"]==[\"timeout\"] and info[\"Config\"][\"Cmd\"]==argv[image_at+1:]\n    assert info[\"Config\"][\"User\"]==\"11027:11027\" and info[\"Config\"][\"WorkingDir\"]==\"/work\"\n    assert info[\"HostConfig\"][\"NetworkMode\"]==\"none\"\n    assert info[\"HostConfig\"][\"DeviceRequests\"][0][\"DeviceIDs\"]==[str(item[\"gpu\"])]\n    for target in (\"/work\",\"/model\",\"/ptsenv\",\"/overlay\"):\n        mount=next(m for m in info[\"Mounts\"] if m[\"Destination\"]==target)\n        assert not mount[\"RW\"]\n    assert not any(m[\"Destination\"]==\"/warm\" for m in info[\"Mounts\"])\n    env=info[\"Config\"][\"Env\"]\n    for index,value in enumerate(argv):\n        if value==\"--env\":\n            assert argv[index+1] in env\n    raw=subprocess.run([\"sudo\",\"-n\",\"docker\",\"logs\",record[\"container_id\"]],capture_output=True,text=True,check=True)\n    events=[]\n    for line in raw.stdout.splitlines():\n        if line.startswith(\"{\"):\n            events.append(json.loads(line))\n    progress=[e for e in events if e.get(\"event\") in (\"selection_chunk\",\"fit_update\",\"baseline_terminal\")]\n    rows.append({\"index\":record[\"index\"],\"container_id\":record[\"container_id\"],\"state\":info[\"State\"],\"restarts\":info[\"RestartCount\"],\"actual_argv_mounts_env_match\":True,\"last_progress_event\":progress[-1] if progress else None,\"last_fit_event\":next((e for e in reversed(events) if e.get(\"event\")==\"fit_update\"),None),\"selection_completed\":max([e[\"completed\"] for e in events if e.get(\"event\")==\"selection_chunk\" and e.get(\"condition\")==\"selection\"],default=0),\"fit_bytes\":(base/f\"candidate_{record['index']:02d}\"/\"run\"/\"fit.jsonl\").stat().st_size if (base/f\"candidate_{record['index']:02d}\"/\"run\"/\"fit.jsonl\").exists() else None,\"adapter_bytes\":(base/f\"candidate_{record['index']:02d}\"/\"run\"/\"adapter.pt\").stat().st_size if (base/f\"candidate_{record['index']:02d}\"/\"run\"/\"adapter.pt\").exists() else None})\ngpu=subprocess.check_output([\"nvidia-smi\",\"--query-gpu=index,memory.used,utilization.gpu\",\"--format=csv,noheader,nounits\"],text=True).strip()\nprint(json.dumps({\"timestamp\":datetime.now(timezone.utc).isoformat(),\"workers\":rows,\"gpu_snapshot\":gpu,\"snapshot_is_average_utilization\":False,\"scientific_comparison_complete\":False}),flush=True)\n",
+    "stdout": "{\"timestamp\": \"2026-09-08T06:57:30.481934+00:00\", \"workers\": [{\"index\": 0, \"container_id\": \"34fc26d5443a742936962c87a1ebe7dbaf2e9f9dbee2713a1f72c3e9f4efd1a5\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3772667, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:28.003521962Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"selection_chunk\", \"condition\": \"selection\", \"completed\": 88, \"seconds\": 18.875770643353462}, \"last_fit_event\": {\"event\": \"fit_update\", \"loss\": 0.4638754650950432, \"target_tokens\": 8341, \"active_positions\": 392, \"gradient_norm\": 0.38645219802856445, \"changed_parameters\": 2, \"microbatches\": 14, \"epoch\": 11, \"update\": 564, \"examples\": 28, \"indices_sha256\": \"605ae7570684d93fc3db9b9e83ce3898bac109df4834ebb5b2bcca4edd6069fb\", \"learning_rate\": 1.775147928994083e-06, \"seconds\": 4.968725044280291}, \"selection_completed\": 88, \"fit_bytes\": 202320, \"adapter_bytes\": 67210325}, {\"index\": 1, \"container_id\": \"286d5d2b8065bf16081910877092a8093293cd84ad639bbd6ee4a7d2b40ef501\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3772768, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:28.535552226Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"selection_chunk\", \"condition\": \"selection\", \"completed\": 72, \"seconds\": 90.6828473508358}, \"last_fit_event\": {\"event\": \"fit_update\", \"loss\": 0.5000509503297508, \"target_tokens\": 8341, \"active_positions\": 392, \"gradient_norm\": 0.3089888095855713, \"changed_parameters\": 2, \"microbatches\": 14, \"epoch\": 11, \"update\": 564, \"examples\": 28, \"indices_sha256\": \"605ae7570684d93fc3db9b9e83ce3898bac109df4834ebb5b2bcca4edd6069fb\", \"learning_rate\": 1.775147928994083e-06, \"seconds\": 4.081435266882181}, \"selection_completed\": 72, \"fit_bytes\": 202293, \"adapter_bytes\": 67210325}, {\"index\": 2, \"container_id\": \"bf634156e91fa313dd5c2621e0df0350033b220501b5aedaa63bda50f0ccc7af\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3772869, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:29.052450006Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"selection_chunk\", \"condition\": \"selection\", \"completed\": 112, \"seconds\": 31.183329980820417}, \"last_fit_event\": {\"event\": \"fit_update\", \"loss\": 0.4577599153853953, \"target_tokens\": 8341, \"active_positions\": 392, \"gradient_norm\": 0.41261667013168335, \"changed_parameters\": 2, \"microbatches\": 14, \"epoch\": 11, \"update\": 564, \"examples\": 28, \"indices_sha256\": \"605ae7570684d93fc3db9b9e83ce3898bac109df4834ebb5b2bcca4edd6069fb\", \"learning_rate\": 1.775147928994083e-06, \"seconds\": 5.008710693567991}, \"selection_completed\": 112, \"fit_bytes\": 202280, \"adapter_bytes\": 67308629}, {\"index\": 3, \"container_id\": \"4f174c1b31ae14e191dc0e3f39a3bfb4fc08515e3c0c8397523530d410b00425\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3772961, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:29.589838199Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"selection_chunk\", \"condition\": \"selection\", \"completed\": 72, \"seconds\": 37.66945595294237}, \"last_fit_event\": {\"event\": \"fit_update\", \"loss\": 0.4889036030508578, \"target_tokens\": 8341, \"active_positions\": 392, \"gradient_norm\": 0.3426378071308136, \"changed_parameters\": 2, \"microbatches\": 14, \"epoch\": 11, \"update\": 564, \"examples\": 28, \"indices_sha256\": \"605ae7570684d93fc3db9b9e83ce3898bac109df4834ebb5b2bcca4edd6069fb\", \"learning_rate\": 1.775147928994083e-06, \"seconds\": 4.146793399006128}, \"selection_completed\": 72, \"fit_bytes\": 202289, \"adapter_bytes\": 67308629}, {\"index\": 4, \"container_id\": \"3558be7597e85f371ebb128b3ef583943030607111622520c1041b52750d3d51\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3773045, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:30.124223741Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"selection_chunk\", \"condition\": \"selection\", \"completed\": 56, \"seconds\": 310.4819632098079}, \"last_fit_event\": {\"event\": \"fit_update\", \"loss\": 0.4565492747351527, \"target_tokens\": 8341, \"active_positions\": 8733, \"gradient_norm\": 0.34269922971725464, \"changed_parameters\": 2, \"microbatches\": 14, \"epoch\": 11, \"update\": 564, \"examples\": 28, \"indices_sha256\": \"605ae7570684d93fc3db9b9e83ce3898bac109df4834ebb5b2bcca4edd6069fb\", \"learning_rate\": 1.775147928994083e-06, \"seconds\": 4.9666827917099}, \"selection_completed\": 56, \"fit_bytes\": 202886, \"adapter_bytes\": 67210325}, {\"index\": 5, \"container_id\": \"ccf9dc1c4964ab3ea28d235ca66006b09272ba47fe8247e98b0cb59cbb415049\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3773133, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:30.609953706Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"selection_chunk\", \"condition\": \"selection\", \"completed\": 136, \"seconds\": 318.98828208073974}, \"last_fit_event\": {\"event\": \"fit_update\", \"loss\": 0.4802318075671792, \"target_tokens\": 8341, \"active_positions\": 8733, \"gradient_norm\": 0.29042553901672363, \"changed_parameters\": 2, \"microbatches\": 14, \"epoch\": 11, \"update\": 564, \"examples\": 28, \"indices_sha256\": \"605ae7570684d93fc3db9b9e83ce3898bac109df4834ebb5b2bcca4edd6069fb\", \"learning_rate\": 1.775147928994083e-06, \"seconds\": 4.061566177755594}, \"selection_completed\": 136, \"fit_bytes\": 202963, \"adapter_bytes\": 67210325}, {\"index\": 6, \"container_id\": \"ef90d3017d66e3de06820a2c9d10203f505f3aa184d77b7f99957e5416769f40\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3773232, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:31.130255285Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"selection_chunk\", \"condition\": \"selection\", \"completed\": 232, \"seconds\": 26.53787586092949}, \"last_fit_event\": {\"event\": \"fit_update\", \"loss\": 0.43530840147286654, \"target_tokens\": 8341, \"active_positions\": 8733, \"gradient_norm\": 0.3853019177913666, \"changed_parameters\": 2, \"microbatches\": 14, \"epoch\": 11, \"update\": 564, \"examples\": 28, \"indices_sha256\": \"605ae7570684d93fc3db9b9e83ce3898bac109df4834ebb5b2bcca4edd6069fb\", \"learning_rate\": 1.775147928994083e-06, \"seconds\": 4.990440938621759}, \"selection_completed\": 232, \"fit_bytes\": 202955, \"adapter_bytes\": 67308629}, {\"index\": 7, \"container_id\": \"57bb1cc316cd7d0b2b05c925dd5c4b0cbd42266431566a9d9ee944e0784416ea\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3773320, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:31.63816927Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"selection_chunk\", \"condition\": \"selection\", \"completed\": 128, \"seconds\": 39.90035027265549}, \"last_fit_event\": {\"event\": \"fit_update\", \"loss\": 0.45975182205438614, \"target_tokens\": 8341, \"active_positions\": 8733, \"gradient_norm\": 0.34121614694595337, \"changed_parameters\": 2, \"microbatches\": 14, \"epoch\": 11, \"update\": 564, \"examples\": 28, \"indices_sha256\": \"605ae7570684d93fc3db9b9e83ce3898bac109df4834ebb5b2bcca4edd6069fb\", \"learning_rate\": 1.775147928994083e-06, \"seconds\": 4.2345385402441025}, \"selection_completed\": 128, \"fit_bytes\": 202916, \"adapter_bytes\": 67308629}], \"gpu_snapshot\": \"0, 72112, 46\\n1, 65584, 51\\n2, 68746, 59\\n3, 70120, 58\\n4, 75128, 65\\n5, 69610, 58\\n6, 48974, 53\\n7, 80154, 47\", \"snapshot_is_average_utilization\": false, \"scientific_comparison_complete\": false}\n",
+    "instant_utilization_is_average_or_speedup": false
+  },
+  "skill_receipts": [
+    {
+      "skill": "scientific-claim-evidence",
+      "result": "PASS",
+      "scope": "C92 complete-fit qualification and C93 descriptive online training observation only",
+      "inputs": "Hash-bound source/config/native result/archive/independent review above",
+      "outputs": [
+        "research/claim-ledger.md",
+        "research/irc-baseline-fit-analysis-v3.md"
+      ],
+      "unresolved": "Final base/status/selection/cost, causal interpretation and SOTA not supported"
+    },
+    {
+      "skill": "scientific-results-and-figures",
+      "result": "PASS",
+      "scope": "96 online epoch aggregates, all8 original-fit coverage, checkpoint lineage and nested cost semantics",
+      "inputs": "Hash-bound native fit result and immutable raw fit records",
+      "outputs": [
+        "research/irc-baseline-fit-analysis-v3.md",
+        "research/evidence-manifest.md"
+      ],
+      "uncertainty": "No new inferential training-loss endpoint or fit-seed interval; full candidate paired BCa remains pending",
+      "visual": "Exact8-candidate online-training table only; no submission figure/prose"
+    },
+    {
+      "skill": "scientific-research-strengthening",
+      "result": "BLOCKED",
+      "scope": "Fair-strong central efficacy claim not yet established; not an operational blocker",
+      "inputs": "Current claims, unchanged benchmark/analysis contracts and completed zero+fit components",
+      "outputs": [
+        "research/research-reset-plan-v1.md"
+      ],
+      "decision": "Continue same8already-running selection jobs; do not repeat readiness, fitting or component audits"
+    }
+  ],
+  "skills": {
+    "router": "research-paper-writing",
+    "additional": "modern-python: existing pinned native runtime and uv-based local analysis reused; no dependencies or production source changed",
+    "maturity": "EVIDENCE_AVAILABLE",
+    "scientific_class": "EVIDENCE_THIN",
+    "S1_S9": [
+      3,
+      2,
+      0,
+      3,
+      0,
+      0,
+      0,
+      4,
+      3
+    ],
+    "total": 15,
+    "presentation": [
+      3,
+      3,
+      4
+    ],
+    "strength_evidence_anchors": [
+      "S1=3: unchanged benchmark question/success/failure contract in research/benchmark-reset-v1.md",
+      "S2=2: closest-work reset and unresolved strongest-comparator admission; no new novelty claim",
+      "S3=0,S5=0,S7=0: no complete original-family behavioral comparison or strongest matched comparator yet",
+      "S4=3: unchanged source/fit/selection/sealed allocation and config; no protected test exposure",
+      "S6=0: three-family/three-construct generality not demonstrated",
+      "S8=4: append-only full failure/run history, all8 candidates retained",
+      "S9=3: source-bound new raw/native/independent components; final receipts remain pending"
+    ],
+    "downstream_not_reached": "Fair-strong closure; paper skeleton/section writers; global paper review; final venue/submission compliance",
+    "AI_assistance_ledger": "research/ai-assistance-ledger.jsonl",
+    "AI_ledger_sha256": "80b5259e83597fc3aff969ce020041597bc92d327a818b17201f81498a2b6c2b",
+    "AI_record": "ai-task-0125",
+    "responsible_author": "unassigned",
+    "approval": "unverified",
+    "venue_compliance": "ICLR exact year/track/final disclosure and submission requirements unverified in this component",
+    "superpowers_used": false
+  },
+  "ledger_prefixes_preserved": {
+    "research/run-manifest.jsonl": {
+      "bytes": 255844,
+      "sha256": "9f19028947087f5c16cd6816ef441a6283dfc85a2569c1b8e849ee849a0d05e5",
+      "records": 227,
+      "last_record_id": "manifest-v180"
+    },
+    "research/ai-assistance-ledger.jsonl": {
+      "bytes": 207506,
+      "sha256": "cd581af202fa6db4df1a87a83cfd27cdf7ee45f9a8a3b40ccb56bb7c89b8de37",
+      "records": 124,
+      "last_record_id": "ai-task-0124"
+    }
+  },
+  "next_actions": [
+    "Keep these exact8 workers; do not duplicate/restart or reinterpret an observation timeout as failure.",
+    "Wait for all8complete256-question candidate packets under original deadlines. No interim training-loss/correctness winner.",
+    "Reuse zero and fit component audits only after matching source/config/raw/checkpoint hashes. Check real producer order/count/target/duration/base/version/status joins; do not regrade unchanged zero or rerun unchanged fit counters.",
+    "Perform original full-family primary/rank/site selection and paired rescue/harm, EOS/cap, fixed-support sensitivity, subject/difficulty/prompt/token analyses. Retain all outputs/failures; no reduced family.",
+    "Bestfull must strictly exceed freshzero198 as exploratory initialization, not a SOTA effect threshold or automatic response-launch authority.",
+    "If no new complete condition/terminal state exists, perform a verified wait on these live handles rather than invent another readiness increment.",
+    "Retain full three-family/three-construct,strongest-comparator,protected-utility/mechanism/uncertainty and empirical-paper objective."
+  ]
+}

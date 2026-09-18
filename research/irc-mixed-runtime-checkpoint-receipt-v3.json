@@ -1,0 +1,193 @@
+{
+  "schema": "irc-mixed-runtime-checkpoint-receipt-v3",
+  "created_at": "2026-09-07 16:29:34 UTC",
+  "repository": "git@github.com:mariklolik/projection-transport-steering.git",
+  "working_directory": "/Users/mekashirskiy/projection-transport-steering",
+  "goal_objective_sha256": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a",
+  "goal_status": "active",
+  "goal_turn_result": "progress_then_external_observation_dependency",
+  "scientific_maturity": "EVIDENCE_AVAILABLE engineering; RESEARCH_DESIGNED IRC efficacy",
+  "workflow_mode": "DRAFT_FROM_EVIDENCE audits and plans; no submission prose",
+  "artifact_sha256": {
+    "research/irc-flex-operator-result-audit-v2.json": "38a9407045f0afdab9e59a14e7d64ef22b63dece6783e9106b59827da5df9227",
+    "research/irc-flex-operator-audit-v2.md": "03f3a954ac6519fa43ddea7e5d7e7827d475488784a1f9599f3cdf2e1a74c3cd",
+    "research/irc-mixed-profile-result-audit-v3.json": "6b37eac89f5a5f40f83cc10a132151baef96cf044f95aa651ac6e22efa4ae745",
+    "research/irc-mixed-profile-verification-v3.json": "23d7ee08a3ceab005ebbefe87961f9c1219ba4b546628171511d70c7585b67ce",
+    "research/irc-mixed-runtime-audit-v3.md": "b4a61823b0ef3ef27e3c6c1a5f8bfb9d2c2c8d591f18f6be69f7416a06d5a390",
+    "research/irc-mixed-precision-runtime-config-v3.json": "60295e6ed2f78b3aaaf4d1f588f3f24288302cd29ff8da86a174f8307d540bd9",
+    "research/irc-mixed-precision-runtime-protocol-v3.md": "0e83ad1361df758d94546105597d7d13b4dea3cbcda620f7435bbb0cf2ad3f1d",
+    "research/irc-mixed-precision-runtime-launch-v3.json": "76a81ae18a94b7859bb3361dec4e18918fbe468bd9db49d00d8276ad2d7a5b00",
+    "research/irc-scientific-runtime-candidate-v3.json": "4767ed64ae0b4b355899a1c6a69846802ceb7501c5179bff7ec17311f8a13296",
+    "research/irc-native-flex-backward-spec-v1.json": "0b48a9a91077cae1b461520b7d82c0c6cb7d5a4fa9e05f3781e4e15b8af6b39b",
+    "research/irc-native-flex-backward-launch-v1.json": "333b2626dd0d25b4703b28f21669d03001b41d20d9d4a1e200ca72f091428a75",
+    "research/irc-fixed-adapter-design-v1.md": "d58eac1f949221cda58f8d51f4e4b04cc53e40b1b117261e073aac978139e916",
+    "research/irc-fit-source-length-audit-v1.json": "4f73b420f1de8a6b311330e0c2e910fbcfb8d49bf350f87712282f4cbbbeafbf",
+    "research/benchmark-reset-v1.md": "1fa58add808f961cadc1c5e18770021d6bd746ba57f4f058c4a3dde6fe772af1",
+    "research/literature-reset-v1.md": "8332d547593e1e1bad2ce4db77e22cd9244ce22fda1af9a6017f362a77cd24df",
+    "research/research-reset-plan-v1.md": "8d0c265fc7f2373ad1baf393f3f750723e0dfe73509770c7f015803fb20cc1df",
+    "research/claim-ledger.md": "86340b68ded343bc217d0ac6841197b21e5a272cdfa4a36e5cecb9a8afffc02a",
+    "research/evidence-manifest.md": "3685053a50f9dcb5d03501b8822ebf102868b10ee418106db1ba4deaa34f84bf",
+    "README.md": "d09ab9dde7a253f03e3a3c3d716d0b4b1680c43d8d03d2409b270f75e35a1e1e",
+    "research/run-manifest.jsonl": "7bebf6d1aded9cf895d1b64a7351126dc2994421194e5a919b847bb23ea88794",
+    "research/ai-assistance-ledger.jsonl": "dc63715b9c222a7ceb6b07ce9cca2748d457be51066a5de31da5c09badeb74a8",
+    "scripts/run_irc_real_runtime.py": "629ae37502805af6f0c0898dbfea5758c3218267d44f57cfd9b1b25b2425d2b4",
+    "src/projection_transport_steering/attention_backend.py": "02ca4e01ec511b4e08d5e02688ee41599b84b6114319b865ebaafb5f31d403da",
+    "tests/test_attention_backend.py": "c84aab8c3f203fda0c04c6a7534de018ed47e0f29509345e5303232c99bf1d24",
+    "tests/test_irc_real_runtime.py": "ecaaeac014092df2c12a12e066dd5dc97469392cfaf3649538c498707dab96b9",
+    "artifacts/data/irc_v1_runtime.json": "a536c97d0dd3a31b027e64463040681a2fa9ea67e4b97ae95defb9bacfa68eda",
+    "artifacts/data/irc_v1_allocations/manifest.json": "e489f1273b1c667ac5f5bbc35963a5ed480a01224f155cf52ee56bbd79083156",
+    "artifacts/engineering/irc_real_runtime_v1/source/run_irc_real_runtime.py": "d5fcb15da8013fe621568c9848efde9dd10f9c8eb8f38f2773aa4df62fa8131b",
+    "artifacts/engineering/irc_mixed_runtime_v3/profile_8/receipt.json": "b045e178e36c8930f01460a33a6f652fa3f768b66ed0d896f988477e61a4b75a"
+  },
+  "gate_receipts": [
+    {
+      "skill": "research-paper-writing",
+      "result": "PASS",
+      "scope": "Matched-state routing only",
+      "evidence": "Runtime v3 short pass is distinct from full admission, backward, useful action and scientific efficacy."
+    },
+    {
+      "skill": "scientific-claim-evidence",
+      "result": "PASS",
+      "scope": "C73/C74 engineering-only",
+      "evidence": "Native BF16 prefill failure retained; FP32 exact-input result and complete short packet do not promote C67, quality or SOTA."
+    },
+    {
+      "skill": "scientific-results-and-figures",
+      "result": "PASS",
+      "scope": "Operator and complete-profile audit, partial-progress boundary",
+      "evidence": "Six complete operator logs; nine decode cells; paired precision controls;16 unique profile questions, no pseudo-replicate intervals;314 independent-critic assertions; paid failure/cold costs exposed."
+    },
+    {
+      "skill": "scientific-research-strengthening",
+      "result": "BLOCKED",
+      "scope": "Central fair-strong gate, not a completed or blocked persistent goal",
+      "evidence": "S5 effect and S7 strongest-comparator execution remain0. Full result retrieval, useful action, response-policy learning, uncertainty and breadth still required."
+    },
+    {
+      "skill": "experimental-setup-writer",
+      "result": "BLOCKED",
+      "scope": "Executable scientific fit/selection packet",
+      "evidence": "Frozen data and runtime source gates exist; full terminal receipt, native backward and fit/selection cost have not been admitted."
+    },
+    {
+      "skill": "scientific-avoid-ai-writing",
+      "result": "PASS",
+      "scope": "Evidence-bound audits and plans only",
+      "evidence": "Observations, critic inference, proposed implementation and unknown worker state separated. No scientific scope expansion or removed adverse evidence."
+    },
+    {
+      "skill": "section-self-check",
+      "result": "PASS",
+      "scope": "Local audit/planning documents only",
+      "evidence": "Claims bind to raw results/receipts; missing full outputs and authentication dependency explicit; no submission section released."
+    },
+    {
+      "skill": "python-performance-optimization",
+      "result": "PASS",
+      "scope": "Profile-first source inspection and minimal native reuse",
+      "evidence": "No custom attention kernel; local timing not generalized to serving; cold compilation and mask overhead included."
+    },
+    {
+      "skill": "test-driven-development",
+      "result": "PASS",
+      "scope": "Non-superpowers test-first backend configuration/adapter plumbing",
+      "evidence": "Missing field/ignored attention and absent adapter tests failed before minimal code changes; old v1 executable retained."
+    },
+    {
+      "skill": "modern-python",
+      "result": "PASS",
+      "scope": "Minimal existing-runtime integration",
+      "evidence": "25-line helper reuses native attention and mask formatters, no comments/docstrings/custom trainer, source-bound CLI and immutable outputs."
+    },
+    {
+      "skill": "pytest",
+      "result": "PASS",
+      "scope": "Observed local and exact-remote tests only",
+      "evidence": "363 local passes,1 CUDA skip,25 warnings,52.49s. Frozen prelaunch snapshot22 exact remote CPU passes. Native CUDA backward unconfirmed, not passed."
+    },
+    {
+      "skill": "Avito Internal Service Access Pattern",
+      "result": "BLOCKED",
+      "scope": "Current FSK access",
+      "evidence": "Fresh SSH/banner fails,dc-fixed PASSWORD_WAIT persists after existing helper reconnect; route en0; native login dialog requires user action. No cookie export needed for SSH; Happ/SSH configuration unchanged."
+    }
+  ],
+  "reused_passed_gates": [
+    {
+      "gate": "Runtime packet and frozen allocation",
+      "evidence": "Current packet a536c97d... and allocation manifest e489f127... match prior hashes; scope remains lexical/training separation only."
+    },
+    {
+      "gate": "Isolated environment identity",
+      "evidence": "Both package trees rehashed earlier in this turn at1757db.../6d4036...; readonly mounts and -S preserved."
+    },
+    {
+      "gate": "Unchanged scientific source contracts",
+      "evidence": "All38 current runtime source hashes, protocol/config candidate binding and old v1 executable hash rechecked at handoff."
+    }
+  ],
+  "verification": {
+    "local_tests": "363passed1skipped25warnings52.49s",
+    "exact_remote_cpu_tests": "22passed21warnings106.39s in frozen prelaunch snapshot",
+    "critical_ruff": "PASS E9,F63,F7,F82",
+    "all_rule_ruff": "FAIL188 findings including typing/style/test-assert and namespace rules; no full-lint-clean claim",
+    "independent_critic": "314 profile integrity assertions pass; native backward oracle reviewed but no CUDA outcome"
+  },
+  "invalidated_downstream": [
+    "Old whole-current-CLI receipt does not cover new loader; original v1 source is separately preserved.",
+    "Updated plan/fit-design/claim docs require current hashes, not older whole-file hashes.",
+    "New CUDA-only test addition does not retroactively enter frozen prelaunch22-test snapshot.",
+    "All actual-weight full-runtime, fitting, result/paper and global/compliance gates remain unpassed."
+  ],
+  "full_worker": {
+    "id": "80711276d2b052a2aadb8cd75c2feb69f197ba3ecfe56285d3b3248891f735cf",
+    "expected_rows": 16,
+    "last_progress_rows": 8,
+    "full_json_retrieved": 0,
+    "terminal_state": "unknown_after_network_loss",
+    "duplicate_launch": false
+  },
+  "backward_worker": {
+    "name": "pts-irc-native-flex-backward-v1",
+    "dispatch": "unconfirmed_after_SSH_exit255",
+    "gpu_result": "unobserved",
+    "next": "Inspect exact name before dispatch retry; do not infer concurrency or execution."
+  },
+  "cost": {
+    "completed_operator_seconds": 137.356475079,
+    "completed_profile_seconds": 174.17538342,
+    "full_reserved_seconds": 920,
+    "unconfirmed_backward_reserved_seconds": 62,
+    "previous_v1_sdpa_approximate_h100_hours": 0.50273,
+    "historical_overhead_planning_allowance_hours": 0.1,
+    "conservative_stage_upper_hours": 0.9620444051386111,
+    "stage_ceiling_hours": 1,
+    "scope": "Known allocation intervals plus declared reserves, not an exact lifetime bill."
+  },
+  "cleanup": "Six stopped diagnostic containers removed only after all raw logs captured. Source/config/results retained; stopped profile/full containers not removed while terminal/full evidence retrieval remains outstanding.",
+  "next": "User completes dc-fixed login in Tunnelblick. Inspect existing full and backward workers, retrieve/hash/audit the complete full output packet, then qualify backward and fit cost within unchanged ceilings.",
+  "author_decisions": [
+    "Authentication must be completed locally; no credentials in chat.",
+    "Scientific content and disclosure classifications require author approval before submission."
+  ],
+  "ai_assistance": {
+    "path": "research/ai-assistance-ledger.jsonl",
+    "sha256": "dc63715b9c222a7ceb6b07ce9cca2748d457be51066a5de31da5c09badeb74a8",
+    "last_record": "ai-task-0099",
+    "disclosure_status": "unverified_author_approval_required"
+  },
+  "mandatory_downstream_not_reached": [
+    "skeleton-planner",
+    "introduction-writer",
+    "method-writer",
+    "results-writer",
+    "abstract-writer",
+    "global-writer-check",
+    "complete-paper a-star-conference-paper revisit",
+    "scientific-review-and-rebuttal full-paper review",
+    "submission-compliance"
+  ],
+  "venue_compliance": "Not current-final-paper verified; no ICLR submission readiness or acceptance claim.",
+  "sota_achieved": false
+}

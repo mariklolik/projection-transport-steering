@@ -1,0 +1,209 @@
+{
+  "schema": "irc-eager-engine-result-v8",
+  "timestamp": {
+    "current_time": "2026-09-08 04:34:35 UTC"
+  },
+  "status": "all_four_declared_inference_engine_stages_PASS",
+  "scope": "Pinned FSK42 H100/Qwen3-8B inference engineering only; no static-fit composition, fitted action, scientific comparison or SOTA admission",
+  "v7": {
+    "result_sha256": "1eb0ff063f6b5dd40aaf4e2f68242c73666a8125a2bf2cbf37a133535e04a716",
+    "independent_review_sha256": "9a4bcec4cbb667e61294e3044c542fda8af3e91cd528736be4c7005307f989c8",
+    "CPU_admission_failures": 2,
+    "GPU_stages_attempted": 0,
+    "GPU_seconds": 0,
+    "original_failures_and_source_preserved": true
+  },
+  "inputs": {
+    "config": {
+      "path": "research/irc-eager-engine-config-v8.json",
+      "sha256": "bccc5f0aa5e98fb1d1188cbc0053ab529fbdd9ecdfac42e892107f19f367af47"
+    },
+    "protocol_sha256": "c3e3b7f429eba6563cbd2800581dca59bceef7072f2610e11064d6b04bf8b0c8",
+    "dispatch_sha256": "ce1c74de71d83eab67bbe19422583d360bee09176888d0e53c7dfb5ef79e4c69",
+    "source_overlay_sha256": "61a2e8607ea436b8385b2a4e9c6123384ff7d8e68bf761d68aba98d5e488b41f",
+    "source_files": 67,
+    "runtime_files": 5,
+    "package_versions": 11,
+    "model_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "fit_packet_sha256": "8fd3696f1feb518d87102043a35f90890cfdf78d5b228d6f00f3cdaeafda7c37"
+  },
+  "verification": {
+    "local_source_corrected_fixture_RED_failed": 2,
+    "local_producer_repair_GREEN_passed": 28,
+    "native_CPU_passed": 105,
+    "native_CPU_CUDA_skips": 1,
+    "native_CPU_container_seconds": 115.94559252634645,
+    "all32_original_inputs_checked_before_model": true,
+    "independent_static_source_argv_assertions": 173,
+    "independent_assertions": {
+      "A": 201,
+      "B": 408,
+      "profile": 361,
+      "full": 291
+    },
+    "assertion_counts_are_statistical_samples": false
+  },
+  "stages": {
+    "a": {
+      "container_id": "242f5ab031f8e3a19d2c64d157242922259cbd02b081f7ca20a14a532fbafcff",
+      "status": "pass",
+      "geometries": 35,
+      "source_mapped_numerical_comparisons": 175,
+      "receipt_sha256": "adef1d965d7f31252f1f3d3a94c72ed382d2cdf8a5359aa4b7f3f4128296b1c2",
+      "observers": false
+    },
+    "b": {
+      "container_id": "e8a23682ecbb1acacd78d3736d1007d0d629f9e2ac41219e76fe252eac6b068d",
+      "status": "pass",
+      "batches": 32,
+      "questions": 256,
+      "short_batches": 8,
+      "unpadded_prompt_tokens": 25836,
+      "padded_prompt_instances": 55384,
+      "finite_BF16_logits_all": true,
+      "cache_lengths_correct_all": true,
+      "base_parameter_versions_unchanged_all": true,
+      "sampling": false,
+      "receipt_sha256": "0993f507fce40907e110e0d5f23e54f6b68a177b0c8b6e7ebbeca3c3909d2604"
+    },
+    "profile": {
+      "container_id": "19c1dc3fe4ffa9611e56cdff9af2f5a5e4d54e62dfaaee4a50ff3bae86fe9932",
+      "status": "pass",
+      "questions": 16,
+      "cap": 512,
+      "emitted_tokens": 8192,
+      "EOS": 0,
+      "cap_censored": 16,
+      "primary_correct": 0,
+      "all_source_and_replay_tokens_exact": true,
+      "original_grader_replay_exact": true,
+      "nonzero_path_covered_rows": 16,
+      "nonzero_path_changed_suffix_rows": 6,
+      "producer_RNG_cache_flags_all_true": true,
+      "receipt_sha256": "47cc4f3398ed3848014286abca613cdc6fa3cd803c0a5da5c63c897ce2744470"
+    },
+    "full": {
+      "container_id": "a0dd33154fa06bbb5fff39a0d78b42f301c6c48ea7dd4557cb453d9db3d2ac32",
+      "status": "pass",
+      "questions": 16,
+      "cap": 8192,
+      "emitted_tokens": 65653,
+      "EOS": 14,
+      "cap_censored": 2,
+      "primary_correct": 13,
+      "sensitivity_correct": 14,
+      "evaluator_errors": 0,
+      "all_source_prompt_seed_decode_and_grader_joins_exact": true,
+      "profile_prefix_512_exact_rows": 16,
+      "cross_cap_prefix_analysis_posthoc": true,
+      "full_replay_action_checks_requested": false,
+      "receipt_sha256": "48c40341d669ffbf5830cfdb8aca354405575741b4227872e1c2e8d30c10da74"
+    }
+  },
+  "cost": {
+    "additional_engineering_remaining_seconds": "2367.256645422",
+    "all_additional_engineering_spent_seconds": "1232.743354578",
+    "baseline_prior_h100_hours": "7.605374254722222",
+    "budget_transfer": false,
+    "full": {
+      "chunks": [
+        {
+          "dense_decode_row_slots": 65536,
+          "emitted_tokens": 38348,
+          "max_generated_tokens": 8192,
+          "reference_seconds": 331.8252535201609,
+          "rows": 8,
+          "start": 0
+        },
+        {
+          "dense_decode_row_slots": 65536,
+          "emitted_tokens": 27305,
+          "max_generated_tokens": 8192,
+          "reference_seconds": 319.00889125838876,
+          "rows": 8,
+          "start": 8
+        }
+      ],
+      "container_tokens_per_second": 98.05315030793605,
+      "dense_decode_row_slots": 131072,
+      "emitted_fraction_of_dense_decode_row_slots": 0.5008926391601562,
+      "generated_tokens": 65653,
+      "max_generated_tokens": 8192,
+      "median_generated_tokens": 3620,
+      "min_generated_tokens": 987,
+      "post_absorption_row_slots": 65419,
+      "reference_tokens_per_second": 100.8751623231735
+    },
+    "old_engineering_remaining_seconds": "9.198053592",
+    "slot_analysis_scope": "Source-mapped dense batch positions, not profiler FLOPs or measured GPU utilization. The last full decode call may also process the last prompt token at the first step; this is an advance-step row-slot accounting convention.",
+    "stage_container_seconds": {
+      "a": "67.927741841",
+      "b": "50.65886002",
+      "full": "669.565432562",
+      "profile": "164.259135166"
+    },
+    "v8_GPU_container_seconds": "952.411169589",
+    "v8_H100_hours": "0.2645586582191666666666666667"
+  },
+  "archive": {
+    "complete": {
+      "path": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_eager_engine_v8/qualified-engine-results-complete.tar",
+      "sha256": "bbcd94e34cb06409001f2df89974ffb10c8638a04630bf62c89a5fa3055b8274",
+      "bytes": 137236480
+    },
+    "inventory": {
+      "files": 721,
+      "bytes": 135918174,
+      "canonical_inventory_sha256": "97c65b499235eff50bbd15866c69708629a9c2068052113dd30cc0eb183340bc"
+    },
+    "canonical_inventory_file": "research/irc-eager-engine-archive-files-v8.jsonl",
+    "local_extraction": "artifacts/engineering/irc_eager_engine_v8/complete_archive",
+    "original_stage_file_matches": 26,
+    "failed_tar": {
+      "path": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_eager_engine_v8/qualified-engine-results.tar",
+      "bytes": 137226240,
+      "sha256": "ab8f0723ff67dc43dd14b696437c64d7dd766b96b08f65e91338b24e5dc1334d",
+      "status": "retained_incomplete_tar_exit2"
+    },
+    "transport_failure": "Initial tar cannot read root-owned CUDA-cache copies; exit2. The separate complete tar reads existing copies as root, without source/cache permission edits or GPU retry.",
+    "local_native_exact_match": true
+  },
+  "root_audit": {
+    "path": "research/irc-eager-engine-root-audit-v8.json",
+    "sha256": "dba104f32cd2f4ee11c703fcfafc60a703e85e3215eb71124b8f65fe33cfa734"
+  },
+  "human_audit": {
+    "path": "research/irc-eager-engine-audit-v8.md",
+    "sha256": "04c0c985f2247dc15cb697a11e09f3d67eabd04c8a48f576b51b69c5659dae3a"
+  },
+  "limitations": [
+    "Only 16 source-selected short-prompt fit questions; no held-out accuracy estimate or model/behavior transfer.",
+    "Only one question overlaps the older v3 packet; no speedup or quality comparison between those durations/counts.",
+    "A comparisons map from normal unchanged helper returns, not individually logged outcomes or independent replications.",
+    "B retains no logits and parameter-version checks are not complete base-weight byte hashes.",
+    "Profile RNG/cache are producer flags; cache comparison covers keys/values, and action-forward count is width-derived.",
+    "Full retains 13 primary successes and two cap failures; the Sunday/text-Sunday primary-format discrepancy is not relabelled.",
+    "Static compiled eager-mask B2 training composition is unverified; old static and new dynamic gates do not compose automatically.",
+    "Dense row-slot accounting is not a GPU-utilization, FLOP or measured speedup claim."
+  ],
+  "scientific_maturity": "EVIDENCE_AVAILABLE / EVIDENCE_THIN",
+  "S1_to_S9": [
+    3,
+    2,
+    0,
+    3,
+    0,
+    0,
+    0,
+    4,
+    3
+  ],
+  "scientific_strength_total": 15,
+  "fair_strong": "BLOCKED",
+  "inference_workload_qualified": true,
+  "training_engine_qualified": false,
+  "baseline_admitted": false,
+  "sota_achieved": false,
+  "goal_status": "active",
+  "next_action": "Prospectively freeze only the changed static/eager fit-composition bridge using existing FP64 and accumulated/checkpoint paths. Then source-bound registration wiring and cost review for all eight fresh baseline candidates plus a fresh complete shared zero; no survivors, metric/cap/product changes or broad literature restart."
+}

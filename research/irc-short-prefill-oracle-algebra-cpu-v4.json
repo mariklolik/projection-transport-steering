@@ -1,0 +1,92 @@
+{
+  "atol": 1e-10,
+  "comparisons": [
+    {
+      "max_abs_difference": 1.7763568394002505e-15,
+      "name": "output",
+      "numel": 3047424,
+      "shape": [
+        8,
+        93,
+        32,
+        128
+      ],
+      "status": "pass"
+    },
+    {
+      "max_abs_difference": 3.1086244689504383e-15,
+      "name": "q_grad",
+      "numel": 3047424,
+      "shape": [
+        8,
+        32,
+        93,
+        128
+      ],
+      "status": "pass"
+    },
+    {
+      "max_abs_difference": 8.881784197001252e-15,
+      "name": "k_grad",
+      "numel": 761856,
+      "shape": [
+        8,
+        8,
+        93,
+        128
+      ],
+      "status": "pass"
+    },
+    {
+      "max_abs_difference": 1.5987211554602254e-14,
+      "name": "v_grad",
+      "numel": 761856,
+      "shape": [
+        8,
+        8,
+        93,
+        128
+      ],
+      "status": "pass"
+    }
+  ],
+  "cuda_qualification": false,
+  "device": "cpu",
+  "expected_full_block_counts": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "expected_partial_forward_and_reverse_block_counts": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "geometry": [
+    8,
+    32,
+    8,
+    93,
+    128
+  ],
+  "purpose": "Independent CPU FP64 SDPA algebra check of the existing grouped reference, not a replay of GPU data or a repair of the failed v4 gate",
+  "rtol": 1e-10,
+  "same_native_gpu_tensors": false,
+  "schema": "irc-short-prefill-oracle-algebra-cpu-v4",
+  "seconds": 0.43091000000276836,
+  "seed": 20260908,
+  "source_sha256": "88b48eae16b85578768b693c2c4385b8e74d5a55d7b2ac5bc5d75e0e78fa8a23",
+  "status": "pass",
+  "torch": "2.14.0",
+  "python_code": "import hashlib,json,time\nfrom pathlib import Path\nimport torch\nimport torch.nn.functional as F\ntorch.set_num_threads(2)\ntorch.manual_seed(20260908)\nstarted=time.perf_counter()\nq,k,v=[torch.randn(8,h,93,128,dtype=torch.bfloat16).double().requires_grad_() for h in (32,8,8)]\nmask=torch.ones(8,93,dtype=torch.bool)\nmask[1,0]=False\nmask[0,-3:]=False\nids=torch.arange(93)\nkeep=(ids[None,:,None]>=ids[None,None,:])&mask[:,None,:]\nvalid=keep.any(-1)\nscores=torch.einsum(\"bghqd,bgkd->bghqk\",q.reshape(8,8,4,93,128),k)\nscores=(scores*128**-0.5).masked_fill(~keep[:,None,None],-torch.inf)\nscores=torch.where(valid[:,None,None,:,None],scores,torch.zeros_like(scores))\nweights=torch.where(valid[:,None,None,:,None],scores.softmax(-1),torch.zeros_like(scores))\noracle=torch.einsum(\"bghqk,bgkd->bghqd\",weights,v).reshape(8,32,93,128).transpose(1,2)\nref_q,ref_k,ref_v=[x.detach().clone().requires_grad_() for x in (q,k,v)]\nnative=F.scaled_dot_product_attention(ref_q,ref_k.repeat_interleave(4,1),ref_v.repeat_interleave(4,1),attn_mask=keep[:,None],dropout_p=0.0,scale=128**-0.5).transpose(1,2)\ngradient=torch.randn_like(oracle,dtype=torch.bfloat16).double()\noracle.backward(gradient)\nnative.backward(gradient)\nrows=[]\nfor name,a,b in [(\"output\",oracle,native),(\"q_grad\",q.grad,ref_q.grad),(\"k_grad\",k.grad,ref_k.grad),(\"v_grad\",v.grad,ref_v.grad)]:\n    assert torch.isfinite(a).all() and torch.isfinite(b).all()\n    torch.testing.assert_close(a,b,rtol=1e-10,atol=1e-10)\n    rows.append({\"name\":name,\"shape\":list(a.shape),\"numel\":a.numel(),\"max_abs_difference\":(a-b).abs().max().item(),\"status\":\"pass\"})\nassert torch.all(oracle[~valid]==0) and torch.all(native[~valid]==0)\nblock_count=keep.any((-1,-2)).int().tolist()\nresult={\"schema\":\"irc-short-prefill-oracle-algebra-cpu-v4\",\"status\":\"pass\",\"torch\":torch.__version__,\"device\":\"cpu\",\"seed\":20260908,\"same_native_gpu_tensors\":False,\"geometry\":[8,32,8,93,128],\"comparisons\":rows,\"rtol\":1e-10,\"atol\":1e-10,\"expected_partial_forward_and_reverse_block_counts\":block_count,\"expected_full_block_counts\":[0]*8,\"seconds\":time.perf_counter()-started,\"cuda_qualification\":False,\"purpose\":\"Independent CPU FP64 SDPA algebra check of the existing grouped reference, not a replay of GPU data or a repair of the failed v4 gate\",\"source_sha256\":hashlib.sha256(Path(\"tests/test_attention_backend.py\").read_bytes()).hexdigest()}\nprint(json.dumps(result,sort_keys=True))\n"
+}

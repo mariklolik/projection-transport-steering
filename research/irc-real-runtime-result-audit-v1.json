@@ -1,0 +1,831 @@
+{
+  "schema": "irc-real-runtime-result-audit-v1",
+  "overall_gate": "FAIL_incomplete_full_8_timeout",
+  "planned_scored_rows": 64,
+  "saved_scored_rows": 56,
+  "unique_questions": 16,
+  "missing_scored_rows": 8,
+  "conditions": {
+    "profile_1": {
+      "declared_rows": 16,
+      "saved_rows": 16,
+      "missing_ids": [],
+      "receipt_status": "pass",
+      "receipt_sha256": "20f5677b73e5243f6a85741aefc7a4ac0a4290d17651df24f301ab8b10839791",
+      "container_exit": 0,
+      "container_wall_seconds": 601.785,
+      "reference_tokens": 8192,
+      "reference_seconds": 186.7109114266932,
+      "check_seconds": 396.1492496691644,
+      "grading_seconds": 0.21655689179897308,
+      "primary_correct": 0,
+      "sensitivity_correct": 0,
+      "eos": 0,
+      "cap": 16,
+      "parse_pass": 0,
+      "evaluator_errors": 0,
+      "peak_memory_bytes": 17499363328,
+      "profile_checks": [
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        }
+      ],
+      "coverage": [
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64
+          ],
+          "at_risk_at_cut": 1,
+          "intervention_path": "exercised"
+        }
+      ],
+      "strata": {
+        "type:Intermediate Algebra": {
+          "observed": 5,
+          "correct": 0,
+          "eos": 0,
+          "cap": 5
+        },
+        "level:Level 5": {
+          "observed": 8,
+          "correct": 0,
+          "eos": 0,
+          "cap": 8
+        },
+        "type:Precalculus": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "level:Level 4": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "type:Algebra": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "level:Level 1": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "type:Geometry": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "level:Level 2": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Prealgebra": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "level:Level 3": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Number Theory": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Counting & Probability": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        }
+      },
+      "reference_tokens_per_second": 43.875314717299524
+    },
+    "profile_4": {
+      "declared_rows": 16,
+      "saved_rows": 16,
+      "missing_ids": [],
+      "receipt_status": "pass",
+      "receipt_sha256": "d43af549e0a7613869dd0e4f8c68dc5f944173f35a6a860bd1e097d922ce1784",
+      "container_exit": 0,
+      "container_wall_seconds": 183.695,
+      "reference_tokens": 8192,
+      "reference_seconds": 52.823926363140345,
+      "check_seconds": 111.47497630491853,
+      "grading_seconds": 0.21541014313697815,
+      "primary_correct": 0,
+      "sensitivity_correct": 0,
+      "eos": 0,
+      "cap": 16,
+      "parse_pass": 0,
+      "evaluator_errors": 0,
+      "peak_memory_bytes": 20786938368,
+      "profile_checks": [
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        }
+      ],
+      "coverage": [
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64,
+            64,
+            64,
+            64
+          ],
+          "at_risk_at_cut": 4,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64,
+            64,
+            64,
+            64
+          ],
+          "at_risk_at_cut": 4,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64,
+            64,
+            64,
+            64
+          ],
+          "at_risk_at_cut": 4,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64,
+            64,
+            64,
+            64
+          ],
+          "at_risk_at_cut": 4,
+          "intervention_path": "exercised"
+        }
+      ],
+      "strata": {
+        "type:Intermediate Algebra": {
+          "observed": 5,
+          "correct": 0,
+          "eos": 0,
+          "cap": 5
+        },
+        "level:Level 5": {
+          "observed": 8,
+          "correct": 0,
+          "eos": 0,
+          "cap": 8
+        },
+        "type:Precalculus": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "level:Level 4": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "type:Algebra": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "level:Level 1": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "type:Geometry": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "level:Level 2": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Prealgebra": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "level:Level 3": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Number Theory": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Counting & Probability": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        }
+      },
+      "reference_tokens_per_second": 155.08123996091743
+    },
+    "profile_8": {
+      "declared_rows": 16,
+      "saved_rows": 16,
+      "missing_ids": [],
+      "receipt_status": "pass",
+      "receipt_sha256": "6f3ad3500d41c177c101cc770c1a026bbcdedd127a9ac19873ea8b6447c1f9c1",
+      "container_exit": 0,
+      "container_wall_seconds": 106.543,
+      "reference_tokens": 8192,
+      "reference_seconds": 28.166806757450104,
+      "check_seconds": 59.12677459791303,
+      "grading_seconds": 0.21077073365449905,
+      "primary_correct": 0,
+      "sensitivity_correct": 0,
+      "eos": 0,
+      "cap": 16,
+      "parse_pass": 0,
+      "evaluator_errors": 0,
+      "peak_memory_bytes": 25150108160,
+      "profile_checks": [
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        },
+        {
+          "parent_cache_unchanged": true,
+          "split_replay_exact": true,
+          "split_rng_exact": true,
+          "zero_replay_exact": true,
+          "zero_rng_exact": true
+        }
+      ],
+      "coverage": [
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64
+          ],
+          "at_risk_at_cut": 8,
+          "intervention_path": "exercised"
+        },
+        {
+          "action_forward_calls": 64,
+          "action_generated_lengths": [
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64
+          ],
+          "at_risk_at_cut": 8,
+          "intervention_path": "exercised"
+        }
+      ],
+      "strata": {
+        "type:Intermediate Algebra": {
+          "observed": 5,
+          "correct": 0,
+          "eos": 0,
+          "cap": 5
+        },
+        "level:Level 5": {
+          "observed": 8,
+          "correct": 0,
+          "eos": 0,
+          "cap": 8
+        },
+        "type:Precalculus": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "level:Level 4": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "type:Algebra": {
+          "observed": 3,
+          "correct": 0,
+          "eos": 0,
+          "cap": 3
+        },
+        "level:Level 1": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "type:Geometry": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "level:Level 2": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Prealgebra": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        },
+        "level:Level 3": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Number Theory": {
+          "observed": 2,
+          "correct": 0,
+          "eos": 0,
+          "cap": 2
+        },
+        "type:Counting & Probability": {
+          "observed": 1,
+          "correct": 0,
+          "eos": 0,
+          "cap": 1
+        }
+      },
+      "reference_tokens_per_second": 290.8387901597408
+    },
+    "full_8": {
+      "declared_rows": 16,
+      "saved_rows": 8,
+      "missing_ids": [
+        "0178f1d8cc5ce1cbb86c4911aadbae64e47a09b59eda114e93decf7011c3707a",
+        "a3ececfc60a6d5d5a61a39da77a798347bf995c4ed890835d1c43280bca761c0",
+        "e5eb61ad5bcd0a5676caa2907cae7e516d65646222c99122f61ea1865d688df7",
+        "e819e9869cfbb495d639da40525626e5dbf743b43f26b4e11cc9a6c59d898d56",
+        "40a5d73ec03401e661e7be871b6b13e6aaf74db11e2d823895ccbe4c2ab5ddd9",
+        "bd801793ebd6735f83dc2f3c5798e6dcb63d04093c5790cb8a646879b597de0d",
+        "9f9c8531a9bcf1dfd362a2d5c60ead889907b5298a065460e3fb65fc26683657",
+        "f11fd3f5eaf1b423714c153dabefe9a63918354a82e84c95c1a18efe4318d1e0"
+      ],
+      "receipt_status": "absent",
+      "receipt_sha256": null,
+      "container_exit": 124,
+      "container_wall_seconds": 901.337,
+      "reference_tokens": 42950,
+      "reference_seconds": 471.08054967597127,
+      "check_seconds": 0.00004359334707260132,
+      "grading_seconds": 0.2164204679429531,
+      "primary_correct": 6,
+      "sensitivity_correct": 6,
+      "eos": 6,
+      "cap": 2,
+      "parse_pass": 7,
+      "evaluator_errors": 0,
+      "peak_memory_bytes": null,
+      "profile_checks": [
+        {}
+      ],
+      "coverage": [
+        {
+          "intervention_path": "not_requested"
+        }
+      ],
+      "strata": {
+        "type:Intermediate Algebra": {
+          "observed": 3,
+          "correct": 1,
+          "eos": 1,
+          "cap": 2
+        },
+        "level:Level 5": {
+          "observed": 4,
+          "correct": 3,
+          "eos": 3,
+          "cap": 1
+        },
+        "type:Precalculus": {
+          "observed": 1,
+          "correct": 1,
+          "eos": 1,
+          "cap": 0
+        },
+        "level:Level 4": {
+          "observed": 2,
+          "correct": 1,
+          "eos": 1,
+          "cap": 1
+        },
+        "type:Algebra": {
+          "observed": 2,
+          "correct": 2,
+          "eos": 2,
+          "cap": 0
+        },
+        "level:Level 1": {
+          "observed": 1,
+          "correct": 1,
+          "eos": 1,
+          "cap": 0
+        },
+        "type:Geometry": {
+          "observed": 1,
+          "correct": 1,
+          "eos": 1,
+          "cap": 0
+        },
+        "level:Level 2": {
+          "observed": 1,
+          "correct": 1,
+          "eos": 1,
+          "cap": 0
+        },
+        "type:Prealgebra": {
+          "observed": 1,
+          "correct": 1,
+          "eos": 1,
+          "cap": 0
+        }
+      },
+      "reference_tokens_per_second": 91.17336733504024
+    }
+  },
+  "cross_batch_exact_matches": {
+    "profile_1__profile_4": 2,
+    "profile_1__profile_8": 1,
+    "profile_4__profile_8": 1
+  },
+  "remote_output_hashes": {
+    "full_8/batch-0000.json": "b28570fc05def308f3162bac948bfdf58971b9822aae281518d84958ecda56ac",
+    "full_8/reference-0000.json": "72522f863c05c4d7410e278ee7de15315d090f0ac231ef32c211240ed7d15617",
+    "profile_1/batch-0000.json": "79b62a7dcdf1cac192f05ece07e77fe629e88c69fec7b76cd0fbe0b2fa6a4cdf",
+    "profile_1/batch-0001.json": "c7855a4e5555c7a12153e5a9ceb6f390669b8ab4b850d841a24f2a615968de64",
+    "profile_1/batch-0002.json": "7b7bc243153777dedd664f332a4cf13d4e31835802e5ed836e57b5d2036b5f88",
+    "profile_1/batch-0003.json": "fdabcace99a67c220c59bacbd60f41eadcd13f977c39a19aa8a223b940e6ff3b",
+    "profile_1/batch-0004.json": "bf1e01e2e5bc8ba53550c641875318fc73197a6e1f66839eaa432441b8c602d1",
+    "profile_1/batch-0005.json": "49fae8fdd7c316268fcc863d85eeb55ef99b66e0e6807dddf4b7f0142bdb2332",
+    "profile_1/batch-0006.json": "fbd6454f9011c1a89a21508ab4ea2c5c30ad3b776ae70aa589dea37cb9b1891f",
+    "profile_1/batch-0007.json": "4efd0958b6f56326fa36551490a37c58a756059288d59f244c1c5bb52432bafd",
+    "profile_1/batch-0008.json": "1acb785819877f2ff0897e7bb4ae94201f55aaf3dbaf0a23f5ac2f5b1818e171",
+    "profile_1/batch-0009.json": "e1175a47d0239e6595c96abbd9406e4b5668cff2e29b86b254ab2936088a37c3",
+    "profile_1/batch-0010.json": "ed5fcf1795664d9b446d138ffe3705f9c3e0f795f9ad563164333d68b45bfe5d",
+    "profile_1/batch-0011.json": "666dc63618f9a9fc6105b17c641a8f89923600946afc3c5de02c30d86c436b44",
+    "profile_1/batch-0012.json": "d9092897e0608fc0a00dc05a2dc295800b7e7c9922c229ea8413425d2796bb25",
+    "profile_1/batch-0013.json": "0acb1edfc7cb5c2caea0baeed1a233c9f2d44544d6f95ab5dc5ca329f9682900",
+    "profile_1/batch-0014.json": "2505544a362823ac149a6c34e0c6eb29d0ecc81536a962a33a4477755dc442b9",
+    "profile_1/batch-0015.json": "ea6d95e1ee9245ce23954652f2361c167b6868eb52fd317bd2a85f8e0cd44fde",
+    "profile_1/receipt.json": "20f5677b73e5243f6a85741aefc7a4ac0a4290d17651df24f301ab8b10839791",
+    "profile_1/reference-0000.json": "5ae1d22095314e1d37d4594f954a5a7fa20da598b344a6b84ad8349c73b6a182",
+    "profile_1/reference-0001.json": "8d0ec45ab2a25782b7b7c1c106a93bec6ea2ee8b00666b1bca961ba8d0dc5420",
+    "profile_1/reference-0002.json": "75ceea0ca56a59b0662f843a54a584a39c6fc98f6ae40523f24f6d239e6ddd69",
+    "profile_1/reference-0003.json": "782dd5d5fb005fef0185c67523675dc0f71bbec2b59e9d2cab975f002079b0c6",
+    "profile_1/reference-0004.json": "7f73693bcdfd8375c72fc4ebbfd5fccff77325fa57265095f97188c1dda82b00",
+    "profile_1/reference-0005.json": "2df6c3a299f0a2f055a526877e7bc8313117f662f08b2cc74c1cdfbf240c7e98",
+    "profile_1/reference-0006.json": "ef6d6b3e927ddd10ff05d397fc0545e67f73bdee731b6c6fd8c5b7ec5c32c410",
+    "profile_1/reference-0007.json": "0c10e8f1c0023c05f47d4b9185b23e1523a1357192d23ba8891538eff4b9aa1c",
+    "profile_1/reference-0008.json": "3e8da3df75692e8e4ff20a40c04f5362dccba551034c8095642f74da352580e3",
+    "profile_1/reference-0009.json": "a85ed12d6c919cab653055df2ab0ff9f2e8793574677a283c11f98b3f04bea0b",
+    "profile_1/reference-0010.json": "3717aaca7ce38a44e4b4fb235e2f7c991fd1af86db3192a57323235002563775",
+    "profile_1/reference-0011.json": "6cffdc33373e32decdbd9d1748e03bc7d90874f97ee2ba7d0df466b621bca8a2",
+    "profile_1/reference-0012.json": "efb8fef74ca900a2bbaa825945f4e3b3cb89d54063a6f7a11923041bb0c24a29",
+    "profile_1/reference-0013.json": "e8e33de01d9199fa946a98f23711fadf56d60b7e45e26cf06e8e46943edb6587",
+    "profile_1/reference-0014.json": "53e68c2a40cb00eaf65964e24a718b2f158e125579b8e0d9ca9a88c8dd733f5f",
+    "profile_1/reference-0015.json": "27a367540b806131a52bb06b977c9418662f4b51c754b92636ccdb57785ac9e8",
+    "profile_4/batch-0000.json": "1b171c2e8ee2b135782054f2bcc0795ddfc23791dc5d4086dfad52e5bda1170b",
+    "profile_4/batch-0004.json": "3fdd002abbbe975de9babc363248d4569de909a4748bc924af38628d23ed59fb",
+    "profile_4/batch-0008.json": "f3445a07531323de2a412380130fd14fae9a24ff0674b26e92b6d521efd14aca",
+    "profile_4/batch-0012.json": "5b6bf2a14fd63c94d133a2f42469dc1d765c75a895371a87b143f7d9a11f208a",
+    "profile_4/receipt.json": "d43af549e0a7613869dd0e4f8c68dc5f944173f35a6a860bd1e097d922ce1784",
+    "profile_4/reference-0000.json": "f52a4de8a7002454ded4fde9c35832cf0e85906681a8ea111da5cf7c982b1c6b",
+    "profile_4/reference-0004.json": "33d8b859163055bc5c5450edd6537491d179ffe5bdd536c7a8899817e016754b",
+    "profile_4/reference-0008.json": "c3c02bcafb63c3d4834b0dbd54df469d4998ec98338d3a6763a11400703cf825",
+    "profile_4/reference-0012.json": "cd13090532977777630c86e741ac4e4a07388a9d6d83a16ec212f0ba95133806",
+    "profile_8/batch-0000.json": "0376204fbb882c0cf706c855f99b999f3e785415d245df45059e60ddaae3ba97",
+    "profile_8/batch-0008.json": "0f901282c8ce1c31348178de1f72072f8d65ce303a2f46cc1733db92dff4f484",
+    "profile_8/receipt.json": "6f3ad3500d41c177c101cc770c1a026bbcdedd127a9ac19873ea8b6447c1f9c1",
+    "profile_8/reference-0000.json": "9cde7314b6957819e8358d012ad6709190ccf3b3b8705b0131c1bede3a3ed058",
+    "profile_8/reference-0008.json": "a24a4b4f9546ad856680f79574310921a85ebc26dce34835f826f40cd1051d89"
+  },
+  "verified_transferred_files": 49,
+  "config_sha256": "b1d9fee872e2cdf35844fb7453c3cc35104acd494212bf39b46d29be63292cfb",
+  "terminal_sha256": "bb8a42e40752b9b7822292102f4ad7bbb5552a741aa3ea101da6710c76e75ee8",
+  "total_new_container_h100_hours": 0.4981555555555556,
+  "full_8_partial_identification_interval_not_confidence_interval": [
+    0.375,
+    0.875
+  ],
+  "new_adapter_or_controller": false,
+  "baseline_fitting_authorized": false,
+  "limitations": [
+    "Only 16 independent fit questions, reused across engineering workloads",
+    "8 unobserved full-budget outputs are not scored zero and not excluded from a claimed full-panel mean",
+    "Single measurement per profile; no independent repeated-run throughput confidence interval",
+    "Profile timing excludes replay and grading; all container costs include failed and partial work",
+    "Scoring was not repeated in this audit; exactly-once evidence is pinned control flow and no duplicate identities",
+    "No production optimization or scientific method comparison"
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "schema": "research-router-checkpoint-receipt-v1",
+  "created_at": "2026-09-08 00:02:39 UTC",
+  "project_maturity": "EVIDENCE_AVAILABLE",
+  "scientific_strength": "EVIDENCE_THIN",
+  "paper_type": "empirical_with_appendix_theory",
+  "status": "baseline_v2_technically_aborted_archived_goal_active",
+  "goal_achieved": false,
+  "input_hashes": {
+    "README.md": "9a4dbd9a80c1b901a274640ff67dcd60d566fa0f9f1411f6370a5526b4196341",
+    "research/research-reset-plan-v1.md": "ccda031567e4184c8d2e24216f986d71cfce19be6060bee4be6ade6f479a5157",
+    "research/claim-ledger.md": "8bc6587ed79816a00c3ae81e2da13e5fa05a1a84afc292021163a9eae93980ea",
+    "research/evidence-manifest.md": "3943eec5ec2c917b00383c31fe6ef1e78ccf45e14fd0b0413fb6ba3d1145c99d",
+    "research/irc-baseline-technical-abort-audit-v2.md": "9112ccf4dab891e6bb470cb6b4a0eee0d9f7b4e28205d2be6974875eb1eaf984",
+    "research/irc-baseline-archive-fit-cpu-v2.json": "483ba1c158a35b7668aef0e7818539b7c6f40542e81a479e1aca913080302e18",
+    "research/irc-baseline-partial-cost-decomposition-v2.json": "56205f1395a4d06973f7913272f902b36a7ff1e75e049e3145c2d68d059bd01c",
+    "research/irc-baseline-analysis-cpu-preflight-v2.json": "ce7739abd3a207146b9c631515728e20c12af35bcc3bd7b4ac493445e3c5ebc0",
+    "research/irc-baseline-technical-abort-decision-v2.json": "18f3f396af7d3dc414e893f8ae293dca338f74f9dd16e810907e9251c89fb8be",
+    "research/irc-baseline-terminal-inventory-v2.json": "ecd01d30aa17b7d409561f1cbd07591bb14e0637dcc21c182b834e674a2e35a4",
+    "research/irc-baseline-result-audit-v2.json": "8b30848792ce1cefb490ea51ac2c71c9ceae53c71dfb7512e766ad0e196a6587",
+    "research/irc-baseline-analysis-contract-v2.md": "84d9607df875b37cd8b41a69ba7cccecb81bf02a09c64cdc1f182fe0ce474ed4",
+    "research/ai-assistance-ledger.jsonl": "1a6ec872c2bfc8642e4baf0af87ed295177e26a1d7f7f335fc6b293d30e37106",
+    "research/run-manifest.jsonl": "7200fc180c4dc0212624e6a08bbb974f3729d423279e2bc63d960a0e651e762c",
+    "research/irc-baseline-config-v2.json": "207e37dd9a7bf977378db65e41db53177451ee36a037e8d347beaa99c34a9acf",
+    "research/irc-mixed-full-result-audit-v3.json": "62da42faf8871d3767a2db9c5e7cedec41653af67f5be65d1be34ab437d9f7af",
+    "research/irc-accumulation-result-audit-v1.json": "3cacf9aa216b2a0c8ae9cd30c0bca6c2f0b60e255958db7e7f6ae3f35acdf1dc",
+    "scripts/analyze_irc_baseline.py": "797e32fa1489832ae161f51ebbe33696e3426a66fb237a0e2f54bee35db7d1a3",
+    "scripts/irc_baseline_audit.py": "74f446d955d48097ff68b451f0e13ffc9cd3db66280527761417ebcfb9c376ce",
+    "scripts/audit_irc_baseline.py": "3da4c8f252c5c3992379b2fdce258e5683dbfb37e61bafc027b8d09bb4576b38",
+    "tests/test_irc_baseline_analysis.py": "842af928161e483e3a612c0aaa4ab4eeee614bae647e2c706e32ef2d7c30bf3a",
+    "tests/test_irc_baseline_audit.py": "d2da9b5a5e10759822be1737657277a592c826c8a71e1674fd395ae9c8624584",
+    "tests/test_irc_baseline_cost.py": "4e97f3ee0f03eac853da37a1679ba2480356656fbaa1f28ca6b87899a9d7a3a9",
+    "tests/test_irc_baseline_integration.py": "a082da382f193fc6da894df0cd4826e5e3b1ede76311ab808c5f54a7c7f74e17",
+    "artifacts/engineering/irc_accumulation_probe_v1/baseline-analysis-local-tests-v2.xml": "0446c160d4b6bce11ab616f8618f57f0b7c11e36ee0a1a2cd1eb30fda1a50b2e",
+    "artifacts/engineering/irc_accumulation_probe_v1/baseline-analysis-exact-cpu-tests-v2.xml": "ae8b6e7fed14abefede38d28fdcb8d4e81e689694b746b6503a53a28f7ad335a"
+  },
+  "frozen_producer_sources_unchanged": 52,
+  "historical_registry_caveat": {
+    "initial_final_check": "Global record-ID uniqueness assertion failed on a pre-existing manifest-v36 collision, not a new baseline record.",
+    "locations": [
+      "research/run-manifest.jsonl:68, 2026-09-05T22:13:11Z, preregistration_amendment",
+      "research/run-manifest.jsonl:81, 2026-09-06T00:12:12Z, preregistration"
+    ],
+    "historical_records_modified": false,
+    "new_manifest_and_ai_record_ids_unique": true,
+    "lookup_rule": "Use immutable path/hash and line/timestamp for historical records; do not treat a bare manifest-v36 as unique."
+  },
+  "route": "B: scientific-claim-evidence -> scientific-results-and-figures -> scientific-research-strengthening",
+  "ai_assistance_ledger": {
+    "path": "research/ai-assistance-ledger.jsonl",
+    "sha256": "1a6ec872c2bfc8642e4baf0af87ed295177e26a1d7f7f335fc6b293d30e37106",
+    "latest_record": "ai-task-0109",
+    "responsible_author": "unassigned",
+    "approval_status": "unverified",
+    "disclosure_status": "unverified"
+  },
+  "run_manifest": {
+    "path": "research/run-manifest.jsonl",
+    "sha256": "7200fc180c4dc0212624e6a08bbb974f3729d423279e2bc63d960a0e651e762c",
+    "latest_record": "manifest-v163"
+  },
+  "specialists": [
+    {
+      "skill": "scientific-claim-evidence",
+      "result": "PASS",
+      "scope": "Technical incomplete baseline and narrow archived-fit observations only; C67 and SOTA remain unverified; C80 remains contradicted",
+      "decisive_evidence": "ecd01d30aa17b7d409561f1cbd07591bb14e0637dcc21c182b834e674a2e35a4"
+    },
+    {
+      "skill": "scientific-results-and-figures",
+      "result": "PASS",
+      "scope": "Complete terminal cost and partial artifact reconstruction; no incomplete-pair scoring, selection or correctness inference",
+      "outputs": [
+        "research/irc-baseline-result-audit-v2.json",
+        "research/irc-baseline-archive-fit-cpu-v2.json",
+        "research/irc-baseline-partial-cost-decomposition-v2.json",
+        "research/irc-baseline-technical-abort-audit-v2.md"
+      ],
+      "limits": [
+        "Reconstructed fit expectations are not native worker receipts",
+        "Nested update intervals are not complete fit time",
+        "Unattributed wall time is not compilation time or utilization",
+        "Training loss does not select a useful adapter",
+        "Condition/stratum BCa intervals are exploratory and not selection-corrected"
+      ]
+    },
+    {
+      "skill": "scientific-research-strengthening",
+      "result": "BLOCKED",
+      "scope": "Fair-strong/S5/S7 remain blocked by missing complete useful baseline, response-control efficacy, strongest comparisons and three-family/three-construct evidence",
+      "independent_critic": "/root/math_grader_audit",
+      "independent_integrity_checks": 352,
+      "independent_checkpoint_checks": 54,
+      "discrepancies": 0,
+      "next_decision": "Explicit prospective engineering resource decision and separate short-prefill engine qualification before any complete scientific re-dispatch"
+    },
+    {
+      "skill": "experimental-setup-writer",
+      "result": "PASS",
+      "scope": "Research implementation/audit design only: exact baseline scientific contract preserved; administrative abort and analysis denominators disclosed; replacement engine protocol not yet admitted"
+    },
+    {
+      "skill": "scientific-avoid-ai-writing",
+      "result": "PASS",
+      "scope": "Evidence-bound audit/README/plan wording only; no submission prose, policy-survivor inference, safe-engine or SOTA promotion"
+    },
+    {
+      "skill": "section-self-check",
+      "result": "PASS",
+      "scope": "Updated operational sections checked against terminal states, source hashes, exact counts, failure classes and cost denominators; historical records preserved"
+    }
+  ],
+  "reused_gates": [
+    {
+      "path": "research/irc-mixed-full-result-audit-v3.json",
+      "sha256": "62da42faf8871d3767a2db9c5e7cedec41653af67f5be65d1be34ab437d9f7af",
+      "status": "PASS only at original16-question fixed-workload scope",
+      "new_limit": "Does not qualify Q<128 native generation specializations in baseline-v2"
+    },
+    {
+      "path": "research/irc-accumulation-result-audit-v1.json",
+      "sha256": "3cacf9aa216b2a0c8ae9cd30c0bca6c2f0b60e255958db7e7f6ae3f35acdf1dc",
+      "status": "PASS only at original two-update/raw-reload diagnostic scope",
+      "new_limit": "Does not admit any of three incomplete-worker archives as useful scientific baselines"
+    },
+    {
+      "path": "research/irc-baseline-analysis-cpu-preflight-v2.json",
+      "sha256": "ce7739abd3a207146b9c631515728e20c12af35bcc3bd7b4ac493445e3c5ebc0",
+      "status": "48 native CPU tests pass;462 local pass plus1CUDA skip",
+      "new_limit": "Test fixtures are not scientific H100 evidence"
+    }
+  ],
+  "invalidated_operational_status": [
+    "Historical running status in irc-baseline-execution-checkpoint-receipt-v2.json is superseded, not overwritten"
+  ],
+  "preserved_boundaries": {
+    "c67_unverified": true,
+    "c80_contradicted": true,
+    "v20_closed": true,
+    "observer_v1_closed": true,
+    "selection_ranked": false,
+    "positive_action_admitted": false,
+    "reduced_family_admitted": false,
+    "sealed_labels_accessed": false,
+    "engineering_budget_reassigned": false,
+    "automatic_retry": false,
+    "sota_achieved": false
+  },
+  "cost": {
+    "baseline_h100_hours": 7.605374254722222,
+    "baseline_ceiling_h100_hours": 48,
+    "original_engineering_seconds_remaining": "9.198053592",
+    "new_engineering_budget_approved_or_declared": false,
+    "cpu_only_analysis_accelerator_cost": 0,
+    "cpu_container_lifetimes_not_instrumented": true
+  },
+  "terminal_summary": {
+    "natural_failure_indices": [
+      1,
+      2
+    ],
+    "administrative_stop_indices": [
+      0,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "archived_final_fit_indices": [
+      4,
+      6,
+      7
+    ],
+    "fit_updates": 1692,
+    "fit_target_token_instances": 12842748,
+    "common_zero_rows": 144,
+    "candidate_selection_rows": 16,
+    "output_files": 48,
+    "output_bytes": 213153439,
+    "eligible_candidates": 0
+  },
+  "independent_review": {
+    "status": "abort-accounting PASS; scientific selection BLOCKED",
+    "no_material_blocker": true,
+    "exact_seconds": "27379.347316906",
+    "exact_h100_hours": "7.605374254696111",
+    "precision_agreement": "within declared1us container-time resolution",
+    "quality_fields_accessed": false,
+    "checkpoint_tensors_finite": true,
+    "source_diagnosis": "Direct c01 traceback to FP32 Q113/GQA4/BLOCK_M512; source-width prefix alignment corroborates shape dependence; not an intervention-policy comparison"
+  },
+  "final_remote_check": {
+    "observed_at": "2026-09-08T00:01:23.112325+00:00",
+    "active_baseline_worker_names": [],
+    "gpu": "0, 1, 0\n1, 1, 0\n2, 1, 0\n3, 1, 0\n4, 1, 0\n5, 1, 0\n6, 1, 0\n7, 1, 0\n"
+  },
+  "next_dependency": "Prospectively bound and qualify the existing regular-Flex kernel option for FP32 short prefill; current proposal remains source-only and no new GPU work is admitted.",
+  "downstream_not_reached": [
+    "Fair-strong/S5/S7",
+    "Evidence-locked skeleton and submission section writers",
+    "Results/abstract/global-paper check",
+    "Complete-paper adversarial review",
+    "Current ICLR submission compliance"
+  ],
+  "venue_compliance": {
+    "status": "unpassed",
+    "submission_ready": false
+  },
+  "distinctions": {
+    "verified": "Terminal lineages, natural failures, archives, costs, native source path, CPU contracts and checkpoint finiteness",
+    "inference": "Matching short-prefill boundaries explain stalled-worker prefixes; administrative stops are not natural failures",
+    "proposal": "Force regular FlexAttention through existing kwargs only in a separately qualified engine; no safe-engine or speedup evidence yet"
+  }
+}

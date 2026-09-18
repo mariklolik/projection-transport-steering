@@ -1,0 +1,59 @@
+{
+  "schema": "irc-eager-engine-admission-B-v8",
+  "timestamp": {
+    "current_time": "2026-09-08 03:54:30 UTC"
+  },
+  "status": "B_admitted_no_C_or_baseline_admission",
+  "A": {
+    "container_id": "242f5ab031f8e3a19d2c64d157242922259cbd02b081f7ca20a14a532fbafcff",
+    "receipt_sha256": "adef1d965d7f31252f1f3d3a94c72ed382d2cdf8a5359aa4b7f3f4128296b1c2",
+    "terminal_sha256": "301c545148f66117fbbb8dff2efb6a15b5ce89af48798bf32209afbedfcd9c10",
+    "cells": 35,
+    "source_mapped_comparisons": 175,
+    "container_seconds": "67.927741841",
+    "exit_code": 0,
+    "no_oom": true,
+    "no_restart": true
+  },
+  "local_remote_files_match": true,
+  "inventory": [
+    {
+      "path": "container.log",
+      "bytes": 11255,
+      "sha256": "964e8738661401fc30b0980fcd828984219628309f32b71b6e01e0bfdfca40bc"
+    },
+    {
+      "path": "inspect.json",
+      "bytes": 21437,
+      "sha256": "3fd456f1e6282cc4e81816b0c31ec4f7f4dd9252301724011457241bd14193cf"
+    },
+    {
+      "path": "run/cells.jsonl",
+      "bytes": 2310,
+      "sha256": "c644f7a3a4895bac49b6e2cdc6379b5b95023bd4879d1f09cf2d6e3d2b26f28a"
+    },
+    {
+      "path": "run/receipt.json",
+      "bytes": 12917,
+      "sha256": "adef1d965d7f31252f1f3d3a94c72ed382d2cdf8a5359aa4b7f3f4128296b1c2"
+    },
+    {
+      "path": "terminal.json",
+      "bytes": 536,
+      "sha256": "301c545148f66117fbbb8dff2efb6a15b5ce89af48798bf32209afbedfcd9c10"
+    }
+  ],
+  "independent_review": {
+    "reviewer": "math_grader_audit",
+    "integrity_checks": 201,
+    "status": "scoped_PASS",
+    "gpu_reexecution": false,
+    "not_statistical_replicates": true,
+    "compiler_archive_still_pending": true
+  },
+  "remaining_pool_seconds": "3251.740073170",
+  "remaining_stage_ceiling_sum_seconds": 3000,
+  "B_command_locator": "research/irc-eager-engine-dispatch-v8.json:gpu_commands.b",
+  "launch_python_code": "import hashlib,json,subprocess\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nroot=Path(\"/home/mekashirskiy/projection-transport-steering/tmp/irc-eager-engine-v8\")\np=root/\"research/irc-eager-engine-config-v8.json\"\nassert hashlib.sha256(p.read_bytes()).hexdigest()==\"bccc5f0aa5e98fb1d1188cbc0053ab529fbdd9ecdfac42e892107f19f367af47\"\nc=json.loads(p.read_text())\nassert all(hashlib.sha256((root/n).read_bytes()).hexdigest()==v for n,v in c[\"source_sha256\"].items())\nbase=Path(\"/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_eager_engine_v8\")\nassert json.loads((base/\"cpu/terminal.json\").read_text())[\"returncode\"]==0\nassert hashlib.sha256((base/\"cpu/native-tests.xml\").read_bytes()).hexdigest()==\"cbab4d92c62d618130c79c55905a1b0a7b948498cca6e13ade120f3624be2d1d\"\na=json.loads((base/\"a/run/receipt.json\").read_text())\nterminal=json.loads((base/\"a/terminal.json\").read_text())\nassert a[\"status\"]==\"pass\" and [row[\"length\"] for row in a[\"cells\"]]==c[\"lengths\"]\nassert len(a[\"cells\"])==35 and all(row[\"status\"]==\"pass\" for row in a[\"cells\"])\nassert a[\"numerical_comparisons_in_fully_passed_cells\"]==175\nassert a[\"config_sha256\"]==\"bccc5f0aa5e98fb1d1188cbc0053ab529fbdd9ecdfac42e892107f19f367af47\"\nassert not terminal[\"state\"][\"Running\"] and terminal[\"state\"][\"ExitCode\"]==0 and not terminal[\"state\"][\"OOMKilled\"]\nassert float(terminal[\"container_seconds\"])<=300\nmodel=Path(\"/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B/snapshots\")/c[\"model_revision\"]\nassert model.is_dir()\nassert all(hashlib.sha256((model/name).read_bytes()).hexdigest()==digest for name,digest in c[\"model_files_sha256\"].items())\ncmd=json.loads(\"[\\\"sudo\\\",\\\"-n\\\",\\\"docker\\\",\\\"run\\\",\\\"--detach\\\",\\\"--name\\\",\\\"pts-irc-eager-v8-b\\\",\\\"--gpus\\\",\\\"device=0\\\",\\\"--network\\\",\\\"none\\\",\\\"--user\\\",\\\"11027:11027\\\",\\\"--workdir\\\",\\\"/work\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-eager-engine-v8,dst=/work,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/.venv,dst=/ptsenv,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages,dst=/overlay,readonly\\\",\\\"--env\\\",\\\"PYTHONPATH=/work/src:/overlay:/ptsenv/lib/python3.12/site-packages\\\",\\\"--env\\\",\\\"PYTHONDONTWRITEBYTECODE=1\\\",\\\"--env\\\",\\\"MPLBACKEND=Agg\\\",\\\"--env\\\",\\\"OMP_NUM_THREADS=2\\\",\\\"--env\\\",\\\"OPENBLAS_NUM_THREADS=2\\\",\\\"--env\\\",\\\"MKL_NUM_THREADS=2\\\",\\\"--env\\\",\\\"USER=mekashirskiy\\\",\\\"--env\\\",\\\"TRITON_CACHE_DIR=/tmp/irc-eager-v8-b-triton\\\",\\\"--env\\\",\\\"MPLCONFIGDIR=/tmp/irc-matplotlib\\\",\\\"--env\\\",\\\"TORCHINDUCTOR_CACHE_DIR=/tmp/irc-eager-v8-b-inductor\\\",\\\"--env\\\",\\\"TORCHINDUCTOR_COMPILE_THREADS=2\\\",\\\"--env\\\",\\\"CUDA_CACHE_PATH=/tmp/irc-eager-v8-b-cuda\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_eager_engine_v8/b,dst=/out\\\",\\\"--env\\\",\\\"TORCH_LOGS=recompiles\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B,dst=/model,readonly\\\",\\\"--entrypoint\\\",\\\"timeout\\\",\\\"sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb\\\",\\\"--signal=TERM\\\",\\\"--kill-after=10s\\\",\\\"560s\\\",\\\"python3\\\",\\\"-S\\\",\\\"-c\\\",\\\"import os,sys,runpy,json,hashlib\\\\nfrom pathlib import Path\\\\nfor name in (\\\\\\\"TRITON_CACHE_DIR\\\\\\\",\\\\\\\"TORCHINDUCTOR_CACHE_DIR\\\\\\\",\\\\\\\"CUDA_CACHE_PATH\\\\\\\"):\\\\n    assert not Path(os.environ[name]).exists(),name+\\\\\\\" not initially empty\\\\\\\"\\\\nsys.path.insert(0,\\\\\\\"/work/scripts\\\\\\\")\\\\nimport torch\\\\nassert torch.cuda.is_available() and torch.cuda.get_device_name().startswith(\\\\\\\"NVIDIA H100\\\\\\\")\\\\nfrom run_attention_diagnostic import checked_config\\\\np=Path(\\\\\\\"/work/research/irc-eager-engine-config-v8.json\\\\\\\")\\\\nc=checked_config(p,\\\\\\\"bccc5f0aa5e98fb1d1188cbc0053ab529fbdd9ecdfac42e892107f19f367af47\\\\\\\",Path(\\\\\\\"/work\\\\\\\"))\\\\nsys.argv=[\\\\\\\"run_irc_prefill_probe.py\\\\\\\",\\\\\\\"--config\\\\\\\",str(p),\\\\\\\"--config-sha256\\\\\\\",\\\\\\\"bccc5f0aa5e98fb1d1188cbc0053ab529fbdd9ecdfac42e892107f19f367af47\\\\\\\",\\\\\\\"--model\\\\\\\",c[\\\\\\\"model_path\\\\\\\"],\\\\\\\"--output\\\\\\\",\\\\\\\"/out/run\\\\\\\"]\\\\nrunpy.run_path(\\\\\\\"/work/scripts/run_irc_prefill_probe.py\\\\\\\",run_name=\\\\\\\"__main__\\\\\\\")\\\\n\\\"]\")\ndef call(args):\n    return subprocess.check_output(args,text=True,timeout=15).strip()\ngpu=call([\"nvidia-smi\",\"--id=0\",\"--query-gpu=uuid,memory.used,utilization.gpu\",\"--format=csv,noheader,nounits\"])\nassert gpu==\"GPU-988dde5b-1ad3-d864-244f-e0ffe6693cb6, 1, 0\"\nassert not call([\"sudo\",\"-n\",\"docker\",\"ps\",\"-a\",\"--filter\",\"name=^/\"+cmd[6]+\"$\",\"--format\",\"{{.Names}}\"])\nassert not list((base/\"b\").iterdir())\nprint(json.dumps({\"timestamp\":datetime.now(timezone.utc).isoformat(),\"stage\":\"b\",\"source_files\":67,\"native_CPU_pass\":True,\"same_GPU_idle\":True,\"name_absent\":True,\"output_empty\":True,\"gpu\":gpu}),flush=True)\nprint(call(cmd),flush=True)\n",
+  "baseline_admitted": false
+}

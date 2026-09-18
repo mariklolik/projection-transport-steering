@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "record_id": "irc-real-runtime-receipt-v1",
+  "timestamp": "2026-09-07T15:19:27Z",
+  "repository": "git@github.com:mariklolik/projection-transport-steering.git",
+  "working_directory": "/Users/mekashirskiy/projection-transport-steering",
+  "active_goal_objective": {
+    "path": "/Users/mekashirskiy/.codex/attachments/322808f2-1bda-44c4-bb66-c9855b21a266/goal-objective.md",
+    "sha256": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a"
+  },
+  "scientific_maturity": "EVIDENCE_AVAILABLE for engineering; RESEARCH_DESIGNED for IRC efficacy",
+  "workflow_mode": "DRAFT_FROM_EVIDENCE audit and research planning only",
+  "persistent_goal_status": "active",
+  "goal_turn_result": "progress",
+  "fair_strong_gate": "BLOCKED",
+  "full_runtime_gate": "FAIL_incomplete_full_8_timeout",
+  "input_sha256": {
+    "research/benchmark-reset-v1.md": "1fa58add808f961cadc1c5e18770021d6bd746ba57f4f058c4a3dde6fe772af1",
+    "research/literature-reset-v1.md": "8332d547593e1e1bad2ce4db77e22cd9244ce22fda1af9a6017f362a77cd24df",
+    "research/irc-data-and-cuda-receipt-v1.json": "c3dcd747b6411c7e2f263572d77e2fd8156e120e6f653e2933408ee6b71b8433",
+    "research/irc-real-runtime-config-v1.json": "b1d9fee872e2cdf35844fb7453c3cc35104acd494212bf39b46d29be63292cfb",
+    "research/irc-real-runtime-protocol-v1.md": "09143da89981154d1a2721d06f3a8c8aaba45b29b178257e0c8d0f9685487d66",
+    "research/irc-real-runtime-launch-v1.json": "9d737742e5a37d766481568f79fc7dfb7c4f2eca7922f13ca2c79da4f84bcfa2",
+    "research/irc-scientific-runtime-candidate-v1.json": "5e81b8c23880cce6294d7f7efe80cc72a45b5aa2231756bcfa47089463f29830",
+    "artifacts/data/irc_v1_runtime.json": "a536c97d0dd3a31b027e64463040681a2fa9ea67e4b97ae95defb9bacfa68eda",
+    "artifacts/data/irc_v1_allocations/manifest.json": "e489f1273b1c667ac5f5bbc35963a5ed480a01224f155cf52ee56bbd79083156",
+    "research/irc-sdpa-diagnostic-v1.json": "ebfcbf67d4950bc9856ede99b61fecd8326d081de907762e7f753015ce2d01e9",
+    "research/irc-sdpa-diagnostic-attempt2-v1.json": "8a0a98f680ad5bb4811862f5c044de0b346b784d2e93281feead7a4313884ab0",
+    "artifacts/literature/reset_20260907/reft-recipe-primary-v3.xml": "be68ca92f5f75c657cf10ba6296aa359dca349a922cc0742bcd3bf389417c53b",
+    ".external/pyreft/examples/loreft/train.py": "ec529cb3bed8782430ce327fed58107a5028453b749e11977c118622eb1046f4"
+  },
+  "output_sha256": {
+    "research/irc-real-runtime-code-invariants-v1.json": "56638f59ee81958964ad7f620cd76e0185e2d0a224a7ba6448da2a7f175782b2",
+    "research/irc-real-runtime-result-audit-v1.json": "747ae57d8c73304f97292230a3ca5d00cfd7b3f52179891c529f21f5dbb4c294",
+    "research/irc-real-runtime-audit-v1.md": "563a15217fd1ca0ff168835ab8f5c43ba5145c9fff7bbfb75449071615439dc2",
+    "research/irc-sdpa-diagnostic-result-v1.json": "40702b38a4bd2088fa50b725ebbd3d33556154f309dc785804f04e30f3898fcc",
+    "research/irc-fixed-adapter-design-v1.md": "0319a7754dce1ab369635e13bb9336e166b3580f1ce2d9d89658ca359a681b25",
+    "research/irc-fit-source-length-audit-v1.json": "4f73b420f1de8a6b311330e0c2e910fbcfb8d49bf350f87712282f4cbbbeafbf",
+    "research/research-reset-plan-v1.md": "9c0fd0df9a0f4715ea9e9d89e5ec57744e160278b379e6da3666a54fd26ec812",
+    "research/claim-ledger.md": "a72b0224add9779039ec22ab36842bf0fb039b25bd55927dda95da437e60d988",
+    "research/evidence-manifest.md": "f59b6a7a0f81b11d77e3cedfa6fdf4ef17bc555a774b0fafaae2fb82b12f3fb5",
+    "README.md": "fead40efbceabf988a1c070f2eb1bfa349cc3a0676b2b87169b26e53680f908f",
+    "scripts/run_irc_real_runtime.py": "d5fcb15da8013fe621568c9848efde9dd10f9c8eb8f38f2773aa4df62fa8131b",
+    "src/projection_transport_steering/outcome_score.py": "3d6e4d8f8a7d4e9c287c66235543edb55e51345f467a127780f4ccaf9b566ade",
+    "src/projection_transport_steering/outcome_score_runtime.py": "701c394a028c409561fe2927c90f59f364855c5964a1aee6f8758348be727294",
+    "src/projection_transport_steering/branch_runtime.py": "bc90229eff21434b01bb238c117c56e423dbf213804fff4656ad44d8b97ece8b",
+    "tests/test_irc_real_runtime.py": "6d66b85f55e76cf592cf992a77ed33f9ded328dfab88b3e339061e3bc6f0b868",
+    "artifacts/engineering/irc_real_runtime_v1/terminal-states.json": "bb8a42e40752b9b7822292102f4ad7bbb5552a741aa3ea101da6710c76e75ee8",
+    "artifacts/engineering/irc_real_runtime_v1/sdpa-diagnostic-attempt1.log": "25670211cf605895133680ffb45d2735f295b3ea2503e7ca05e658d2c0b274cc",
+    "artifacts/engineering/irc_real_runtime_v1/sdpa-diagnostic-attempt2.log": "132e97263b6f9315feca833d40644297108bafb2681c35ad1b413efb781688c7",
+    "research/irc-real-runtime-verification-v1.json": "a8120b2744ae4a91e4020a628b003288fd239ae428571cd03316335a914cafa0",
+    "research/run-manifest.jsonl": "8386a0942883d2d1fffb0fd88def3fc704e5e88e27b4b7b32571b0170c95497e",
+    "research/ai-assistance-ledger.jsonl": "ea292f7c8fbb4cbc7bdcf8306a47ba091058bb0b06f0111d18149ea97bca2b55"
+  },
+  "checked_contracts": {
+    "frozen_scientific_inputs": "No post-outcome change to source, questions, allocation, prompt, grader, seed derivation, 8192 cap, sampler or deadlines.",
+    "raw_accounting": "56/64 scored rows on 16 unique questions; eight missing full-budget observations remain missing. All 49 transferred generation files match remote hashes.",
+    "complete_short_scope": "48 real-question short rows, 22 batch check records, 48 at-risk rows and 64 action tokens per row; all declared within-condition contracts pass.",
+    "incomplete_full_scope": "Only the first 8/16 full-budget rows are saved; exit124, no OOM and no final receipt. Six correct EOS answers and two capped failures are partial observations, not an estimate for the full panel.",
+    "stochastic_scope": "Same per-row seed does not establish cross-batch identity. Exact full-prefix match counts are 2/16, 1/16 and 1/16 across batch pairs.",
+    "timing_scope": "Single execution per condition; reference tokens exclude padding slots. Four rounded container intervals total0.4981556 H100-hours including timeout; diagnostics add about0.0045742. Earlier costs are additional.",
+    "diagnostic_scope": "Nine synthetic SDPA cells and all zero-query checks complete; one fixed-tolerance all-true/no-mask failure is retained. Operator cost is not whole-model speedup or engine conformance.",
+    "baseline_scope": "Source-only formatting succeeds for all1500 fit examples, max2690 tokens. Published all-layer12-epoch arithmetic ReFT is not the minimal single-layer action grid.",
+    "tests": "356 local tests with25 warnings and critical Ruff pass;15 exact isolated-remote CPU tests pass. Test-only -S inheritance fixes a retained subprocess environment failure.",
+    "cleanup": "Six stopped task-owned containers removed after output/log capture; last read-only compute-process check empty. Remote bind-mounted generation outputs and local evidence preserved."
+  },
+  "gate_receipts": [
+    {
+      "skill": "research-paper-writing",
+      "result": "PASS",
+      "scope": "Current-state routing and audit/planning boundary",
+      "checked_contract": "Earliest unmet dependency remains full real-question runtime; engineering success cannot upgrade C67, SOTA or submission maturity."
+    },
+    {
+      "skill": "scientific-claim-evidence",
+      "result": "PASS",
+      "scope": "C71/C72 only, with existing C69/C70 limits preserved",
+      "checked_contract": "Exact artifact hashes support narrow workload/operator claims; partial accuracy, cross-batch identity, backend fix and useful controller remain unverified."
+    },
+    {
+      "skill": "scientific-results-and-figures",
+      "result": "PASS",
+      "scope": "Observed/missing accounting, strata, system measurements and failure retention",
+      "checked_contract": "16 unique questions, no pseudo-replication or timing CI; incomplete full-workload throughput labeled; emitted tokens and paid failed work counted."
+    },
+    {
+      "skill": "scientific-research-strengthening",
+      "result": "BLOCKED",
+      "scope": "Central fair-strong gate, not an external impasse",
+      "checked_contract": "Independent saved-packet critic finds no remaining material integrity defect; full runtime, useful fixed action, learned response, strongest comparators, uncertainty and replication are still required."
+    },
+    {
+      "skill": "experimental-setup-writer",
+      "result": "BLOCKED",
+      "scope": "Executable scientific experiment",
+      "checked_contract": "Exact environment and prospective runtime packet exist, but full workload fails; baseline recipe and matched strong-comparator execution are not frozen."
+    },
+    {
+      "skill": "scientific-avoid-ai-writing",
+      "result": "PASS",
+      "scope": "New audit notes, source-design notes and plan/ledger updates only",
+      "checked_contract": "DRAFT_FROM_EVIDENCE; adverse evidence and scope remain explicit; no submission prose or unmeasured superlative."
+    },
+    {
+      "skill": "section-self-check",
+      "result": "PASS",
+      "scope": "Local audit/planning sections, not a paper-section release",
+      "checked_contract": "Result paragraphs map to hash-bound artifacts; claims, missingness, costs, source distinctions and next dependency are consistent."
+    },
+    {
+      "skill": "deep-research-work:deep-research",
+      "result": "PASS",
+      "scope": "Targeted primary ReFT follow-up after the prior broad reset",
+      "checked_contract": "Decisive paper passages and pinned author code clarify the recipe and reproduction boundary; generated summaries alone do not establish priority."
+    },
+    {
+      "skill": "python-performance-optimization",
+      "result": "PASS",
+      "scope": "Profile-first operator diagnosis",
+      "checked_contract": "Reused the installed SDPA callable and profiler, preserved numerical failures and separated microbenchmark from end-to-end inference."
+    }
+  ],
+  "passed_prior_gates_reused": [
+    {
+      "artifact": "artifacts/data/irc_v1_allocations/manifest.json",
+      "sha256": "e489f1273b1c667ac5f5bbc35963a5ed480a01224f155cf52ee56bbd79083156",
+      "scope": "Unchanged source eligibility/exposure/allocation contract; no sealed evaluation opened."
+    },
+    {
+      "artifact": "src/projection_transport_steering/branch_runtime.py",
+      "sha256": "bc90229eff21434b01bb238c117c56e423dbf213804fff4656ad44d8b97ece8b",
+      "scope": "Unchanged isolated continuation and cache/RNG contract; new real-question checks extend only tested scope."
+    },
+    {
+      "artifact": "research/irc-real-runtime-code-invariants-v1.json",
+      "sha256": "56638f59ee81958964ad7f620cd76e0185e2d0a224a7ba6448da2a7f175782b2",
+      "scope": "Reuse old grader/allocation and runtime definitions by exact AST proof, not a stale whole-module hash; added helpers have new tests."
+    },
+    {
+      "artifact": "research/literature-reset-v1.md",
+      "sha256": "8332d547593e1e1bad2ce4db77e22cd9244ce22fda1af9a6017f362a77cd24df",
+      "scope": "Prior primary-source contribution boundary; targeted recipe follow-up does not assert new priority or replace the original report."
+    },
+    {
+      "artifact": "research/benchmark-reset-v1.md",
+      "sha256": "1fa58add808f961cadc1c5e18770021d6bd746ba57f4f058c4a3dde6fe772af1",
+      "scope": "Unchanged bounded SOTA, uncertainty, comparator and stopping obligations; benchmark not promoted to executable."
+    }
+  ],
+  "independent_critic": {
+    "agent": "/root/math_grader_audit",
+    "verdict": "Saved-packet integrity PASS; overall runtime FAIL/incomplete",
+    "evidence_artifact": "research/irc-real-runtime-verification-v1.json",
+    "sha256": "a8120b2744ae4a91e4020a628b003288fd239ae428571cd03316335a914cafa0",
+    "limitations": "No scorer rerun or runtime call trace; no independent claim of SOTA, full workload or cross-engine parity."
+  },
+  "invalidated_downstream_receipts": "Old experiment receipts remain immutable in their own scope. This packet does not validate prior whole-file code hashes after additive helpers. Any new attention backend invalidates engine, CUDA, replay, cost and affected setup/results receipts and requires prospective versioned qualification. No downstream paper release receipt exists for C67.",
+  "downstream_not_reached": [
+    "Mask-preserving engine admission and complete16-question8192 workload",
+    "Actual-weight fit-step cost and exact useful fixed-adapter schedule",
+    "Action-response pilot, head fitting and full-rollout development",
+    "Simultaneous sealed strongest-comparator and32768-frontier comparisons",
+    "Independent architecture and three-behavior evidence",
+    "Input-matched fair-strong and a-star-conference-paper contribution pass",
+    "skeleton-planner and assigned introduction-writer, method-writer, experimental-setup-writer, results-writer and abstract-writer release gates",
+    "global-writer-check and scientific-review-and-rebuttal final gates",
+    "submission-compliance for current official ICLR venue rules and disclosure approval"
+  ],
+  "next_decisive_increment": "Prospectively qualify the existing mask-preserving GQA/FlexAttention path, charging compilation/mask construction and cache/padding/EOS/replay checks to the unchanged runtime ceiling; then rerun the original full workload as a new immutable version. Do not drop masks, change questions/caps or overwrite v1.",
+  "budget_ceiling_unchanged_h100_hours": {
+    "runtime": 1,
+    "baseline": 8,
+    "pilot": 12,
+    "response": 36,
+    "development": 16
+  },
+  "author_decisions_required_for_next_engineering_step": [],
+  "author_scientific_approval": "unverified",
+  "ai_assistance_ledger": "research/ai-assistance-ledger.jsonl",
+  "ai_assistance_ledger_sha256": "ea292f7c8fbb4cbc7bdcf8306a47ba091058bb0b06f0111d18149ea97bca2b55",
+  "new_ai_records": [
+    "ai-task-0093",
+    "ai-task-0094",
+    "ai-task-0095"
+  ],
+  "disclosure_status": "Unverified author approval; no final disclosure or current submission-compliance pass.",
+  "trained_baseline_exists": false,
+  "new_controller_fitted": false,
+  "new_steering_effect_measured": false,
+  "scientific_engine_admitted": false,
+  "sota_achieved": false,
+  "submission_ready": false
+}

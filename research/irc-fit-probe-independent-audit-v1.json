@@ -1,0 +1,28 @@
+{
+  "schema": "irc-fit-probe-independent-audit-v1",
+  "scope": "Read-only independent reconstruction of completed fit probe and planning cost arithmetic",
+  "agent": "/root/math_grader_audit",
+  "fit_assertions": 224,
+  "fit_discrepancies": 0,
+  "cost_arithmetic_assertions": 31,
+  "cost_discrepancies": 0,
+  "receipt_sha256": "1e5b0305730d4b19ab2620ad6f221626000dc6cf4ed5c07cb8a0dded12ea5ca9",
+  "audit_sha256": "76434c32fb170987677c23ca50ca1dfcdd2c31a2e8e085c72967dfd16d0f64f0",
+  "verified": [
+    "18 steps,19files,47sourcehashes and raw stdout joins",
+    "35802 supervised token instances,finite nonzero gradients and three changed adapter tensors each step",
+    "FP32 rotation/BF16 learned source;65544 trainable values",
+    "138.9011713container seconds; cumulative allocated41.0824GiB",
+    "Target audit hashes original packet order; length sorting only selects pairs",
+    "Padding20.5921percent and attention-square proxy30.3242percent reductions are arithmetic,not speedups"
+  ],
+  "boundaries": [
+    "Raw gradient tensors not persisted; source-enforced checks plus recorded norms",
+    "Base ownership/gradient/version checks do not compare every base byte",
+    "Six selected questions,not18 independent trials",
+    "Prompt-median second loss increased; no efficacy/fit/full-hook generation qualification",
+    "CUDA profile requires positive device activity in both instrumented rows even if optimizer receipt passes"
+  ],
+  "extra_gpu_runs": false,
+  "files_edited": false
+}

@@ -1,0 +1,155 @@
+{
+  "schema": "irc-short-prefill-gate-a-terminal-v4",
+  "id": "5a84065016bf3ac05ee6f49049813a4ea9427b0f59cdd7187b3f24262aa1b635",
+  "name": "/pts-irc-prefill-v4-a",
+  "state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 1,
+    "Error": "",
+    "StartedAt": "2026-09-08T00:26:13.174443039Z",
+    "FinishedAt": "2026-09-08T00:26:59.702922528Z"
+  },
+  "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+  "gpu": [
+    {
+      "Driver": "",
+      "Count": 0,
+      "DeviceIDs": [
+        "0"
+      ],
+      "Capabilities": [
+        [
+          "gpu"
+        ]
+      ],
+      "Options": {}
+    }
+  ],
+  "mounts": [
+    {
+      "Type": "bind",
+      "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-short-prefill-v4",
+      "Destination": "/work",
+      "Mode": "",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+      "Destination": "/ptsenv",
+      "Mode": "",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+      "Destination": "/overlay",
+      "Mode": "",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B",
+      "Destination": "/model",
+      "Mode": "",
+      "RW": false,
+      "Propagation": "rprivate"
+    },
+    {
+      "Type": "bind",
+      "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_v4/gate_a",
+      "Destination": "/out",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    }
+  ],
+  "path": "timeout",
+  "args": [
+    "--signal=TERM",
+    "--kill-after=10s",
+    "560s",
+    "python3",
+    "-S",
+    "-c",
+    "import hashlib,json\nfrom pathlib import Path\np=Path(\"/work/research/irc-short-prefill-gate-a-v4.json\")\nassert hashlib.sha256(p.read_bytes()).hexdigest()==\"56a374b49d40b48ff59017acdf8223c8831908eb3086e7cf0b6fcd7ce27a788b\"\nc=json.loads(p.read_text())\nexec(compile(c[\"python_code\"],str(p),\"exec\"))\n"
+  ],
+  "stdout": "{\"event\": \"cell_started\", \"length\": 113, \"status\": \"running\"}\n{\"event\": \"cell_complete\", \"length\": 113, \"status\": \"pass\", \"seconds\": 17.434498079121113}\n{\"event\": \"cell_started\", \"length\": 2, \"status\": \"running\"}\n{\"event\": \"cell_complete\", \"length\": 2, \"status\": \"pass\", \"seconds\": 16.652813121676445}\n{\"event\": \"cell_started\", \"length\": 93, \"status\": \"running\"}\n{\"event\": \"cell_complete\", \"length\": 93, \"status\": \"fail\", \"failure_type\": \"AssertionError\", \"failure_message\": \"Tensor-likes are not close!\\n\\nMismatched elements: 761650 / 761856 (100.0%)\\nGreatest absolute difference: 1199.5983157205703 at index (7, 6, 15, 54) (up to 0.0005 allowed)\\nGreatest relative difference: inf at index (0, 0, 90, 0) (up to 0.005 allowed)\", \"seconds\": 0.04118422418832779}\n{\"event\": \"gate_a_complete\", \"status\": \"fail\", \"cells\": 3}\n",
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 6, in <module>\n  File \"/work/research/irc-short-prefill-gate-a-v4.json\", line 48, in <module>\n    103,\n    ^^^^^\nRuntimeError: short-prefill gate A failed; artifacts retained\n",
+  "files": {
+    "run/cells.jsonl": {
+      "sha256": "9acd1bf5b491b18edf154176e73407f60da2108d162daba9e14a0a5395e34240",
+      "bytes": 503
+    },
+    "run/receipt.json": {
+      "sha256": "7534ebc339c7f8ffda28c11c868ecc27c38a0e173fb2f705e740d358804f1105",
+      "bytes": 2139
+    }
+  },
+  "receipt": {
+    "automatic_retry": false,
+    "cells": [
+      {
+        "length": 113,
+        "seconds": 17.434498079121113,
+        "status": "pass"
+      },
+      {
+        "length": 2,
+        "seconds": 16.652813121676445,
+        "status": "pass"
+      },
+      {
+        "failure_message": "Tensor-likes are not close!\n\nMismatched elements: 761650 / 761856 (100.0%)\nGreatest absolute difference: 1199.5983157205703 at index (7, 6, 15, 54) (up to 0.0005 allowed)\nGreatest relative difference: inf at index (0, 0, 90, 0) (up to 0.005 allowed)",
+        "failure_type": "AssertionError",
+        "length": 93,
+        "seconds": 0.04118422418832779,
+        "status": "fail"
+      }
+    ],
+    "config_sha256": "56a374b49d40b48ff59017acdf8223c8831908eb3086e7cf0b6fcd7ce27a788b",
+    "device_capability": [
+      9,
+      0
+    ],
+    "gpu": "NVIDIA H100 80GB HBM3",
+    "matmul_precision": "highest",
+    "numerical_comparisons_in_fully_passed_cells": 10,
+    "peak_allocated_bytes": 442632704,
+    "planned_cells": 35,
+    "required_numerical_comparisons": 175,
+    "runtime_files_sha256": {
+      "/ptsenv/lib/python3.12/site-packages/torch/_inductor/kernel/flex/flex_attention.py": "647de8711e39660127e712bff893fd18283d326d148ce25a36f87a2757651fb4",
+      "/ptsenv/lib/python3.12/site-packages/torch/_inductor/kernel/flex/flex_decoding.py": "f147ceca751a436a3ea9dd201b77ec7a50e92089e93be9f85e2b38a9e835cb4e",
+      "/ptsenv/lib/python3.12/site-packages/transformers/integrations/flex_attention.py": "46655f4b8b528a75cdaa418e2fc6690fa4c2dd5e0180fe78900f4db0a7c83650"
+    },
+    "schema": "irc-short-prefill-gate-a-result-v4",
+    "scientific_result": false,
+    "seconds": 34.1307693682611,
+    "source_sha256": {
+      "research/irc-short-prefill-qualification-protocol-v4.md": "ac25315342cb92847eb3f9a85222da2726bf0d3b6d77a415a31790215799bfbf",
+      "src/projection_transport_steering/attention_backend.py": "143d1e0a58e1a5682b3e73ecb5a1a4baf4565a25185b82e05a22ec429a3fc0cc",
+      "tests/test_attention_backend.py": "88b48eae16b85578768b693c2c4385b8e74d5a55d7b2ac5bc5d75e0e78fa8a23",
+      "tests/test_short_prefill_backend.py": "e6e1479eb14deeda2e30da20d046b8cc0ff062c765bfbe1c35a7fe9e488b8cf3"
+    },
+    "status": "fail"
+  },
+  "cost": {
+    "container_lifetime_seconds": "46.528479489",
+    "h100_hours": 0.012924577635833333,
+    "additional_engineering_ceiling_seconds": 3600,
+    "remaining_additional_engineering_seconds": "3553.471520511",
+    "old_engineering_remainder_seconds": "9.198053592",
+    "gate_b_c_open": false,
+    "budget_transfer": false
+  }
+}

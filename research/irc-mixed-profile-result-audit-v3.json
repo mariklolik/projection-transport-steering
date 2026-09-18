@@ -1,0 +1,159 @@
+{
+  "schema": "irc-mixed-profile-result-audit-v3",
+  "created_at": "2026-09-07 16:22:41 UTC",
+  "profile": {
+    "backend": "fp32_prefill_flex",
+    "checks": [
+      {
+        "parent_cache_unchanged": true,
+        "split_replay_exact": true,
+        "split_rng_exact": true,
+        "zero_replay_exact": true,
+        "zero_rng_exact": true
+      },
+      {
+        "parent_cache_unchanged": true,
+        "split_replay_exact": true,
+        "split_rng_exact": true,
+        "zero_replay_exact": true,
+        "zero_rng_exact": true
+      }
+    ],
+    "coverage": [
+      {
+        "action_forward_calls": 64,
+        "action_generated_lengths": [
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64
+        ],
+        "at_risk_at_cut": 8,
+        "intervention_path": "exercised"
+      },
+      {
+        "action_forward_calls": 64,
+        "action_generated_lengths": [
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          64
+        ],
+        "at_risk_at_cut": 8,
+        "intervention_path": "exercised"
+      }
+    ],
+    "files_sha256": {
+      "batch-0000.json": "ed1909864f032b13dab39caeba5f5799c89fff098115adf42a6a8baf2e3f6b30",
+      "batch-0008.json": "de3e119c98ee6eeafca0878d59516d68ef52430b7d4140f668ff05260bfc5cdc",
+      "receipt.json": "b045e178e36c8930f01460a33a6f652fa3f768b66ed0d896f988477e61a4b75a",
+      "reference-0000.json": "22d414f30f4665c80c6fb244cb424e41dfbd41952bdc482250d967ff81316931",
+      "reference-0008.json": "aec07f0ee8e1b161bd88c60ef61358cfdfa9cacde60c875f69d86560ac75de1a"
+    },
+    "peak_memory_bytes": 25060251136,
+    "precision": "highest",
+    "receipt_sha256": "b045e178e36c8930f01460a33a6f652fa3f768b66ed0d896f988477e61a4b75a",
+    "references": [
+      {
+        "seconds": 43.25420819595456,
+        "tokens": 4096
+      },
+      {
+        "seconds": 28.34556271508336,
+        "tokens": 4096
+      }
+    ],
+    "rows": 16,
+    "status": "pass",
+    "total_elapsed_seconds": 160.40944217145443
+  },
+  "container": {
+    "id": "17012908818f48e7feff1331dd040ea0b3407a24abe9a00b2fa59985058f5e5a",
+    "started": "2026-09-07T16:02:43.531418257Z",
+    "finished": "2026-09-07T16:05:37.706801677Z",
+    "exit_code": 0,
+    "oom_killed": false,
+    "elapsed_seconds": 174.17538342
+  },
+  "independent_critic": {
+    "assertions": 314,
+    "failures": 0,
+    "raw_scored_token_and_completion_joins": true,
+    "zero_split_tokens": true,
+    "unique_questions": 16,
+    "at_risk_questions": 16,
+    "action_tokens_per_row": 64,
+    "rows_with_changed_action_tokens": 4,
+    "all_references_cap_512": true,
+    "eos_references": 0,
+    "rescoring_performed": false
+  },
+  "timing": {
+    "reference_seconds": 71.59977091103792,
+    "check_seconds": 83.838552844,
+    "grading_seconds": 0.205046572,
+    "reference_tokens": 8192,
+    "reference_tokens_per_second": 114.41377389570823,
+    "reference_tokens_per_container_second": 47.03305277213668,
+    "scope": "One process/condition; cold loading/compilation charged. No independent-run CI or quality preservation."
+  },
+  "full_workload": {
+    "container_id": "80711276d2b052a2aadb8cd75c2feb69f197ba3ecfe56285d3b3248891f735cf",
+    "launched_after_profile_verification": true,
+    "started": "2026-09-07T16:07:19.58273779Z",
+    "deadline_seconds": 900,
+    "kill_grace_seconds": 20,
+    "last_observed_worker_completed": 8,
+    "expected": 16,
+    "last_observed_reference_seconds": 325.96383998543024,
+    "last_observed_reference_tokens": 44160,
+    "local_full_output_files": 0,
+    "terminal_status": "unobserved_after_SSH_banner_loss",
+    "final_receipt": "not_retrieved",
+    "scope": "Worker progress log only; not a verified full packet, full-panel score or complete-workload throughput."
+  },
+  "native_backward": {
+    "dispatch": "SSH exit255 before any container ID; remote launch unconfirmed",
+    "local_test": "5 passed,1 CUDA test skipped; final suite363passed1skipped25warnings52.49s",
+    "spec_sha256": "0b48a9a91077cae1b461520b7d82c0c6cb7d5a4fa9e05f3781e4e15b8af6b39b",
+    "numerical_result": "unobserved",
+    "actual_overlap_with_full_job": "unknown_not_asserted",
+    "retry_policy": "Inspect exact name pts-irc-native-flex-backward-v1 before any retry."
+  },
+  "network": {
+    "fresh_ssh_and_fresh_jump": "banner timeout",
+    "vpn_status": "PASSWORD_WAIT",
+    "bastion_route_interface": "en0",
+    "configured_helper": "/Users/mekashirskiy/bin/vpn-connect",
+    "scope": "dc-fixed reconnect only; Happ and SSH configuration unchanged",
+    "redacted_reconnect": "TOTP generated and login autofill returned ok; connection wait timed out; PASSWORD_WAIT persists",
+    "user_action": "Finish dc-fixed login in Tunnelblick, not in chat."
+  },
+  "cost": {
+    "completed_operator_seconds": 137.356475079,
+    "completed_profile_seconds": 174.17538342,
+    "full_reserved_seconds": 920,
+    "unconfirmed_backward_reserved_seconds": 62,
+    "previous_v1_sdpa_approximate_h100_hours": 0.50273,
+    "historical_overhead_planning_allowance_hours": 0.1,
+    "conservative_stage_upper_hours": 0.9620444051386111,
+    "stage_ceiling_hours": 1,
+    "scope": "Known allocation intervals plus declared reserves, not an exact lifetime bill."
+  },
+  "claims": [
+    "C73",
+    "C74"
+  ],
+  "full_runtime_gate": "PENDING_receipt_retrieval_and_audit",
+  "fitting_authorized": false,
+  "sota_achieved": false,
+  "goal_turn_result": "progress_then_external_observation_dependency"
+}

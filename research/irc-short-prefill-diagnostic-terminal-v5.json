@@ -1,0 +1,263 @@
+{
+  "schema": "irc-short-prefill-diagnostic-terminal-v5",
+  "timestamp": "2026-09-08 01:33:05 UTC",
+  "config_sha256": "0441a6b5b0d189901b2b259ac3bc60fbffe80f6a1cbf3f02a4cfcdef304ffe7f",
+  "corrected_dispatch_sha256": "a96d5802af4ce4320b0fb89f2a4c73ef9f9b03f4d87592c84e878eaf4462e67a",
+  "original_dispatch": {
+    "status": "failed_before_container_create",
+    "receipt_sha256": "b6afebb70b490a4ebee63f837d764d8f57cc52858328cde8eda66ed84b329175",
+    "container_seconds": 0,
+    "second_arm_unattempted": true,
+    "original_no_retry_policy_preserved": true
+  },
+  "corrected_dispatches": {
+    "fresh93": {
+      "chunk_id": "0c635c",
+      "wall_time_seconds": 0.958698584,
+      "exit_code": 0,
+      "original_token_count": 17,
+      "output": "9ed3dd386e60dc8efb55b6540eb6a9e0a6eccfddcaf4f262e687aad973aaf249\n"
+    },
+    "history113_2_93": {
+      "chunk_id": "51e398",
+      "wall_time_seconds": 1.002280334,
+      "session_id": 49223,
+      "original_token_count": 66,
+      "output": "{\"timestamp\": \"2026-09-08T01:16:26.804956+00:00\", \"gpu0\": \"GPU-988dde5b-1ad3-d864-244f-e0ffe6693cb6, 1, 0\", \"source_hashes_verified\": 58, \"history_name_absent\": true, \"history_output_empty\": true}\nae76f4e2231adcb2c25452ab545c79b21879a8c2cae45622e0e7772374ac95e0\n"
+    }
+  },
+  "arms": {
+    "fresh93": {
+      "timestamp": "2026-09-08T01:15:54.481388+00:00",
+      "inspect": {
+        "Id": "9ed3dd386e60dc8efb55b6540eb6a9e0a6eccfddcaf4f262e687aad973aaf249",
+        "Name": "/pts-irc-diag-v5-d2-fresh93",
+        "State": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 0,
+          "Error": "",
+          "StartedAt": "2026-09-08T01:14:43.267630588Z",
+          "FinishedAt": "2026-09-08T01:15:13.098469437Z"
+        },
+        "Mounts": [
+          {
+            "Type": "bind",
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-short-prefill-diagnostic-v5",
+            "Destination": "/work",
+            "Mode": "",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Destination": "/overlay",
+            "Mode": "",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2/fresh93",
+            "Destination": "/out",
+            "Mode": "",
+            "RW": true,
+            "Propagation": "rprivate"
+          }
+        ]
+      },
+      "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+      "device_requests": [
+        {
+          "Driver": "",
+          "Count": 0,
+          "DeviceIDs": [
+            "0"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": {}
+        }
+      ],
+      "logs": {
+        "stdout": "{\"event\": \"cell\", \"length\": 93, \"status\": \"pass\", \"comparisons\": [{\"label\": \"grad_output\", \"status\": \"pass\"}, {\"label\": \"no_grad_output\", \"status\": \"pass\"}, {\"label\": \"q_grad\", \"status\": \"pass\"}, {\"label\": \"k_grad\", \"status\": \"pass\"}, {\"label\": \"v_grad\", \"status\": \"pass\"}]}\n",
+        "stderr": "V0908 01:15:07.689000 7 torch/_dynamo/guards.py:4181] [1/1] [__recompiles] Recompiling function flex_attention in /ptsenv/lib/python3.12/site-packages/torch/nn/attention/flex_attention.py:1449\nV0908 01:15:07.689000 7 torch/_dynamo/guards.py:4181] [1/1] [__recompiles]     triggered by the following guard failure(s):\nV0908 01:15:07.689000 7 torch/_dynamo/guards.py:4181] [1/1] [__recompiles]     - 1/0: GLOBAL_STATE changed: grad_mode \n",
+        "returncode": 0
+      }
+    },
+    "history113_2_93": {
+      "timestamp": "2026-09-08T01:17:25.908506+00:00",
+      "inspect": {
+        "Id": "ae76f4e2231adcb2c25452ab545c79b21879a8c2cae45622e0e7772374ac95e0",
+        "Name": "/pts-irc-diag-v5-d2-history113_2_93",
+        "State": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 1,
+          "Error": "",
+          "StartedAt": "2026-09-08T01:16:26.877039601Z",
+          "FinishedAt": "2026-09-08T01:17:14.954620864Z"
+        },
+        "Mounts": [
+          {
+            "Type": "bind",
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-short-prefill-diagnostic-v5",
+            "Destination": "/work",
+            "Mode": "",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/home/mekashirskiy/projection-transport-steering/.venv",
+            "Destination": "/ptsenv",
+            "Mode": "",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages",
+            "Destination": "/overlay",
+            "Mode": "",
+            "RW": false,
+            "Propagation": "rprivate"
+          },
+          {
+            "Type": "bind",
+            "Source": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2/history113_2_93",
+            "Destination": "/out",
+            "Mode": "",
+            "RW": true,
+            "Propagation": "rprivate"
+          }
+        ]
+      },
+      "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+      "device_requests": [
+        {
+          "Driver": "",
+          "Count": 0,
+          "DeviceIDs": [
+            "0"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": {}
+        }
+      ],
+      "logs": {
+        "stdout": "{\"event\": \"cell\", \"length\": 113, \"status\": \"pass\", \"comparisons\": [{\"label\": \"grad_output\", \"status\": \"pass\"}, {\"label\": \"no_grad_output\", \"status\": \"pass\"}, {\"label\": \"q_grad\", \"status\": \"pass\"}, {\"label\": \"k_grad\", \"status\": \"pass\"}, {\"label\": \"v_grad\", \"status\": \"pass\"}]}\n{\"event\": \"cell\", \"length\": 2, \"status\": \"pass\", \"comparisons\": [{\"label\": \"grad_output\", \"status\": \"pass\"}, {\"label\": \"no_grad_output\", \"status\": \"pass\"}, {\"label\": \"q_grad\", \"status\": \"pass\"}, {\"label\": \"k_grad\", \"status\": \"pass\"}, {\"label\": \"v_grad\", \"status\": \"pass\"}]}\n{\"event\": \"cell\", \"length\": 93, \"status\": \"fail\", \"comparisons\": [{\"label\": \"grad_output\", \"status\": \"pass\"}, {\"label\": \"no_grad_output\", \"status\": \"pass\"}, {\"label\": \"q_grad\", \"status\": \"pass\"}, {\"label\": \"k_grad\", \"status\": \"fail\"}]}\n",
+        "stderr": "V0908 01:16:51.641000 7 torch/_dynamo/guards.py:4181] [1/1] [__recompiles] Recompiling function flex_attention in /ptsenv/lib/python3.12/site-packages/torch/nn/attention/flex_attention.py:1449\nV0908 01:16:51.641000 7 torch/_dynamo/guards.py:4181] [1/1] [__recompiles]     triggered by the following guard failure(s):\nV0908 01:16:51.641000 7 torch/_dynamo/guards.py:4181] [1/1] [__recompiles]     - 1/0: GLOBAL_STATE changed: grad_mode \nV0908 01:16:55.547000 7 torch/_dynamo/guards.py:4181] [0/1] [__recompiles] Recompiling function create_block_mask in /ptsenv/lib/python3.12/site-packages/torch/nn/attention/flex_attention.py:1027\nV0908 01:16:55.547000 7 torch/_dynamo/guards.py:4181] [0/1] [__recompiles]     triggered by the following guard failure(s):\nV0908 01:16:55.547000 7 torch/_dynamo/guards.py:4181] [0/1] [__recompiles]     - 0/0: Q_LEN == 113                                             # m = torch.arange(0, Q_LEN, device=device)  # nn/attention/flex_attention.py:1005 in create_mask\nV0908 01:16:59.034000 7 torch/_dynamo/guards.py:4181] [1/2] [__recompiles] Recompiling function flex_attention in /ptsenv/lib/python3.12/site-packages/torch/nn/attention/flex_attention.py:1449\nV0908 01:16:59.034000 7 torch/_dynamo/guards.py:4181] [1/2] [__recompiles]     triggered by the following guard failure(s):\nV0908 01:16:59.034000 7 torch/_dynamo/guards.py:4181] [1/2] [__recompiles]     - 1/1: GLOBAL_STATE changed: grad_mode \nV0908 01:16:59.034000 7 torch/_dynamo/guards.py:4181] [1/2] [__recompiles]     - 1/0: tensor 'key' size mismatch at index 2. expected 113, actual 2\nV0908 01:17:07.285000 7 torch/_dynamo/guards.py:4181] [1/3] [__recompiles] Recompiling function flex_attention in /ptsenv/lib/python3.12/site-packages/torch/nn/attention/flex_attention.py:1449\nV0908 01:17:07.285000 7 torch/_dynamo/guards.py:4181] [1/3] [__recompiles]     triggered by the following guard failure(s):\nV0908 01:17:07.285000 7 torch/_dynamo/guards.py:4181] [1/3] [__recompiles]     - 1/2: GLOBAL_STATE changed: grad_mode \nV0908 01:17:07.285000 7 torch/_dynamo/guards.py:4181] [1/3] [__recompiles]     - 1/1: tensor 'key' size mismatch at index 2. expected 113, actual 2\nV0908 01:17:07.285000 7 torch/_dynamo/guards.py:4181] [1/3] [__recompiles]     - 1/0: GLOBAL_STATE changed: grad_mode \n",
+        "returncode": 0
+      }
+    }
+  },
+  "counts": {
+    "planned_arms": 2,
+    "executed_arms": 2,
+    "planned_geometries": 4,
+    "executed_geometries": 4,
+    "planned_numerical_comparisons": 20,
+    "attempted_native_comparisons": 19,
+    "passed_native_comparisons": 18,
+    "failed_native_comparisons": 1,
+    "unattempted_native_comparisons": 1,
+    "failed_native_label": "history113_2_93/Q93/k_grad",
+    "unattempted_native_label": "history113_2_93/Q93/v_grad",
+    "post_capture_v_gradient": "separately_fails_CPU_check_not_a_native_assertion"
+  },
+  "cost": {
+    "fresh_seconds": "29.830838849",
+    "history_seconds": "48.077581263",
+    "total_seconds": "77.908420112",
+    "h100_hours": 0.02164122780888889,
+    "reserved_unspent_seconds": "522.091579888",
+    "v4_remaining_seconds": "3475.563100399",
+    "v4_total_spent_seconds": "124.436899601",
+    "v4_total_h100_hours": 0.03456580544472222
+  },
+  "old_engineering_remainder_seconds": "9.198053592",
+  "baseline_v2_cost_h100_hours": 7.605374254722222,
+  "archive": {
+    "files": 495,
+    "bytes": 485529188,
+    "canonical_inventory_sha256": "bfa072acad4065d42a0520598e718343b41b38b59d98770f5f4eb8c69e3ac384",
+    "inventory_separator": "newline",
+    "archive_path": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2-results-complete.tar",
+    "archive_sha256": "0a58e890979372ee4ad49c098d1f9166b55b4c41742e467b5638bd2afcdb739e",
+    "archive_bytes": 486553600,
+    "prior_partial_archive_preserved": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2-results.tar",
+    "archive_read_as_root_for_restricted_cuda_cache": true
+  },
+  "local_inventory": {
+    "files": 495,
+    "bytes": 485529188,
+    "canonical_inventory_sha256": "bfa072acad4065d42a0520598e718343b41b38b59d98770f5f4eb8c69e3ac384",
+    "remote_local_exact_inventory_match": true,
+    "source_files": [
+      {
+        "path": "history113_2_93/compiler_archive/inductor/f2/cf2cubbrg22v2c2ej5zktrtire4aeivang66gpdtzxapq7qoqmgl.py",
+        "sha256": "806c3ab43a7d08d9998362289e2767eabec035fc25f711232361c317beb303ac",
+        "bytes": 49555
+      },
+      {
+        "path": "history113_2_93/compiler_archive/inductor/hg/chg5hnwiiv4eqbkvl7l7xsiklf7lgysi64sxt3p4ncjzo67r3orc.py",
+        "sha256": "91d93b8bba230b5fb010991c4a55993b26ee9d7e9585fb52317aba506aef2b93",
+        "bytes": 36865
+      }
+    ]
+  },
+  "local_inventory_code": "import hashlib,json\nfrom pathlib import Path\nroot=Path(\"artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2\")\nrows=[]\nfor p in sorted(root.rglob(\"*\")):\n    if p.is_file():\n        h=hashlib.sha256()\n        with p.open(\"rb\") as f:\n            for part in iter(lambda:f.read(1048576),b\"\"):\n                h.update(part)\n        rows.append({\"path\":str(p.relative_to(root)),\"sha256\":h.hexdigest(),\"bytes\":p.stat().st_size})\nencoded=\"\".join(json.dumps(r,sort_keys=True,separators=(\",\",\":\"))+chr(10) for r in rows).encode()\ndigest=hashlib.sha256(encoded).hexdigest()\nassert digest==\"bfa072acad4065d42a0520598e718343b41b38b59d98770f5f4eb8c69e3ac384\"\nprint(json.dumps({\"files\":len(rows),\"bytes\":sum(r[\"bytes\"] for r in rows),\"canonical_inventory_sha256\":digest,\"remote_local_exact_inventory_match\":True,\"source_files\":[r for r in rows if r[\"path\"].endswith((\"cf2cubbrg22v2c2ej5zktrtire4aeivang66gpdtzxapq7qoqmgl.py\",\"chg5hnwiiv4eqbkvl7l7xsiklf7lgysi64sxt3p4ncjzo67r3orc.py\"))]}))\n",
+  "archive_failures": {
+    "first_tar_permission_denied_cuda_cache": {
+      "chunk_id": "222512",
+      "wall_time_seconds": 0.000001125,
+      "exit_code": 1,
+      "original_token_count": 187,
+      "output": "tar: dispatch2/fresh93/compiler_archive/cuda: Cannot open: Permission denied\ntar: dispatch2/history113_2_93/compiler_archive/cuda: Cannot open: Permission denied\ntar: Exiting with failure status due to previous errors\nTraceback (most recent call last):\n  File \"<string>\", line 22, in <module>\n  File \"/usr/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['tar', '-cf', '/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2-results.tar', '-C', '/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5', 'dispatch2']' returned non-zero exit status 2.\n"
+    },
+    "partial_archive_preserved": true,
+    "complete_archive_read_under_sudo_without_mutating_native_files": true,
+    "download_time_hash_and_tar_probe_were_incomplete_not_verification": true,
+    "final_complete_tar_sha256": "0a58e890979372ee4ad49c098d1f9166b55b4c41742e467b5638bd2afcdb739e"
+  },
+  "analysis_sha256": "be65548bc332f8681895080b9032145d70bf6e1eeebef2a649a01cc1229ce57c",
+  "source_audit_sha256": "67df1d1857d746df57987e46ebfbe662c9bdee3d9d34b7a669449e4a84fd3f4f",
+  "scientific_eligibility": {
+    "engine_admitted": false,
+    "v4_gate_a": "fail",
+    "gate_b_c_open": false,
+    "c67": false,
+    "s5": false,
+    "s7": false,
+    "sota": false
+  },
+  "responsible_author": "unassigned",
+  "disclosure_status": "unverified"
+}

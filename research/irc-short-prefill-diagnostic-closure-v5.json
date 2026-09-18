@@ -1,0 +1,298 @@
+{
+  "schema": "irc-short-prefill-diagnostic-closure-v5",
+  "timestamp": "2026-09-08 01:50:07 UTC",
+  "goal_status": "active",
+  "phase_status": "paired_diagnostic_completed_numerical_failure_and_source_defect_archived",
+  "objective": {
+    "path": "/Users/mekashirskiy/.codex/attachments/322808f2-1bda-44c4-bb66-c9855b21a266/goal-objective.md",
+    "sha256": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a",
+    "read_completely_this_turn": true,
+    "full_scope": "Evidence-grounded SOTA steering and an empirical ICLR paper across three architectures and three behavioral constructs; current Qwen3/math engine prerequisite is not the full goal.",
+    "literature_reset": "Completed prior reset reused; no new literature search or claim of refreshed coverage this diagnostic turn."
+  },
+  "workspace": {
+    "path": "/Users/mekashirskiy/projection-transport-steering",
+    "upstream": "git@github.com:mariklolik/projection-transport-steering.git",
+    "smiles_checkout": "read_only"
+  },
+  "input_sha256": {
+    "scripts/run_attention_diagnostic.py": "3f1803426ef2ac4b4bf3e0cc05d6315f526cdbd0fff85019e02a7c17d231caa0",
+    "tests/test_attention_diagnostic.py": "e377dc9416c2d4c633200cb0025045cc38e2820a200293af7674109643c56b30",
+    "tests/test_attention_backend.py": "88b48eae16b85578768b693c2c4385b8e74d5a55d7b2ac5bc5d75e0e78fa8a23",
+    "src/projection_transport_steering/attention_backend.py": "143d1e0a58e1a5682b3e73ecb5a1a4baf4565a25185b82e05a22ec429a3fc0cc",
+    "research/irc-short-prefill-diagnostic-protocol-v5.md": "f3057ed2d69a35373d774867118164afdb2c8e1fa2353e43935573e650302a72",
+    "research/irc-short-prefill-diagnostic-v5.json": "0441a6b5b0d189901b2b259ac3bc60fbffe80f6a1cbf3f02a4cfcdef304ffe7f",
+    "research/irc-short-prefill-diagnostic-predispatch-v5.json": "fdfb01ac67312d219eb21cd3aa5d0674f77fb3c41dd9557c62604e5b2823c73f",
+    "research/irc-short-prefill-diagnostic-dispatch-failure-v5.json": "b6afebb70b490a4ebee63f837d764d8f57cc52858328cde8eda66ed84b329175",
+    "research/irc-short-prefill-diagnostic-dispatch-correction-v5.json": "a96d5802af4ce4320b0fb89f2a4c73ef9f9b03f4d87592c84e878eaf4462e67a",
+    "research/irc-short-prefill-diagnostic-corrected-launch-v5.json": "5c6df6c4188a2f3d2f1480511042b520e20d85d7e3cc252d342a2e7e0495dea2",
+    "research/irc-short-prefill-diagnostic-terminal-v5.json": "31179ffc022a15b13a0885cda34b8b49845af33720fda9c2e792330ec169d4e6",
+    "research/irc-short-prefill-diagnostic-analysis-v5.json": "be65548bc332f8681895080b9032145d70bf6e1eeebef2a649a01cc1229ce57c",
+    "research/irc-short-prefill-mask-source-audit-v5.json": "67df1d1857d746df57987e46ebfbe662c9bdee3d9d34b7a669449e4a84fd3f4f",
+    "research/irc-short-prefill-diagnostic-audit-v5.md": "3e19d0fadda9675e2e8284a8a74dc43d4249b10aeaa4b93207b33d4b5480b537",
+    "README.md": "5210e296b6fe7ab655be5ef44208eef3eb2813a5958a7e07a73ced7658f88141",
+    "research/research-reset-plan-v1.md": "c484377652ca4e70b8f7cf534db6f5108be57981de2d041f2e8771feffa5a7d4",
+    "research/claim-ledger.md": "ae649c6b63bd615b53ffcd2f070b69c56d704f9a1b0a8c9fec5c964f76d3ee54",
+    "research/evidence-manifest.md": "723d79bb694bab0264b13092253cf44a8f1b465bfc2812f5bbb7334b4daae00e",
+    "research/irc-short-prefill-qualification-protocol-v4.md": "ac25315342cb92847eb3f9a85222da2726bf0d3b6d77a415a31790215799bfbf",
+    "research/irc-short-prefill-closure-checkpoint-v4.json": "42e163c94af1278483c2297391947c184a64e9d41bce6dbd9ed5eb2b04cef9b0",
+    "artifacts/engineering/irc_short_prefill_diagnostic_v5/source.tar": "d0fdf847bbcf6fb1dbcef899f464d82fd2cd5c45c75afb8b7df92de065a7273e",
+    "artifacts/engineering/irc_short_prefill_diagnostic_v5/source-final.tar": "067b7574cbdd366a0322c0ae49c8d34da25e5b531e47bfed21fcb510b9ecfc54",
+    "artifacts/engineering/irc_short_prefill_diagnostic_v5/native-tests.xml": "94568f39b2103bca9dfa4aa5be0129459a1b6aec5d201a0bfac3889e46d27d58",
+    "artifacts/engineering/irc_short_prefill_diagnostic_v5/local-tests-final.xml": "99541f6fa1da2cbe0bf192eee281e4c1553dca90856c4aa75766d3b02d21dd23",
+    "research/run-manifest.jsonl": "0d294bb45ad2a59b0f918cbd0d303a314ce48bed30c2a510dc5eb74c85882ba9",
+    "research/ai-assistance-ledger.jsonl": "947c91b0d2f9396f55e45080841ac8602d5ea4fcf15d9dcede5d4e640490f0de"
+  },
+  "append_only_ledger_predecessors": {
+    "research/run-manifest.jsonl": "6d7cf6f2eb397a19a9d22a9de1fd3b73a5ed31dd16ac7aa11ff6ab8f692007d0",
+    "research/ai-assistance-ledger.jsonl": "c6603986ee3baa42f53907b89cf533298e472cfffee40ed2bd0dda0f420fda53"
+  },
+  "appended_record_ids": {
+    "research/run-manifest.jsonl": [
+      "manifest-v167",
+      "manifest-v168",
+      "manifest-v169"
+    ],
+    "research/ai-assistance-ledger.jsonl": [
+      "ai-task-0113",
+      "ai-task-0114",
+      "ai-task-0115"
+    ]
+  },
+  "prior_v4_checkpoint": {
+    "path": "research/irc-short-prefill-closure-checkpoint-v4.json",
+    "sha256": "42e163c94af1278483c2297391947c184a64e9d41bce6dbd9ed5eb2b04cef9b0",
+    "bound_files_revalidated_at_turn_start": 21,
+    "scope": "Matched before this turn's append-only ledger and human-document updates; mutable document predecessor hashes are not claimed current.",
+    "gate_a": "fail",
+    "gate_b_c": "not_dispatched",
+    "original_backend_and_helper_unchanged": true
+  },
+  "posthoc_pairing_detail": {
+    "classification": "posthoc_descriptive_comparison_of_saved_tensors",
+    "runtime": "Local CPU Torch 2.14.0; no new forward/backward or GPU computation",
+    "code": "import json,torch\nfrom pathlib import Path\nroot=Path(\"artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2\")\na=torch.load(root/\"fresh93/run/cell-00-q93/tensors.pt\",weights_only=True)\nb=torch.load(root/\"history113_2_93/run/cell-02-q93/tensors.pt\",weights_only=True)\nrows={}\nfor group,names in ((\"tensors\",[\"output\",\"inference_output\"]),(\"gradients\",[\"query\"])):\n    for name in names:\n        x,y=a[group][name],b[group][name]\n        rows[group+\"/\"+name]={\"bit_equal\":torch.equal(x,y),\"unequal_elements\":int((x!=y).sum()),\"elements\":x.numel(),\"max_abs_difference\":float((x.double()-y.double()).abs().max())}\nprint(json.dumps({\"classification\":\"posthoc_descriptive_pairing_detail\",\"cuda_used\":False,\"torch\":torch.__version__,\"comparison\":rows}))\n",
+    "tool_result": {
+      "chunk_id": "f0fca1",
+      "wall_time_seconds": 0.3944635,
+      "exit_code": 0,
+      "original_token_count": 117,
+      "output": "{\"classification\": \"posthoc_descriptive_pairing_detail\", \"cuda_used\": false, \"torch\": \"2.14.0\", \"comparison\": {\"tensors/output\": {\"bit_equal\": true, \"unequal_elements\": 0, \"elements\": 3047424, \"max_abs_difference\": 0.0}, \"tensors/inference_output\": {\"bit_equal\": true, \"unequal_elements\": 0, \"elements\": 3047424, \"max_abs_difference\": 0.0}, \"gradients/query\": {\"bit_equal\": false, \"unequal_elements\": 16726, \"elements\": 3047424, \"max_abs_difference\": 0.001953125}}}\n"
+    },
+    "result": {
+      "classification": "posthoc_descriptive_pairing_detail",
+      "cuda_used": false,
+      "torch": "2.14.0",
+      "comparison": {
+        "tensors/output": {
+          "bit_equal": true,
+          "unequal_elements": 0,
+          "elements": 3047424,
+          "max_abs_difference": 0
+        },
+        "tensors/inference_output": {
+          "bit_equal": true,
+          "unequal_elements": 0,
+          "elements": 3047424,
+          "max_abs_difference": 0
+        },
+        "gradients/query": {
+          "bit_equal": false,
+          "unequal_elements": 16726,
+          "elements": 3047424,
+          "max_abs_difference": 0.001953125
+        }
+      }
+    }
+  },
+  "archive": {
+    "local_root": "/Users/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2",
+    "remote_root": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2",
+    "files": 495,
+    "bytes": 485529188,
+    "canonical_inventory_sha256": "bfa072acad4065d42a0520598e718343b41b38b59d98770f5f4eb8c69e3ac384",
+    "inventory_recipe_locator": "research/irc-short-prefill-diagnostic-terminal-v5.json: local_inventory_code",
+    "complete_tar": "/Users/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_short_prefill_diagnostic_v5/dispatch2-results-complete.tar",
+    "tar_sha256": "0a58e890979372ee4ad49c098d1f9166b55b4c41742e467b5638bd2afcdb739e",
+    "tar_bytes": 486553600,
+    "remote_local_exact_inventory_match": true,
+    "complete_copy_finished_before_final_verification": true,
+    "failed_unprivileged_partial_tar_preserved": true,
+    "unfinished_download_probe_not_verification": true,
+    "native_files_or_permissions_modified_for_archive": false,
+    "heavy_archive_rehashed_at_closure": false
+  },
+  "remote_closing_check": {
+    "timestamp": "2026-09-08T01:39:56.335753+00:00",
+    "source_hashes_unchanged": 58,
+    "old_v4_source_hashes_unchanged": 4,
+    "states": {
+      "pts-irc-diag-v5-d2-history113_2_93": {
+        "id": "ae76f4e2231adcb2c25452ab545c79b21879a8c2cae45622e0e7772374ac95e0",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 1,
+          "Error": "",
+          "StartedAt": "2026-09-08T01:16:26.877039601Z",
+          "FinishedAt": "2026-09-08T01:17:14.954620864Z"
+        }
+      },
+      "pts-irc-diag-v5-d2-fresh93": {
+        "id": "9ed3dd386e60dc8efb55b6540eb6a9e0a6eccfddcaf4f262e687aad973aaf249",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 0,
+          "Error": "",
+          "StartedAt": "2026-09-08T01:14:43.267630588Z",
+          "FinishedAt": "2026-09-08T01:15:13.098469437Z"
+        }
+      }
+    },
+    "gpus": [
+      "0, GPU-988dde5b-1ad3-d864-244f-e0ffe6693cb6, 1, 0",
+      "1, GPU-d632b062-2f86-7682-7e63-317347af5c84, 1, 0",
+      "2, GPU-f666bb5e-f9e7-5ed1-458c-8ac103cd56f5, 1, 0",
+      "3, GPU-28c6ca21-6f29-4c42-1990-04181256fe69, 1, 0",
+      "4, GPU-c6f16b20-0db2-f335-7f1d-69b437de78a4, 1, 0",
+      "5, GPU-65af5f4b-3576-0b2b-d60c-ba572b4e1fd6, 1, 0",
+      "6, GPU-c41d19e6-5c03-b8af-b341-28118b5dc827, 1, 0",
+      "7, GPU-6ca2a253-ebb0-dd33-2d24-6d05a60ca292, 1, 0"
+    ],
+    "compute_apps": "",
+    "no_additional_v5_containers": true
+  },
+  "independent_review": {
+    "agent": "math_grader_audit",
+    "status": "evidence_integrity_and_scope_pass",
+    "checks": 741,
+    "tensor_provenance_checks": 667,
+    "terminal_source_checks": 74,
+    "archived_local_files_verified": 495,
+    "saved_tensor_and_source_arithmetic_recomputed": true,
+    "verification_runtime": "Local CPU Torch 2.14; pinned native CPU reconstruction by primary is recorded separately",
+    "independent_gpu_reexecution": false,
+    "checks_are_experimental_replicates": false,
+    "final_markdown_reviewed_byte_for_byte": false
+  },
+  "verification_scope": {
+    "local_final_tests": {
+      "passed": 11,
+      "seconds": 0.68
+    },
+    "exact_native_cpu_tests": {
+      "passed": 11,
+      "seconds": 0.21
+    },
+    "ruff_critical_rules": "E9,F63,F7,F82,F401 pass",
+    "full_repository_suite_rerun": false,
+    "tdd_boundary": "Eight initial RED tests and two separately observed regression RED stages; config-validation test did not have a separately observed RED stage",
+    "source_hashes_verified_native": 58,
+    "new_code_comments_or_docstrings_added": false
+  },
+  "cost": {
+    "fresh_seconds": "29.830838849",
+    "history_seconds": "48.077581263",
+    "total_seconds": "77.908420112",
+    "h100_hours": 0.02164122780888889,
+    "reserved_unspent_seconds": "522.091579888",
+    "v4_remaining_seconds": "3475.563100399",
+    "v4_total_spent_seconds": "124.436899601",
+    "v4_total_h100_hours": 0.03456580544472222,
+    "reservation_seconds": 600,
+    "old_engineering_remainder_seconds": "9.198053592",
+    "baseline_v2_h100_hours": 7.605374254722222,
+    "budget_transfer": false,
+    "container_lifetime_is_not_end_to_end_iteration_wall_time": true,
+    "measured_serving_speedup": false,
+    "unused_reservation_authorizes_automatic_followup": false
+  },
+  "skills": {
+    "router": "research-paper-writing",
+    "route": [
+      "scientific-claim-evidence",
+      "scientific-results-and-figures",
+      "scientific-research-strengthening"
+    ],
+    "changed_design": "experimental-setup-writer",
+    "implementation": [
+      "test-driven-development (non-superpowers)",
+      "modern-python"
+    ],
+    "required_references_read_by_primary": [
+      "claim-ledger",
+      "formal-claims",
+      "statistics-and-selection",
+      "cost-accounting",
+      "figure-design",
+      "strength-rubric",
+      "research-loop",
+      "ai-assistance-ledger",
+      "experimental-setup-writer original",
+      "testing-anti-patterns"
+    ],
+    "material_effect": "Late-capture paired diagnostic, source-bound alternatives, declared decision and budget, adverse-result retention, exact provenance, independent critique and separated scientific/presentation admission.",
+    "maturity": "EVIDENCE_AVAILABLE / EVIDENCE_THIN",
+    "current_empirical_target_rubric_scale": "0-4",
+    "strength_before": [
+      3,
+      2,
+      0,
+      3,
+      0,
+      0,
+      0,
+      4,
+      3
+    ],
+    "strength_after": [
+      3,
+      2,
+      0,
+      3,
+      0,
+      0,
+      0,
+      4,
+      3
+    ],
+    "strength_total_before": 15,
+    "strength_total_after": 15,
+    "strength_maximum": 36,
+    "rubric_not_replacement_for_historical_source_paper_audit": true,
+    "presentation": {
+      "claim_fidelity": 3,
+      "information_density": 3,
+      "boundary_visibility": 4
+    },
+    "fair_strong_admission": "blocked",
+    "downstream_paper_gates": "Skeleton, section/global checks and submission compliance not reached; no submission prose promoted"
+  },
+  "scientific_eligibility": {
+    "engine_admitted": false,
+    "gate_b_c_dispatched": false,
+    "baseline_rerun_admitted": false,
+    "c67": false,
+    "s5": false,
+    "s7": false,
+    "sota": false
+  },
+  "next_action": "Separately predeclare and resource a mask-construction-only counterfactual: retain native predicates and offsets, fixed attention compilation, exact inputs, RNG, tolerances and shape history; inspect metadata immediately after construction and after attention/backward. Compare the automatic symbolic native builder with eager or explicitly shape-specialized native construction. Do not hand-patch generated Triton or restore static attention globally. Any repair must pass the original 35-shape contract and later qualification gates before actual weights and the full baseline.",
+  "completed_v5_authorizes_more_gpu_work": false,
+  "responsible_author": "unassigned",
+  "disclosure_status": "unverified",
+  "iclr_compliance_passed": false,
+  "execution_and_count_record": "research/irc-short-prefill-diagnostic-terminal-v5.json; original failed dispatch and pre-execution amendment are separately bound in input_sha256",
+  "diagnostic_decision": "Fresh Q93 passes but identical inputs fail the native K gradient comparison after 113→2→93. Saved metadata is malformed and archived mask-construction source omits logical reduction bounds. Capture timing and sole dynamic causality remain unresolved. This is a one-seed diagnostic, not repaired execution or behavioral evidence."
+}

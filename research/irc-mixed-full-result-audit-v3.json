@@ -1,0 +1,218 @@
+{
+  "backend": "fp32_prefill_flex",
+  "config_sha256": "60295e6ed2f78b3aaaf4d1f588f3f24288302cd29ff8da86a174f8307d540bd9",
+  "container": {
+    "elapsed_seconds": 660.672601913,
+    "id": "80711276d2b052a2aadb8cd75c2feb69f197ba3ecfe56285d3b3248891f735cf",
+    "state": {
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "2026-09-07T16:18:20.255339703Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 0,
+      "Restarting": false,
+      "Running": false,
+      "StartedAt": "2026-09-07T16:07:19.58273779Z",
+      "Status": "exited"
+    }
+  },
+  "created_at": "2026-09-07T16:58:13.294684+00:00",
+  "files_sha256": {
+    "batch-0000.json": "edfecb5bbea76f9405bd835d6229df16da0f07cab48bf044a4db5c76d6b4c747",
+    "batch-0008.json": "96467387caffa740a1e2c1a1b7ef3de5544ffa9435b51b9c553d0ff29ceca9c8",
+    "receipt.json": "e123cf3f8f789b355a5cc97d5262c05456057e06871cb4ae73752f0416411830",
+    "reference-0000.json": "85b7a88ebc18f63aedffc3fdfe06f9dbe3cd9eaff161e055d8a0f78778dc0971",
+    "reference-0008.json": "be658796e53ba16aebfd2da513bdad099bd407aeb69ef25ac81124e3b2a9f2f4"
+  },
+  "full": {
+    "capped": 8,
+    "eos": 8,
+    "primary_correct": 8,
+    "primary_parse": {
+      "fail": 8,
+      "pass": 8
+    },
+    "questions": 16,
+    "sensitivity_correct": 8
+  },
+  "full_runtime_gate": "PASS_scoped_inference_engineering",
+  "independent_critic": {
+    "first512_match_profile": 16,
+    "followup_checks": 8,
+    "initial_passes": 435,
+    "material_defects": 0,
+    "principal_checks": 436,
+    "rescoring_performed": false,
+    "resolved_presentation_difference": "Readable full-8.log normalizes CR and adds one final LF; exact full-8-capture.json and five output files are authoritative.",
+    "tokenizer_seed_prompt_raw_scored_joins": "PASS16/16"
+  },
+  "lengths": {
+    "max": 8192,
+    "median": 7981.5,
+    "min": 1456,
+    "source": "generated tokens of original16 fixed fit-only engineering questions"
+  },
+  "packet_sha256": "a536c97d0dd3a31b027e64463040681a2fa9ea67e4b97ae95defb9bacfa68eda",
+  "precision": "highest",
+  "raw_capture_sha256": "5d2faf3b3a2fd16be8094900bc71c6d697e0605a9857acea8d78e2b2b9244891",
+  "schema": "irc-mixed-full-result-audit-v3",
+  "scope": {
+    "fitting_admitted": false,
+    "full_replay_action_checks": "not_requested; previous profile checks apply only to512",
+    "population": "16 originally fixed fit questions, exploratory engineering; no held-out MATH estimate",
+    "quality_or_speedup_comparison": false,
+    "sota_achieved": false
+  },
+  "source_hashes_checked": 38,
+  "strata": {
+    "level": {
+      "Level 1": {
+        "capped": 0,
+        "eos": 1,
+        "primary_correct": 1,
+        "primary_parse": {
+          "pass": 1
+        },
+        "questions": 1,
+        "sensitivity_correct": 1
+      },
+      "Level 2": {
+        "capped": 0,
+        "eos": 2,
+        "primary_correct": 2,
+        "primary_parse": {
+          "pass": 2
+        },
+        "questions": 2,
+        "sensitivity_correct": 2
+      },
+      "Level 3": {
+        "capped": 1,
+        "eos": 1,
+        "primary_correct": 1,
+        "primary_parse": {
+          "fail": 1,
+          "pass": 1
+        },
+        "questions": 2,
+        "sensitivity_correct": 1
+      },
+      "Level 4": {
+        "capped": 2,
+        "eos": 1,
+        "primary_correct": 1,
+        "primary_parse": {
+          "fail": 2,
+          "pass": 1
+        },
+        "questions": 3,
+        "sensitivity_correct": 1
+      },
+      "Level 5": {
+        "capped": 5,
+        "eos": 3,
+        "primary_correct": 3,
+        "primary_parse": {
+          "fail": 5,
+          "pass": 3
+        },
+        "questions": 8,
+        "sensitivity_correct": 3
+      }
+    },
+    "type": {
+      "Algebra": {
+        "capped": 0,
+        "eos": 3,
+        "primary_correct": 3,
+        "primary_parse": {
+          "pass": 3
+        },
+        "questions": 3,
+        "sensitivity_correct": 3
+      },
+      "Counting & Probability": {
+        "capped": 0,
+        "eos": 1,
+        "primary_correct": 1,
+        "primary_parse": {
+          "pass": 1
+        },
+        "questions": 1,
+        "sensitivity_correct": 1
+      },
+      "Geometry": {
+        "capped": 1,
+        "eos": 0,
+        "primary_correct": 0,
+        "primary_parse": {
+          "fail": 1
+        },
+        "questions": 1,
+        "sensitivity_correct": 0
+      },
+      "Intermediate Algebra": {
+        "capped": 4,
+        "eos": 1,
+        "primary_correct": 1,
+        "primary_parse": {
+          "fail": 4,
+          "pass": 1
+        },
+        "questions": 5,
+        "sensitivity_correct": 1
+      },
+      "Number Theory": {
+        "capped": 1,
+        "eos": 1,
+        "primary_correct": 1,
+        "primary_parse": {
+          "fail": 1,
+          "pass": 1
+        },
+        "questions": 2,
+        "sensitivity_correct": 1
+      },
+      "Prealgebra": {
+        "capped": 0,
+        "eos": 1,
+        "primary_correct": 1,
+        "primary_parse": {
+          "pass": 1
+        },
+        "questions": 1,
+        "sensitivity_correct": 1
+      },
+      "Precalculus": {
+        "capped": 2,
+        "eos": 1,
+        "primary_correct": 1,
+        "primary_parse": {
+          "fail": 2,
+          "pass": 1
+        },
+        "questions": 3,
+        "sensitivity_correct": 1
+      }
+    }
+  },
+  "timing": {
+    "container_seconds": 660.672601913,
+    "deadline_margin_seconds": 239.327398087,
+    "full_h100_hours": 0.18352016719805556,
+    "gpu_busy_fraction": "not_measured",
+    "grading_seconds": 0.22584788128733635,
+    "independent_timing_replications": 1,
+    "peak_memory_bytes": 27201878016,
+    "physical_decode_slots": 131072,
+    "reference_seconds": 642.0878681913018,
+    "reference_tokens": 102326,
+    "reference_tokens_per_container_second": 154.88155510567805,
+    "reference_tokens_per_runner_second": 158.17036286006967,
+    "reference_tokens_per_second": 159.3644812013693,
+    "runner_seconds": 646.9353559650481
+  },
+  "verification_code": "import collections,decimal,hashlib,json\nfrom datetime import datetime,timezone\nfrom pathlib import Path\nimport numpy as np\nroot=Path(\".\")\nfolder=root/\"artifacts/engineering/irc_mixed_runtime_v3/full_8\"\nsha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nc=json.loads((root/\"research/irc-mixed-precision-runtime-config-v3.json\").read_text())\nr=json.loads((folder/\"receipt.json\").read_text())\nchunks=[json.loads((folder/n).read_text()) for n in sorted(r[\"chunk_sha256\"])]\nrows=[row for chunk in chunks for row in chunk[\"rows\"]]\nassert r[\"completed_ids\"]==r[\"expected_ids\"]==c[\"cluster_ids\"]==[row[\"cluster_id\"] for row in rows]\nassert len(rows)==len(set(r[\"completed_ids\"]))==16\nassert r[\"status\"]==\"pass\" and r[\"condition\"]==\"full_8\"\nassert r[\"config_sha256\"]==sha(root/\"research/irc-mixed-precision-runtime-config-v3.json\")\nassert r[\"packet_sha256\"]==c[\"packet_sha256\"]==sha(root/c[\"packet\"])\nassert r[\"source_sha256\"]==c[\"source_sha256\"]\nassert r[\"versions\"]==c[\"expected_versions\"]\nassert r[\"attention\"]==\"fp32_prefill_flex\" and r[\"float32_matmul_precision\"]==\"highest\"\nfor name,digest in r[\"source_sha256\"].items(): assert sha(root/name)==digest\nfor name,digest in (r[\"chunk_sha256\"]|r[\"reference_sha256\"]).items(): assert sha(folder/name)==digest\nassert not any(row[\"evaluator_errors\"] for row in rows)\nsource={x[\"cluster_id\"]:x for x in json.loads((root/c[\"packet\"]).read_text())[\"rows\"]}\nfor name,chunk in zip(sorted(r[\"chunk_sha256\"]),chunks,strict=True):\n    ref=json.loads((folder/name.replace(\"batch-\",\"reference-\")).read_text())\n    assert ref[\"reference_seconds\"]==chunk[\"reference_seconds\"]\n    assert chunk[\"checks\"]=={} and chunk[\"check_coverage\"]=={\"intervention_path\":\"not_requested\"}\n    for raw,scored in zip(ref[\"rows\"],chunk[\"rows\"],strict=True):\n        assert all(scored[k]==v for k,v in raw.items())\n        assert len(scored[\"token_ids\"])==scored[\"generated_tokens\"]\nstate=json.loads(json.loads((folder.parent/\"full-8-capture.json\").read_text())[\"output\"].splitlines()[0])\ndef timestamp(value):\n    whole=int(datetime.fromisoformat(value[:19]).replace(tzinfo=timezone.utc).timestamp())\n    return decimal.Decimal(whole)+decimal.Decimal(\"0.\"+value.split(\".\")[1].rstrip(\"Z\"))\nelapsed=float(timestamp(state[\"FinishedAt\"])-timestamp(state[\"StartedAt\"]))\nassert state[\"Status\"]==\"exited\" and state[\"ExitCode\"]==0 and not state[\"OOMKilled\"]\ntokens=sum(row[\"generated_tokens\"] for row in rows)\nreference_seconds=sum(x[\"reference_seconds\"] for x in chunks)\ndef describe(subset):\n    return {\"questions\":len(subset),\"eos\":sum(x[\"terminated\"] for x in subset),\"capped\":sum(not x[\"terminated\"] and x[\"generated_tokens\"]==8192 for x in subset),\"primary_correct\":sum(x[\"primary\"][\"correct\"] for x in subset),\"sensitivity_correct\":sum(x[\"sensitivity\"][\"correct\"] for x in subset),\"primary_parse\":dict(collections.Counter(x[\"primary\"][\"parse_status\"] for x in subset))}\nstrata={}\nfor field in (\"type\",\"level\"):\n    strata[field]={value:describe([x for x in rows if source[x[\"cluster_id\"]][field]==value]) for value in sorted({source[x[\"cluster_id\"]][field] for x in rows})}\nprint(json.dumps({\"schema\":\"irc-mixed-full-result-audit-v3\",\"created_at\":datetime.now(timezone.utc).isoformat(),\"full_runtime_gate\":\"PASS_scoped_inference_engineering\",\"full\":describe(rows),\"files_sha256\":{p.name:sha(p) for p in sorted(folder.glob(\"*.json\"))},\"config_sha256\":r[\"config_sha256\"],\"packet_sha256\":r[\"packet_sha256\"],\"source_hashes_checked\":len(r[\"source_sha256\"]),\"backend\":r[\"attention\"],\"precision\":r[\"float32_matmul_precision\"],\"container\":{\"id\":\"80711276d2b052a2aadb8cd75c2feb69f197ba3ecfe56285d3b3248891f735cf\",\"state\":state,\"elapsed_seconds\":elapsed},\"timing\":{\"reference_tokens\":tokens,\"physical_decode_slots\":2*8*8192,\"reference_seconds\":reference_seconds,\"runner_seconds\":r[\"total_elapsed_seconds\"],\"grading_seconds\":sum(x[\"grading_seconds\"] for x in chunks),\"container_seconds\":elapsed,\"reference_tokens_per_second\":tokens/reference_seconds,\"reference_tokens_per_runner_second\":tokens/r[\"total_elapsed_seconds\"],\"reference_tokens_per_container_second\":tokens/elapsed,\"deadline_margin_seconds\":900-elapsed,\"full_h100_hours\":elapsed/3600,\"peak_memory_bytes\":r[\"peak_memory_bytes\"],\"gpu_busy_fraction\":\"not_measured\",\"independent_timing_replications\":1},\"lengths\":{\"min\":min(x[\"generated_tokens\"] for x in rows),\"median\":float(np.median([x[\"generated_tokens\"] for x in rows])),\"max\":max(x[\"generated_tokens\"] for x in rows),\"source\":\"generated tokens of original16 fixed fit-only engineering questions\"},\"strata\":strata,\"independent_critic\":{\"principal_checks\":436,\"initial_passes\":435,\"followup_checks\":8,\"material_defects\":0,\"resolved_presentation_difference\":\"Readable full-8.log normalizes CR and adds one final LF; exact full-8-capture.json and five output files are authoritative.\",\"tokenizer_seed_prompt_raw_scored_joins\":\"PASS16/16\",\"first512_match_profile\":16,\"rescoring_performed\":False},\"scope\":{\"population\":\"16 originally fixed fit questions, exploratory engineering; no held-out MATH estimate\",\"full_replay_action_checks\":\"not_requested; previous profile checks apply only to512\",\"quality_or_speedup_comparison\":False,\"fitting_admitted\":False,\"sota_achieved\":False},\"raw_capture_sha256\":sha(folder.parent/\"full-8-capture.json\")},sort_keys=True))\n"
+}

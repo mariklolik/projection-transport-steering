@@ -1,0 +1,268 @@
+{
+  "schema": "irc-baseline-zero-closure-v3",
+  "recorded_at_utc": "2026-09-08 06:25:14 UTC",
+  "status": "complete_zero_component_native_CPU_and_independent_audit_pass_baseline_still_running",
+  "goal": {
+    "status": "active",
+    "SOTA_achieved": false,
+    "objective_file": "/Users/mekashirskiy/.codex/attachments/322808f2-1bda-44c4-bb66-c9855b21a266/goal-objective.md",
+    "objective_sha256": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a",
+    "scope_unchanged": "Three architecture families/three constructs, strong resource-matched comparisons, protected uncertainty/mechanism evidence and an empirical ICLR-ready paper with proofs in the appendix."
+  },
+  "previous_goal_turn": "progress: v9 composition and complete fresh baseline dispatch",
+  "this_goal_turn": "progress: complete freshzero identity/token/grader evidence and failure-stratified analysis while the same8GPU workers advance",
+  "artifact_sha256": {
+    "README.md": "b4a8803c57075636ff1f38afbe97e34d82acb015d5a657a0dd7ee9b1578c46f9",
+    "research/research-reset-plan-v1.md": "e3e85fc89448f84eec99387b1d790b8a8587bd739038e4b0a668062b47f805a6",
+    "research/claim-ledger.md": "d3c5ccbaad40515fb75a2d88735e46ea0fc7fcd384e690dd8145f3b9eeec168e",
+    "research/evidence-manifest.md": "d801345ca5c8684ee99ccb1db862a41cd161e6c4008831422fa1bc8411a87b41",
+    "research/irc-baseline-zero-audit-v3.json": "8eb9d202835428bb5ec004eb85a29c10e5132e0547015f07a04de6791105f616",
+    "research/irc-baseline-zero-analysis-v3.md": "a1f62c496f48c3c50fc67203ceba0650fb4247eb8aa466257c83cf9928e8ac32",
+    "research/irc-baseline-zero-independent-review-v3.json": "7a80c1b6d6db909dfa793988b7d15200229966ce7dcfdb052ee12c2d704f2b0c",
+    "research/irc-baseline-dispatch-receipt-v3.json": "ccd6313a0860c7b794a1b455a9d645a3716014c9750c922148886e11ff65562d",
+    "research/irc-baseline-config-v3.json": "61529de3e7cf2e865d147ca11e54388590bb50e12d8702c388adb2ed7702f7be",
+    "research/irc-baseline-launch-v3.json": "a7a465f6666ca147f04c6fc997ade95797fe76fc9b32157a2409b81d27ae59bd",
+    "research/irc-baseline-execution-protocol-v3.md": "5d708e9bf2b55df4a328196f9b922faffbacdfaa23f5fe1359272bf2dd5d9907",
+    "research/irc-baseline-analysis-contract-v2.md": "84d9607df875b37cd8b41a69ba7cccecb81bf02a09c64cdc1f182fe0ce474ed4",
+    "research/irc-baseline-analysis-cpu-preflight-v2.json": "ce7739abd3a207146b9c631515728e20c12af35bcc3bd7b4ac493445e3c5ebc0",
+    "scripts/irc_baseline_audit.py": "74f446d955d48097ff68b451f0e13ffc9cd3db66280527761417ebcfb9c376ce",
+    "scripts/analyze_irc_baseline.py": "797e32fa1489832ae161f51ebbe33696e3426a66fb237a0e2f54bee35db7d1a3",
+    "scripts/audit_irc_baseline.py": "3da4c8f252c5c3992379b2fdce258e5683dbfb37e61bafc027b8d09bb4576b38",
+    "artifacts/data/irc_v1_allocations/selection.json": "e8e6d62b20f1a4fc6c10c177a223e2deecf6de99cda84bedb509940e648a58bc",
+    "artifacts/selection/irc_baseline_v3/zero-reference-complete-v1.tar": "4e2e461193f328eaf92ac2e5fc09f878378deaa457cd07250386fe69af37b01a",
+    "artifacts/selection/irc_baseline_v3/zero-reference-complete-v1-inventory.jsonl": "8410ba1c3180598f9da40905675d0d07f44d4b8459c614a2783d1555bd04b8a2",
+    "artifacts/selection/irc_baseline_v3/zero-audit-v1/result.json": "14e1bc01402e39ff25a90fd160e0cd2606add34ff38a1cce992cc203ca8000ac",
+    "artifacts/selection/irc_baseline_v3/zero-audit-v1/terminal.json": "6c8bbcc1313463c676433a46ba73da5a985d5f82290ae35370ecca1d6c94a0ef",
+    "artifacts/selection/irc_baseline_v3/zero-audit-v1/inspect.json": "e1fb54db4032619d3f047ac1093e000e97c439dcd265b8a6a1b9df8264f685af",
+    "artifacts/selection/irc_baseline_v3/zero-audit-v1/stdout.log": "d666b2a72908ca732eed78c472fbb93726dd07db4c4712d7720724b60139cde2",
+    "artifacts/selection/irc_baseline_v3/zero-audit-v1/stderr.log": "867ea661c1104942f26006b234e37a66da4f7b2becaa4517c57bfc380494819e",
+    "research/run-manifest.jsonl": "9f19028947087f5c16cd6816ef441a6283dfc85a2569c1b8e849ee849a0d05e5",
+    "research/ai-assistance-ledger.jsonl": "cd581af202fa6db4df1a87a83cfd27cdf7ee45f9a8a3b40ccb56bb7c89b8de37"
+  },
+  "source_precedence": "Immutable fresh raw/scored outputs and source hashes; deterministic native CPU replay; independent archive/result audit; descriptive analysis; timestamped runtime observations. No manuscript or narrative supersedes raw evidence.",
+  "creation_time_snapshot": {
+    "path": "research/irc-baseline-zero-audit-v3.json",
+    "sha256": "8eb9d202835428bb5ec004eb85a29c10e5132e0547015f07a04de6791105f616",
+    "status_at_creation": "complete_zero_capture_native_CPU_replay_ready",
+    "preserved_unchanged": true,
+    "current_status_superseded_by_this_receipt": true
+  },
+  "zero_component": {
+    "unique_selection_questions": 256,
+    "shares": 8,
+    "questions_per_share": 32,
+    "raw_scored_files": 64,
+    "primary_correct": 198,
+    "primary_fraction": 0.7734375,
+    "EOS": 213,
+    "cap_exhausted": 43,
+    "EOS_primary_false": 15,
+    "EOS_author_parse_failures": 0,
+    "cap_partition": {
+      "author_extraction_failed": 32,
+      "nonempty_author_extracted_answer": 11
+    },
+    "EOS_primary_false_partition": {
+      "sensitivity_true": 9,
+      "supported_both_false": 5,
+      "sensitivity_unsupported": 1
+    },
+    "fixed_sensitivity_support": 255,
+    "supported_primary_correct": 198,
+    "sensitivity_correct": 203,
+    "disagreements": {
+      "total": 13,
+      "sensitivity_only": 9,
+      "primary_only": 4,
+      "relabeled": 0
+    },
+    "rows_excluded_after_outcome": 0,
+    "expected_condition_inputs": "Derived original source IDs plus independently captured hashes; not producer terminal receipts.",
+    "scope": "Complete exploratory zero reference only. Whole-worker final status/checkpoint/base version and all8 candidate comparisons remain unverified."
+  },
+  "native_CPU": {
+    "result_path": "artifacts/selection/irc_baseline_v3/zero-audit-v1/result.json",
+    "result_status": "pass_zero_component_only",
+    "returncode": 0,
+    "audit_seconds": 14.171910244971514,
+    "container_seconds": "15.254472207",
+    "controller_seconds": 15.35336460545659,
+    "source_binding": "Actual immutablev3 source67, native11versions/model/tokenizer bytes and unchanged audit helper files checked.",
+    "verification": "Exactly one audit_condition call per32-row share. All original stored primary and fixed-supported sensitivity scores match; raw/scored/prompt/seed/token/decode/EOS/cap joins pass.",
+    "GPU_requested": false,
+    "model_weights_loaded": false,
+    "automatic_retry": false,
+    "tests_reused": "Matching analysis helpers from prior48-native-test admission; no generic test or GPU qualification rerun.",
+    "exact_controller_and_argv": "research/irc-baseline-zero-audit-v3.json:native_CPU",
+    "controller_completion_stdout": "{\"terminal\": {\"returncode\": 0, \"controller_seconds\": 15.35336460545659, \"GPU\": false, \"automatic_retry\": false}, \"stdout\": \"{\\\"event\\\": \\\"zero_audit_input_bound\\\", \\\"rows\\\": 256, \\\"GPU\\\": false}\\n{\\\"event\\\": \\\"zero_share_audited\\\", \\\"index\\\": 0, \\\"rows\\\": 32}\\n{\\\"event\\\": \\\"zero_share_audited\\\", \\\"index\\\": 1, \\\"rows\\\": 32}\\n{\\\"event\\\": \\\"zero_share_audited\\\", \\\"index\\\": 2, \\\"rows\\\": 32}\\n{\\\"event\\\": \\\"zero_share_audited\\\", \\\"index\\\": 3, \\\"rows\\\": 32}\\n{\\\"event\\\": \\\"zero_share_audited\\\", \\\"index\\\": 4, \\\"rows\\\": 32}\\n{\\\"event\\\": \\\"zero_share_audited\\\", \\\"index\\\": 5, \\\"rows\\\": 32}\\n{\\\"event\\\": \\\"zero_share_audited\\\", \\\"index\\\": 6, \\\"rows\\\": 32}\\n{\\\"event\\\": \\\"zero_share_audited\\\", \\\"index\\\": 7, \\\"rows\\\": 32}\\n{\\\"event\\\": \\\"zero_audit_terminal\\\", \\\"status\\\": \\\"pass_zero_component_only\\\", \\\"CPU_seconds\\\": 14.171910244971514, \\\"shares_audited\\\": 8, \\\"summary\\\": {\\\"questions\\\": 256, \\\"primary_correct\\\": 198, \\\"eos_count\\\": 213, \\\"cap_failures\\\": 43, \\\"malformed_count\\\": 32, \\\"sensitivity_supported\\\": 255, \\\"supported_primary_correct\\\": 198, \\\"supported_sensitivity_correct\\\": 203, \\\"scorer_disagreements\\\": 13, \\\"generated_tokens\\\": {\\\"total\\\": 1143747, \\\"mean\\\": 4467.76171875, \\\"median\\\": 3864.0, \\\"p95\\\": 8192.0, \\\"maximum\\\": 8192}}, \\\"error_partition\\\": {\\\"cap_exhausted\\\": 43, \\\"terminated_author_parse_failed\\\": 0, \\\"terminated_parsed_primary_incorrect\\\": 15, \\\"primary_correct\\\": 198}, \\\"failure\\\": null}\\n\", \"stderr\": \"/work/.external/math-author-source/modeling/math_equivalence.py:104: SyntaxWarning: invalid escape sequence '\\\\%'\\n  string = string.replace(\\\"\\\\%\\\", \\\"\\\")\\n<unknown>:51: SyntaxWarning: invalid escape sequence '\\\\l'\\n<unknown>:53: SyntaxWarning: invalid escape sequence '\\\\s'\\n\", \"result_sha256\": \"14e1bc01402e39ff25a90fd160e0cd2606add34ff38a1cce992cc203ca8000ac\"}\n"
+  },
+  "archive": {
+    "path": "artifacts/selection/irc_baseline_v3/zero-reference-complete-v1.tar",
+    "bytes": 19107840,
+    "payload_files": 90,
+    "raw_scored_files": 64,
+    "inventory": "artifacts/selection/irc_baseline_v3/zero-reference-complete-v1-inventory.jsonl",
+    "all90_payload_hashes_independently_verified": true,
+    "local_transfer_completed_before_hashing": true,
+    "extraction_required": false,
+    "producer_zero_files_hash_equal_before_after_capture_and_CPU_audit": true,
+    "whole_candidate_terminal_archive": false
+  },
+  "independent_review": {
+    "path": "research/irc-baseline-zero-independent-review-v3.json",
+    "sha256": "7a80c1b6d6db909dfa793988b7d15200229966ce7dcfdb052ee12c2d704f2b0c",
+    "status": "PASS_COMPLETE_ZERO_REFERENCE_COMPONENT_ONLY",
+    "archive_raw_checks": 4190,
+    "native_result_checks": 134,
+    "postsave_checks": 17,
+    "counts_are_statistical_samples": false,
+    "critic_grader_model_GPU_test_or_remote_execution": false,
+    "reviewer_failure_preserved": "A compact-vs-default JSONL serialization assumption failed; exact archive/inventory hashes were correct. The corrected checker uses recorded default-spaced sorted JSON. No producer change/replay."
+  },
+  "descriptive_analysis": {
+    "path": "research/irc-baseline-zero-analysis-v3.md",
+    "cap_share_of_primary_failures": 74.13793103448276,
+    "all_emitted_tokens": 1143747,
+    "cap_emitted_tokens": 352256,
+    "cap_share_of_tokens": 30.798419580554093,
+    "levels4_5": {
+      "questions": 130,
+      "of_questions": 256,
+      "caps": 38,
+      "of_caps": 43
+    },
+    "grader_scope": "Eight sensitivity-only cases have visible algebraic/numeric-format alternatives; one binary answer depends on source context. Four primary-only cases have unit-suffixed golds. These are not13 proven grader bugs or9 certified reasoning successes.",
+    "unsupported": {
+      "cluster_id": "7443dcbc81608b149ddc9a6e94251bfbdafb942f22d969141bc4170815152588",
+      "EOS": true,
+      "generated_tokens": 4653,
+      "extracted_answer": "17:00",
+      "primary": false,
+      "sensitivity": null,
+      "excluded": false
+    },
+    "native_zero_timers": {
+      "generation_seconds": 9846.580573897809,
+      "grading_seconds": 2.073363985866308,
+      "check_seconds": 0.00129004567861557
+    },
+    "cost_scope": "Nested components of still-running GPU lifetimes, not a final charge or serving/per-question latency. Do not add them twice to container cost.",
+    "uncertainty_scope": "Reference counts/strata only; no new isolated-zero inferential endpoint or candidate effect. Original all-eight pairedBCa10000/seed20260907 analysis remains exploratory/non-simultaneous/non-winner-corrected."
+  },
+  "runtime_observation": {
+    "timestamp": "2026-09-08T06:21:17.030865+00:00",
+    "existing_workers_running": 8,
+    "fit_updates": [
+      347,
+      403,
+      347,
+      410,
+      360,
+      433,
+      347,
+      430
+    ],
+    "required_updates": 564,
+    "OOM_observed": false,
+    "restarts": 0,
+    "actual_command_image_env_device_readonly_modes_match": true,
+    "source_of_read_only_observer_code": "research/irc-baseline-dispatch-receipt-v3.json:trace.postdispatch.code",
+    "stdout": "{\"timestamp\": \"2026-09-08T06:21:17.030865+00:00\", \"workers\": [{\"index\": 0, \"container_id\": \"34fc26d5443a742936962c87a1ebe7dbaf2e9f9dbee2713a1f72c3e9f4efd1a5\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3772667, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:28.003521962Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"fit_update\", \"loss\": 0.4263417995534837, \"target_tokens\": 7138, \"active_positions\": 448, \"gradient_norm\": 0.3103899359703064, \"changed_parameters\": 3, \"microbatches\": 16, \"epoch\": 7, \"update\": 347, \"examples\": 32, \"indices_sha256\": \"ef1649b248d548d406df6ecee1f573ac8f733e4e427e4bb84f8dee493c22ba87\", \"learning_rate\": 0.00038698224852071005, \"seconds\": 4.783338189125061}}, {\"index\": 1, \"container_id\": \"286d5d2b8065bf16081910877092a8093293cd84ad639bbd6ee4a7d2b40ef501\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3772768, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:28.535552226Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"fit_update\", \"loss\": 0.4844727488234639, \"target_tokens\": 9531, \"active_positions\": 448, \"gradient_norm\": 0.27316009998321533, \"changed_parameters\": 3, \"microbatches\": 16, \"epoch\": 8, \"update\": 403, \"examples\": 32, \"indices_sha256\": \"2fabbc0ab0b48368b8ef7266fd7e269eaf872d290a8407fff3ce7618574bef45\", \"learning_rate\": 0.00028757396449704143, \"seconds\": 4.669966217130423}}, {\"index\": 2, \"container_id\": \"bf634156e91fa313dd5c2621e0df0350033b220501b5aedaa63bda50f0ccc7af\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3772869, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:29.052450006Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"fit_update\", \"loss\": 0.4171187807805836, \"target_tokens\": 7138, \"active_positions\": 448, \"gradient_norm\": 0.38128912448883057, \"changed_parameters\": 3, \"microbatches\": 16, \"epoch\": 7, \"update\": 347, \"examples\": 32, \"indices_sha256\": \"ef1649b248d548d406df6ecee1f573ac8f733e4e427e4bb84f8dee493c22ba87\", \"learning_rate\": 0.00038698224852071005, \"seconds\": 4.827554911375046}}, {\"index\": 3, \"container_id\": \"4f174c1b31ae14e191dc0e3f39a3bfb4fc08515e3c0c8397523530d410b00425\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3772961, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:29.589838199Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"fit_update\", \"loss\": 0.6065672505646944, \"target_tokens\": 6501, \"active_positions\": 448, \"gradient_norm\": 0.3866167664527893, \"changed_parameters\": 3, \"microbatches\": 16, \"epoch\": 8, \"update\": 410, \"examples\": 32, \"indices_sha256\": \"6d458c74c8647ed8b095d47f2f3f65cc196147ac74fec3b3f6a534cd78d22d61\", \"learning_rate\": 0.00027514792899408283, \"seconds\": 2.6834640726447105}}, {\"index\": 4, \"container_id\": \"3558be7597e85f371ebb128b3ef583943030607111622520c1041b52750d3d51\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3773045, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:30.124223741Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"fit_update\", \"loss\": 0.5107066174969077, \"target_tokens\": 7191, \"active_positions\": 7639, \"gradient_norm\": 0.3467992842197418, \"changed_parameters\": 3, \"microbatches\": 16, \"epoch\": 7, \"update\": 360, \"examples\": 32, \"indices_sha256\": \"63ffee34b4c88d95f5fc3af8820b6577d5d0ded5c9e25fe55306fd572d7e880e\", \"learning_rate\": 0.00036390532544378697, \"seconds\": 4.636041782796383}}, {\"index\": 5, \"container_id\": \"ccf9dc1c4964ab3ea28d235ca66006b09272ba47fe8247e98b0cb59cbb415049\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3773133, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:30.609953706Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"fit_update\", \"loss\": 0.4965027179569006, \"target_tokens\": 9826, \"active_positions\": 10274, \"gradient_norm\": 0.25902611017227173, \"changed_parameters\": 2, \"microbatches\": 16, \"epoch\": 9, \"update\": 433, \"examples\": 32, \"indices_sha256\": \"f57e01fedc3289d1f027ffc68db9036cbdfa815a446b6fc73ef10ac08c649cdb\", \"learning_rate\": 0.00023431952662721892, \"seconds\": 4.44698753580451}}, {\"index\": 6, \"container_id\": \"ef90d3017d66e3de06820a2c9d10203f505f3aa184d77b7f99957e5416769f40\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3773232, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:31.130255285Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"fit_update\", \"loss\": 0.4033887533005327, \"target_tokens\": 7138, \"active_positions\": 7586, \"gradient_norm\": 0.35938626527786255, \"changed_parameters\": 3, \"microbatches\": 16, \"epoch\": 7, \"update\": 347, \"examples\": 32, \"indices_sha256\": \"ef1649b248d548d406df6ecee1f573ac8f733e4e427e4bb84f8dee493c22ba87\", \"learning_rate\": 0.00038698224852071005, \"seconds\": 4.815822180360556}}, {\"index\": 7, \"container_id\": \"57bb1cc316cd7d0b2b05c925dd5c4b0cbd42266431566a9d9ee944e0784416ea\", \"state\": {\"Status\": \"running\", \"Running\": true, \"Paused\": false, \"Restarting\": false, \"OOMKilled\": false, \"Dead\": false, \"Pid\": 3773320, \"ExitCode\": 0, \"Error\": \"\", \"StartedAt\": \"2026-09-08T05:33:31.63816927Z\", \"FinishedAt\": \"0001-01-01T00:00:00Z\"}, \"restarts\": 0, \"actual_argv_mounts_env_match\": true, \"last_progress_event\": {\"event\": \"fit_update\", \"loss\": 0.5722702546045184, \"target_tokens\": 7308, \"active_positions\": 7756, \"gradient_norm\": 0.4490523934364319, \"changed_parameters\": 3, \"microbatches\": 16, \"epoch\": 9, \"update\": 430, \"examples\": 32, \"indices_sha256\": \"ae9231faa672976e254ce50cb8cecaa2495d28df993b6d5a583ae56e380e331c\", \"learning_rate\": 0.0002396449704142012, \"seconds\": 4.3477748073637486}}], \"gpu_snapshot\": \"0, 72110, 94\\n1, 65416, 95\\n2, 68578, 97\\n3, 70118, 99\\n4, 74990, 97\\n5, 69472, 95\\n6, 48814, 100\\n7, 79994, 98\", \"snapshot_is_average_utilization\": false, \"scientific_comparison_complete\": false}\n",
+    "observation_exit_code": 0,
+    "instant_utilization_is_mean_or_speedup": false,
+    "new_GPU_launches_in_this_turn": 0,
+    "existing_five_hour_inclusive_deadlines_unchanged": true,
+    "automatic_GPU_retry": false
+  },
+  "skill_receipts": [
+    {
+      "skill": "scientific-claim-evidence",
+      "result": "PASS",
+      "scope": "C91 qualified complete-zero observation only",
+      "inputs": "Hash-bound native result/raw archive/config and independent review above",
+      "outputs": [
+        "research/claim-ledger.md",
+        "research/irc-baseline-zero-analysis-v3.md"
+      ],
+      "unresolved": "No candidate effect/controller/architecture/SOTA claim supported; no source/metric/label change."
+    },
+    {
+      "skill": "scientific-results-and-figures",
+      "result": "PASS",
+      "scope": "Reference integrity, descriptive adverse strata, bidirectional grader discrepancies and nested component cost",
+      "inputs": "Hash-bound native result and fixed analysis contract",
+      "outputs": [
+        "research/irc-baseline-zero-analysis-v3.md",
+        "research/evidence-manifest.md"
+      ],
+      "uncertainty": "Full candidate paired estimands unavailable; no figure or submission results section generated."
+    },
+    {
+      "skill": "scientific-research-strengthening",
+      "result": "BLOCKED",
+      "scope": "Fair-strong central-method claim remains unpassed, not an operational block",
+      "inputs": "Current claim ledger, original benchmark/analysis contract and completed zero component",
+      "outputs": [
+        "research/research-reset-plan-v1.md"
+      ],
+      "decision": "Continue the already-running complete8candidate experiment. Zero narrows failure interpretation but does not improve S5/S7 or meet scientific success."
+    }
+  ],
+  "skills": {
+    "router": "research-paper-writing",
+    "ordered_route": [
+      "scientific-claim-evidence",
+      "scientific-results-and-figures",
+      "scientific-research-strengthening"
+    ],
+    "additional": "modern-python: existing pinned runtime and uv-based local bookkeeping reused; no dependency or production code changes",
+    "maturity": "EVIDENCE_AVAILABLE",
+    "scientific_class": "EVIDENCE_THIN",
+    "S1_S9": [
+      3,
+      2,
+      0,
+      3,
+      0,
+      0,
+      0,
+      4,
+      3
+    ],
+    "total": 15,
+    "presentation": [
+      3,
+      3,
+      4
+    ],
+    "downstream_not_reached": "Fair-strong closure, paper skeleton/section writers, global paper review and final submission compliance.",
+    "AI_assistance_ledger": "research/ai-assistance-ledger.jsonl",
+    "AI_record": "ai-task-0124",
+    "responsible_author": "unassigned",
+    "author_approval": "unverified",
+    "venue_compliance": "ICLR year/track and final disclosure/compliance not verified in this component.",
+    "superpowers_used": false
+  },
+  "ledger_prefixes_preserved": {
+    "research/run-manifest.jsonl": {
+      "bytes": 249468,
+      "sha256": "3b658542282c1a763bd52032233e390ad8b20f7bfba9a021344f680bff9cc324",
+      "records": 226,
+      "last_record_id": "manifest-v179"
+    },
+    "research/ai-assistance-ledger.jsonl": {
+      "bytes": 204109,
+      "sha256": "d2c6af3712c2ae68c676fd51b85ba4a267ec924c55516d80c97f7617fb4afb89",
+      "records": 123,
+      "last_record_id": "ai-task-0123"
+    }
+  },
+  "next_actions": [
+    "Continue these exact8existing workers; no duplicate launch, checkpoint reuse, new tests or unchanged engineering qualification.",
+    "Require all8complete fit/checkpoint/final producer/selection packets and final lifetime accounting under the original deadlines.",
+    "Reuse this zero audit only by matching complete source/config/raw hashes and the later final producer receipt joins. Do not repeatedly regrade unchanged zero.",
+    "Select full/prompt under the original rule only after complete family. Bestfull must strictly exceed198; minimum199/256 is an exploratory initialization condition, not SOTA threshold or automatic response authority.",
+    "Apply frozen paired rescue/harm/EOS-cap/subject-difficulty/prompt/sensitivity/token analyses to every candidate; candidate output length is post-treatment and not mechanistic proof.",
+    "Keep broad steering efficacy, strongest comparisons, protected utility, three-family/three-construct scope and scientific-paper requirements open."
+  ]
+}

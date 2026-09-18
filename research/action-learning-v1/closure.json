@@ -1,0 +1,243 @@
+{
+  "schema": "action-learning-research-increment-closure-v1",
+  "timestamp": "2026-09-08 09:01:35 UTC",
+  "status": "PASS_bounded_source_reconciliation_and_design_deliverable; NOT_EXECUTION_ADMITTED",
+  "goal_progress": "New primary-source/version/code constraints, cost scenario and independently corrected research design. Full empirical goal remains active.",
+  "goal_objective": {
+    "path": "/Users/mekashirskiy/.codex/attachments/322808f2-1bda-44c4-bb66-c9855b21a266/goal-objective.md",
+    "sha256": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a",
+    "read_completely_this_turn": true
+  },
+  "scope": {
+    "target": "/Users/mekashirskiy/projection-transport-steering",
+    "origin": "git@github.com:mariklolik/projection-transport-steering.git",
+    "source_checkout": "read-only",
+    "scientific_runtime_changes": 0,
+    "new_GPU_jobs": 0,
+    "new_model_outputs": 0,
+    "regrading": 0,
+    "bootstrap_reruns": 0,
+    "manual_labels": 0,
+    "budget_changes": 0,
+    "CPU_metadata_containers": 1,
+    "report_renderer": "existing renderer extended with optional paths/metadata; default historical contract preserved"
+  },
+  "source_discovery": {
+    "first_pass": "one targeted alphaXiv discovery;11 discovery hits,4 closest sources deeply followed",
+    "primary_methods": [
+      "RISER current ACL publication and partial author tree",
+      "PGS2607.27574v1",
+      "OGLS-SD2605.12400v2",
+      "First-token REFT2605.28295v1"
+    ],
+    "stop_reason": "Nearest objective/novelty/comparator/affordability axes have primary support or explicit missing-source limits. Further broad search not justified before useful-action measurement.",
+    "parallel_lanes": [
+      "reward_steering_sources: PGS/RISER paper, release and code gap",
+      "math_grader_audit: local PyReFT/AxBench/IRC reusable objective contracts"
+    ],
+    "parent_checks": [
+      "RISER official publication and full recursive pinned tree",
+      "Missing router inference import",
+      "Published once-after-prefill action and2/5epochs discrepancy",
+      "PGS Eqs8-12 and empiricalscope",
+      "OGLS raw method and cost appendix",
+      "First-token raw title and off-policy boundary"
+    ],
+    "reviews": {
+      "RISER": "unlocated",
+      "PGS": "unlocated",
+      "OGLS_SD": "unlocated",
+      "first_token_REFT": "Browser OpenReview challenge; not solved/bypassed, reviews unread"
+    },
+    "unavailable_tools": "DeepResearch update_plan, fetch/Jina not exposed; plan file and alphaXiv/official web/author source used",
+    "raw_packet_entries": 13
+  },
+  "analysis": {
+    "prior_result_reuse": {
+      "path": "research/irc-baseline-selection-analysis-v3.md",
+      "sha256": "39062a972fecfe5318800f328f9f9adbedbd0f6e7f80f0fad58676b0577d09db",
+      "new_result_analysis": false
+    },
+    "cost_scenario": {
+      "input_record": "manifest-v182",
+      "zero_generation_GPU_seconds": 9846.580573897809,
+      "zero_questions": 256,
+      "scenario_questions": 1500,
+      "rollouts_per_question": 4,
+      "projected_generation_only_H100h": 64.10534227798053,
+      "remaining_baseline_H100h": 24.94656775388889,
+      "type": "different-population arithmetic extrapolation; not measured speed, prediction interval, upper bound or complete cost"
+    },
+    "source_strategy": "Qualify batched base-only collection using existing pinned SGLang before any full source or training schedule",
+    "design": "2x2 offline DPO/positive-only imitation by representation/LoRA; common admitted source questions and positive traces; no isolated negative-information or parameterization claim without further controls"
+  },
+  "independent_design_review": {
+    "agent": "math_grader_audit",
+    "mode": "AI design consistency, not author approval/empirical qualification/PDF QA",
+    "status": "PASS",
+    "input_report_sha256": "179344eb0855eb4a7ce226a76f200b942abd47a15e7ed92ac231a4dad884d235",
+    "initial_review_sha256": "13163485fe04f957f216f5cafb655bcfab1d327a807a58fd34af735f4cc24299",
+    "confirmed_corrections": [
+      "Identical admitted mixed/EOS questions, positive traces and question weights;1500 is source frame not guaranteed effective DPO coverage",
+      "DPO/SFT is objective-recipe contrast, not isolated negative-information mechanism",
+      "Scalar matching does not remove LoRA versus f7/l7/full deployment coverage confounding",
+      "Small prefix cannot establish corpus-wide supply or full fitting/evaluation budget; full-length frozen-reference and policy memory required",
+      "Distinct parent closure17b8... and independent reviewc4cac... now have exact paths and hashes",
+      "Reference explicitly under no_grad"
+    ],
+    "remaining_execution_dependencies": [
+      "pinned callable source-engine contract and tests",
+      "source full-corpus cost and pair-yield boundary",
+      "full-length objective/optimizer qualification",
+      "exact hyperparameters, seeds and four-arm complete cost freeze"
+    ]
+  },
+  "artifact_verification": {
+    "pdf": "output/pdf/action-learning-research-plan-2026-09-08.pdf",
+    "pages": 5,
+    "all_pages_visually_inspected": true,
+    "source_links": 6,
+    "link_targets_checked": true,
+    "render_count": 1,
+    "no_visible_clipping_overlap_missing_glyphs": true,
+    "normal_paragraph_page_continuations": true,
+    "tagged_PDF": false,
+    "full_accessibility_certification": false,
+    "historical_pdf_sha256": "913df72fc4d320932ec2d5ae1c1ed6aa826a63a2904b6dd3e346137bd8f339a3",
+    "historical_pdf_unchanged": true,
+    "renderer_tests": {
+      "red": 2,
+      "green": 2,
+      "scope": "actual argument/default contract without PDF side effects, then real PDF render and full structural/visual QA"
+    },
+    "artifact_marker_successes": 1,
+    "code_source_hashes_verified": 8
+  },
+  "correction_history": [
+    "Parent draft RISER author and first-token title corrected from primary sources before render",
+    "Closure and independent-review artifact labels separated; both hashes verified",
+    "Common admitted training population, objective confounding, position coverage and full-cost dependencies added following independent critique",
+    "Frozen reference memory wording clarified with no_grad",
+    "Initial patch used partial line and failed before modifying; reapplied exact full line",
+    "Initial optional ACTS search target missing; scoped existing-path search repeated; no dependency or runtime change"
+  ],
+  "skills": [
+    {
+      "name": "research-paper-writing",
+      "result": "PASS",
+      "contract": "route and immutable gate reuse; research plan not submission prose"
+    },
+    {
+      "name": "scientific-claim-evidence",
+      "result": "PASS",
+      "contract": "C98-C102 source/claim audit and explicit untested candidate"
+    },
+    {
+      "name": "a-star-conference-paper",
+      "result": "BLOCKED",
+      "contract": "full contribution strength not established; novelty ingredients owned by prior work"
+    },
+    {
+      "name": "scientific-research-strengthening",
+      "result": "PASS",
+      "contract": "bounded prospective research design and invalidation, not fair-strong"
+    },
+    {
+      "name": "scientific-results-and-figures",
+      "result": "PASS",
+      "contract": "reused exact adverse audit, fresh cost-scenario arithmetic; no new effect, uncertainty or throughput claim"
+    },
+    {
+      "name": "experimental-setup-writer",
+      "result": "BLOCKED",
+      "mode": "audit-only for setup completeness",
+      "contract": "scientific execution still requires exact source policy, objective/mask/optimizer tests, hyperparameters, seeds and inclusive cost"
+    },
+    {
+      "name": "Deep Research",
+      "result": "PASS",
+      "contract": "bounded discovery/follow-up/synthesis and verified5pageartifact; access limits explicit"
+    },
+    {
+      "name": "read-url",
+      "result": "PASS",
+      "contract": "available primary tools used; fetch/Jina unavailable after discovery"
+    },
+    {
+      "name": "pdf",
+      "result": "PASS",
+      "contract": "one marker, reused renderer, render once, all pages and links checked"
+    },
+    {
+      "name": "test-driven-development",
+      "result": "PASS",
+      "contract": "renderer optional-input contract RED2/GREEN2; not experiment code qualification"
+    },
+    {
+      "name": "modern-python",
+      "result": "PASS",
+      "contract": "reuse renderer and installed bundled dependencies; no project migration or dependency installation"
+    }
+  ],
+  "state": {
+    "maturity": "EVIDENCE_AVAILABLE",
+    "evidence_class": "EVIDENCE_THIN",
+    "strength_vector": [
+      3,
+      2,
+      0,
+      3,
+      0,
+      0,
+      0,
+      4,
+      3
+    ],
+    "strength_total": 15,
+    "fair_strong": false,
+    "SOTA": false,
+    "goal_status": "active",
+    "author": "unassigned",
+    "author_approval": "unverified",
+    "venue_year_track_disclosure": "unverified",
+    "submission_compliance": "unpassed",
+    "downstream_not_reached": [
+      "skeleton and section submission prose",
+      "global paper review",
+      "final empirical/formal/independent review",
+      "submission compliance"
+    ]
+  },
+  "next": "Route through research-paper-writing; inspect exact SGLang callable source, freeze fit-only IDs/seeds and bounded qualification before CUDA; implement missing raw-token/source-policy contract with failing tests; measure real throughput and full-length objective memory; only then register complete scientific schedule. No unchanged gate replay, closed-family rescue or broad literature restart.",
+  "artifact_sha256": {
+    "research/research-plan-action-learning-v1.md": "fbfdc2c363bb80eeac75efd942c4bd73ca57c92974fc5500743f138a5c7b0d70",
+    "research/action-learning-v1/report-source.md": "179344eb0855eb4a7ce226a76f200b942abd47a15e7ed92ac231a4dad884d235",
+    "research/action-learning-v1/source-ledger.json": "2a239bf00cb08cd6ddc6ea2d0e5c762f5a82f4dd77117cb76fc99dcbb0059c02",
+    "research/action-learning-v1/runtime-inventory.json": "da68aa965b52532137066f2f11a37236a7fdfade688da25b5185c303942089ee",
+    "artifacts/literature/action_learning_20260908/retrieval-packet.json": "1cb240c0eab18cfa5bef8960cf9e7a5bb3accba8e6cce6c4c956416485ef4e8b",
+    "output/pdf/action-learning-research-plan-2026-09-08.pdf": "c1bd43de7b9fd3360d584e72d912f624c9745f826f0f8431b75ffbe880df40f5",
+    "tmp/pdfs/render_research_reset.py": "8e7d9aafe70de29cb72933c8bf53394eb107d49df0b444e9f154ba4ae96d6301",
+    "tmp/pdfs/test_report_options.py": "a9a53c31cc06ed775a9f4cb30ae9f8d8816021cefe68298adf0eb57515194d92",
+    "README.md": "65898d74082d8d98395425710b0b826d02db914467f3ba3d3cdd53eb8f972e81",
+    "research/literature-reset-v1.md": "13d59c0cb79752c7403665f582b4d9d92cac48ca02d86ff95b2163b3bb7b038c",
+    "research/research-reset-plan-v1.md": "fd9dbb6c2412c3f66e58ef34564d0cfa01cb73a204059782627e58c13c6e6a7b",
+    "research/claim-ledger.md": "58a4e5d957d81a788923d83b2f25210c56b7978626ae60a812083b6f516c8495",
+    "research/evidence-manifest.md": "fdc702b19b2a66cea3b6447753d146205b3fadeac87476a8197f9d26a71bed65",
+    "research/run-manifest.jsonl": "0c30d952ca05c0e6a2cd3ca64ac1111e696309ae8a258b5f2210d21b60fcf4b0",
+    "research/ai-assistance-ledger.jsonl": "ba1f396066d49df50ede6f52b27809f3285d532c67b3d334b3ea9523eae008a3"
+  },
+  "append_only_prefix_guards": {
+    "run_manifest": {
+      "bytes": 274301,
+      "sha256": "0c30d952ca05c0e6a2cd3ca64ac1111e696309ae8a258b5f2210d21b60fcf4b0",
+      "records": 229,
+      "next_id": "manifest-v183"
+    },
+    "AI_ledger": {
+      "bytes": 213183,
+      "sha256": "ba1f396066d49df50ede6f52b27809f3285d532c67b3d334b3ea9523eae008a3",
+      "records": 126,
+      "next_id": "ai-task-0127"
+    }
+  }
+}

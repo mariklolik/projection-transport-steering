@@ -1,0 +1,169 @@
+{
+  "schema": "irc-baseline-fit-cpu-execution-v3",
+  "status": "ready_not_yet_executed",
+  "recorded_at_utc": "2026-09-08 06:39:55 UTC",
+  "protocol": {
+    "path": "research/irc-baseline-fit-audit-v3.json",
+    "sha256": "6dc8af845bf18224fab9d9eb3382a7b5d7bddb0c420c4df68fa68cfd61c17e40"
+  },
+  "capture": {
+    "status": "PASS_COMPLETE_FIT_CAPTURE_NOT_EFFICACY",
+    "timestamp": "2026-09-08T06:38:01.629339+00:00",
+    "archive": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v3/fit-complete-v1.tar",
+    "archive_bytes": 541716480,
+    "archive_sha256": "0237ddfdbc119af2a942f1debc48c33ca9a41807ba8f7c1433c3c3c09175e3da",
+    "inventory": "/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v3/fit-complete-v1-inventory.jsonl",
+    "inventory_sha256": "4fde669e02cad87609df0fd52b735e322e0448c6d5f7e68001ba794af29f32d5",
+    "files": 42,
+    "fit_files": 16,
+    "updates": 4512,
+    "workers": [
+      {
+        "index": 0,
+        "state": "running",
+        "fit_updates": 564,
+        "selection_completed": 8,
+        "producer_terminal_receipt_exists": false
+      },
+      {
+        "index": 1,
+        "state": "running",
+        "fit_updates": 564,
+        "selection_completed": 16,
+        "producer_terminal_receipt_exists": false
+      },
+      {
+        "index": 2,
+        "state": "running",
+        "fit_updates": 564,
+        "selection_completed": 0,
+        "producer_terminal_receipt_exists": false
+      },
+      {
+        "index": 3,
+        "state": "running",
+        "fit_updates": 564,
+        "selection_completed": 8,
+        "producer_terminal_receipt_exists": false
+      },
+      {
+        "index": 4,
+        "state": "running",
+        "fit_updates": 564,
+        "selection_completed": 0,
+        "producer_terminal_receipt_exists": false
+      },
+      {
+        "index": 5,
+        "state": "running",
+        "fit_updates": 564,
+        "selection_completed": 48,
+        "producer_terminal_receipt_exists": false
+      },
+      {
+        "index": 6,
+        "state": "running",
+        "fit_updates": 564,
+        "selection_completed": 0,
+        "producer_terminal_receipt_exists": false
+      },
+      {
+        "index": 7,
+        "state": "running",
+        "fit_updates": 564,
+        "selection_completed": 48,
+        "producer_terminal_receipt_exists": false
+      }
+    ]
+  },
+  "checkpoint_contract_source": {
+    "path": "research/irc-fit-bridge-independent-review-v9.json",
+    "sha256": "0f6414f7744b04b519e99ad2aabbe14a2a75ea13d618bb92cdfff6e21a824074",
+    "locator": "post_result_review.actual_packet_summary.B.raw_state_cpu_summary",
+    "rank8": "Existing actual native raw state; no new reference probe",
+    "rank4": "Pinned same constructor rank parameter, checked against actual v3 checkpoint by this CPU audit",
+    "keys": "embed_dim/int64 scalar4096; interchange_dim/int64 scalar4096; rotate original FP32[4096,r]; rotate base FP32[4096,4096]; learned source weight BF16[r,4096]; bias BF16[r]"
+  },
+  "constructed_input_field_origins": {
+    "optimizer_updates": "Frozen12epochs * ceil(1500/32)=564; not inferred from successful event count",
+    "target_tokens": "12 * target-token count recomputed from exact hash-bound native fit examples",
+    "epoch_order_sha256": "Frozen recipe, independently reconstructed inside unchanged audit_fit",
+    "checkpoint_sha256": "Captured bytes bound before and after archive/nativeCPU read",
+    "seconds": "Original Docker StartedAt to same-FSK capture timestamp; conservative elapsed envelope, NOT measured fit duration",
+    "training_resume_supported": "Frozen no-resume contract; not a claim about saved optimizer state"
+  },
+  "native_CPU": {
+    "analysis_code": "import hashlib,importlib.metadata,json,time\nfrom pathlib import Path\nstarted=time.perf_counter()\nreport={\"schema\":\"irc-baseline-v3-fit-component-audit\",\"status\":\"blocked\",\"GPU\":False,\"model_weights_loaded\":False,\"adapter_weights_loaded_on_CPU\":True,\"evidence_label\":\"exploratory_fit_component\",\"complete_candidate_comparison\":False,\"response_launch_authorized\":False,\"sota_achieved\":False,\"workers\":[]}\nfailure=None\ntry:\n    import torch\n    import irc_baseline_audit\n    import irc_baseline_support\n    from materialize_outcome_score_data import file_sha256,payload_sha256\n    torch.set_num_threads(2)\n    torch.set_num_interop_threads(1)\n    assert not torch.cuda.is_available()\n    root=Path(\"/work\")\n    results=Path(\"/results\")\n    config_path=root/\"research/irc-baseline-config-v3.json\"\n    assert file_sha256(config_path)==\"61529de3e7cf2e865d147ca11e54388590bb50e12d8702c388adb2ed7702f7be\"\n    config=json.loads(config_path.read_text())\n    capture_path=results/\"fit-capture-v1/fit-input-manifest.json\"\n    capture=json.loads(capture_path.read_text())\n    assert capture[\"config_sha256\"]==file_sha256(config_path) and capture[\"source_sha256\"]==config[\"source_sha256\"]\n    assert capture[\"all_fit_updates\"]==4512 and len(capture[\"fit_files_sha256\"])==16\n    assert file_sha256(Path(irc_baseline_audit.__file__))==\"74f446d955d48097ff68b451f0e13ffc9cd3db66280527761417ebcfb9c376ce\"\n    assert file_sha256(Path(irc_baseline_support.__file__))==config[\"source_sha256\"][\"scripts/irc_baseline_support.py\"]\n    for name,digest in capture[\"fit_files_sha256\"].items():\n        assert file_sha256(results/name)==digest,name\n    tokenizer,examples,selection=irc_baseline_support.prepare_inputs(config,root,Path(config[\"model_path\"]))\n    assert len(examples)==1500 and len(selection)==256\n    target_per_epoch=sum(sum(label!=-100 for label in example[\"labels\"][1:]) for example in examples)\n    assert target_per_epoch==356743\n    report.update(config_sha256=file_sha256(config_path),capture_sha256=file_sha256(capture_path),analysis_source_sha256={\"irc_baseline_audit.py\":file_sha256(Path(irc_baseline_audit.__file__))},source_files=len(config[\"source_sha256\"]),target_examples_sha256=payload_sha256(examples),versions={name:importlib.metadata.version(name) for name in config[\"expected_versions\"]},input_manifest_kind=\"Constructed expected coverage/order and captured checkpoint hash; seconds is ONLY container-to-capture upper bound, not producer fit duration\",producer_fit_receipt_verified=False)\n    for index,candidate in enumerate(config[\"candidates\"]):\n        observation=capture[\"workers\"][index]\n        assert observation[\"index\"]==index and observation[\"fit_updates\"]==564\n        directory=results/f\"candidate_{index:02d}/run\"\n        expected={\"optimizer_updates\":564,\"target_tokens\":target_per_epoch*12,\"epoch_order_sha256\":config[\"recipe\"][\"epoch_order_sha256\"],\"checkpoint_sha256\":capture[\"fit_files_sha256\"][f\"candidate_{index:02d}/run/adapter.pt\"],\"training_resume_supported\":False,\"seconds\":observation[\"container_to_capture_upper_bound_seconds\"]}\n        evidence=irc_baseline_audit.audit_fit(directory,expected,config[\"recipe\"],examples,candidate)\n        evidence[\"fit_duration_upper_bound_seconds\"]=evidence.pop(\"fit_seconds\")\n        evidence[\"measured_fit_duration_seconds\"]=None\n        rows=[json.loads(line) for line in (directory/\"fit.jsonl\").read_text().splitlines()]\n        events=[json.loads(line) for line in (results/f\"fit-capture-v1/candidate_{index:02d}-stdout.log\").read_text().splitlines() if line.startswith(\"{\")]\n        logged=[{k:v for k,v in e.items() if k!=\"event\"} for e in events if e.get(\"event\")==\"fit_update\"]\n        assert rows==logged\n        raw=torch.load(directory/\"adapter.pt\",map_location=\"cpu\",weights_only=True)\n        hidden=json.loads((Path(config[\"model_path\"])/\"config.json\").read_text())[\"hidden_size\"]\n        rank=candidate[\"rank\"]\n        assert hidden==4096 and rank in (4,8)\n        expected_tensors={\"embed_dim\":((),torch.int64),\"interchange_dim\":((),torch.int64),\"rotate_layer.parametrizations.weight.original\":((hidden,rank),torch.float32),\"rotate_layer.parametrizations.weight.0.base\":((hidden,hidden),torch.float32),\"learned_source.weight\":((rank,hidden),torch.bfloat16),\"learned_source.bias\":((rank,),torch.bfloat16)}\n        assert isinstance(raw,dict) and set(raw)==set(expected_tensors)\n        tensors={}\n        for name,value in raw.items():\n            assert isinstance(value,torch.Tensor) and value.device.type==\"cpu\" and value.numel()>0 and torch.isfinite(value).all().item(),name\n            assert (tuple(value.shape),value.dtype)==expected_tensors[name],name\n            if name in (\"embed_dim\",\"interchange_dim\"):\n                assert value.item()==hidden,name\n            tensors[name]={\"shape\":list(value.shape),\"dtype\":str(value.dtype),\"elements\":value.numel(),\"all_finite\":True}\n        report[\"workers\"].append({\"index\":index,\"candidate\":candidate,\"expected_input\":expected,\"fit\":evidence,\"stdout_fit_join\":True,\"checkpoint_tensor_metadata\":tensors,\"selection_completed_at_capture\":observation[\"selection_completed\"]})\n        del raw\n        print(json.dumps({\"event\":\"fit_component_audited\",\"index\":index,\"updates\":evidence[\"optimizer_updates\"],\"target_tokens\":evidence[\"target_tokens\"],\"epochs\":len(evidence[\"epochs\"])}),flush=True)\n    for name,digest in capture[\"fit_files_sha256\"].items():\n        assert file_sha256(results/name)==digest,name\n    report.update(status=\"pass_complete_fit_component_only\",totals={\"candidates\":8,\"unique_fit_questions\":1500,\"question_epoch_exposures_per_candidate\":18000,\"updates\":sum(w[\"fit\"][\"optimizer_updates\"] for w in report[\"workers\"]),\"target_tokens\":sum(w[\"fit\"][\"target_tokens\"] for w in report[\"workers\"]),\"microbatches\":sum(w[\"fit\"][\"microbatches\"] for w in report[\"workers\"])},limits=[\"No candidate scoring, zero regrading, model forward, test suite or GPU request.\",\"Constructed audit input is not a producer receipt. Final producer target/order/checkpoint/base/version/status and true duration must still join.\",\"Update timers are nested in unavailable actual fit duration and ongoing GPU lifetimes; do not charge them twice.\",\"One fit seed; all candidates reuse the same1500 questions. Training loss is not held-out efficacy or a selection rule.\",\"No resumed checkpoint, modified candidate/schedule/metric/cap or sealed-test exposure.\"])\nexcept BaseException as error:\n    failure=error\n    report[\"failure\"]={\"type\":type(error).__name__,\"message\":str(error)}\nreport[\"CPU_audit_seconds\"]=time.perf_counter()-started\nwith Path(\"/out/result.json\").open(\"x\") as handle:\n    json.dump(report,handle,sort_keys=True,indent=2,allow_nan=False)\n    handle.write(\"\\n\")\nprint(json.dumps({\"event\":\"fit_audit_terminal\",\"status\":report[\"status\"],\"CPU_seconds\":report[\"CPU_audit_seconds\"],\"workers\":len(report[\"workers\"]),\"totals\":report.get(\"totals\"),\"failure\":report.get(\"failure\")}),flush=True)\nif failure is not None:\n    raise SystemExit(1)\n",
+    "controller_code": "import hashlib,json,subprocess,time\nfrom pathlib import Path\nbase=Path(\"/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v3/fit-audit-v1\")\ncommand=json.loads(\"[\\\"sudo\\\",\\\"-n\\\",\\\"docker\\\",\\\"run\\\",\\\"--name\\\",\\\"pts-irc-baseline-v3-fit-audit\\\",\\\"--network\\\",\\\"none\\\",\\\"--user\\\",\\\"11027:11027\\\",\\\"--workdir\\\",\\\"/work\\\",\\\"--entrypoint\\\",\\\"timeout\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v3,dst=/work,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-analysis-v2/scripts,dst=/analysis,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/.venv,dst=/ptsenv,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages,dst=/overlay,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B,dst=/model,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v3,dst=/results,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v3/fit-audit-v1,dst=/out\\\",\\\"--env\\\",\\\"PYTHONPATH=/work/src:/work/scripts:/analysis:/overlay:/ptsenv/lib/python3.12/site-packages\\\",\\\"--env\\\",\\\"PYTHONDONTWRITEBYTECODE=1\\\",\\\"--env\\\",\\\"CUDA_VISIBLE_DEVICES=\\\",\\\"--env\\\",\\\"MPLBACKEND=Agg\\\",\\\"--env\\\",\\\"OMP_NUM_THREADS=2\\\",\\\"--env\\\",\\\"OPENBLAS_NUM_THREADS=2\\\",\\\"--env\\\",\\\"MKL_NUM_THREADS=2\\\",\\\"--env\\\",\\\"MPLCONFIGDIR=/tmp/irc-fit-audit-matplotlib\\\",\\\"--env\\\",\\\"USER=mekashirskiy\\\",\\\"sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb\\\",\\\"--signal=TERM\\\",\\\"--kill-after=10s\\\",\\\"600s\\\",\\\"python3\\\",\\\"-S\\\",\\\"-c\\\",\\\"import hashlib,importlib.metadata,json,time\\\\nfrom pathlib import Path\\\\nstarted=time.perf_counter()\\\\nreport={\\\\\\\"schema\\\\\\\":\\\\\\\"irc-baseline-v3-fit-component-audit\\\\\\\",\\\\\\\"status\\\\\\\":\\\\\\\"blocked\\\\\\\",\\\\\\\"GPU\\\\\\\":False,\\\\\\\"model_weights_loaded\\\\\\\":False,\\\\\\\"adapter_weights_loaded_on_CPU\\\\\\\":True,\\\\\\\"evidence_label\\\\\\\":\\\\\\\"exploratory_fit_component\\\\\\\",\\\\\\\"complete_candidate_comparison\\\\\\\":False,\\\\\\\"response_launch_authorized\\\\\\\":False,\\\\\\\"sota_achieved\\\\\\\":False,\\\\\\\"workers\\\\\\\":[]}\\\\nfailure=None\\\\ntry:\\\\n    import torch\\\\n    import irc_baseline_audit\\\\n    import irc_baseline_support\\\\n    from materialize_outcome_score_data import file_sha256,payload_sha256\\\\n    torch.set_num_threads(2)\\\\n    torch.set_num_interop_threads(1)\\\\n    assert not torch.cuda.is_available()\\\\n    root=Path(\\\\\\\"/work\\\\\\\")\\\\n    results=Path(\\\\\\\"/results\\\\\\\")\\\\n    config_path=root/\\\\\\\"research/irc-baseline-config-v3.json\\\\\\\"\\\\n    assert file_sha256(config_path)==\\\\\\\"61529de3e7cf2e865d147ca11e54388590bb50e12d8702c388adb2ed7702f7be\\\\\\\"\\\\n    config=json.loads(config_path.read_text())\\\\n    capture_path=results/\\\\\\\"fit-capture-v1/fit-input-manifest.json\\\\\\\"\\\\n    capture=json.loads(capture_path.read_text())\\\\n    assert capture[\\\\\\\"config_sha256\\\\\\\"]==file_sha256(config_path) and capture[\\\\\\\"source_sha256\\\\\\\"]==config[\\\\\\\"source_sha256\\\\\\\"]\\\\n    assert capture[\\\\\\\"all_fit_updates\\\\\\\"]==4512 and len(capture[\\\\\\\"fit_files_sha256\\\\\\\"])==16\\\\n    assert file_sha256(Path(irc_baseline_audit.__file__))==\\\\\\\"74f446d955d48097ff68b451f0e13ffc9cd3db66280527761417ebcfb9c376ce\\\\\\\"\\\\n    assert file_sha256(Path(irc_baseline_support.__file__))==config[\\\\\\\"source_sha256\\\\\\\"][\\\\\\\"scripts/irc_baseline_support.py\\\\\\\"]\\\\n    for name,digest in capture[\\\\\\\"fit_files_sha256\\\\\\\"].items():\\\\n        assert file_sha256(results/name)==digest,name\\\\n    tokenizer,examples,selection=irc_baseline_support.prepare_inputs(config,root,Path(config[\\\\\\\"model_path\\\\\\\"]))\\\\n    assert len(examples)==1500 and len(selection)==256\\\\n    target_per_epoch=sum(sum(label!=-100 for label in example[\\\\\\\"labels\\\\\\\"][1:]) for example in examples)\\\\n    assert target_per_epoch==356743\\\\n    report.update(config_sha256=file_sha256(config_path),capture_sha256=file_sha256(capture_path),analysis_source_sha256={\\\\\\\"irc_baseline_audit.py\\\\\\\":file_sha256(Path(irc_baseline_audit.__file__))},source_files=len(config[\\\\\\\"source_sha256\\\\\\\"]),target_examples_sha256=payload_sha256(examples),versions={name:importlib.metadata.version(name) for name in config[\\\\\\\"expected_versions\\\\\\\"]},input_manifest_kind=\\\\\\\"Constructed expected coverage/order and captured checkpoint hash; seconds is ONLY container-to-capture upper bound, not producer fit duration\\\\\\\",producer_fit_receipt_verified=False)\\\\n    for index,candidate in enumerate(config[\\\\\\\"candidates\\\\\\\"]):\\\\n        observation=capture[\\\\\\\"workers\\\\\\\"][index]\\\\n        assert observation[\\\\\\\"index\\\\\\\"]==index and observation[\\\\\\\"fit_updates\\\\\\\"]==564\\\\n        directory=results/f\\\\\\\"candidate_{index:02d}/run\\\\\\\"\\\\n        expected={\\\\\\\"optimizer_updates\\\\\\\":564,\\\\\\\"target_tokens\\\\\\\":target_per_epoch*12,\\\\\\\"epoch_order_sha256\\\\\\\":config[\\\\\\\"recipe\\\\\\\"][\\\\\\\"epoch_order_sha256\\\\\\\"],\\\\\\\"checkpoint_sha256\\\\\\\":capture[\\\\\\\"fit_files_sha256\\\\\\\"][f\\\\\\\"candidate_{index:02d}/run/adapter.pt\\\\\\\"],\\\\\\\"training_resume_supported\\\\\\\":False,\\\\\\\"seconds\\\\\\\":observation[\\\\\\\"container_to_capture_upper_bound_seconds\\\\\\\"]}\\\\n        evidence=irc_baseline_audit.audit_fit(directory,expected,config[\\\\\\\"recipe\\\\\\\"],examples,candidate)\\\\n        evidence[\\\\\\\"fit_duration_upper_bound_seconds\\\\\\\"]=evidence.pop(\\\\\\\"fit_seconds\\\\\\\")\\\\n        evidence[\\\\\\\"measured_fit_duration_seconds\\\\\\\"]=None\\\\n        rows=[json.loads(line) for line in (directory/\\\\\\\"fit.jsonl\\\\\\\").read_text().splitlines()]\\\\n        events=[json.loads(line) for line in (results/f\\\\\\\"fit-capture-v1/candidate_{index:02d}-stdout.log\\\\\\\").read_text().splitlines() if line.startswith(\\\\\\\"{\\\\\\\")]\\\\n        logged=[{k:v for k,v in e.items() if k!=\\\\\\\"event\\\\\\\"} for e in events if e.get(\\\\\\\"event\\\\\\\")==\\\\\\\"fit_update\\\\\\\"]\\\\n        assert rows==logged\\\\n        raw=torch.load(directory/\\\\\\\"adapter.pt\\\\\\\",map_location=\\\\\\\"cpu\\\\\\\",weights_only=True)\\\\n        hidden=json.loads((Path(config[\\\\\\\"model_path\\\\\\\"])/\\\\\\\"config.json\\\\\\\").read_text())[\\\\\\\"hidden_size\\\\\\\"]\\\\n        rank=candidate[\\\\\\\"rank\\\\\\\"]\\\\n        assert hidden==4096 and rank in (4,8)\\\\n        expected_tensors={\\\\\\\"embed_dim\\\\\\\":((),torch.int64),\\\\\\\"interchange_dim\\\\\\\":((),torch.int64),\\\\\\\"rotate_layer.parametrizations.weight.original\\\\\\\":((hidden,rank),torch.float32),\\\\\\\"rotate_layer.parametrizations.weight.0.base\\\\\\\":((hidden,hidden),torch.float32),\\\\\\\"learned_source.weight\\\\\\\":((rank,hidden),torch.bfloat16),\\\\\\\"learned_source.bias\\\\\\\":((rank,),torch.bfloat16)}\\\\n        assert isinstance(raw,dict) and set(raw)==set(expected_tensors)\\\\n        tensors={}\\\\n        for name,value in raw.items():\\\\n            assert isinstance(value,torch.Tensor) and value.device.type==\\\\\\\"cpu\\\\\\\" and value.numel()>0 and torch.isfinite(value).all().item(),name\\\\n            assert (tuple(value.shape),value.dtype)==expected_tensors[name],name\\\\n            if name in (\\\\\\\"embed_dim\\\\\\\",\\\\\\\"interchange_dim\\\\\\\"):\\\\n                assert value.item()==hidden,name\\\\n            tensors[name]={\\\\\\\"shape\\\\\\\":list(value.shape),\\\\\\\"dtype\\\\\\\":str(value.dtype),\\\\\\\"elements\\\\\\\":value.numel(),\\\\\\\"all_finite\\\\\\\":True}\\\\n        report[\\\\\\\"workers\\\\\\\"].append({\\\\\\\"index\\\\\\\":index,\\\\\\\"candidate\\\\\\\":candidate,\\\\\\\"expected_input\\\\\\\":expected,\\\\\\\"fit\\\\\\\":evidence,\\\\\\\"stdout_fit_join\\\\\\\":True,\\\\\\\"checkpoint_tensor_metadata\\\\\\\":tensors,\\\\\\\"selection_completed_at_capture\\\\\\\":observation[\\\\\\\"selection_completed\\\\\\\"]})\\\\n        del raw\\\\n        print(json.dumps({\\\\\\\"event\\\\\\\":\\\\\\\"fit_component_audited\\\\\\\",\\\\\\\"index\\\\\\\":index,\\\\\\\"updates\\\\\\\":evidence[\\\\\\\"optimizer_updates\\\\\\\"],\\\\\\\"target_tokens\\\\\\\":evidence[\\\\\\\"target_tokens\\\\\\\"],\\\\\\\"epochs\\\\\\\":len(evidence[\\\\\\\"epochs\\\\\\\"])}),flush=True)\\\\n    for name,digest in capture[\\\\\\\"fit_files_sha256\\\\\\\"].items():\\\\n        assert file_sha256(results/name)==digest,name\\\\n    report.update(status=\\\\\\\"pass_complete_fit_component_only\\\\\\\",totals={\\\\\\\"candidates\\\\\\\":8,\\\\\\\"unique_fit_questions\\\\\\\":1500,\\\\\\\"question_epoch_exposures_per_candidate\\\\\\\":18000,\\\\\\\"updates\\\\\\\":sum(w[\\\\\\\"fit\\\\\\\"][\\\\\\\"optimizer_updates\\\\\\\"] for w in report[\\\\\\\"workers\\\\\\\"]),\\\\\\\"target_tokens\\\\\\\":sum(w[\\\\\\\"fit\\\\\\\"][\\\\\\\"target_tokens\\\\\\\"] for w in report[\\\\\\\"workers\\\\\\\"]),\\\\\\\"microbatches\\\\\\\":sum(w[\\\\\\\"fit\\\\\\\"][\\\\\\\"microbatches\\\\\\\"] for w in report[\\\\\\\"workers\\\\\\\"])},limits=[\\\\\\\"No candidate scoring, zero regrading, model forward, test suite or GPU request.\\\\\\\",\\\\\\\"Constructed audit input is not a producer receipt. Final producer target/order/checkpoint/base/version/status and true duration must still join.\\\\\\\",\\\\\\\"Update timers are nested in unavailable actual fit duration and ongoing GPU lifetimes; do not charge them twice.\\\\\\\",\\\\\\\"One fit seed; all candidates reuse the same1500 questions. Training loss is not held-out efficacy or a selection rule.\\\\\\\",\\\\\\\"No resumed checkpoint, modified candidate/schedule/metric/cap or sealed-test exposure.\\\\\\\"])\\\\nexcept BaseException as error:\\\\n    failure=error\\\\n    report[\\\\\\\"failure\\\\\\\"]={\\\\\\\"type\\\\\\\":type(error).__name__,\\\\\\\"message\\\\\\\":str(error)}\\\\nreport[\\\\\\\"CPU_audit_seconds\\\\\\\"]=time.perf_counter()-started\\\\nwith Path(\\\\\\\"/out/result.json\\\\\\\").open(\\\\\\\"x\\\\\\\") as handle:\\\\n    json.dump(report,handle,sort_keys=True,indent=2,allow_nan=False)\\\\n    handle.write(\\\\\\\"\\\\\\\\n\\\\\\\")\\\\nprint(json.dumps({\\\\\\\"event\\\\\\\":\\\\\\\"fit_audit_terminal\\\\\\\",\\\\\\\"status\\\\\\\":report[\\\\\\\"status\\\\\\\"],\\\\\\\"CPU_seconds\\\\\\\":report[\\\\\\\"CPU_audit_seconds\\\\\\\"],\\\\\\\"workers\\\\\\\":len(report[\\\\\\\"workers\\\\\\\"]),\\\\\\\"totals\\\\\\\":report.get(\\\\\\\"totals\\\\\\\"),\\\\\\\"failure\\\\\\\":report.get(\\\\\\\"failure\\\\\\\")}),flush=True)\\\\nif failure is not None:\\\\n    raise SystemExit(1)\\\\n\\\"]\")\nassert not subprocess.check_output([\"sudo\",\"-n\",\"docker\",\"ps\",\"-a\",\"--filter\",\"name=^/pts-irc-baseline-v3-fit-audit$\",\"--format\",\"{{.Names}}\"],text=True).strip()\nassert not base.exists()\nbase.mkdir()\nstarted=time.perf_counter()\nwith (base/\"stdout.log\").open(\"x\") as stdout,(base/\"stderr.log\").open(\"x\") as stderr:\n    result=subprocess.run(command,stdout=stdout,stderr=stderr)\nterminal={\"returncode\":result.returncode,\"controller_seconds\":time.perf_counter()-started,\"GPU\":False,\"automatic_retry\":False}\nwith (base/\"terminal.json\").open(\"x\") as handle:\n    json.dump(terminal,handle,sort_keys=True)\n    handle.write(\"\\n\")\ninspect=json.loads(subprocess.check_output([\"sudo\",\"-n\",\"docker\",\"inspect\",\"pts-irc-baseline-v3-fit-audit\"],text=True))[0]\nwith (base/\"inspect.json\").open(\"x\") as handle:\n    json.dump(inspect,handle,sort_keys=True,indent=2)\n    handle.write(\"\\n\")\nprint(json.dumps({\"terminal\":terminal,\"stdout\":(base/\"stdout.log\").read_text(),\"stderr\":(base/\"stderr.log\").read_text(),\"result_sha256\":hashlib.sha256((base/\"result.json\").read_bytes()).hexdigest() if (base/\"result.json\").exists() else None}),flush=True)\nraise SystemExit(result.returncode)\n",
+    "command": [
+      "sudo",
+      "-n",
+      "docker",
+      "run",
+      "--name",
+      "pts-irc-baseline-v3-fit-audit",
+      "--network",
+      "none",
+      "--user",
+      "11027:11027",
+      "--workdir",
+      "/work",
+      "--entrypoint",
+      "timeout",
+      "--mount",
+      "type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v3,dst=/work,readonly",
+      "--mount",
+      "type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-analysis-v2/scripts,dst=/analysis,readonly",
+      "--mount",
+      "type=bind,src=/home/mekashirskiy/projection-transport-steering/.venv,dst=/ptsenv,readonly",
+      "--mount",
+      "type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages,dst=/overlay,readonly",
+      "--mount",
+      "type=bind,src=/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B,dst=/model,readonly",
+      "--mount",
+      "type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v3,dst=/results,readonly",
+      "--mount",
+      "type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/selection/irc_baseline_v3/fit-audit-v1,dst=/out",
+      "--env",
+      "PYTHONPATH=/work/src:/work/scripts:/analysis:/overlay:/ptsenv/lib/python3.12/site-packages",
+      "--env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "--env",
+      "CUDA_VISIBLE_DEVICES=",
+      "--env",
+      "MPLBACKEND=Agg",
+      "--env",
+      "OMP_NUM_THREADS=2",
+      "--env",
+      "OPENBLAS_NUM_THREADS=2",
+      "--env",
+      "MKL_NUM_THREADS=2",
+      "--env",
+      "MPLCONFIGDIR=/tmp/irc-fit-audit-matplotlib",
+      "--env",
+      "USER=mekashirskiy",
+      "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+      "--signal=TERM",
+      "--kill-after=10s",
+      "600s",
+      "python3",
+      "-S",
+      "-c",
+      "import hashlib,importlib.metadata,json,time\nfrom pathlib import Path\nstarted=time.perf_counter()\nreport={\"schema\":\"irc-baseline-v3-fit-component-audit\",\"status\":\"blocked\",\"GPU\":False,\"model_weights_loaded\":False,\"adapter_weights_loaded_on_CPU\":True,\"evidence_label\":\"exploratory_fit_component\",\"complete_candidate_comparison\":False,\"response_launch_authorized\":False,\"sota_achieved\":False,\"workers\":[]}\nfailure=None\ntry:\n    import torch\n    import irc_baseline_audit\n    import irc_baseline_support\n    from materialize_outcome_score_data import file_sha256,payload_sha256\n    torch.set_num_threads(2)\n    torch.set_num_interop_threads(1)\n    assert not torch.cuda.is_available()\n    root=Path(\"/work\")\n    results=Path(\"/results\")\n    config_path=root/\"research/irc-baseline-config-v3.json\"\n    assert file_sha256(config_path)==\"61529de3e7cf2e865d147ca11e54388590bb50e12d8702c388adb2ed7702f7be\"\n    config=json.loads(config_path.read_text())\n    capture_path=results/\"fit-capture-v1/fit-input-manifest.json\"\n    capture=json.loads(capture_path.read_text())\n    assert capture[\"config_sha256\"]==file_sha256(config_path) and capture[\"source_sha256\"]==config[\"source_sha256\"]\n    assert capture[\"all_fit_updates\"]==4512 and len(capture[\"fit_files_sha256\"])==16\n    assert file_sha256(Path(irc_baseline_audit.__file__))==\"74f446d955d48097ff68b451f0e13ffc9cd3db66280527761417ebcfb9c376ce\"\n    assert file_sha256(Path(irc_baseline_support.__file__))==config[\"source_sha256\"][\"scripts/irc_baseline_support.py\"]\n    for name,digest in capture[\"fit_files_sha256\"].items():\n        assert file_sha256(results/name)==digest,name\n    tokenizer,examples,selection=irc_baseline_support.prepare_inputs(config,root,Path(config[\"model_path\"]))\n    assert len(examples)==1500 and len(selection)==256\n    target_per_epoch=sum(sum(label!=-100 for label in example[\"labels\"][1:]) for example in examples)\n    assert target_per_epoch==356743\n    report.update(config_sha256=file_sha256(config_path),capture_sha256=file_sha256(capture_path),analysis_source_sha256={\"irc_baseline_audit.py\":file_sha256(Path(irc_baseline_audit.__file__))},source_files=len(config[\"source_sha256\"]),target_examples_sha256=payload_sha256(examples),versions={name:importlib.metadata.version(name) for name in config[\"expected_versions\"]},input_manifest_kind=\"Constructed expected coverage/order and captured checkpoint hash; seconds is ONLY container-to-capture upper bound, not producer fit duration\",producer_fit_receipt_verified=False)\n    for index,candidate in enumerate(config[\"candidates\"]):\n        observation=capture[\"workers\"][index]\n        assert observation[\"index\"]==index and observation[\"fit_updates\"]==564\n        directory=results/f\"candidate_{index:02d}/run\"\n        expected={\"optimizer_updates\":564,\"target_tokens\":target_per_epoch*12,\"epoch_order_sha256\":config[\"recipe\"][\"epoch_order_sha256\"],\"checkpoint_sha256\":capture[\"fit_files_sha256\"][f\"candidate_{index:02d}/run/adapter.pt\"],\"training_resume_supported\":False,\"seconds\":observation[\"container_to_capture_upper_bound_seconds\"]}\n        evidence=irc_baseline_audit.audit_fit(directory,expected,config[\"recipe\"],examples,candidate)\n        evidence[\"fit_duration_upper_bound_seconds\"]=evidence.pop(\"fit_seconds\")\n        evidence[\"measured_fit_duration_seconds\"]=None\n        rows=[json.loads(line) for line in (directory/\"fit.jsonl\").read_text().splitlines()]\n        events=[json.loads(line) for line in (results/f\"fit-capture-v1/candidate_{index:02d}-stdout.log\").read_text().splitlines() if line.startswith(\"{\")]\n        logged=[{k:v for k,v in e.items() if k!=\"event\"} for e in events if e.get(\"event\")==\"fit_update\"]\n        assert rows==logged\n        raw=torch.load(directory/\"adapter.pt\",map_location=\"cpu\",weights_only=True)\n        hidden=json.loads((Path(config[\"model_path\"])/\"config.json\").read_text())[\"hidden_size\"]\n        rank=candidate[\"rank\"]\n        assert hidden==4096 and rank in (4,8)\n        expected_tensors={\"embed_dim\":((),torch.int64),\"interchange_dim\":((),torch.int64),\"rotate_layer.parametrizations.weight.original\":((hidden,rank),torch.float32),\"rotate_layer.parametrizations.weight.0.base\":((hidden,hidden),torch.float32),\"learned_source.weight\":((rank,hidden),torch.bfloat16),\"learned_source.bias\":((rank,),torch.bfloat16)}\n        assert isinstance(raw,dict) and set(raw)==set(expected_tensors)\n        tensors={}\n        for name,value in raw.items():\n            assert isinstance(value,torch.Tensor) and value.device.type==\"cpu\" and value.numel()>0 and torch.isfinite(value).all().item(),name\n            assert (tuple(value.shape),value.dtype)==expected_tensors[name],name\n            if name in (\"embed_dim\",\"interchange_dim\"):\n                assert value.item()==hidden,name\n            tensors[name]={\"shape\":list(value.shape),\"dtype\":str(value.dtype),\"elements\":value.numel(),\"all_finite\":True}\n        report[\"workers\"].append({\"index\":index,\"candidate\":candidate,\"expected_input\":expected,\"fit\":evidence,\"stdout_fit_join\":True,\"checkpoint_tensor_metadata\":tensors,\"selection_completed_at_capture\":observation[\"selection_completed\"]})\n        del raw\n        print(json.dumps({\"event\":\"fit_component_audited\",\"index\":index,\"updates\":evidence[\"optimizer_updates\"],\"target_tokens\":evidence[\"target_tokens\"],\"epochs\":len(evidence[\"epochs\"])}),flush=True)\n    for name,digest in capture[\"fit_files_sha256\"].items():\n        assert file_sha256(results/name)==digest,name\n    report.update(status=\"pass_complete_fit_component_only\",totals={\"candidates\":8,\"unique_fit_questions\":1500,\"question_epoch_exposures_per_candidate\":18000,\"updates\":sum(w[\"fit\"][\"optimizer_updates\"] for w in report[\"workers\"]),\"target_tokens\":sum(w[\"fit\"][\"target_tokens\"] for w in report[\"workers\"]),\"microbatches\":sum(w[\"fit\"][\"microbatches\"] for w in report[\"workers\"])},limits=[\"No candidate scoring, zero regrading, model forward, test suite or GPU request.\",\"Constructed audit input is not a producer receipt. Final producer target/order/checkpoint/base/version/status and true duration must still join.\",\"Update timers are nested in unavailable actual fit duration and ongoing GPU lifetimes; do not charge them twice.\",\"One fit seed; all candidates reuse the same1500 questions. Training loss is not held-out efficacy or a selection rule.\",\"No resumed checkpoint, modified candidate/schedule/metric/cap or sealed-test exposure.\"])\nexcept BaseException as error:\n    failure=error\n    report[\"failure\"]={\"type\":type(error).__name__,\"message\":str(error)}\nreport[\"CPU_audit_seconds\"]=time.perf_counter()-started\nwith Path(\"/out/result.json\").open(\"x\") as handle:\n    json.dump(report,handle,sort_keys=True,indent=2,allow_nan=False)\n    handle.write(\"\\n\")\nprint(json.dumps({\"event\":\"fit_audit_terminal\",\"status\":report[\"status\"],\"CPU_seconds\":report[\"CPU_audit_seconds\"],\"workers\":len(report[\"workers\"]),\"totals\":report.get(\"totals\"),\"failure\":report.get(\"failure\")}),flush=True)\nif failure is not None:\n    raise SystemExit(1)\n"
+    ],
+    "model_weights_loaded": false,
+    "adapter_weights_loaded_on_CPU": true,
+    "new_GPU_execution": false,
+    "zero_regrading": false,
+    "selection_scoring": false,
+    "new_tests": false,
+    "automatic_retry": false
+  },
+  "no_input_matched_gate_rerun": "Reuses existing audit helper source and native48-test receipt. This analyzes new complete fit records, not unchanged readiness.",
+  "result_constraints": [
+    "No producer receipt equivalence or exact fit duration claim",
+    "No candidate selection before all8 complete original256-question panels",
+    "No base-final-version, terminal success, SOTA, between-seed stability or end-to-end efficiency claim",
+    "Never add elapsed fit envelope or nested update timers to terminal GPU cost"
+  ]
+}

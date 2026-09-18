@@ -11,6 +11,8 @@ dependencies = [
     "scikit-learn>=1.4",
     "accelerate>=0.30",
     "sae-lens>=6.0",           # pretrained SAE zoo (Gemma Scope JumpReLU, SAEBench TopK/vanilla)
+    "scipy>=1.13",
+    "math-verify>=0.5",
 ]
 
 # Run scripts as modules from the repo root, e.g.
@@ -19,6 +21,13 @@ dependencies = [
 
 [tool.uv]
 package = false          # this is an application (a tree of scripts), not a library to build
+
+[tool.pytest.ini_options]
+addopts = ["--strict-config", "--strict-markers"]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.6"]
 
 [tool.ruff]
 line-length = 120

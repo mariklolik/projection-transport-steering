@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "record_id": "research-reset-receipt-v1",
+  "timestamp": "2026-09-07T11:49:44Z",
+  "repository": "git@github.com:mariklolik/projection-transport-steering.git",
+  "working_directory": "/Users/mekashirskiy/projection-transport-steering",
+  "status": "research_report_verified_next_benchmark_not_executable",
+  "scientific_maturity": "EVIDENCE_AVAILABLE",
+  "paper_mode": "REVIEW_MODE",
+  "fair_strong_gate": "BLOCKED",
+  "requested_outcome": "Restart scientific reasoning from source goal, primary literature and all recorded attempts; define a decisive route toward stronger steering.",
+  "delivered_outcome": "Evidence reconstruction, scoped theory checks, failure synthesis, primary-source comparison, one prospective experiment and a verified nine-page report.",
+  "input_sha256": {
+    "research/source-audit.md": "5264adddf8b47e1cd81fd078ea3071c08bf4a661f97a0744c70384cd84a2d1d5",
+    "/Users/mekashirskiy/.codex/attachments/322808f2-1bda-44c4-bb66-c9855b21a266/goal-objective.md": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a",
+    "/Users/mekashirskiy/.codex/attachments/dcf8243b-6a7b-4c7a-a66f-de7b90d4f114/goal-objective.md": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a",
+    "/Users/mekashirskiy/.codex/attachments/f9db6aa0-a205-41a6-a973-278f1124618b/pasted-text.txt": "1b37e22cd536589c8526de7a724c40a275f86f9098bd25694f9ce0ebd13da831",
+    "/Users/mekashirskiy/smiles_latent_behavior_features_for_reasoning_2-exp/paper/paper.pdf": "ef8d151481a1f4bf5bda58b1244c56ca492dcf2ae260f2b61fbefc76b28a54f2",
+    "/Users/mekashirskiy/smiles_latent_behavior_features_for_reasoning_2-exp/paper/paper.tex": "07547106cb8be13db3c6bc47427c589ae03ab95e2deb6bd899cc1f296baf1f0b",
+    "artifacts/development/research_reset_fit_archive_analysis_v1/analysis.json": "e328d5e821841f8286eff9692b4af709528e91bde0610b75c77b8d67595062ed",
+    "artifacts/development/outcome_score_observer_v1_basis_completion_analysis_attempt1/analysis.json": "d700969ea5c6826e070a567f2b4233100534d64d878481d508a27e06cab99f3e",
+    "tmp/research-reset-raw.IjHaVj/artifacts/confirmatory/rcaps_v14/aggregate.json": "9962d8f7cb67381cffd8ae29cd18a308817d797480c9d84cc4aef56a29d38ba3",
+    "tmp/research-reset-raw.IjHaVj/artifacts/development/fisher_protected_flas_v16_validation/aggregate.json": "3730eff290279f374cc777d93cd61495cb05afb7f8523c881196931ded9672d3",
+    "tmp/research-reset-raw.IjHaVj/artifacts/development/fisher_protected_flas_v16_9b_validation/aggregate.json": "f789a1b42c3fd2f363bc5b61aff0707e9794e354fdd2675defc1223423936702",
+    "tmp/research-reset-raw.IjHaVj/artifacts/development/amortized_pullback_v18_analysis/aggregate.json": "468b7366a1fab4498377dd7eb18b8aee3c33ebf28692d4ff73536571e60fc575"
+  },
+  "archival_boundary": {
+    "archive": "/Users/mekashirskiy/projection-transport-steering-archives/2026-09-07-legacy-pre-invariantback/legacy.tar.zst",
+    "archive_sha256": "30b445bcb3f27dd9bcaaf2a3ad62f1ac0de14fb0c423d0ca64836c92337831e8",
+    "archive_files": 1592,
+    "archive_bytes": 2043488459,
+    "restored_historical_documents": 97,
+    "restored_decisive_aggregates": 4,
+    "pre_reset_run_manifest_sha256": "5f8dd9285c3626e398169a3aceb3dc5be9f9ba69f9fe36f075e841b984973e92",
+    "pre_reset_manifest_records": 176,
+    "record_count_is_not_experiment_count": true,
+    "duplicate_record_ids_preserved": {
+      "manifest-v36": 2
+    },
+    "historical_gpu_experiments_rerun": false,
+    "every_historical_bootstrap_recomputed_from_raw": false,
+    "latest_dense_fit_traces": "Verified by unchanged analyzer remotely; not downloaded or independently re-read locally."
+  },
+  "primary_extract_sha256": {
+    "artifacts/literature/reset_20260907/alphaxiv_agenticcot.json": "c8861e05dce4d10027b3de55d34ff054bd7fe0363c476ef48bc28ab88619fc01",
+    "artifacts/literature/reset_20260907/alphaxiv_causal.json": "24368c928f4256e652fe4094d9175e9ceaf00e7d36ebbdd643df86e355b38e3f",
+    "artifacts/literature/reset_20260907/alphaxiv_clas.json": "34124c2a67b6b3d4880d62accd19a4aa8c28d4f044b8ffcac840ecfc0a0c7416",
+    "artifacts/literature/reset_20260907/alphaxiv_cobra.json": "8c5ecb3e0390087d80eab5f13e5d7e9ddb7aa809c0899b1dbf7eed6d471aef7e",
+    "artifacts/literature/reset_20260907/alphaxiv_cobras_full.json": "49e44e7e5b72a23b63fb13f05ed41b0914bd2dc194d5c4db104474e10cbfcbe8",
+    "artifacts/literature/reset_20260907/alphaxiv_cylinder.json": "4dab136954e86ffedce00d9f0cd752ea6adccc3b52e73d8eb891516b3bf171b5",
+    "artifacts/literature/reset_20260907/alphaxiv_discovery.json": "f3568acd98ae01238dceec9e25511c8c9f823ce9dabb6abf7cdfff461e8494b4",
+    "artifacts/literature/reset_20260907/alphaxiv_dsas.json": "59eab83db027f6e1c3c6fe436c6bc2761d8738189e78932a8a0d53e707cdc160",
+    "artifacts/literature/reset_20260907/alphaxiv_dsas_full.json": "377f8fbbb668037c2341752d7f6f6fb42ac37231718eac32c746a5d8a502f699",
+    "artifacts/literature/reset_20260907/alphaxiv_flas.json": "e4c67f20b20d47aad1496270260d1613d83c61aad8a179ec9992b1c1e32cb07c",
+    "artifacts/literature/reset_20260907/alphaxiv_fpcg_cost.json": "8a5a36014fdfabf7c2e3d0519da3e860b384b2ffaa30d8a0f35ae59c9f6f0c2e",
+    "artifacts/literature/reset_20260907/alphaxiv_futurebehavior.json": "354dc436a1c8b817d3617970c719b93f09e1706cff1591156e2bdda96781676b",
+    "artifacts/literature/reset_20260907/alphaxiv_gainprefix.json": "13a4ce17214e75007df7ec3a1ed7341edcdffd3b0a246445f4a31db8562b3693",
+    "artifacts/literature/reset_20260907/alphaxiv_gap_discovery.json": "3c0b55a0775608bae78665d046e0bde22a6773c1ebe1930c21073921c7eeb0d1",
+    "artifacts/literature/reset_20260907/alphaxiv_lrh.json": "c870394791fd2fcb5650ebbe08b1a35ddee3f25c37702f3723439986eb901fb0",
+    "artifacts/literature/reset_20260907/alphaxiv_lrs.json": "a8283417029a0e0b91850539c97f71b9170214c09e2009293190dd2c1c35e051",
+    "artifacts/literature/reset_20260907/alphaxiv_manifold.json": "72c67aa9d23455b826df74578255d462cf835628055506eeafc36bef60591653",
+    "artifacts/literature/reset_20260907/alphaxiv_observerbench.json": "741e1a7afaa597a59582441b8b30c16db81c3b0616d025f1788fdc16c583efdf",
+    "artifacts/literature/reset_20260907/alphaxiv_riser.json": "03b7504ee34c3ec8de302fb1067409a0396fcefa25a01b8da0e34c813b73ec3b",
+    "artifacts/literature/reset_20260907/alphaxiv_riser_full.json": "8a4f3f3f39a1e40f6c6472342b8ba0674b883a2e1c1aaf2a8ef8d807aae12736",
+    "artifacts/literature/reset_20260907/alphaxiv_unisteer.json": "4b8db4457de13d98bdaa333909af21244a820a40939c3debf11684be59c8fe58",
+    "artifacts/literature/reset_20260907/code_acts.json": "c36715834cb64dbf9213ecf9d19c349d7fcf8b69fafc10ff87d36a43e3683ca1",
+    "artifacts/literature/reset_20260907/code_flas.json": "1a2784cd972533dda7b9ac4b670661c987fe95f26028fe80627890d0d7055086",
+    "artifacts/literature/reset_20260907/code_futureprobes.json": "44f8a7368f2d2eccb0a038bed1ccb9bd4fb4460959e6915a1911ef1df7195fac"
+  },
+  "primary_source_boundary": {
+    "alphaxiv_discovery_passes": 2,
+    "extraction_and_code_response_files": 24,
+    "coverage": "Decision-focused re-reading plus existing 2022-present corpus; not an exhaustive fresh reading or reproduction.",
+    "public_reviews_read": [
+      "CAST official reviews, replies and decision",
+      "AcT official reviews, replies and decision"
+    ],
+    "public_review_limits": [
+      "Original PTS rating-8/confidence-3 review remains author-provided",
+      "Complete FPCG review/rebuttal packet unverified",
+      "Recent preprint review availability not fully established"
+    ],
+    "comparator_code_executed_in_reset": false
+  },
+  "output_sha256": {
+    "research/attempt-inventory-reset-v1.json": "f185c3994167b0ed3fc3a41f0f0e1864c31d700e7a7709ffaf277bc9aebf5c98",
+    "research/outcome-score-observer-fit-audit-v1.md": "4ba9b585c3ba202ec1161a8fb6676fb64402542b7f3bb61e11b5df7a304a993c",
+    "research/literature-reset-v1.md": "8332d547593e1e1bad2ce4db77e22cd9244ce22fda1af9a6017f362a77cd24df",
+    "research/benchmark-reset-v1.md": "1fa58add808f961cadc1c5e18770021d6bd746ba57f4f058c4a3dde6fe772af1",
+    "research/research-reset-plan-v1.md": "80a3c847e94fe95e3b45312756aaa728e0e9aff551a81fca2b8ba8eeff511c43",
+    "research/report-source.md": "8a21086850e9b541f2fc144456524e72c7741d7df9db327c575366ac40fc5341",
+    "research/claim-ledger.md": "310733e33d8949cd56af4a666b63b2031584201d03e3a3b606c3721576fe7fb4",
+    "research/evidence-manifest.md": "fc2c25d6b326fbee07f01d00b95aecd68b094270fda21d06c29f369443077739",
+    "README.md": "e2cc86fc502e8fefc64ca07b3742b65cb3aff9b16c7a0b7a284cca9d889999ab",
+    "output/pdf/research-reset-2026-09-07.pdf": "913df72fc4d320932ec2d5ae1c1ed6aa826a63a2904b6dd3e346137bd8f339a3",
+    "tmp/paused-observer-v1/test_outcome_score_observer_basis.py": "1f8274a47eb4b8cf2f5963542d20c22f25bdfae17bf24a66592d6ed4d08b4687",
+    "tmp/pdfs/render_research_reset.py": "28d03004c368b90051961cf3185bc3e4d3e9d25477bc42960c473fb27a317225"
+  },
+  "ledger_sha256": {
+    "research/run-manifest.jsonl": "96df09630f21f37cf4afb2635718cfbf96a54eaf41a0f8c4736381e8772f5ef6",
+    "research/ai-assistance-ledger.jsonl": "823a72334a73cadb4e30375b23008d4dfe32545a62de6ee571dfa3b9a021a1a6"
+  },
+  "assistance_records": [
+    "ai-task-0087",
+    "ai-task-0088"
+  ],
+  "execution_records": [
+    "manifest-v130",
+    "manifest-v131"
+  ],
+  "skill_routing": {
+    "research-paper-writing": "Applied to reset, evidence state and blocked submission boundary.",
+    "deep-research-work:deep-research": "Applied to discovery, targeted follow-up, reconciliation and report; persistent plan file substitutes for unavailable update_plan tool.",
+    "scientific-claim-evidence": "Applied; C66 execution closure separated from unverified efficacy, C67 unverified, C68 scoped logical support.",
+    "a-star-conference-paper": "Applied; fair-strong evidence gate remains BLOCKED.",
+    "scientific-research-strengthening": "Applied; one intervention-response increment and mandatory baseline/attribution gates.",
+    "scientific-results-and-figures": "Applied; question clusters, selection, all-output denominators and full costs.",
+    "experimental-setup-writer": "Applied to prospective design only; executable freeze prerequisites remain open.",
+    "read-url": "Applied to primary-source retrieval and verification.",
+    "scientific-avoid-ai-writing": "Applied to research-report specificity, provenance and calibrated wording.",
+    "section-self-check": "Applied to report scope, local claim support and missing empirical evidence.",
+    "pdf": "Applied; artifact operation marker succeeded once, final PDF rendered and inspected."
+  },
+  "verification": {
+    "report_content": "PASS: checked key counts, contrasts, uncertainty labels and unchanged-source hashes.",
+    "pdf_layout": "PASS: all nine final rendered pages visually inspected; no clipping, overlapping or orphan headings.",
+    "pdf_pages": 9,
+    "pdf_clickable_uri_annotations": 6,
+    "tests_command": ".venv/bin/python -m pytest -q",
+    "tests_result": "257 passed, 1 warning in 15.71s",
+    "test_warning": "torch.jit.script deprecation in an existing GPT-2 autodiff test",
+    "original_source_pdf_unchanged": true,
+    "original_source_tex_unchanged": true,
+    "old_protocol_thresholds_changed": false,
+    "old_failures_reclassified_as_passes": false,
+    "observer_v1_fitted": false,
+    "new_controller_implemented": false,
+    "new_behavioral_outputs": false,
+    "runtime_batch_conformance": "NOT RUN",
+    "benchmark_sealed": false,
+    "sota_achieved": false
+  },
+  "remote_boundary": {
+    "host": "avi-gn-fsk40",
+    "earlier_in_reset": "SSH access, result inspection and eight idle H100s were observed before the final report checks.",
+    "latest_check_utc": "2026-09-07T11:47:45Z",
+    "latest_check": "Configured FSK route and bastion with direct nc ProxyCommand both timed out during banner exchange; exit 255.",
+    "current_gpu_state": "UNVERIFIED after latest failed SSH checks",
+    "new_gpu_jobs_launched_by_reset": false
+  },
+  "next_dependencies": [
+    "Verify authoritative mathematical split and prior-exposure/duplicate manifest.",
+    "Pin primary and replication model artifacts and upstream ReFT callable contract.",
+    "Validate general-math scoring, absorbing termination and batched isolated branches.",
+    "Admit a useful strong fixed adapter before collecting the finite response pilot.",
+    "Evaluate full-rollout development before sealed comparison and three-family/three-construct breadth."
+  ],
+  "downstream_gates": {
+    "submission_prose": "NOT AUTHORIZED",
+    "skeleton_and_section_writers": "NOT REACHED for a new evidence-grounded submission",
+    "global_writer_check": "NOT REACHED",
+    "independent_final_paper_review": "NOT REACHED",
+    "current_iclr_submission_compliance": "NOT CHECKED",
+    "responsible_author": "unassigned",
+    "author_scientific_approval": "unverified",
+    "disclosure_approval": "unverified",
+    "persistent_goal": "ACTIVE; not completed or marked blocked by this handoff"
+  }
+}

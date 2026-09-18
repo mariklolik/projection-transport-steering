@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "record_id": "irc-integration-receipt-v1",
+  "timestamp": "2026-09-07T12:57:55Z",
+  "repository": "git@github.com:mariklolik/projection-transport-steering.git",
+  "working_directory": "/Users/mekashirskiy/projection-transport-steering",
+  "status": "engineering_progress_scientific_benchmark_unsealed",
+  "scientific_maturity": "EVIDENCE_AVAILABLE",
+  "fair_strong_gate": "BLOCKED",
+  "persistent_goal_status": "active",
+  "input_sha256": {
+    "research/benchmark-reset-v1.md": "1fa58add808f961cadc1c5e18770021d6bd746ba57f4f058c4a3dde6fe772af1",
+    "research/literature-reset-v1.md": "8332d547593e1e1bad2ce4db77e22cd9244ce22fda1af9a6017f362a77cd24df",
+    "/Users/mekashirskiy/.codex/attachments/322808f2-1bda-44c4-bb66-c9855b21a266/goal-objective.md": "522da7bfa67be76f8d7919823ca1e09b613626a2d49e9d1bbbebd9e7642f118a",
+    "/Users/mekashirskiy/smiles_latent_behavior_features_for_reasoning_2-exp/paper/paper.pdf": "ef8d151481a1f4bf5bda58b1244c56ca492dcf2ae260f2b61fbefc76b28a54f2",
+    "/Users/mekashirskiy/smiles_latent_behavior_features_for_reasoning_2-exp/paper/paper.tex": "07547106cb8be13db3c6bc47427c589ae03ab95e2deb6bd899cc1f296baf1f0b"
+  },
+  "output_sha256": {
+    "research/irc-integration-audit-v1.md": "f15b9466a577c22638c2e7505f2734e95dffaca7b8786e6ba658c917474c73c8",
+    "research/irc-source-audit-v1.json": "8c0d0c6cfe2f0bd95e0455f3995cf63b30598415e427f30202ce5827ec7c6b07",
+    "research/implementation-discovery-irc-v1.md": "9b568f59fb291d35751aaa1f6f060a86903b7e419e5d9f065177c2639b939477",
+    "research/irc-runtime-launch-v1.json": "a21513afdbb5d928770bc3a89682191320237ba00cc9189f9e846d14d68606cb",
+    "research/irc-runtime-attempt1-failure.json": "b45472f3fb314fde7dffc25340dd1bd659b5a35b80604743dd129c67b7d94e47",
+    "research/irc-runtime-launch-attempt2-v1.json": "e247d9afd3aeaa5fc8b40fe1d7ac50597636459f5beff566d2ef17ddd78c7ba4",
+    "research/benchmark-reset-v1.md": "1fa58add808f961cadc1c5e18770021d6bd746ba57f4f058c4a3dde6fe772af1",
+    "research/research-reset-plan-v1.md": "213ac1a3c61e462a7e37dd700e74e88176985bfa4b9cf0eacd502d0d737ad670",
+    "research/claim-ledger.md": "92ef318c69333a1538f55de0e5896496c28e4d4b3447b0f1bf76541bc20e1132",
+    "research/evidence-manifest.md": "f9e79b3015daaac701431912c1c7cf41cbf87615b4eda708b2594797cfcad11e",
+    "README.md": "feab0f3f8445d4da31b053e5cba99c60e731b343b85fa3f97f7d87e237fd9468",
+    "src/projection_transport_steering/outcome_score.py": "25778d7ac742d24bff35b014eb42e8ac765e7153a8952c349773726473b8503f",
+    "src/projection_transport_steering/branch_runtime.py": "bc90229eff21434b01bb238c117c56e423dbf213804fff4656ad44d8b97ece8b",
+    "src/projection_transport_steering/torch_runtime.py": "8a8818d33a41f781b5f6cd5274dd9c9b5d0b3ca34b7f24eb3ff6091ae6358f5a",
+    "scripts/audit_irc_sources.py": "fadd93fd35e7444c6acbb1323d6d253dcb3df17aca023905842b5265e9da2685",
+    "scripts/run_irc_branch_probe.py": "0f4b8507c28dbbdd8e2b98c7f1634d60b2196732982136e2dbc1d68512c8546f",
+    "tests/test_math_outcomes.py": "52b2bb76287bf0e0d223a0523a17f3a69ce6ff51ccfee3a164314933df062937",
+    "tests/test_reft_conformance.py": "13cdd07b9d77d0f048ab1fbdb2090423848a8c7eb6ee06d8f411478b59600d1f",
+    "tests/test_irc_source_audit.py": "ceceddf6c3d58da85c0f19e5417bd1d689ba9aede12a69683fa00038fc58a26d",
+    "tests/test_branch_runtime.py": "c3dd6e22758aa5f6e7f2fc58ff2fcbeca10a50a3bbb1a799904e8640235483ae",
+    "tests/test_branch_probe.py": "a0f304d40db2aaa0b374070416b6d54784f7f04a5dca10833cbaf3f299f3fbc4",
+    "pyproject.toml": "28c8e65fe545d508160ef99115e33c3a2a19e71293f3f5f2ee4d42d501e08218",
+    "uv.lock": "d5258b50b0a183c5d0969ff9912890fe8392e98ce477126df64cc09f22f2363e",
+    "artifacts/engineering/irc_branch_probe_v1/batch1_attempt2.json": "a9f49d15319e035b9bef488a21c14e7b2121d45328caca40f7ff1e607acabfe8",
+    "artifacts/engineering/irc_branch_probe_v1/batch4_attempt2.json": "b4a9da3e40ed1731396112d68520868a27110065427f2acee8f61a16c33bc1d3",
+    "artifacts/engineering/irc_branch_probe_v1/batch8_attempt2.json": "75d0b8a6ea8629aab45dad4b44f8e27dcc7a614901d2257b4315caceedd0934c"
+  },
+  "ledger_sha256": {
+    "research/run-manifest.jsonl": "3def0741f527d9e41f72e03fb064f554fe8a6216e92089c6c00bd31fe0c9e717",
+    "research/ai-assistance-ledger.jsonl": "1ea290b377186e1d2c8ec56175ccf3c77248f470023bab897c23decc547480ad"
+  },
+  "assistance_records": [
+    "ai-task-0089",
+    "ai-task-0090"
+  ],
+  "execution_records": [
+    "manifest-v132",
+    "manifest-v133",
+    "manifest-v134"
+  ],
+  "skill_receipts": [
+    {
+      "skill": "research-paper-writing",
+      "result": "PASS",
+      "scope": "Routed the current execution increment through claim, strength, setup and engineering-results gates; submission prose remains blocked."
+    },
+    {
+      "skill": "scientific-claim-evidence",
+      "result": "PASS",
+      "scope": "C69 supported only on explicit engineering fixtures; C67 efficacy and priority remain unverified.",
+      "evidence": [
+        "research/claim-ledger.md",
+        "research/irc-integration-audit-v1.md"
+      ]
+    },
+    {
+      "skill": "scientific-research-strengthening",
+      "result": "BLOCKED",
+      "scope": "Behavioral fair-strong gate remains unpassed; the existing decisive increment is still executable work in progress, not a failed method.",
+      "evidence": [
+        "research/benchmark-reset-v1.md",
+        "research/research-reset-plan-v1.md"
+      ]
+    },
+    {
+      "skill": "experimental-setup-writer",
+      "result": "BLOCKED",
+      "scope": "Source pinning advanced, but final heterogeneous-answer scoring, invalid-reference handling, historical exposure/deduplication, allocation and scientific runtime freeze are incomplete.",
+      "evidence": [
+        "research/irc-source-audit-v1.json"
+      ]
+    },
+    {
+      "skill": "scientific-results-and-figures",
+      "result": "PASS",
+      "scope": "Engineering counts and timing table reconstructed from immutable receipts; one timing per condition, no confidence or behavioral inference; incomplete end-to-end cost stated.",
+      "evidence": [
+        "research/irc-integration-audit-v1.md",
+        "artifacts/engineering/irc_branch_probe_v1/batch1_attempt2.json",
+        "artifacts/engineering/irc_branch_probe_v1/batch4_attempt2.json",
+        "artifacts/engineering/irc_branch_probe_v1/batch8_attempt2.json"
+      ]
+    },
+    {
+      "skill": "scientific-avoid-ai-writing",
+      "result": "PASS",
+      "scope": "DRAFT_FROM_EVIDENCE for audit notes and plan-status update only; source/probe locators support every addition; adverse reference and environment failures preserved."
+    },
+    {
+      "skill": "section-self-check",
+      "result": "PASS",
+      "scope": "Audit-note local check, not submission-section acceptance; future obligations and measurement limits remain explicit."
+    },
+    {
+      "skill": "test-driven-development",
+      "result": "PASS",
+      "scope": "Observed RED cases for missing general scorer, variable corruption, source audit, branch runtime and probe CLI before GREEN; no legacy failed result relabeled."
+    },
+    {
+      "skill": "modern-python",
+      "result": "PASS",
+      "scope": "Reused existing hooks, hashes, standard cache and sampling processors; pinned pyvene; no new project comments or docstrings; environment isolation is explicit."
+    },
+    {
+      "skill": "pytest",
+      "result": "PASS",
+      "scope": "312 tests pass, including actual tiny transformer and upstream ReFT calls."
+    },
+    {
+      "skill": "hugging-face:hf-cli",
+      "result": "PASS",
+      "scope": "Downloaded pinned source snapshots and model metadata; audited HF download revisions; source audit is not a clean held-out allocation."
+    },
+    {
+      "skill": "read-url",
+      "result": "PASS",
+      "scope": "Primary repository, dataset and package sources inspected; no new exhaustive literature-coverage claim."
+    }
+  ],
+  "verification": {
+    "local_tests_command": "uv run --frozen --no-sync pytest -q",
+    "local_tests": "312 passed, 1 existing deprecation warning in 29.52s",
+    "critical_lint": "uv run --frozen --no-sync ruff check --select E9,F63,F7,F82 src tests scripts: pass",
+    "source_audit_input_hash_drift": [],
+    "original_source_pdf_unchanged": true,
+    "original_source_tex_unchanged": true,
+    "old_aime_functions_ast_equal": 11,
+    "old_aime_config_unchanged": true,
+    "prospective_benchmark_unchanged": true,
+    "v20_reopened": false,
+    "observer_v1_reopened": false,
+    "gpu_weight_files_sha256_verified": 5,
+    "gpu_probe_conditions_completed": 3,
+    "gpu_worker_exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "gpu_receipt_hashes_match_remote": true,
+    "gpu_probe_source_hashes_match": true,
+    "final_matching_containers_remaining": 0,
+    "final_host_compute_processes": 0,
+    "scientific_outputs_generated": 0,
+    "real_question_runtime_packet_completed": false,
+    "reft_cuda_conformance_completed": false,
+    "controller_fitted": false,
+    "sota_achieved": false
+  },
+  "unresolved": [
+    "Standard treatment of heterogeneous mathematical answers and 16 training-reference failures",
+    "Historical exposure and exact/near-duplicate cluster manifest",
+    "Frozen training/selection/development/sealed-test allocation",
+    "Clean declared CUDA environment and upstream ReFT conformance on it",
+    "Real-question long-context throughput and full output-accounting packet",
+    "Useful fixed-adapter selection, intervention-response data, value head and full-rollout comparisons",
+    "Strong competitor/resource frontier, independent replication, broader behavior gates and independent review"
+  ],
+  "invalidation": {
+    "previous_reset_receipt": "Retained as an immutable receipt for the earlier report, not the current README/plan/ledger state.",
+    "historical_report": "PDF, report source and historical numerical findings unchanged.",
+    "current_paper": "No affected submission section or fair-strong claim is admitted by these engineering updates."
+  },
+  "author_approval_status": "unverified"
+}

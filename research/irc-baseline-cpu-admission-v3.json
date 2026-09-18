@@ -1,0 +1,91 @@
+{
+  "schema": "irc-baseline-cpu-admission-v3",
+  "status": "native_CPU_pass_independent_source_cost_review_pending",
+  "config_sha256": "61529de3e7cf2e865d147ca11e54388590bb50e12d8702c388adb2ed7702f7be",
+  "minimal_delta": "Only existing registration condition in scripts/run_irc_baseline.py; native v9 source snapshot unchanged",
+  "production_sha256": "d7ca0aa750a6009fc65f0f824de1de0d9f834af66d9974a76f43e5c70b4d60c2",
+  "test_sha256": "5c7a93e20b8cbe43d6c772fd3207b89bbdc630fb241f35fa3ce092579581a848",
+  "local_RED": {
+    "command": "uv run --no-sync pytest -q tests/test_irc_baseline_failures.py -k registers_attention --tb=short",
+    "result": {
+      "chunk_id": "6d7be7",
+      "wall_time_seconds": 0.000001,
+      "exit_code": 1,
+      "original_token_count": 617,
+      "output": ".F.                                                                      [100%]\n=================================== FAILURES ===================================\n_ test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager] _\ntests/test_irc_baseline_failures.py:75: in test_baseline_registers_attention_before_model_load\n    assert events == expected\nE   AssertionError: assert [('load', 'fp..._flex_eager')] == ['register', ..._flex_eager')]\nE     \nE     At index 0 diff: ('load', 'fp32_prefill_flex_eager') != 'register'\nE     Right contains one more item: ('load', 'fp32_prefill_flex_eager')\nE     Use -v to get more diff\n----------------------------- Captured stdout call -----------------------------\n{\"event\": \"baseline_terminal\", \"status\": \"fail\"}\n=============================== warnings summary ===============================\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\n  /Users/mekashirskiy/projection-transport-steering/.external/math-author-source/modeling/math_equivalence.py:104: DeprecationWarning: invalid escape sequence '\\%'\n    string = string.replace(\"\\%\", \"\")\n\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\n  <unknown>:51: DeprecationWarning: invalid escape sequence '\\l'\n\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\n  <unknown>:53: DeprecationWarning: invalid escape sequence '\\s'\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nFAILED tests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\n1 failed, 2 passed, 1 deselected, 9 warnings in 2.45s\n"
+    }
+  },
+  "local_GREEN": {
+    "command": "uv run --no-sync pytest -q tests/test_irc_baseline_failures.py tests/test_irc_baseline.py --tb=short",
+    "result": {
+      "chunk_id": "1dbd41",
+      "wall_time_seconds": 0.000001125,
+      "exit_code": 0,
+      "original_token_count": 667,
+      "output": "...............                                                          [100%]\n=============================== warnings summary ===============================\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-full]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-full]\n  /Users/mekashirskiy/projection-transport-steering/.external/math-author-source/modeling/math_equivalence.py:104: DeprecationWarning: invalid escape sequence '\\%'\n    string = string.replace(\"\\%\", \"\")\n\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-full]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-full]\n  <unknown>:51: DeprecationWarning: invalid escape sequence '\\l'\n\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-full]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-full]\n  <unknown>:53: DeprecationWarning: invalid escape sequence '\\s'\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n15 passed, 21 warnings in 23.25s\n"
+    }
+  },
+  "native_CPU": {
+    "controller_code": "import hashlib,json,subprocess,time\nfrom pathlib import Path\nsource=Path(\"/home/mekashirskiy/projection-transport-steering/tmp/irc-baseline-v3\")\nassert hashlib.sha256((source/\"research/irc-baseline-config-v3.json\").read_bytes()).hexdigest()==\"61529de3e7cf2e865d147ca11e54388590bb50e12d8702c388adb2ed7702f7be\"\nd=json.loads((source/\"research/irc-baseline-launch-v3.json\").read_text())\nbase=Path(d[\"stage_output\"])\nbase.mkdir()\nfor name in [\"cpu\"]+[\"candidate_\"+str(i).zfill(2) for i in range(8)]:\n    (base/name).mkdir()\nout=base/\"cpu\"\nstarted=time.perf_counter()\nresult=subprocess.run(d[\"cpu_command\"],capture_output=True,text=True,timeout=230)\n(out/\"stdout.log\").write_text(result.stdout)\n(out/\"stderr.log\").write_text(result.stderr)\nreceipt={\"returncode\":result.returncode,\"controller_seconds\":time.perf_counter()-started,\"GPU\":False}\n(out/\"terminal.json\").write_text(json.dumps(receipt,sort_keys=True,indent=2)+\"\\n\")\nprint(json.dumps({\"terminal\":receipt,\"stdout\":result.stdout,\"stderr\":result.stderr}),flush=True)\nassert result.returncode==0\n",
+    "result": {
+      "terminal": {
+        "returncode": 0,
+        "controller_seconds": 123.93498487398028,
+        "GPU": false
+      },
+      "stdout": "{\"event\": \"baseline_v3_exact_inputs\", \"status\": \"pass\", \"fit\": 1500, \"selection\": 256, \"source_files\": 67, \"targets_sha256\": \"63907e15bce7e67f720a811a4a672087cab614be619a6fd2ae2e020e09419284\", \"epoch_hashes\": 12, \"bucket_histogram\": {\"896\": 2154, \"384\": 6432, \"2816\": 414}, \"zero_shares\": [32, 32, 32, 32, 32, 32, 32, 32], \"GPU\": false}\n...............                                                          [100%]\n=============================== warnings summary ===============================\n../ptsenv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345\n  /ptsenv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio\n    self._mark_plugins_for_rewrite(hook, disable_autoload)\n\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-full]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-full]\n  /work/.external/math-author-source/modeling/math_equivalence.py:104: SyntaxWarning: invalid escape sequence '\\%'\n    string = string.replace(\"\\%\", \"\")\n\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-full]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-full]\n  <unknown>:51: SyntaxWarning: invalid escape sequence '\\l'\n\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[fp32_prefill_flex_eager]\ntests/test_irc_baseline_failures.py::test_baseline_registers_attention_before_model_load[sdpa]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[qwen3-full]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-prompt]\ntests/test_irc_baseline.py::test_full_cli_keeps_complete_zero_fit_and_selection[llama-full]\n  <unknown>:53: SyntaxWarning: invalid escape sequence '\\s'\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n15 passed, 22 warnings in 109.15s (0:01:49)\n",
+      "stderr": "/work/.external/math-author-source/modeling/math_equivalence.py:104: SyntaxWarning: invalid escape sequence '\\%'\n  string = string.replace(\"\\%\", \"\")\n<unknown>:51: SyntaxWarning: invalid escape sequence '\\l'\n<unknown>:53: SyntaxWarning: invalid escape sequence '\\s'\n"
+    },
+    "GPU": false
+  },
+  "source_scientific_invariants": {
+    "code": "import hashlib,json,ast,tokenize,io\nfrom pathlib import Path\np=Path(\"research/irc-baseline-config-v3.json\")\nc=json.loads(p.read_text())\nold=json.loads(Path(\"research/irc-baseline-config-v2.json\").read_text())\nfor key in (\"recipe\",\"candidates\",\"zero_shares\",\"packet\",\"packet_sha256\",\"selection\",\"sampling\",\"generation_batch\",\"generation_steps\",\"target_examples_sha256\",\"eos_token_ids\"):\n    assert c[key]==old[key],key\nassert all(hashlib.sha256(Path(n).read_bytes()).hexdigest()==h for n,h in c[\"source_sha256\"].items())\nassert hashlib.sha256(Path(c[\"preregistration\"][\"protocol\"]).read_bytes()).hexdigest()==c[\"preregistration\"][\"sha256\"]\nfor name in (\"scripts/run_irc_baseline.py\",\"tests/test_irc_baseline_failures.py\"):\n    source=Path(name).read_text()\n    ast.parse(source)\n    assert len(source.splitlines())<=300\n    assert not any(t.type==tokenize.COMMENT for t in tokenize.generate_tokens(io.StringIO(source).readline))\nprint(json.dumps({\"status\":\"pass\",\"config_sha256\":hashlib.sha256(p.read_bytes()).hexdigest(),\"source_count\":len(c[\"source_sha256\"]),\"unchanged_scientific_fields\":12,\"code_no_comments_syntax\":True,\"config_lines\":len(p.read_text().splitlines())}))\n",
+    "result": {
+      "chunk_id": "70ee9c",
+      "wall_time_seconds": 0.000002542,
+      "exit_code": 0,
+      "original_token_count": 54,
+      "output": "{\"status\": \"pass\", \"config_sha256\": \"61529de3e7cf2e865d147ca11e54388590bb50e12d8702c388adb2ed7702f7be\", \"source_count\": 67, \"unchanged_scientific_fields\": 12, \"code_no_comments_syntax\": true, \"config_lines\": 239}\n"
+    }
+  },
+  "cost": {
+    "scenarios": [
+      {
+        "adapter_generation_multiplier": 1,
+        "zero_seconds": 1327.3010140806437,
+        "fit_seconds": 3101.553924523294,
+        "selection_seconds": 10618.40811264515,
+        "other_reserved_seconds": 600,
+        "worker_seconds": 15647.263051249087,
+        "eight_worker_H100_hours": 34.771695669442416,
+        "within_18000_seconds": true
+      },
+      {
+        "adapter_generation_multiplier": 1.15,
+        "zero_seconds": 1327.3010140806437,
+        "fit_seconds": 3101.553924523294,
+        "selection_seconds": 12211.16932954192,
+        "other_reserved_seconds": 600,
+        "worker_seconds": 17240.02426814586,
+        "eight_worker_H100_hours": 38.31116504032413,
+        "within_18000_seconds": true
+      },
+      {
+        "adapter_generation_multiplier": 1.3,
+        "zero_seconds": 1327.3010140806437,
+        "fit_seconds": 3101.553924523294,
+        "selection_seconds": 13803.930546438694,
+        "other_reserved_seconds": 600,
+        "worker_seconds": 18832.78548504263,
+        "eight_worker_H100_hours": 41.850634411205846,
+        "within_18000_seconds": false
+      }
+    ],
+    "not_bound": true,
+    "conditional_attempt": true,
+    "baseline_remaining_H100_hours": "40.394625745277778",
+    "reservation_H100_hours": 40,
+    "engineering_transfer": false
+  },
+  "full_GPU_launch_admitted": false
+}

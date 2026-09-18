@@ -1,0 +1,572 @@
+{
+  "schema": "irc-static-fit-result-audit-v1",
+  "status": "failed_trajectory_parity",
+  "receipt_sha256": "c847d43da0fa517e6da03bd0616baaf93104b12f33e654a04f0cbfee0d959dc1",
+  "config_sha256": "1cf086b6008211ee27e6b55c1f45b502b4588f05dcf830d8e349e6552443792f",
+  "capture_sha256": "26bb07cd47bfddeaeb79feb58513d2dfbf9faf96ee56858199861233013cbbd5",
+  "step_sha256": {
+    "full-maximum-0.json": "30f854c109205954cc86a75b4c2a3eed0672601d6daba0bf71e4afb12923c760",
+    "full-maximum-1.json": "7ef3d6e609f449442ec6ccdc2105da40287560278f07f33e27c27d0a78acbaa1",
+    "full-maximum-2.json": "68f965e435b924b8662437469307de1bee8c0d3d8d3a13d0e5c97f3d21dc7e9e",
+    "full-median-0.json": "6cd49198fe18c0bf8756387992bf09493562b5ea4a97811a7fe6a2265656d08e",
+    "full-median-1.json": "88a3fffd9c85ae5519ba6ae7f04430566005fa5e80a61168f85b7d782ea067f4",
+    "full-median-2.json": "13f20550351a4b57df1c2eae5f81384b71ef7c83944ae9ed6d84404f8c1d531f",
+    "full-p95-0.json": "dd8ed3a6c003a45897cc59985aa8584bb96346b5a7172d2e6f1dfd683a1f3098",
+    "full-p95-1.json": "110eb352b9a89691bbcee6b2ddb4bd9213ed24c17ce8dbbc3c702f7b2057e65d",
+    "full-p95-2.json": "b531c5d7fb9668ffecc5e5561c73bcd1be11323c0766790797d6b736abe892dc",
+    "prompt-maximum-0.json": "e5d2691877eefe6ffa418da8f21061ef337cc83b71c2989c7d2ce0c3a808f79b",
+    "prompt-maximum-1.json": "8eaf47463fb32ff9958315855c2ba1ab98c108b5c65a8fc2a48bca7fabfb077c",
+    "prompt-maximum-2.json": "8f445210d49bfbae0ce5ae5103c0478477ad30ae8b3fb75946ca3238c2649460",
+    "prompt-median-0.json": "adddc447cd2e5db2260ede1d8d9d3ebe8f94956c2f1a8fa337afa3d54523b9a1",
+    "prompt-median-1.json": "7459cb3ea6a7171758114c4c9cb2791e5f477a42f2725ebb188df7036f653def",
+    "prompt-median-2.json": "4260ceddd2f815e0967fc33de311e120073f66f9125a1b16aac0ff3bdd25dacd",
+    "prompt-p95-0.json": "58dc04767287147518ec7118bda20b81f05972110de3e5867d1f5461b7d06681",
+    "prompt-p95-1.json": "fe94475bc12b2eb29cdfaf91c07a8a6fd016806fb101e0f50592259b24a366ee",
+    "prompt-p95-2.json": "8d1dd0f74309d75093220b511ddd55d374baf9849f1c6cb6d6af5e8d0848289d"
+  },
+  "source_hash_count": 47,
+  "complete_steps": 18,
+  "unique_questions": 6,
+  "supervised_token_instances": 35802,
+  "cells": [
+    {
+      "application": "prompt",
+      "group": "median",
+      "padded_shape": [
+        2,
+        384
+      ],
+      "first_in_cell_seconds": 15.253281500190496,
+      "warm_seconds": [
+        0.1502370350062847,
+        0.14550268650054932
+      ],
+      "warm_mean_seconds": 0.14786986075341702,
+      "losses": [
+        1.2231601476669312,
+        1.2571780681610107,
+        0.7857547998428345
+      ],
+      "target_tokens_each": 366,
+      "active_positions_each": 28
+    },
+    {
+      "application": "prompt",
+      "group": "p95",
+      "padded_shape": [
+        2,
+        896
+      ],
+      "first_in_cell_seconds": 12.444470573216677,
+      "warm_seconds": [
+        0.45210984349250793,
+        0.45216449350118637
+      ],
+      "warm_mean_seconds": 0.45213716849684715,
+      "losses": [
+        0.9180038571357727,
+        0.9131669998168945,
+        0.9119656682014465
+      ],
+      "target_tokens_each": 1274,
+      "active_positions_each": 28
+    },
+    {
+      "application": "prompt",
+      "group": "maximum",
+      "padded_shape": [
+        2,
+        2816
+      ],
+      "first_in_cell_seconds": 10.92759344726801,
+      "warm_seconds": [
+        2.842842996120453,
+        2.8409807682037354
+      ],
+      "warm_mean_seconds": 2.841911882162094,
+      "losses": [
+        0.45631518959999084,
+        0.455647736787796,
+        0.4531337320804596
+      ],
+      "target_tokens_each": 4327,
+      "active_positions_each": 28
+    },
+    {
+      "application": "full",
+      "group": "median",
+      "padded_shape": [
+        2,
+        384
+      ],
+      "first_in_cell_seconds": 0.14836282283067703,
+      "warm_seconds": [
+        0.14589153602719307,
+        0.14544489979743958
+      ],
+      "warm_mean_seconds": 0.14566821791231632,
+      "losses": [
+        1.2272350788116455,
+        1.1853505373001099,
+        0.7267564535140991
+      ],
+      "target_tokens_each": 366,
+      "active_positions_each": 394
+    },
+    {
+      "application": "full",
+      "group": "p95",
+      "padded_shape": [
+        2,
+        896
+      ],
+      "first_in_cell_seconds": 0.45635778084397316,
+      "warm_seconds": [
+        0.4525216072797775,
+        0.4538072980940342
+      ],
+      "warm_mean_seconds": 0.45316445268690586,
+      "losses": [
+        0.907292902469635,
+        0.9077980518341064,
+        0.8992130756378174
+      ],
+      "target_tokens_each": 1274,
+      "active_positions_each": 1302
+    },
+    {
+      "application": "full",
+      "group": "maximum",
+      "padded_shape": [
+        2,
+        2816
+      ],
+      "first_in_cell_seconds": 2.8447973616421223,
+      "warm_seconds": [
+        2.8367558643221855,
+        2.8351204097270966
+      ],
+      "warm_mean_seconds": 2.835938137024641,
+      "losses": [
+        0.4638316035270691,
+        0.45783621072769165,
+        0.4516412317752838
+      ],
+      "target_tokens_each": 4327,
+      "active_positions_each": 4355
+    }
+  ],
+  "adapter_parameters": {
+    "full": {
+      "learned_source.bias": {
+        "count": 8,
+        "dtype": "torch.bfloat16"
+      },
+      "learned_source.weight": {
+        "count": 32768,
+        "dtype": "torch.bfloat16"
+      },
+      "rotate_layer.parametrizations.weight.original": {
+        "count": 32768,
+        "dtype": "torch.float32"
+      }
+    },
+    "prompt": {
+      "learned_source.bias": {
+        "count": 8,
+        "dtype": "torch.bfloat16"
+      },
+      "learned_source.weight": {
+        "count": 32768,
+        "dtype": "torch.bfloat16"
+      },
+      "rotate_layer.parametrizations.weight.original": {
+        "count": 32768,
+        "dtype": "torch.float32"
+      }
+    }
+  },
+  "base_parameter_versions_unchanged": true,
+  "container_seconds": 81.156233799,
+  "runner_seconds": 64.3679719530046,
+  "summed_step_seconds": 55.8282429240644,
+  "peak_memory_bytes": 44111876096,
+  "known_stage_h100_hours": 0.867077294655,
+  "historical_overhead_reserve_hours": 0.1,
+  "stage_ceiling_hours": 1,
+  "baseline_eligible": false,
+  "statistical_scope": "Six purposively selected fit questions; two sequential policies in one process; no independent timing interval or efficacy estimate",
+  "memory_scope": "Cumulative post-load torch max_memory_allocated, not per-cell isolated peak or all GPU-resident memory",
+  "base_mutation_scope": "Parameter-version plus gradient and optimizer-ownership checks, not cryptographic comparison of every base byte",
+  "remaining_gates": [
+    "Accumulated trainer and full fit schedule",
+    "Held-out fixed-control selection",
+    "Useful full-generation static action",
+    "IRC behavioral efficacy",
+    "Strongest-comparator resource frontier",
+    "Three architecture families and three behavior constructs"
+  ],
+  "sota_achieved": false,
+  "comparison": {
+    "event": "static_fit_comparison",
+    "compiler_callable_unchanged": true,
+    "status": "fail",
+    "comparisons": [
+      {
+        "step": "full-maximum-0.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.001775205135345459,
+        "gradient_norm_absolute_difference": 0.016278386116027832
+      },
+      {
+        "step": "full-maximum-1.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.0009868443012237549,
+        "gradient_norm_absolute_difference": 0.01083672046661377
+      },
+      {
+        "step": "full-maximum-2.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.0009098947048187256,
+        "gradient_norm_absolute_difference": 0.007756292819976807
+      },
+      {
+        "step": "full-median-0.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.0009775161743164062,
+        "gradient_norm_absolute_difference": 0.0969400405883789
+      },
+      {
+        "step": "full-median-1.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.0035352706909179688,
+        "gradient_norm_absolute_difference": 0.5660982131958008
+      },
+      {
+        "step": "full-median-2.json",
+        "passed": false,
+        "fields": {
+          "loss": false,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.006312668323516846,
+        "gradient_norm_absolute_difference": 0.08139467239379883
+      },
+      {
+        "step": "full-p95-0.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.0007516145706176758,
+        "gradient_norm_absolute_difference": 0.05156385898590088
+      },
+      {
+        "step": "full-p95-1.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.0014547109603881836,
+        "gradient_norm_absolute_difference": 0.01781749725341797
+      },
+      {
+        "step": "full-p95-2.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.001478433609008789,
+        "gradient_norm_absolute_difference": 0.045986175537109375
+      },
+      {
+        "step": "prompt-maximum-0.json",
+        "passed": true,
+        "fields": {
+          "loss": true,
+          "gradient_norm": true
+        },
+        "loss_absolute_difference": 0.0005753934383392334,
+        "gradient_norm_absolute_difference": 0.0005207061767578125
+      },
+      {
+        "step": "prompt-maximum-1.json",
+        "passed": true,
+        "fields": {
+          "loss": true,
+          "gradient_norm": true
+        },
+        "loss_absolute_difference": 0.00026702880859375,
+        "gradient_norm_absolute_difference": 0.0010455846786499023
+      },
+      {
+        "step": "prompt-maximum-2.json",
+        "passed": false,
+        "fields": {
+          "loss": true,
+          "gradient_norm": false
+        },
+        "loss_absolute_difference": 0.0000055730342864990234,
+        "gradient_norm_absolute_difference": 0.0032526254653930664
+      },
+      {
+        "step": "prompt-median-0.json",
+        "passed": true,
+        "fields": {
+          "loss": true,
+          "gradient_norm": true
+        },
+        "loss_absolute_difference": 0,
+        "gradient_norm_absolute_difference": 0
+      },
+      {
+        "step": "prompt-median-1.json",
+        "passed": true,
+        "fields": {
+          "loss": true,
+          "gradient_norm": true
+        },
+        "loss_absolute_difference": 0,
+        "gradient_norm_absolute_difference": 0
+      },
+      {
+        "step": "prompt-median-2.json",
+        "passed": true,
+        "fields": {
+          "loss": true,
+          "gradient_norm": true
+        },
+        "loss_absolute_difference": 0,
+        "gradient_norm_absolute_difference": 0
+      },
+      {
+        "step": "prompt-p95-0.json",
+        "passed": true,
+        "fields": {
+          "loss": true,
+          "gradient_norm": true
+        },
+        "loss_absolute_difference": 0.0013552308082580566,
+        "gradient_norm_absolute_difference": 0.0003458261489868164
+      },
+      {
+        "step": "prompt-p95-1.json",
+        "passed": true,
+        "fields": {
+          "loss": true,
+          "gradient_norm": true
+        },
+        "loss_absolute_difference": 0.0010164380073547363,
+        "gradient_norm_absolute_difference": 0.0006191730499267578
+      },
+      {
+        "step": "prompt-p95-2.json",
+        "passed": true,
+        "fields": {
+          "loss": true,
+          "gradient_norm": true
+        },
+        "loss_absolute_difference": 0.0010789036750793457,
+        "gradient_norm_absolute_difference": 0.00848388671875
+      }
+    ]
+  },
+  "reconstructed_comparisons": [
+    {
+      "step": "full-maximum-0.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.0038126700518947114,
+      "gradient_norm_relative_difference": 0.019491222469609954
+    },
+    {
+      "step": "full-maximum-1.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.002150816726420958,
+      "gradient_norm_relative_difference": 0.014673505424661223
+    },
+    {
+      "step": "full-maximum-2.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.0020105898573179915,
+      "gradient_norm_relative_difference": 0.011367854382021373
+    },
+    {
+      "step": "full-median-0.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.0007958851572659365,
+      "gradient_norm_relative_difference": 0.01599835560783293
+    },
+    {
+      "step": "full-median-1.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.0029735998757457185,
+      "gradient_norm_relative_difference": 0.039497177627610264
+    },
+    {
+      "step": "full-median-2.json",
+      "fields": {
+        "loss": false,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.008611286624230751,
+      "gradient_norm_relative_difference": 0.021540783685655006
+    },
+    {
+      "step": "full-p95-0.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.0008291013113805365,
+      "gradient_norm_relative_difference": 0.026038171789244606
+    },
+    {
+      "step": "full-p95-1.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.0016050329878143496,
+      "gradient_norm_relative_difference": 0.007595267339039371
+    },
+    {
+      "step": "full-p95-2.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.0016414428179134062,
+      "gradient_norm_relative_difference": 0.01660216771563537
+    },
+    {
+      "step": "prompt-maximum-0.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": true
+      },
+      "loss_relative_difference": 0.0012625481539802605,
+      "gradient_norm_relative_difference": 0.000986692526685086
+    },
+    {
+      "step": "prompt-maximum-1.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": true
+      },
+      "loss_relative_difference": 0.0005863858611374144,
+      "gradient_norm_relative_difference": 0.0019435404921626857
+    },
+    {
+      "step": "prompt-maximum-2.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": false
+      },
+      "loss_relative_difference": 0.000012298721879991835,
+      "gradient_norm_relative_difference": 0.006107791950944257
+    },
+    {
+      "step": "prompt-median-0.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": true
+      },
+      "loss_relative_difference": 0,
+      "gradient_norm_relative_difference": 0
+    },
+    {
+      "step": "prompt-median-1.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": true
+      },
+      "loss_relative_difference": 0,
+      "gradient_norm_relative_difference": 0
+    },
+    {
+      "step": "prompt-median-2.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": true
+      },
+      "loss_relative_difference": 0,
+      "gradient_norm_relative_difference": 0
+    },
+    {
+      "step": "prompt-p95-0.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": true
+      },
+      "loss_relative_difference": 0.0014741038904491268,
+      "gradient_norm_relative_difference": 0.0001937947081418962
+    },
+    {
+      "step": "prompt-p95-1.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": true
+      },
+      "loss_relative_difference": 0.0011118534478964663,
+      "gradient_norm_relative_difference": 0.00031984755698416143
+    },
+    {
+      "step": "prompt-p95-2.json",
+      "fields": {
+        "loss": true,
+        "gradient_norm": true
+      },
+      "loss_relative_difference": 0.0011816549906889424,
+      "gradient_norm_relative_difference": 0.003980216142380421
+    }
+  ],
+  "parity_passes": 8,
+  "loss_failures": 1,
+  "gradient_norm_failures": 10,
+  "optimizer_receipt_status": "pass",
+  "overall_status": "fail",
+  "compiler_callable_unchanged": true,
+  "dynamic_reference_audit_sha256": "76434c32fb170987677c23ca50ca1dfcdd2c31a2e8e085c72967dfd16d0f64f0",
+  "remaining_stage_seconds_with_reserve": 118.5217392419998,
+  "inference": "Reject equivalence/adoption under the frozen scalar-parity contract; aggregate trajectory failure alone does not isolate which operator or gradient vector is inaccurate.",
+  "retry": false,
+  "reproduction_code": "import hashlib,itertools,json,math,statistics\nfrom pathlib import Path\nroot=Path(\".\")\ndirectory=root/\"artifacts/engineering/irc_static_fit_v1/probe\"\nsha=lambda p: hashlib.sha256(p.read_bytes()).hexdigest()\nconfig_path=root/\"research/irc-static-fit-config-v1.json\"\nconfig=json.loads(config_path.read_text())\nreceipt=json.loads((directory/\"receipt.json\").read_text())\ncapture=json.loads((directory.parent/\"gpu-capture.json\").read_text())\nassert receipt[\"status\"]==\"pass\" and not receipt[\"baseline_eligible\"]\nassert receipt[\"config_sha256\"]==sha(config_path)\nassert receipt[\"source_sha256\"]==config[\"source_sha256\"]\nassert all(sha(root/p)==h for p,h in config[\"source_sha256\"].items())\nassert receipt[\"versions\"]==config[\"expected_versions\"]\nexpected={f\"{a}-{g}-{i}.json\" for a,g,i in itertools.product(config[\"applications\"],config[\"groups\"],range(config[\"repeats\"]))}\nassert expected==set(receipt[\"step_sha256\"])\nassert {p.name for p in directory.glob(\"*.json\")}==expected|{\"receipt.json\"}\nsteps=[]\nfor name in sorted(expected):\n p=directory/name\n assert sha(p)==receipt[\"step_sha256\"][name]\n row=json.loads(p.read_text())\n assert name==f'{row[\"application\"]}-{row[\"group\"]}-{row[\"repeat\"]}.json'\n target=sum(x[\"target_tokens\"] for x in config[\"expected_lengths\"][row[\"group\"]])\n positions=28+(target if row[\"application\"]==\"full\" else 0)\n width=128*math.ceil(max(x[\"total_tokens\"] for x in config[\"expected_lengths\"][row[\"group\"]])/128)\n assert row[\"target_tokens\"]==target and row[\"active_positions\"]==positions\n assert row[\"padded_shape\"]==[2,width]\n assert all(math.isfinite(row[k]) and row[k]>0 for k in [\"loss\",\"gradient_norm\",\"seconds\",\"peak_memory_bytes\"])\n assert row[\"changed_parameters\"]==3\n steps.append(row)\nlogs=[json.loads(line) for line in capture[\"logs_stdout\"].splitlines() if line.startswith(\"{\")]\nassert len(logs)==20\nassert sorted(logs[:-2],key=lambda x:(x[\"application\"],x[\"group\"],x[\"repeat\"]))==steps\nassert logs[-2]=={\"event\":\"fit_probe_complete\",\"status\":\"pass\",\"steps\":18}\nstate=capture[\"inspect\"][0][\"State\"]\nassert not state[\"Running\"] and not state[\"OOMKilled\"] and state[\"ExitCode\"]==1\ndef nanos(t):\n from datetime import datetime,timezone\n main,fraction=t.rstrip(\"Z\").split(\".\")\n return int(datetime.strptime(main,\"%Y-%m-%dT%H:%M:%S\").replace(tzinfo=timezone.utc).timestamp())*10**9+int(fraction.ljust(9,\"0\"))\ncontainer_s=(nanos(state[\"FinishedAt\"])-nanos(state[\"StartedAt\"]))/10**9\ncells=[]\nfor application,group in itertools.product(config[\"applications\"],config[\"groups\"]):\n rows=sorted([x for x in steps if (x[\"application\"],x[\"group\"])==(application,group)],key=lambda x:x[\"repeat\"])\n cells.append({\"application\":application,\"group\":group,\"padded_shape\":rows[0][\"padded_shape\"],\"first_in_cell_seconds\":rows[0][\"seconds\"],\"warm_seconds\":[x[\"seconds\"] for x in rows[1:]],\"warm_mean_seconds\":statistics.mean(x[\"seconds\"] for x in rows[1:]),\"losses\":[x[\"loss\"] for x in rows],\"target_tokens_each\":rows[0][\"target_tokens\"],\"active_positions_each\":rows[0][\"active_positions\"]})\nresult={\"schema\":\"irc-static-fit-result-audit-v1\",\"status\":\"failed_trajectory_parity\",\"receipt_sha256\":sha(directory/\"receipt.json\"),\"config_sha256\":sha(config_path),\"capture_sha256\":sha(directory.parent/\"gpu-capture.json\"),\"step_sha256\":receipt[\"step_sha256\"],\"source_hash_count\":len(receipt[\"source_sha256\"]),\"complete_steps\":len(steps),\"unique_questions\":len(set(itertools.chain.from_iterable(config[\"groups\"].values()))),\"supervised_token_instances\":sum(x[\"target_tokens\"] for x in steps),\"cells\":cells,\"adapter_parameters\":receipt[\"adapter_parameters\"],\"base_parameter_versions_unchanged\":receipt[\"base_parameter_versions_unchanged\"],\"container_seconds\":container_s,\"runner_seconds\":receipt[\"total_elapsed_seconds\"],\"summed_step_seconds\":sum(x[\"seconds\"] for x in steps),\"peak_memory_bytes\":max(x[\"peak_memory_bytes\"] for x in steps),\"known_stage_h100_hours\":0.8445338963775001+container_s/3600,\"historical_overhead_reserve_hours\":0.1,\"stage_ceiling_hours\":1,\"baseline_eligible\":False,\"statistical_scope\":\"Six purposively selected fit questions; two sequential policies in one process; no independent timing interval or efficacy estimate\",\"memory_scope\":\"Cumulative post-load torch max_memory_allocated, not per-cell isolated peak or all GPU-resident memory\",\"base_mutation_scope\":\"Parameter-version plus gradient and optimizer-ownership checks, not cryptographic comparison of every base byte\",\"remaining_gates\":[\"Accumulated trainer and full fit schedule\",\"Held-out fixed-control selection\",\"Useful full-generation static action\",\"IRC behavioral efficacy\",\"Strongest-comparator resource frontier\",\"Three architecture families and three behavior constructs\"],\"sota_achieved\":False}\ncomparison=logs[-1]\nassert comparison[\"event\"]==\"static_fit_comparison\" and comparison[\"status\"]==\"fail\" and comparison[\"compiler_callable_unchanged\"]\nassert len(comparison[\"comparisons\"])==18\nprior=root/\"artifacts/engineering/irc_fit_probe_v1/probe\"\nchecked=[]\nfor row in comparison[\"comparisons\"]:\n name=row[\"step\"]\n assert sha(prior/name)==config[\"reference_step_sha256\"][name]\n current=json.loads((directory/name).read_text());old=json.loads((prior/name).read_text())\n fields={k:math.isclose(current[k],old[k],rel_tol=config[\"comparison_rtol\"],abs_tol=config[\"comparison_atol\"]) for k in [\"loss\",\"gradient_norm\"]}\n assert fields==row[\"fields\"] and all(fields.values())==row[\"passed\"]\n checked.append({\"step\":name,\"fields\":fields,\"loss_relative_difference\":abs(current[\"loss\"]-old[\"loss\"])/abs(old[\"loss\"]),\"gradient_norm_relative_difference\":abs(current[\"gradient_norm\"]-old[\"gradient_norm\"])/abs(old[\"gradient_norm\"])})\nresult[\"comparison\"]=comparison\nresult[\"reconstructed_comparisons\"]=checked\nresult[\"parity_passes\"]=sum(all(x[\"fields\"].values()) for x in checked)\nresult[\"loss_failures\"]=sum(not x[\"fields\"][\"loss\"] for x in checked)\nresult[\"gradient_norm_failures\"]=sum(not x[\"fields\"][\"gradient_norm\"] for x in checked)\nresult[\"optimizer_receipt_status\"]=\"pass\"\nresult[\"overall_status\"]=\"fail\"\nresult[\"compiler_callable_unchanged\"]=True\nresult[\"dynamic_reference_audit_sha256\"]=sha(root/\"research/irc-fit-probe-result-audit-v1.json\")\nresult[\"remaining_stage_seconds_with_reserve\"]=(1-result[\"known_stage_h100_hours\"]-.1)*3600\nresult[\"inference\"]=\"Reject equivalence/adoption under the frozen scalar-parity contract; aggregate trajectory failure alone does not isolate which operator or gradient vector is inaccurate.\"\nresult[\"baseline_eligible\"]=False\nresult[\"retry\"]=False\nprint(json.dumps(result))"
+}

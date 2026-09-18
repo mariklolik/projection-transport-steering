@@ -1,0 +1,190 @@
+{
+  "schema": "action-learning-source-ledger-v1",
+  "date": "2026-09-08",
+  "primary_packet": "artifacts/literature/action_learning_20260908/retrieval-packet.json",
+  "sources": [
+    {
+      "id": "AL1",
+      "title": "RISER: Orchestrating Latent Reasoning Skills for Adaptive Activation Steering",
+      "authors": "Wencheng Ye; Xiaoyang Yuan; Yi Bin; Hengyu Jin; Liang Peng; Pengpeng Zeng; Heng Tao Shen",
+      "publisher": "Association for Computational Linguistics",
+      "date": "2026-07",
+      "url": "https://aclanthology.org/2026.findings-acl.226/",
+      "doi": "10.18653/v1/2026.findings-acl.226",
+      "pages": "4627-4644",
+      "inspected": "method; Appendix E p4641; Appendix I p4643",
+      "confidence": "high primary text",
+      "claims": [
+        "Reward-trained router and per-token routed-to-base KL already exist",
+        "Composition computed once after prefill, reused at every decoding step",
+        "Appendix 2 router epochs versus 5 full-model GRPO epochs does not substantiate same-budget prose"
+      ],
+      "access": "Published specification supersedes historical preprint status; public reviews unlocated in bounded exact-title search",
+      "native_refs": [
+        "turn195view0",
+        "turn197view1",
+        "turn198view0",
+        "turn200view0"
+      ]
+    },
+    {
+      "id": "AL2",
+      "title": "RISER author implementation",
+      "authors": "RISER authors",
+      "publisher": "GitHub author repository",
+      "date": "2026-01-15",
+      "url": "https://github.com/gooogleshanghai/RISER-Orchestrating-Latent-Reasoning-Skills-for-Adaptive-Activation-Steering/tree/acafa4a726fd33e022a280004bfe4b57ca24de8c",
+      "commit": "acafa4a726fd33e022a280004bfe4b57ca24de8c",
+      "claims": [
+        "Complete API tree truncated=false contains partial source but no router/model.py or inference/steered_model.py",
+        "router/inference.py imports missing model.py",
+        "No training or GRPO source/checkpoints in inspected tree"
+      ],
+      "access": "Parent independently checked exact recursive tree and inference source; no execution or bytecode reconstruction; exact reproduction unverified"
+    },
+    {
+      "id": "AL3",
+      "title": "Policy Gradient Steering: Interventions from Behavioral Objectives",
+      "authors": "Poupart; Beynier; Maudet",
+      "publisher": "arXiv",
+      "date": "2026-07-30",
+      "url": "https://arxiv.org/abs/2607.27574v1",
+      "inspected": "Section3 Eqs8-12; Section7; AppendixD; empirical scopes",
+      "claims": [
+        "Reusable additive activation gradient from return-weighted score gradients",
+        "Directional Fisher/local KL calibration and natural-gradient extension precede the candidate",
+        "Tests gridworld, chess policy likelihood and football, not LLM reasoning",
+        "Per-decision correction does not remove state-distribution shift"
+      ],
+      "access": "Primary source independently spot-checked by parent; reviews unlocated",
+      "native_refs": [
+        "turn197view0",
+        "turn198view1",
+        "turn199view0"
+      ],
+      "code": "https://github.com/Xmaster6y/policy-gradient-steering/tree/8b733320735751e21ed0f95a39ad2b62706d247f",
+      "code_access": "Independent source lane inspected implementations/configurations; not executed"
+    },
+    {
+      "id": "AL4",
+      "title": "OGLS-SD: On-Policy Self-Distillation with Outcome-Guided Logit Steering for LLM Reasoning",
+      "authors": "Yuxiao Yang; Xiaoyun Wang; Weitong Zhang",
+      "publisher": "arXiv",
+      "date": "2026-05-29",
+      "url": "https://arxiv.org/html/2605.12400v2",
+      "inspected": "alphaXiv raw pages1-8,13; official HTML AppendicesA/B",
+      "claims": [
+        "Successful/failed guidance mean-logit contrast with base anchor and forward-KL distillation",
+        "Correct rollouts bypass steering loss; short positive-tail SFT stabilizes length, not a utility guarantee",
+        "Adapted LoRA model, not frozen-base activation steering",
+        "8192 training generation,1024 distillation prefix,38912 evaluation,4A100 hardware; no located absolute-hours/training-seed accounting",
+        "Judge appendix disables thinking to align with training; not equivalence to current thinking-enabled protocol"
+      ],
+      "access": "Primary raw XML and HTML read; exact author release and public review unverified; no absent-code proof",
+      "native_refs": [
+        "turn191view0",
+        "turn195view1",
+        "turn195view2",
+        "turn195view3",
+        "turn196view0"
+      ]
+    },
+    {
+      "id": "AL5",
+      "title": "Where Rollouts Begin: Low-Load, High-Leverage First-Token Diversification for RLVR",
+      "authors": "Soeun Kim; Albert No",
+      "publisher": "arXiv",
+      "date": "2026-05-27",
+      "url": "https://arxiv.org/abs/2605.28295",
+      "inspected": "raw primary pages1,2,4-7,9,13-15,19",
+      "claims": [
+        "REFT means Rollout Exploration with First-Token Diversification, not representation fine-tuning",
+        "Only first semantic token diversified; following updates GRPO/DAPO with LoRA",
+        "Appendix B acknowledges first-token off-policy sampling without importance correction",
+        "Reported relative hours do not establish universal zero cost or current FSK speed"
+      ],
+      "access": "Raw paper read; author code unverified; OpenReview forum challenge-gated in Browser, no reviews/rebuttals read",
+      "review_url": "https://openreview.net/forum?id=i5tweoIUTF"
+    }
+  ],
+  "internal_evidence": [
+    {
+      "id": "AL6",
+      "path": "research/irc-baseline-selection-analysis-v3.md",
+      "sha256": "39062a972fecfe5318800f328f9f9adbedbd0f6e7f80f0fad58676b0577d09db",
+      "claim": "Complete adverse baseline and inference limits reused unchanged"
+    },
+    {
+      "id": "AL7",
+      "path": "artifacts/selection/irc_baseline_v3/family-analysis-v1/result.json",
+      "sha256": "03433c5dc63d9f8ec16308e34a58754eccfb8cc36078d0b1c54a08c584aa8467",
+      "claim": "Complete raw-bound paired aggregate; no new regrading or bootstrap"
+    },
+    {
+      "id": "AL8",
+      "path": "research/run-manifest.jsonl",
+      "record_id": "manifest-v182",
+      "claim": "Source zero generation9846.580573897809 GPU seconds on256; new6000-row scenario64.10534227798053 H100h; different-population extrapolation, not measured speed"
+    }
+  ],
+  "code_provenance": {
+    "pyreft_commit": "dafd0995a366d7b47160a337dcc388eda7431821",
+    "axbench_commit": "41c8332543e5a631f9a8c0a9df38799893ace758",
+    "review_mode": "source-only; no dependency execution, training, tests or GPU work by reviewer",
+    "files": [
+      {
+        "path": ".external/pyreft/examples/dpo/dpo_trainer.py",
+        "lines": "8-121",
+        "sha256": "a406f9425b99ca17f68601188b4612671124194a376cd1b245d2853b38b7870d",
+        "contract": "DPO likelihood/reference/loss reference"
+      },
+      {
+        "path": ".external/pyreft/examples/reward/train.py",
+        "lines": "34-84,187-208",
+        "sha256": "07e240ddb07b711211d39c4aaa7743f799829012f843bddd0decd75c7e1233f1",
+        "contract": "Reward ranking classifier; not policy optimization"
+      },
+      {
+        "path": ".external/axbench/axbench/models/preference_model.py",
+        "lines": "38-189,264-308,349-427",
+        "sha256": "5e5b6b9162a8f0cb9ff6825b5fb3a497d345c4dfe0e77e47394de65436d882ef",
+        "contract": "Preference primitives with batch, action-factor, normalization and scheduler hazards"
+      },
+      {
+        "path": ".external/axbench/axbench/models/preference_reft.py",
+        "lines": "64",
+        "sha256": "de4859948d0ac3e227b3abe53b6f618aa98a26f1c605fe2925794bba50774858",
+        "contract": "Unassigned lm_model_name; train versus inference positions differ"
+      },
+      {
+        "path": ".external/axbench/axbench/models/preference_lora.py",
+        "lines": "47-59",
+        "sha256": "9210978d35b7443989fe830850fa2cff6e86a3b15e2f3aa1e8c54b88bd32c4aa",
+        "contract": "List self.ax incompatible with inherited eval call"
+      },
+      {
+        "path": ".external/axbench/axbench/models/lora.py",
+        "lines": "26-53",
+        "sha256": "0cd5f41157fd457113e684bed378cc3e1e09b809161b4ce715a08efcdeae7345",
+        "contract": "Standard PEFT constructor reuse surface"
+      },
+      {
+        "path": "src/projection_transport_steering/reft_training.py",
+        "lines": "9-71,103-182",
+        "sha256": "efaaa6c13f183a0db51a4c5ce5f168f46f98b829b28bf257ca7d59d812a9eb11",
+        "contract": "Preserve exact native token/mask/generation; SFT-only loss and ownership/nonzero-gradient assumptions cannot simply accept PEFT LoRA"
+      },
+      {
+        "path": "scripts/run_irc_baseline.py",
+        "lines": "59-138",
+        "sha256": "d7ca0aa750a6009fc65f0f824de1de0d9f834af66d9974a76f43e5c70b4d60c2",
+        "contract": "Freeze/reload/base-version integrity"
+      }
+    ]
+  },
+  "limitations": [
+    "Offline DPO matrix is a research choice, not a primary-paper result",
+    "No new candidate effectiveness, source throughput, novelty, retention theorem or SOTA",
+    "First-token paper was initially mis-titled and RISER author name initially misstated in parent draft; both corrected against primary source before rendering"
+  ]
+}

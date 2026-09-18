@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "record_id": "irc-scientific-runtime-candidate-v3",
+  "timestamp": "2026-09-07 15:59:16 UTC",
+  "status": "candidate_before_v3_actual_weight_workload",
+  "parent": "research/irc-scientific-runtime-candidate-v1.json",
+  "parent_sha256": "5e81b8c23880cce6294d7f7efe80cc72a45b5aa2231756bcfa47089463f29830",
+  "image": "sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb",
+  "host": "avi-gn-fsk42",
+  "python_flags": [
+    "-S"
+  ],
+  "environment_tree_sha256": "1757db325560254739d07b453df04ece131bfcc5bf268183407da35b7261372c",
+  "overlay_tree_sha256": "6d4036b43fe2e0774b9be0b66108376ec590d09be58b665e4d3cfc448d986344",
+  "tree_reverification": "Both package trees rehashed in this turn with NUL-safe sorted file paths and pipefail; hashes match v1. Bytecode excluded, writes disabled.",
+  "attention": "fp32_prefill_flex",
+  "attention_policy": "Q length >1: lossless QKV FP32 upcast, native Flex highest matmul precision, output/LSE cast back. Q length1: original dtype; native mask formatter registered under exact backend name.",
+  "float32_matmul_precision": "highest",
+  "source_sha256": {
+    "src/projection_transport_steering/attention_backend.py": "02ca4e01ec511b4e08d5e02688ee41599b84b6114319b865ebaafb5f31d403da",
+    "scripts/run_irc_real_runtime.py": "629ae37502805af6f0c0898dbfea5758c3218267d44f57cfd9b1b25b2425d2b4"
+  },
+  "compile_environment": {
+    "USER": "mekashirskiy",
+    "TORCHINDUCTOR_CACHE_DIR": "/tmp/irc-inductor",
+    "TORCHINDUCTOR_COMPILE_THREADS": "2",
+    "CUDA_CACHE_PATH": "/tmp/irc-cuda-cache"
+  },
+  "v2_operator_seconds": 137.356475079,
+  "prior_native_flex_prefill_status": "FAIL_retained",
+  "paired_fp32_prefill_status": "PASS_one_synthetic_ensemble_only",
+  "scope": "New inference engineering candidate; actual-weight replay, full workload, backward, fit and scientific comparison not admitted."
+}

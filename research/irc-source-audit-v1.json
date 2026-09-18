@@ -1,0 +1,269 @@
+{
+  "benchmark_ready": false,
+  "math": {
+    "author_linked_rows": 12500,
+    "canonical_fields": [
+      "problem",
+      "level",
+      "type",
+      "solution"
+    ],
+    "full_record_train_test_overlap": 0,
+    "per_subject": {
+      "algebra": {
+        "test": 1187,
+        "train": 1744
+      },
+      "counting_and_probability": {
+        "test": 474,
+        "train": 771
+      },
+      "geometry": {
+        "test": 479,
+        "train": 870
+      },
+      "intermediate_algebra": {
+        "test": 903,
+        "train": 1295
+      },
+      "number_theory": {
+        "test": 540,
+        "train": 869
+      },
+      "prealgebra": {
+        "test": 871,
+        "train": 1205
+      },
+      "precalculus": {
+        "test": 546,
+        "train": 746
+      }
+    },
+    "problem_only_or_near_duplicate_audit_completed": false,
+    "split_provenance_limit": "Pinned EleutherAI conversion and predecessor loader mapping the original train/test directories; union equals current author-linked mirror. The original archive itself was not recovered.",
+    "split_rows": {
+      "test": 5000,
+      "train": 7500
+    },
+    "union_extra_rows": 0,
+    "union_missing_rows": 0
+  },
+  "model_outcomes_inspected": 0,
+  "models": {
+    "Qwen/Qwen3-8B": {
+      "config": {
+        "hidden_size": 4096,
+        "max_position_embeddings": 40960,
+        "model_type": "qwen3",
+        "num_attention_heads": 32,
+        "num_hidden_layers": 36,
+        "num_key_value_heads": 8
+      },
+      "generation_config": {
+        "bos_token_id": 151643,
+        "do_sample": true,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "pad_token_id": 151643,
+        "temperature": 0.6,
+        "top_k": 20,
+        "top_p": 0.95,
+        "transformers_version": "4.51.0"
+      },
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+      "weights_downloaded_or_verified": false
+    },
+    "deepseek-ai/DeepSeek-R1-Distill-Llama-8B": {
+      "config": {
+        "hidden_size": 4096,
+        "max_position_embeddings": 131072,
+        "model_type": "llama",
+        "num_attention_heads": 32,
+        "num_hidden_layers": 32,
+        "num_key_value_heads": 8
+      },
+      "generation_config": {
+        "_from_model_config": true,
+        "bos_token_id": 128000,
+        "do_sample": true,
+        "eos_token_id": 128001,
+        "temperature": 0.6,
+        "top_p": 0.95,
+        "transformers_version": "4.39.3"
+      },
+      "revision": "6a6f4aa4197940add57724a7707d069478df56b1",
+      "weights_downloaded_or_verified": false
+    }
+  },
+  "remaining_prerequisites": [
+    "Final heterogeneous-answer and invalid-reference evaluator contract",
+    "Historical exposure inventory and problem-cluster overlap manifest",
+    "Frozen allocation and complete decoding configuration",
+    "Real-weight CUDA and batched branch conformance"
+  ],
+  "schema": "irc-source-audit-v1",
+  "snapshots": {
+    "irc-deepseek-llama8b-metadata": {
+      "repository": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+      "revision": "6a6f4aa4197940add57724a7707d069478df56b1"
+    },
+    "irc-qwen3-8b-metadata": {
+      "repository": "Qwen/Qwen3-8B",
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+    },
+    "math-author-linked": {
+      "repository": "qwedsacf/competition_math",
+      "revision": "e839825f9ec5c6cfa585c654a59610969ec13993"
+    },
+    "math-eleuther": {
+      "repository": "EleutherAI/hendrycks_math",
+      "revision": "21a5633873b6a120296cce3e2df9d5550074f4a3"
+    },
+    "math-eleuther-original-loader": {
+      "repository": "EleutherAI/hendrycks_math",
+      "revision": "3730e0d9543219af79a2ddf93da274bb55d7fc27"
+    }
+  },
+  "source_files_sha256": {
+    ".external/irc-deepseek-llama8b-metadata/config.json": "54acfad3cffe057640904ca8a1e83525e6551c70c7a04c641f5a9eda0bbf64bd",
+    ".external/irc-deepseek-llama8b-metadata/generation_config.json": "cd5194726d1e8f7361a8c8425fc11d33ade5e69de1fd7615eb23fae5601af68b",
+    ".external/irc-deepseek-llama8b-metadata/model.safetensors.index.json": "83bdf4be4bb1a054ff315cd804554c48a88036226fdfbc65bee84ff562fea32a",
+    ".external/irc-deepseek-llama8b-metadata/tokenizer_config.json": "8ac8c85fb242563c2260baec0909debd69d718af6a0b3d90e6cab62b4d341cd5",
+    ".external/irc-qwen3-8b-metadata/config.json": "f7c4eadfbbf522470667b797a3c89be2524832d2d599797248dc304fff447c30",
+    ".external/irc-qwen3-8b-metadata/generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+    ".external/irc-qwen3-8b-metadata/model.safetensors.index.json": "f9fdbcb91c23971c13ec5d5f2573d2349e8f61f2f049371ec699281748fdb1bc",
+    ".external/irc-qwen3-8b-metadata/tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    ".external/math-author-linked/.gitattributes": "79deb409a995d414d9b2e89b5e16a5f46fcaa7596c63242dd0bd72311a422458",
+    ".external/math-author-linked/README.md": "fce0b61555d36ef9603e29823871e0789f015ed5c1e1d73a9a95b9a90b81016d",
+    ".external/math-author-linked/data/train-00000-of-00001-7320a6f3aba8ebd2.parquet": "2325458edc03d786939ee9e1e5795efb9e2480247b6e1ed2c51f41bea7369c6a",
+    ".external/math-author-source/modeling/dataset/util.py": "9183a9ea7bce3c126ac33f993d21bf85cffbdb7bab10088216d286699c9e084a",
+    ".external/math-author-source/modeling/math_equivalence.py": "c4101b1f51a2bb65665194aecd9f761d668c0c248a0350f196c2950e87488527",
+    ".external/math-eleuther-original-loader/hendrycks_math.py": "5aa4683a08959004f16dc542fac3db28fad69e4c8f25047b1fbc38751ba9769b",
+    ".external/math-eleuther/.gitattributes": "f4e703ea6e44bbebe53aceed2a89c11e40b88b7ae130c480c89860ab805ffc8f",
+    ".external/math-eleuther/README.md": "2372e22a154ca3ed5865378e270b32d8ed5b615c4592fad42630a731a950bcc0",
+    ".external/math-eleuther/algebra/test-00000-of-00001.parquet": "0e04a850dac9cfc758eac0c80afd2d0cc65e29ea72f916c8ac1045b12af937f5",
+    ".external/math-eleuther/algebra/train-00000-of-00001.parquet": "73347f5b55869f21ff094361025dbd12d291e971aa4d72142eacee10438e449f",
+    ".external/math-eleuther/counting_and_probability/test-00000-of-00001.parquet": "c324818949c75a6227c0328a8499d58023cbbf6757cfc1736f5ab24cc8d87966",
+    ".external/math-eleuther/counting_and_probability/train-00000-of-00001.parquet": "d37ae017930df41678edee50dcde18c17fb06afaff9eb505c1b95f1002bfcb31",
+    ".external/math-eleuther/geometry/test-00000-of-00001.parquet": "98720f3a8134ad9784fd8951195245264495df03ffc5c9485a9a54ff5ae2431a",
+    ".external/math-eleuther/geometry/train-00000-of-00001.parquet": "9dbf5e5b55499e696e0ba72da9d85d4f0be3acbf7eaa6cb014b0fc78bb63784f",
+    ".external/math-eleuther/intermediate_algebra/test-00000-of-00001.parquet": "e859f72486c951c2017da880541ca729940eaa986b0364eb23e238983df9bfeb",
+    ".external/math-eleuther/intermediate_algebra/train-00000-of-00001.parquet": "0c87f3798ebdfb915b1f9b6fc13c1a8d064c3cb91631ccbe85b83ed5d71150f6",
+    ".external/math-eleuther/number_theory/test-00000-of-00001.parquet": "ba156c9c9fa2040836ba12135fd964e6e67d6bccd8c469ec4a3ad941f8f6fbe9",
+    ".external/math-eleuther/number_theory/train-00000-of-00001.parquet": "81c08649149b39811f2d1d7ddf5dfccf6c4c8044a2e169cfb24db09160c941f4",
+    ".external/math-eleuther/prealgebra/test-00000-of-00001.parquet": "301e5d8ade5c7b5038032532e498bdc9dca799e7f1061a63f2e7d980803240cc",
+    ".external/math-eleuther/prealgebra/train-00000-of-00001.parquet": "765b526fb5c0b8385cb7be2c16bf4f6f28cf71f2bc15c826abfbb5fa7f8616cc",
+    ".external/math-eleuther/precalculus/test-00000-of-00001.parquet": "da37474ba3761ae5727af3844a7ba963a735bd6a14c65e6137593669a4fe3b9c",
+    ".external/math-eleuther/precalculus/train-00000-of-00001.parquet": "28bb1ff95525c8d32521509bef91de76339659f5467a381e6e8deea204538f0e",
+    ".external/pyreft/pyreft/interventions.py": "ecd9f0cdea62bafea68086598fd4797730a4e86794c82a9aeb0be96479b50de5",
+    "pyproject.toml": "28c8e65fe545d508160ef99115e33c3a2a19e71293f3f5f2ee4d42d501e08218",
+    "scripts/audit_irc_sources.py": "fadd93fd35e7444c6acbb1323d6d253dcb3df17aca023905842b5265e9da2685",
+    "src/projection_transport_steering/outcome_score.py": "25778d7ac742d24bff35b014eb42e8ac765e7153a8952c349773726473b8503f",
+    "src/projection_transport_steering/torch_runtime.py": "8a8818d33a41f781b5f6cd5274dd9c9b5d0b3ca34b7f24eb3ff6091ae6358f5a",
+    "tests/test_math_outcomes.py": "52b2bb76287bf0e0d223a0523a17f3a69ce6ff51ccfee3a164314933df062937",
+    "tests/test_reft_conformance.py": "13cdd07b9d77d0f048ab1fbdb2090423848a8c7eb6ee06d8f411478b59600d1f",
+    "uv.lock": "d5258b50b0a183c5d0969ff9912890fe8392e98ce477126df64cc09f22f2363e"
+  },
+  "source_repositories": {
+    "math-author-source": "985bdc1696e88e8643f081a0ff4719da39f2ae2a",
+    "pyreft": "dafd0995a366d7b47160a337dcc388eda7431821"
+  },
+  "training_gold_self_check": {
+    "configuration": "author last_boxed_only_string; Math-Verify 0.9.0; units=False; no_fallback; strict=True; first_match; 5-second timeouts",
+    "failures": [
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "algebra:888",
+        "solution_sha256": "638af431b2e8329f0e5263daa3a3f349dccc07e8e7faea519eb117bce76774c3"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "algebra:1011",
+        "solution_sha256": "5d2cfad78a33c677c2e4d7496d9dfabd25e844bf46e1fffd1480763bc0eba619"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "algebra:1556",
+        "solution_sha256": "486a72f1db4c16dd9dac2b690361f247f055161776e81db5c9e5be39c5bd06bb"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "algebra:1652",
+        "solution_sha256": "5d33b0dba58d77c8e018d5c2a99e99f358c9b88b6c10387ddb6628e7ec731633"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "counting_and_probability:163",
+        "solution_sha256": "cab01cb20a093e50a1aeeaf5904131be3bef3679ebeb4984b656caa6b4089031"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "geometry:358",
+        "solution_sha256": "f9515d3d0ea469e42917b3435f7e762c9dba72ac700afc4d129f5c9a9eba4a0b"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "number_theory:8",
+        "solution_sha256": "c80dfa4931ce333c8d979fd0b3f1598f8ac809a2820f165b9e281cb9b7f9b17b"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "number_theory:661",
+        "solution_sha256": "6bd3445d81bcbdde7d968f72f7bac4314961d2837c80c7ac411eedc6d9aaea08"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "number_theory:663",
+        "solution_sha256": "871a48fc06b127910874ce9cf330062c78461b07ccb16d394c0296a7ec73f0a1"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "number_theory:737",
+        "solution_sha256": "c7146ae5cbe3b028ca136b60e7e9004c4a85b93269d7308d8d9781c607f63857"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "number_theory:775",
+        "solution_sha256": "49ca9903f74fd5732993a1ec8851fc62c39ec67d90886c5b3a4bb08060bca076"
+      },
+      {
+        "reason": "ValueError: Can't evaluate nan or zoo",
+        "row_id": "prealgebra:599",
+        "solution_sha256": "1515a4e1425267d479a3d8bb7aac2914d1b29e9e1d672910d4ef25309de82757"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "prealgebra:928",
+        "solution_sha256": "a28f437dd44ab6f523c14381509bdd7d32f8eb27faf549be8b35d0ac1a0f6834"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "precalculus:32",
+        "solution_sha256": "7c12c0b9d575d1b9cfb7d61de3e8ed83c624972d0e9c3c332ca9b8aee2723378"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "precalculus:57",
+        "solution_sha256": "22f5f60a182e8340317d1bade7c4aa2911b4758bcea161409c752b67dcac2a84"
+      },
+      {
+        "reason": "ValueError: gold solution has no parseable mathematical answer",
+        "row_id": "precalculus:185",
+        "solution_sha256": "4e321e522ca212c1ff5a882f5fd672c8219170644b52d4c17fa641a783178901"
+      }
+    ],
+    "scope": "Reference measurement audit only, not model accuracy; no rows excluded or allocated by this audit.",
+    "self_correct": 7484,
+    "test_gold_evaluated": false
+  },
+  "versions": {
+    "latex2sympy2-extended": "1.11.0",
+    "math-verify": "0.9.0",
+    "pyarrow": "25.0.1",
+    "pyvene": "0.1.8",
+    "torch": "2.14.0",
+    "transformers": "5.16.1"
+  }
+}

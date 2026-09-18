@@ -1,0 +1,41 @@
+{
+  "schema": "irc-native-backward-connectivity-recovery-v1",
+  "created_at": "2026-09-07 16:45:56 UTC",
+  "record_timing": "Before first confirmed native backward dispatch after connectivity recovery",
+  "previous_launch_sha256": "333b2626dd0d25b4703b28f21669d03001b41d20d9d4a1e200ca72f091428a75",
+  "spec_sha256": "0b48a9a91077cae1b461520b7d82c0c6cb7d5a4fa9e05f3781e4e15b8af6b39b",
+  "previous_dispatch": {
+    "exit_code": 255,
+    "container_id": null
+  },
+  "fresh_ssh_exit_code": 0,
+  "exact_name_inventory": {
+    "name": "pts-irc-native-flex-backward-v1",
+    "matches": 0
+  },
+  "gpu_inventory": {
+    "chunk_id": "a85f5d",
+    "wall_time_seconds": 0.512812042,
+    "exit_code": 0,
+    "original_token_count": 112,
+    "output": "0, GPU-988dde5b-1ad3-d864-244f-e0ffe6693cb6, 0 %, 1 MiB\n1, GPU-d632b062-2f86-7682-7e63-317347af5c84, 0 %, 1 MiB\n2, GPU-f666bb5e-f9e7-5ed1-458c-8ac103cd56f5, 0 %, 1 MiB\n3, GPU-28c6ca21-6f29-4c42-1990-04181256fe69, 0 %, 1 MiB\n4, GPU-c6f16b20-0db2-f335-7f1d-69b437de78a4, 0 %, 1 MiB\n5, GPU-65af5f4b-3576-0b2b-d60c-ba572b4e1fd6, 0 %, 1 MiB\n6, GPU-c41d19e6-5c03-b8af-b341-28118b5dc827, 0 %, 1 MiB\n7, GPU-6ca2a253-ebb0-dd33-2d24-6d05a60ca292, 0 %, 1 MiB\n"
+  },
+  "full_container": {
+    "id": "80711276d2b052a2aadb8cd75c2feb69f197ba3ecfe56285d3b3248891f735cf",
+    "status": "exited",
+    "exit_code": 0,
+    "oom_killed": false,
+    "elapsed_seconds": 660.672601913
+  },
+  "unchanged_numerical_policy": true,
+  "unchanged_code": true,
+  "unchanged_deadline_seconds": 42,
+  "unchanged_kill_grace_seconds": 20,
+  "launch_python_syntax_check": "PASS via shlex.split and compile without execution",
+  "overlap_with_full": false,
+  "planned_operator_ceiling_seconds": 200,
+  "prior_measured_operator_seconds": 137.356475079,
+  "maximum_including_this_attempt_seconds": 199.356475079,
+  "fitting_authorized": false
+}
+

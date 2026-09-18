@@ -1,0 +1,210 @@
+{
+  "schema": "irc-mask-construction-result-v6",
+  "timestamp": "2026-09-08 02:45:44 UTC",
+  "status": "paired_mask_counterfactual_and_observer_free_operator_matrix_complete",
+  "classification": "exploratory_numerical_engineering_not_behavioral_efficacy",
+  "protocol": {
+    "path": "research/irc-mask-construction-protocol-v6.md",
+    "sha256": "adf356b9823b61f556213912bfa04fe6ae2c52ef67ca50b4b46d0ae3d55364a7"
+  },
+  "evidence": {
+    "paired_analysis": {
+      "path": "artifacts/engineering/irc_mask_construction_v6/diagnostic-analysis.json",
+      "sha256": "4ce71bb7595d5d79f1ea6100d845e52bcacc9299a5ad6bfe07e732e1d1394422"
+    },
+    "paired_terminal": {
+      "path": "artifacts/engineering/irc_mask_construction_v6/diagnostic-terminal.json",
+      "sha256": "cf46a5d3b0c3751b38a613d9655b79295d9abb65377c3ec4e078bbd027664317"
+    },
+    "paired_analysis_producer": {
+      "path": "research/irc-mask-paired-analysis-v6.json",
+      "sha256": "75710ddb49e14ac539267d81fccfb8c067fc39c4f2194a63de520e485a8e821f"
+    },
+    "qualification_admission": {
+      "path": "research/irc-mask-qualification-admission-v6.json",
+      "sha256": "aaee7d72cbf31689ff552678230271a47012ba7f08df9cbdc5f7b4a57a9f154a"
+    },
+    "qualification_terminal": {
+      "path": "artifacts/engineering/irc_mask_construction_v6/qualification-terminal.json",
+      "sha256": "de203877e20abe509e8cda6a57eef05f6aa899191a1c8512aec9380cd183fdf4"
+    }
+  },
+  "diagnostic_counts": {
+    "planned_histories": 2,
+    "completed_histories": 2,
+    "planned_cells": 6,
+    "executed_cells": 6,
+    "planned_native_comparisons": 30,
+    "attempted_native_comparisons": 29,
+    "passed_native_comparisons": 28,
+    "failed_native_comparisons": 1,
+    "unattempted_native_comparisons": 1,
+    "failure": "automatic_history/Q93/k_grad",
+    "unattempted": "automatic_history/Q93/v_grad",
+    "post_capture_cpu_v_failure_is_not_native_assertion": true
+  },
+  "counterfactual": {
+    "changed_native_argument": "_compile: True -> False",
+    "exact_shared_cell_pairings": 3,
+    "paired_fields_each": 10,
+    "paired_reference_gradients_each": 3,
+    "automatic_pre_post_metadata_unchanged": true,
+    "automatic_counts_over_capacity": {
+      "Q2": "15/32",
+      "Q93": "24/32"
+    },
+    "eager_all_15_native_comparisons_pass": true,
+    "eager_all_three_pre_post_metadata_valid_and_unchanged": true,
+    "solely_post_attention_corruption_explanation_inadequate_for_observed_v6_metadata": true,
+    "sole_causal_responsibility_for_numerical_failure_established": false
+  },
+  "qualification": {
+    "arm": "eager_qualification",
+    "container_id": "ea2ce1d1881b2c48e9aeaf0c54cb44e36f750a1011663c8803a4ba94569049b7",
+    "config_sha256": "8fa032d1cf7501b02f1ec2a250a2c25f202cacdb816d88bb4d3a88996febde42",
+    "exit_code": 0,
+    "oom": false,
+    "timeout": false,
+    "planned_cells": 35,
+    "completed_cells": 35,
+    "source_mapped_native_numerical_comparisons": 175,
+    "all_pass": true,
+    "additional_contract_checks": [
+      "dense-mask predicate equality",
+      "finite QKV gradients",
+      "exact masked-query zeros in both forwards"
+    ],
+    "rtol": 0.005,
+    "atol": 0.0005,
+    "early_metadata_observer": false,
+    "late_tensor_observer": false,
+    "all_35_compressed_metadata_arrays_verified": false,
+    "actual_weights_mounted": false,
+    "retries": 0,
+    "peak_allocated_bytes": 4669630976
+  },
+  "cost": {
+    "qualification_seconds": "67.678780264",
+    "v6_total_seconds": "155.895285388",
+    "v6_h100_hours": 0.04330424594111111,
+    "v6_reserved_unspent_seconds": "1044.104714612",
+    "additional_engineering_remaining_seconds": "3319.667815011",
+    "additional_engineering_total_spent_seconds": "280.332184989",
+    "old_engineering_remaining_seconds": "9.198053592",
+    "baseline_v2_h100_hours": 7.605374254722222,
+    "budget_transfer": false,
+    "diagnostic_automatic_seconds": "46.797233546",
+    "diagnostic_eager_seconds": "41.419271578",
+    "diagnostic_total_seconds": "88.216505124",
+    "unit": "same H100 container lifetime, including compilation and failures; not measured busy GPU time"
+  },
+  "local_archive_verification": {
+    "paired": {
+      "scp_session": 43302,
+      "scp_exit": 0,
+      "files": 515,
+      "bytes": 667225206,
+      "canonical_inventory_sha256": "fb6303bdd900401de74d0344a365211506eae28e2c02289a471db24b40cecdaf",
+      "complete": true,
+      "archive_sha256": "4472da82b29c5b53a9d06ed290dfa04ca0c2b8b2c67e692cab5337d334a8b806",
+      "archive_bytes": 668221440,
+      "safe_tar_members": 674
+    },
+    "qualification": {
+      "scp_session": 80816,
+      "scp_exit": 0,
+      "sha256": "bc63bd03a91b905aa663760aab8276a00513e94c18c63ed39ba938d462f51e09",
+      "bytes": 65658880,
+      "inventory_files": 253,
+      "inventory_bytes": 65129857,
+      "inventory_sha256": "a50b5a07029e778029ecc316e33872679b7f6415c29bdca2dfda73b3c293dbc2",
+      "run_cells": 35,
+      "native_comparisons": 175,
+      "status": "pass",
+      "safe_members": 353
+    },
+    "native_permissions_changed": false
+  },
+  "independent_review": {
+    "path": "research/irc-mask-independent-review-v6.json",
+    "diagnostic_actual_packet_assertions": 1125,
+    "diagnostic_terminal_report_assertions": 337,
+    "qualification_at_this_receipt": "pending_independent_closure",
+    "not_statistical_replicates": true,
+    "no_gpu_reexecution": true
+  },
+  "native_closing_check": {
+    "timestamp": "2026-09-08T02:42:52.807589+00:00",
+    "source_hashes_verified": 61,
+    "containers": [
+      {
+        "id": "6d27dd81d4c2b514a100f7e9ea6f90e2d3edbd37640ee7484185109558fda79e",
+        "name": "/pts-irc-mask-v6-automatic-history",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 1,
+          "Error": "",
+          "StartedAt": "2026-09-08T02:20:38.892951083Z",
+          "FinishedAt": "2026-09-08T02:21:25.690184629Z"
+        }
+      },
+      {
+        "id": "90d1c506ae79d5b9a0447bfc6401ab908e5839d539e713b174bbc822cdecc5cc",
+        "name": "/pts-irc-mask-v6-eager-history",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 0,
+          "Error": "",
+          "StartedAt": "2026-09-08T02:22:26.070563353Z",
+          "FinishedAt": "2026-09-08T02:23:07.489834931Z"
+        }
+      },
+      {
+        "id": "ea2ce1d1881b2c48e9aeaf0c54cb44e36f750a1011663c8803a4ba94569049b7",
+        "name": "/pts-irc-mask-v6-eager-qualification",
+        "state": {
+          "Status": "exited",
+          "Running": false,
+          "Paused": false,
+          "Restarting": false,
+          "OOMKilled": false,
+          "Dead": false,
+          "Pid": 0,
+          "ExitCode": 0,
+          "Error": "",
+          "StartedAt": "2026-09-08T02:40:07.233443287Z",
+          "FinishedAt": "2026-09-08T02:41:14.912223551Z"
+        }
+      }
+    ],
+    "matching_names": "pts-irc-mask-v6-eager-qualification\npts-irc-mask-v6-eager-history\npts-irc-mask-v6-automatic-history",
+    "gpus": "0, GPU-988dde5b-1ad3-d864-244f-e0ffe6693cb6, 1, 0\n1, GPU-d632b062-2f86-7682-7e63-317347af5c84, 1, 0\n2, GPU-f666bb5e-f9e7-5ed1-458c-8ac103cd56f5, 1, 0\n3, GPU-28c6ca21-6f29-4c42-1990-04181256fe69, 1, 0\n4, GPU-c6f16b20-0db2-f335-7f1d-69b437de78a4, 1, 0\n5, GPU-65af5f4b-3576-0b2b-d60c-ba572b4e1fd6, 1, 0\n6, GPU-c41d19e6-5c03-b8af-b341-28118b5dc827, 1, 0\n7, GPU-6ca2a253-ebb0-dd33-2d24-6d05a60ca292, 1, 0"
+  },
+  "producer": {
+    "diagnostic_archive_code": "import hashlib,json,subprocess\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nbase=Path(\"/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_mask_construction_v6\")\nexpected={\"automatic_history\":\"6d27dd81d4c2b514a100f7e9ea6f90e2d3edbd37640ee7484185109558fda79e\",\"eager_history\":\"90d1c506ae79d5b9a0447bfc6401ab908e5839d539e713b174bbc822cdecc5cc\"}\narms={}\nfor arm,identity in expected.items():\n    name=\"pts-irc-mask-v6-\"+arm.replace(\"_\",\"-\")\n    d=json.loads(subprocess.check_output([\"docker\",\"inspect\",name],text=True))[0]\n    assert d[\"Id\"]==identity and d[\"State\"][\"Status\"]==\"exited\" and not d[\"State\"][\"Running\"]\n    assert not d[\"State\"][\"OOMKilled\"]\n    log=subprocess.run([\"docker\",\"logs\",name],capture_output=True,text=True,check=True)\n    receipt=json.loads((base/arm/\"run/receipt.json\").read_text())\n    target=base/arm/\"compiler_archive\"\n    target.mkdir(exist_ok=False)\n    for kind in (\"triton\",\"inductor\",\"cuda\"):\n        source=\"/tmp/irc-mask-v6-\"+arm+\"-\"+kind\n        subprocess.run([\"docker\",\"cp\",name+\":\"+source,str(target/kind)],check=True,capture_output=True,text=True)\n    arms[arm]={\"id\":identity,\"name\":name,\"state\":d[\"State\"],\"image\":d[\"Image\"],\"device_requests\":d[\"HostConfig\"][\"DeviceRequests\"],\"mounts\":d[\"Mounts\"],\"entrypoint\":d[\"Config\"][\"Entrypoint\"],\"command\":d[\"Config\"][\"Cmd\"],\"logs\":{\"stdout\":log.stdout,\"stderr\":log.stderr},\"receipt\":receipt}\ndef digest(p):\n    h=hashlib.sha256()\n    with p.open(\"rb\") as f:\n        for part in iter(lambda:f.read(1048576),b\"\"):\n            h.update(part)\n    return h.hexdigest()\nrows=[]\nfor arm in expected:\n    for p in sorted((base/arm).rglob(\"*\")):\n        if p.is_file():\n            rows.append({\"path\":str(p.relative_to(base)),\"sha256\":digest(p),\"bytes\":p.stat().st_size})\nencoded=\"\".join(json.dumps(r,sort_keys=True,separators=(\",\",\":\"))+chr(10) for r in rows).encode()\narchive=base/\"diagnostic-results.tar\"\nassert not archive.exists()\nsubprocess.run([\"tar\",\"-cf\",str(archive),\"-C\",str(base),*expected.keys()],check=True)\nprint(json.dumps({\"schema\":\"irc-mask-diagnostic-native-terminal-v6\",\"timestamp\":datetime.now(timezone.utc).isoformat(),\"arms\":arms,\"inventory\":{\"files\":len(rows),\"bytes\":sum(r[\"bytes\"] for r in rows),\"canonical_inventory_sha256\":hashlib.sha256(encoded).hexdigest()},\"archive\":{\"path\":str(archive),\"sha256\":digest(archive),\"bytes\":archive.stat().st_size},\"native_files_or_permissions_changed\":False,\"compiler_cache_copy_new_destinations_only\":True}))\n",
+    "qualification_archive_code": "import hashlib,json,subprocess\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nbase=Path(\"/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_mask_construction_v6\")\nexpected={\"eager_qualification\":\"ea2ce1d1881b2c48e9aeaf0c54cb44e36f750a1011663c8803a4ba94569049b7\"}\narms={}\nfor arm,identity in expected.items():\n    name=\"pts-irc-mask-v6-\"+arm.replace(\"_\",\"-\")\n    d=json.loads(subprocess.check_output([\"docker\",\"inspect\",name],text=True))[0]\n    assert d[\"Id\"]==identity and d[\"State\"][\"Status\"]==\"exited\" and not d[\"State\"][\"Running\"]\n    assert not d[\"State\"][\"OOMKilled\"]\n    log=subprocess.run([\"docker\",\"logs\",name],capture_output=True,text=True,check=True)\n    receipt=json.loads((base/arm/\"run/receipt.json\").read_text())\n    target=base/arm/\"compiler_archive\"\n    target.mkdir(exist_ok=False)\n    for kind in (\"triton\",\"inductor\",\"cuda\"):\n        source=\"/tmp/irc-mask-v6-\"+arm+\"-\"+kind\n        subprocess.run([\"docker\",\"cp\",name+\":\"+source,str(target/kind)],check=True,capture_output=True,text=True)\n    arms[arm]={\"id\":identity,\"name\":name,\"state\":d[\"State\"],\"image\":d[\"Image\"],\"device_requests\":d[\"HostConfig\"][\"DeviceRequests\"],\"mounts\":d[\"Mounts\"],\"entrypoint\":d[\"Config\"][\"Entrypoint\"],\"command\":d[\"Config\"][\"Cmd\"],\"logs\":{\"stdout\":log.stdout,\"stderr\":log.stderr},\"receipt\":receipt}\ndef digest(p):\n    h=hashlib.sha256()\n    with p.open(\"rb\") as f:\n        for part in iter(lambda:f.read(1048576),b\"\"):\n            h.update(part)\n    return h.hexdigest()\nrows=[]\nfor arm in expected:\n    for p in sorted((base/arm).rglob(\"*\")):\n        if p.is_file():\n            rows.append({\"path\":str(p.relative_to(base)),\"sha256\":digest(p),\"bytes\":p.stat().st_size})\nencoded=\"\".join(json.dumps(r,sort_keys=True,separators=(\",\",\":\"))+chr(10) for r in rows).encode()\narchive=base/\"qualification-results.tar\"\nassert not archive.exists()\nsubprocess.run([\"tar\",\"-cf\",str(archive),\"-C\",str(base),*expected.keys()],check=True)\nprint(json.dumps({\"schema\":\"irc-mask-qualification-native-terminal-v6\",\"timestamp\":datetime.now(timezone.utc).isoformat(),\"arms\":arms,\"inventory\":{\"files\":len(rows),\"bytes\":sum(r[\"bytes\"] for r in rows),\"canonical_inventory_sha256\":hashlib.sha256(encoded).hexdigest()},\"archive\":{\"path\":str(archive),\"sha256\":digest(archive),\"bytes\":archive.stat().st_size},\"native_files_or_permissions_changed\":False,\"compiler_cache_copy_new_destinations_only\":True}))\n",
+    "qualification_launch_code": "import hashlib,json,subprocess\nfrom pathlib import Path\nfrom datetime import datetime,timezone\ncmd=json.loads(\"[\\\"sudo\\\",\\\"-n\\\",\\\"docker\\\",\\\"run\\\",\\\"--detach\\\",\\\"--name\\\",\\\"pts-irc-mask-v6-eager-qualification\\\",\\\"--gpus\\\",\\\"device=0\\\",\\\"--network\\\",\\\"none\\\",\\\"--user\\\",\\\"11027:11027\\\",\\\"--workdir\\\",\\\"/work\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-mask-construction-v6,dst=/work,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/.venv,dst=/ptsenv,readonly\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages,dst=/overlay,readonly\\\",\\\"--env\\\",\\\"PYTHONPATH=/work/src:/overlay:/ptsenv/lib/python3.12/site-packages\\\",\\\"--env\\\",\\\"PYTHONDONTWRITEBYTECODE=1\\\",\\\"--env\\\",\\\"MPLBACKEND=Agg\\\",\\\"--env\\\",\\\"OMP_NUM_THREADS=2\\\",\\\"--env\\\",\\\"OPENBLAS_NUM_THREADS=2\\\",\\\"--env\\\",\\\"MKL_NUM_THREADS=2\\\",\\\"--env\\\",\\\"USER=mekashirskiy\\\",\\\"--env\\\",\\\"TRITON_CACHE_DIR=/tmp/irc-mask-v6-eager_qualification-triton\\\",\\\"--env\\\",\\\"MPLCONFIGDIR=/tmp/irc-matplotlib\\\",\\\"--env\\\",\\\"TORCHINDUCTOR_CACHE_DIR=/tmp/irc-mask-v6-eager_qualification-inductor\\\",\\\"--env\\\",\\\"TORCHINDUCTOR_COMPILE_THREADS=2\\\",\\\"--env\\\",\\\"CUDA_CACHE_PATH=/tmp/irc-mask-v6-eager_qualification-cuda\\\",\\\"--mount\\\",\\\"type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_mask_construction_v6/eager_qualification,dst=/out\\\",\\\"--env\\\",\\\"TORCH_LOGS=recompiles\\\",\\\"--entrypoint\\\",\\\"timeout\\\",\\\"sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb\\\",\\\"--signal=TERM\\\",\\\"--kill-after=10s\\\",\\\"560s\\\",\\\"python3\\\",\\\"-S\\\",\\\"-c\\\",\\\"import os,sys,runpy,json,hashlib\\\\nfrom pathlib import Path\\\\nfor name in (\\\\\\\"TRITON_CACHE_DIR\\\\\\\",\\\\\\\"TORCHINDUCTOR_CACHE_DIR\\\\\\\",\\\\\\\"CUDA_CACHE_PATH\\\\\\\"):\\\\n    assert not Path(os.environ[name]).exists(),name+\\\\\\\" not initially empty\\\\\\\"\\\\nsys.path.insert(0,\\\\\\\"/work/scripts\\\\\\\")\\\\nimport torch\\\\nassert torch.cuda.is_available() and torch.cuda.get_device_name().startswith(\\\\\\\"NVIDIA H100\\\\\\\")\\\\nfrom run_attention_diagnostic import checked_config\\\\nfrom run_mask_diagnostic import mask_construction\\\\np=Path(\\\\\\\"/work/research/irc-mask-eager-qualification-v6.json\\\\\\\")\\\\nc=checked_config(p,\\\\\\\"8fa032d1cf7501b02f1ec2a250a2c25f202cacdb816d88bb4d3a88996febde42\\\\\\\",Path(\\\\\\\"/work\\\\\\\"))\\\\nwith mask_construction(c[\\\\\\\"mask_policy\\\\\\\"],capture=False):\\\\n    exec(compile(c[\\\\\\\"python_code\\\\\\\"],str(p)+\\\\\\\":python_code\\\\\\\",\\\\\\\"exec\\\\\\\"))\\\\n\\\"]\")\nroot=Path(\"/home/mekashirskiy/projection-transport-steering/tmp/irc-mask-construction-v6\")\np=root/\"research/irc-mask-eager-qualification-v6.json\"\nassert hashlib.sha256(p.read_bytes()).hexdigest()==\"8fa032d1cf7501b02f1ec2a250a2c25f202cacdb816d88bb4d3a88996febde42\"\nc=json.loads(p.read_text())\nassert all(hashlib.sha256((root/n).read_bytes()).hexdigest()==v for n,v in c[\"source_sha256\"].items())\ndef call(args):\n    return subprocess.check_output(args,text=True,timeout=15).strip()\nassert call([\"nvidia-smi\",\"--id=0\",\"--query-gpu=uuid,memory.used,utilization.gpu\",\"--format=csv,noheader,nounits\"])==\"GPU-988dde5b-1ad3-d864-244f-e0ffe6693cb6, 1, 0\"\nassert not call([\"sudo\",\"-n\",\"docker\",\"ps\",\"-a\",\"--filter\",\"name=^/\"+cmd[6]+\"$\",\"--format\",\"{{.Names}}\"])\nassert not list(Path(c[\"output\"]).iterdir())\nprint(json.dumps({\"timestamp\":datetime.now(timezone.utc).isoformat(),\"arm\":\"eager_qualification\",\"source_hashes\":61,\"same_gpu_idle\":True,\"name_absent\":True,\"output_empty\":True}),flush=True)\nprint(call(cmd),flush=True)\n",
+    "qualification_dispatch_raw": "{\"timestamp\": \"2026-09-08T02:40:07.171412+00:00\", \"arm\": \"eager_qualification\", \"source_hashes\": 61, \"same_gpu_idle\": true, \"name_absent\": true, \"output_empty\": true}\nea2ce1d1881b2c48e9aeaf0c54cb44e36f750a1011663c8803a4ba94569049b7\n",
+    "local_qualification_verification_code": "\nconst fs=require(\"node:fs\"),path=require(\"node:path\"),crypto=require(\"node:crypto\"),{spawnSync}=require(\"node:child_process\");\nconst base=process.cwd()+\"/artifacts/engineering/irc_mask_construction_v6\",archive=base+\"/qualification-results.tar\";\nconst digest=p=>crypto.createHash(\"sha256\").update(fs.readFileSync(p)).digest(\"hex\");\nif(fs.statSync(archive).size!==65658880||digest(archive)!==\"bc63bd03a91b905aa663760aab8276a00513e94c18c63ed39ba938d462f51e09\")throw Error(\"archive mismatch\");\nfunction run(args){const r=spawnSync(\"/usr/bin/tar\",args,{encoding:\"utf8\",maxBuffer:10*1024*1024,timeout:60000});if(r.status!==0)throw Error(r.stderr||String(r.error));return r.stdout;}\nconst names=run([\"-tf\",archive]).trim().split(\"\\n\"),details=run([\"-tvf\",archive]).trim().split(\"\\n\");\nfor(const n of names)if(!/^eager_qualification(\\/|$)/.test(n)||n.split(\"/\").includes(\"..\")||n.startsWith(\"/\"))throw Error(\"unsafe path \"+n);\nfor(const n of details)if(![\"-\",\"d\"].includes(n[0]))throw Error(\"nonregular member\");\nif(fs.existsSync(base+\"/eager_qualification\"))throw Error(\"destination exists\");\nrun([\"-xf\",archive,\"-C\",base]);\nfunction walk(p){return fs.readdirSync(p,{withFileTypes:true}).flatMap(x=>x.isDirectory()?walk(path.join(p,x.name)):x.isFile()?[path.join(p,x.name)]:(()=>{throw Error(\"nonregular extracted member\")})());}\nconst rows=walk(base+\"/eager_qualification\").sort().map(p=>({bytes:fs.statSync(p).size,path:path.relative(base,p),sha256:digest(p)}));\nconst encoded=rows.map(x=>JSON.stringify(x)+\"\\n\").join(\"\"),sha=crypto.createHash(\"sha256\").update(encoded).digest(\"hex\"),bytes=rows.reduce((a,x)=>a+x.bytes,0);\nif(rows.length!==253||bytes!==65129857||sha!==\"a50b5a07029e778029ecc316e33872679b7f6415c29bdca2dfda73b3c293dbc2\")throw Error(\"inventory mismatch\");\nconst receipt=JSON.parse(fs.readFileSync(base+\"/eager_qualification/run/receipt.json\",\"utf8\")),cells=fs.readFileSync(base+\"/eager_qualification/run/cells.jsonl\",\"utf8\").trim().split(\"\\n\").map(JSON.parse);\nif(JSON.stringify(cells)!==JSON.stringify(receipt.cells))throw Error(\"cell log mismatch\");\nconsole.log(JSON.stringify({sha256:digest(archive),bytes:fs.statSync(archive).size,inventory_files:rows.length,inventory_bytes:bytes,inventory_sha256:sha,run_cells:cells.length,native_comparisons:receipt.numerical_comparisons_in_fully_passed_cells,status:receipt.status,safe_members:names.length}));\n",
+    "closing_check_code": "\nimport hashlib,json,subprocess\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nroot=Path(\"/home/mekashirskiy/projection-transport-steering/tmp/irc-mask-construction-v6\")\np=root/\"research/irc-mask-eager-qualification-v6.json\"\nassert hashlib.sha256(p.read_bytes()).hexdigest()==\"8fa032d1cf7501b02f1ec2a250a2c25f202cacdb816d88bb4d3a88996febde42\"\nc=json.loads(p.read_text())\nassert all(hashlib.sha256((root/n).read_bytes()).hexdigest()==v for n,v in c[\"source_sha256\"].items())\ndef call(args): return subprocess.check_output(args,text=True,timeout=15).strip()\nstates=json.loads(call([\"sudo\",\"-n\",\"docker\",\"inspect\",\"pts-irc-mask-v6-automatic-history\",\"pts-irc-mask-v6-eager-history\",\"pts-irc-mask-v6-eager-qualification\"]))\nassert all(x[\"State\"][\"Status\"]==\"exited\" and not x[\"State\"][\"Running\"] for x in states)\nprint(json.dumps({\"timestamp\":datetime.now(timezone.utc).isoformat(),\"source_hashes_verified\":len(c[\"source_sha256\"]),\"containers\":[{\"id\":x[\"Id\"],\"name\":x[\"Name\"],\"state\":x[\"State\"]} for x in states],\"matching_names\":call([\"sudo\",\"-n\",\"docker\",\"ps\",\"-a\",\"--filter\",\"name=pts-irc-mask-v6-\",\"--format\",\"{{.Names}}\"]),\"gpus\":call([\"nvidia-smi\",\"--query-gpu=index,uuid,memory.used,utilization.gpu\",\"--format=csv,noheader,nounits\"])}))\n"
+  },
+  "engine_admitted": false,
+  "actual_weight_gate_b_c_dispatched": false,
+  "baseline_rerun_dispatched": false,
+  "scientific_effect_estimated": false,
+  "sota_achieved": false,
+  "next_decision": "Separately declare minimal durable eager-mask engine integration and actual-weight qualification using the existing original B/C contracts. This completed v6 admits neither those launches nor a scientific baseline.",
+  "source_packet_note": "Analysis-time and admission-time pending markers remain historical; later decisions are separate receipts. C uses the uninstrumented helper: its175 successful comparisons are mapped from35 complete native helper returns and unchanged source, not175 separately logged labels."
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "irc-real-runtime-launch-v1",
+  "created_at": "2026-09-07T14:38:48Z",
+  "record_timing": "Prospective before any real-question GPU launch or output",
+  "scientific_method_comparison": false,
+  "config_sha256": "b1d9fee872e2cdf35844fb7453c3cc35104acd494212bf39b46d29be63292cfb",
+  "protocol_sha256": "09143da89981154d1a2721d06f3a8c8aaba45b29b178257e0c8d0f9685487d66",
+  "runtime_candidate_sha256": "5e81b8c23880cce6294d7f7efe80cc72a45b5aa2231756bcfa47089463f29830",
+  "code_invariants_sha256": "56638f59ee81958964ad7f620cd76e0185e2d0a224a7ba6448da2a7f175782b2",
+  "test_sha256": "6d66b85f55e76cf592cf992a77ed33f9ded328dfab88b3e339061e3bc6f0b868",
+  "host": "avi-gn-fsk42",
+  "snapshot": "/home/mekashirskiy/projection-transport-steering/tmp/irc-real-runtime-v1",
+  "output_parent": "/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_real_runtime_v1",
+  "jobs": [
+    {
+      "condition": "profile_1",
+      "gpu": 0,
+      "name": "pts-irc-real-profile-1-v1",
+      "deadline_seconds": 1200,
+      "kill_grace_seconds": 20,
+      "command": "sudo -n docker run -d --name pts-irc-real-profile-1-v1 --network none --gpus device=0 --user 11027:11027 --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-real-runtime-v1,dst=/work,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages,dst=/overlay,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/.venv,dst=/ptsenv,readonly --mount type=bind,src=/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B,dst=/model,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_real_runtime_v1,dst=/out --env PYTHONPATH=/work/src:/overlay:/ptsenv/lib/python3.12/site-packages --env MPLBACKEND=Agg --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=2 --env OPENBLAS_NUM_THREADS=2 --env MKL_NUM_THREADS=2 --env TRITON_CACHE_DIR=/tmp/irc-triton --env MPLCONFIGDIR=/tmp/irc-matplotlib --entrypoint timeout sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb --signal=TERM --kill-after=20s 1200s python3 -S /work/scripts/run_irc_real_runtime.py --config /work/research/irc-real-runtime-config-v1.json --condition profile_1 --model /model/snapshots/b968826d9c46dd6066d109eabc6255188de91218 --output /out/profile_1 --device cuda"
+    },
+    {
+      "condition": "profile_4",
+      "gpu": 1,
+      "name": "pts-irc-real-profile-4-v1",
+      "deadline_seconds": 450,
+      "kill_grace_seconds": 20,
+      "command": "sudo -n docker run -d --name pts-irc-real-profile-4-v1 --network none --gpus device=1 --user 11027:11027 --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-real-runtime-v1,dst=/work,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages,dst=/overlay,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/.venv,dst=/ptsenv,readonly --mount type=bind,src=/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B,dst=/model,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_real_runtime_v1,dst=/out --env PYTHONPATH=/work/src:/overlay:/ptsenv/lib/python3.12/site-packages --env MPLBACKEND=Agg --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=2 --env OPENBLAS_NUM_THREADS=2 --env MKL_NUM_THREADS=2 --env TRITON_CACHE_DIR=/tmp/irc-triton --env MPLCONFIGDIR=/tmp/irc-matplotlib --entrypoint timeout sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb --signal=TERM --kill-after=20s 450s python3 -S /work/scripts/run_irc_real_runtime.py --config /work/research/irc-real-runtime-config-v1.json --condition profile_4 --model /model/snapshots/b968826d9c46dd6066d109eabc6255188de91218 --output /out/profile_4 --device cuda"
+    },
+    {
+      "condition": "profile_8",
+      "gpu": 2,
+      "name": "pts-irc-real-profile-8-v1",
+      "deadline_seconds": 330,
+      "kill_grace_seconds": 20,
+      "command": "sudo -n docker run -d --name pts-irc-real-profile-8-v1 --network none --gpus device=2 --user 11027:11027 --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-real-runtime-v1,dst=/work,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages,dst=/overlay,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/.venv,dst=/ptsenv,readonly --mount type=bind,src=/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B,dst=/model,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_real_runtime_v1,dst=/out --env PYTHONPATH=/work/src:/overlay:/ptsenv/lib/python3.12/site-packages --env MPLBACKEND=Agg --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=2 --env OPENBLAS_NUM_THREADS=2 --env MKL_NUM_THREADS=2 --env TRITON_CACHE_DIR=/tmp/irc-triton --env MPLCONFIGDIR=/tmp/irc-matplotlib --entrypoint timeout sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb --signal=TERM --kill-after=20s 330s python3 -S /work/scripts/run_irc_real_runtime.py --config /work/research/irc-real-runtime-config-v1.json --condition profile_8 --model /model/snapshots/b968826d9c46dd6066d109eabc6255188de91218 --output /out/profile_8 --device cuda"
+    },
+    {
+      "condition": "full_8",
+      "gpu": 3,
+      "name": "pts-irc-real-full-8-v1",
+      "deadline_seconds": 900,
+      "kill_grace_seconds": 20,
+      "command": "sudo -n docker run -d --name pts-irc-real-full-8-v1 --network none --gpus device=3 --user 11027:11027 --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-real-runtime-v1,dst=/work,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/tmp/irc-pyvene-oldruntime-v1/packages,dst=/overlay,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/.venv,dst=/ptsenv,readonly --mount type=bind,src=/home/mekashirskiy/.cache/huggingface/hub/models--Qwen--Qwen3-8B,dst=/model,readonly --mount type=bind,src=/home/mekashirskiy/projection-transport-steering/artifacts/engineering/irc_real_runtime_v1,dst=/out --env PYTHONPATH=/work/src:/overlay:/ptsenv/lib/python3.12/site-packages --env MPLBACKEND=Agg --env PYTHONDONTWRITEBYTECODE=1 --env OMP_NUM_THREADS=2 --env OPENBLAS_NUM_THREADS=2 --env MKL_NUM_THREADS=2 --env TRITON_CACHE_DIR=/tmp/irc-triton --env MPLCONFIGDIR=/tmp/irc-matplotlib --entrypoint timeout sha256:edc40b8cd5d95f053f05b0f7807e256038cd604c08aee981535c8e44d72180cb --signal=TERM --kill-after=20s 900s python3 -S /work/scripts/run_irc_real_runtime.py --config /work/research/irc-real-runtime-config-v1.json --condition full_8 --model /model/snapshots/b968826d9c46dd6066d109eabc6255188de91218 --output /out/full_8 --device cuda"
+    }
+  ],
+  "admission_conditions": [
+    "15 exact isolated-runtime CPU tests must pass before GPU launch",
+    "Live GPU compute-process inventory must remain empty for selected devices",
+    "All immutable hashes must match and output subdirectories must not exist"
+  ],
+  "cpu_failure": {
+    "tests": 15,
+    "failed": 2,
+    "passed": 13,
+    "warnings": 21,
+    "seconds": 38.4,
+    "root_cause": "Child CLI omitted parent -S and imported incompatible /opt/sglang torchvision alongside /ptsenv torch; operator torchvision::nms does not exist",
+    "change": "Propagate sys.flags.no_site in the existing subprocess command; scientific source and config remain unchanged."
+  },
+  "independent_critic": {
+    "result": "scoped pass",
+    "reproduced_regression_tests": 4,
+    "scope": "Reference checkpoint precedes checks/scoring; absorbing rows report unexercised action; source inspection verifies failure receipt inventories reference hashes",
+    "limits": "No GPU, budget or behavioral admission; crash may prevent a final receipt"
+  },
+  "gpu_cost_envelope": {
+    "deadline_h100_hours": 0.8,
+    "maximum_kill_grace_h100_hours": 0.022222222222222223,
+    "existing_stage_ceiling_h100_hours": 1,
+    "earlier_engineering": "Known prior branch process cost 0.015129729016787476 H100h; CUDA tests, deployment and other overhead separately accounted where measured; no complete retrospective utilization claim"
+  },
+  "failure_policy": "Retain exact container identities, terminal states, logs, raw reference checkpoints and partial scored batches. A missing final receipt is incomplete. Never relaunch after an SSH error without checking the same container ID. No rescoring or quality-based workload changes.",
+  "baseline_authorized": false
+}
