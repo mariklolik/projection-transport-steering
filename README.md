@@ -29,13 +29,7 @@ The practical result is simple: detect whether intervention is warranted, then a
 
 ## Quick verification
 
-    uv sync
-    make smoke
-    cd paper
-    pdflatex -interaction=nonstopmode -halt-on-error paper.tex
-    pdflatex -interaction=nonstopmode -halt-on-error paper.tex
-
-The smoke target imports each core module and runs embedded numerical checks without loading model weights. Full experiments require gated Hugging Face model access and a CUDA device; see [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
+see [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
 
 ## Main paper pipeline
 
