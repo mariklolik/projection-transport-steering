@@ -29,12 +29,28 @@ answer (M2).
 ## Selection rule (applied on the tuning split, identical for every method)
 
 Highest pooled selectivity among configurations whose accuracy change is at
-least -0.01; ties by accuracy change. Budgets: additive 8 doses; CAST-style 4
-thresholds x 2 doses; MiMiC 3 layers x 3 shrinkages; Linear-AcT 3 layers x 3
-strengths; PTS post-hoc 4 detector quantiles x 2 actions; PTS single pass 2
-quantiles x 4 prefix budgets; detector+additive 4 quantiles x 2 doses. Gated
-configurations are scored on the tuning split by composing the ungated rollouts
-of the same split with the gate flags; the confirmatory arms are real runs.
+least -0.01; ties by accuracy change.
+
+Amendment A (before any confirmatory steered rollout). The first tuning pass
+showed that under M5 ablation converts fewer overconfident-wrong answers than a
+shift of the confidence coordinate, so every gated family now searches the
+same kind of grid, and the comparison between gated families is a comparison
+of what the decision reads:
+
+| family | decision reads | grid | budget |
+|---|---|---|---|
+| additive | nothing | dose in {-0.125,...,-1.5} x mean norm | 8 |
+| CAST-style, trace condition | extraction-split OCW-CR direction on the finished trace | 4 CR-quantile thresholds x shift {-0.25,-0.375,-0.5,-0.75} | 16 |
+| CAST, prompt condition | logistic probe on prompt activations, fitted on the detector pool | 4 quantiles {.3,.4,.5,.6} x the same 4 shifts | 16 |
+| MiMiC | nothing | layer {10,14,18} x shrinkage {1e-4,1e-2,1e-1} | 9 |
+| Linear-AcT | nothing | layer {10,14,18} x strength {.25,.5,1} | 9 |
+| PTS post-hoc | logistic probe on the finished unsteered trace, fitted on the detector pool | 4 quantiles x action {ablation, shift -0.25, -0.375, -0.75} | 16 |
+| PTS single pass | logistic probe on the first t tokens | quantile {.3,.5} x t {16,32,64,128} x action {ablation, shift -0.375} | 16 |
+
+Gated configurations are scored on the tuning split by composing the ungated
+rollouts of the same split with the gate flags (Proposition 1 makes this exact
+up to batched-decoding nondeterminism); single-pass configurations are real
+runs. The confirmatory arms are real runs.
 
 ## Arms on the confirmatory split
 
@@ -44,9 +60,10 @@ and copied into `results/v4_confirm/protocol.json` before launch.
 ## Endpoints and tests
 
 - Primary: pooled M5 selectivity, PTS post-hoc against each of prompting, tuned
-  additive, directional ablation, tuned CAST-style, tuned MiMiC, tuned
-  Linear-AcT. Question-level paired bootstrap, 10,000 resamples, two-sided;
-  Holm adjustment over the six comparisons. Superiority is claimed only where
+  additive, directional ablation, tuned CAST (trace condition), tuned CAST
+  (prompt condition), tuned MiMiC, tuned Linear-AcT. Question-level paired
+  bootstrap, 10,000 resamples, two-sided; Holm adjustment over the seven
+  comparisons. Superiority is claimed only where
   the Holm-adjusted p < 0.05.
 - Accuracy: non-inferiority of every arm against the unsteered model at margin
   -0.02 (lower bound of the two-sided 95% bootstrap interval of the change).
