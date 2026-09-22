@@ -1,8 +1,8 @@
 # Projection-Transport Steering (PTS)
 
 Code, directions, and per-question rollouts for the paper
-"Projection-Transport Steering: Provably Minimal-Perturbation Control of
-Reasoning Behavior in LLMs" (paper/paper.pdf, built from paper/paper.tex).
+"Projection-Transport Steering: Conditional Control of Reasoning Behavior in
+LLMs" (paper/iclr2027.pdf, built from paper/iclr2027.tex).
 
 ## Setup
 

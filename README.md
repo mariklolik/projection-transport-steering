@@ -2,8 +2,8 @@
 
 Minimal reproducibility package for **Projection-Transport Steering: Conditional Control of Reasoning Behavior in LLMs**.
 
-- [Paper PDF](paper/paper.pdf)
-- [LaTeX source](paper/paper.tex)
+- [Paper PDF](paper/iclr2027.pdf)
+- [LaTeX source](paper/iclr2027.tex)
 - [Reproducibility guide](REPRODUCIBILITY.md)
 
 ## Method
@@ -14,7 +14,7 @@ Minimal reproducibility package for **Projection-Transport Steering: Conditional
 
 ## Results
 
-Projection-Transport Steering separates two decisions that fixed-vector methods conflate: when the model should be changed and how its activations should move. Across five resampled MMLU subsets, gated ablation reaches **+0.266 selectivity with no detectable accuracy change**. The fixed additive edit is essentially nonselective and lowers accuracy, showing that stronger global steering is not a substitute for targeted control.
+Projection-Transport Steering separates two decisions that fixed-vector methods conflate: when the model should be changed and how its activations should move. Across five resampled MMLU subsets, gated ablation reaches **+0.279 selectivity with no detectable accuracy change**. The fixed additive edit is essentially nonselective and lowers accuracy, showing that stronger global steering is not a substitute for targeted control.
 
 ![Selectivity and accuracy trade-off across steering methods](docs/assets/selectivity-accuracy-frontier.png)
 
@@ -33,7 +33,7 @@ The practical result is simple: detect whether intervention is warranted, then a
 | models_specific/ | Gemma-2B and Gemma-2-9B adapters |
 | results/ | Paper-level summaries and compressed per-question rollouts |
 | behaviour_specific/overconfidence/directions/ | Released fitted directions and projection statistics |
-| paper/ | Complete paper source, generated tables, figures, and compiled PDF |
+| paper/ | ICLR submission source, generated tables, figure data, and compiled PDF |
 | rebuttal/ | Frozen protocols, audit reports, and per-question post-review evidence |
 
 ## Quick verification

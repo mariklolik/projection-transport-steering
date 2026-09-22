@@ -55,10 +55,10 @@ back and rebuilds the PDF.
     uv run python paper/check_numbers.py    # every quantity the prose asserts
     uv run python paper/style_check.py      # punctuation and register
     cd paper
-    pdflatex -interaction=nonstopmode -halt-on-error paper.tex
-    pdflatex -interaction=nonstopmode -halt-on-error paper.tex
+    pdflatex -interaction=nonstopmode -halt-on-error iclr2027.tex
+    pdflatex -interaction=nonstopmode -halt-on-error iclr2027.tex
 
-The committed PDF is the two-pass compilation of the committed paper/paper.tex.
+The committed PDF is the two-pass compilation of the committed paper/iclr2027.tex.
 
 ## Post-review evidence
 

@@ -1,0 +1,31 @@
+% preferred region and Pareto frontier through the non-dominated operators
+\fill[cgate!8] (axis cs:0.20,0.70) rectangle (axis cs:0.42,0.96);
+\node[anchor=north east, font=\tiny\itshape, text=cgate!55!black] at (axis cs:0.415,0.955)
+  {remove more, keep more};
+\addplot[cgate!55!black, thick, dashed, mark=none]
+  coordinates {(0.119,0.881) (0.146,0.868) (0.224,0.820) (0.279,0.727)};
+\node[anchor=west, font=\tiny\itshape, text=cgate!55!black] at (axis cs:0.285,0.755) {frontier};
+% baselines
+\addplot[only marks, mark=pentagon*, mark size=2.4pt, gray!70] coordinates {(0.198,0.735)}
+  node[below=3pt,font=\scriptsize,text=gray!45!black]{prompting};
+\addplot[only marks, mark=*, mark size=2.4pt, cadd] coordinates {(0.222,0.400)}
+  node[right=3pt,font=\scriptsize]{CAST-style};
+\addplot[only marks, mark=triangle*, mark size=2.8pt, cot] coordinates {(0.200,0.783)}
+  node[below right=0pt,font=\scriptsize]{MiMiC $\Theta(d^2)$};
+\addplot[only marks, mark=triangle*, mark size=2.8pt, cot] coordinates {(0.146,0.868)}
+  node[below left=0pt,font=\scriptsize]{Linear-AcT};
+\addplot[only marks, mark=square*, mark size=2.4pt, cclamp] coordinates {(0.254,0.616)}
+  node[below=3pt,font=\scriptsize]{directional ablation};
+% ours
+\addplot[only marks, mark=square*, mark size=2.4pt, cclamp] coordinates {(0.145,0.698)}
+  node[below=3pt,font=\scriptsize]{clamp $q_{50}$ (ours)};
+\addplot[only marks, mark=square*, mark size=2.4pt, cclamp] coordinates {(0.119,0.881)}
+  node[above=3pt,font=\scriptsize]{quantile transport (ours)};
+\addplot[only marks, mark=diamond*, mark size=4.4pt, cgate] coordinates {(0.224,0.820)}
+  node[above=4pt,font=\scriptsize]{\textbf{gated clamp (ours)}};
+\addplot[only marks, mark=diamond*, mark size=4.4pt, cgate] coordinates {(0.279,0.727)}
+  node[right=4pt,font=\scriptsize]{\textbf{gated ablation (ours)}};
+% the global shift, off scale
+\draw[cadd, thick, -{Stealth[length=4pt]}] (axis cs:0.128,0.425) -- (axis cs:0.098,0.378);
+\node[anchor=west, font=\scriptsize, text=cadd!85!black] at (axis cs:0.131,0.432)
+  {additive CAA, off scale at $(0.00,\,0.00)$};
