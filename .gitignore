@@ -14,3 +14,7 @@ tmp/
 output/
 .pytest_cache/
 .ruff_cache/
+results/*/rollouts/
+results/v3_openended/*.jsonl
+rebuttal/run/queue*.jobs
+rebuttal/run/*.jobs

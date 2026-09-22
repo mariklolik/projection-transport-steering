@@ -33,6 +33,31 @@ $P -m behaviour_specific.overconfidence.steer_v4_sota
 $P -m behaviour_specific.overconfidence.analyze_steering_v2 --steer-dir steering_v2
 ```
 
+## Depth, single-pass gate, and the added evidence
+
+```bash
+# where to read the gate and where to act (writes per-layer fits and moments)
+$P -m behaviour_specific.overconfidence.diag_layers --layers 4,7,10,12,14,16,18,22,25 --dump-moments
+# the running-mean deviation scale the sequential boundary needs
+$P -m behaviour_specific.overconfidence.calibrate_gate --gate-layer 16
+# single-pass conditional steering: gate read at 16, action at 14, no regeneration
+$P -m behaviour_specific.overconfidence.steer_v6_online --outdir steering_v2
+
+# equal-budget tuning for every method on a held-out split
+for m in additive cast mimic act ours online; do
+  $P -m behaviour_specific.overconfidence.sweep_parity --method $m --n 400; done
+# capability away from the fitted behavior, and whether the edit stays on-manifold
+for t in wikitext humaneval openended; do
+  $P -m behaviour_specific.overconfidence.eval_openended --task $t; done
+$P -m behaviour_specific.overconfidence.judge_openended
+$P -m behaviour_specific.overconfidence.diag_manifold --benchmark arc --rollouts steering_v2_arc
+# end-to-end wall clock, post-hoc gate charged for its second pass
+$P -m behaviour_specific.overconfidence.bench_serving
+```
+
+`rebuttal/run/dispatch.py` fans a file of job chains out over the GPUs of
+several hosts and is how the grids above were run.
+
 Other benchmarks: add `--benchmark arc|gsm8k|gpqa` (transfer runs reuse the
 MMLU-fitted files in `behaviour_specific/overconfidence/directions/`).
 Multi-seed: repeat steps 2-5 with `--seed 11 23 31 47 --outdir steering_v2_s<seed>`,

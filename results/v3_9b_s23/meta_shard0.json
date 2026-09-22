@@ -1,0 +1,29 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 23,
+    "layer": 24,
+    "benchmark": "mmlu",
+    "direction": "m4_conf",
+    "conditions": "add_a-0.75,ablate,clamp_q50,otq_cal",
+    "methods": "m2,m4",
+    "think_only": "",
+    "batch_size": 64,
+    "outdir": "v3_9b_s23"
+  },
+  "norm": 380.569299214681,
+  "n_records": 300,
+  "clamp_thresholds": {
+    "0.7": 5.36016845703125,
+    "0.5": -4.700411319732666,
+    "0.3": -15.196535110473633
+  },
+  "src_moments": {
+    "mu": -5.872358798980713,
+    "sig": 19.88199234008789
+  },
+  "tgt_cal_moments": {
+    "mu": -3.8232409954071045,
+    "sig": 20.021642684936523
+  }
+}

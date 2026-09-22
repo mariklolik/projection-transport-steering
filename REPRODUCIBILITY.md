@@ -37,10 +37,23 @@ The optimal gate-times-transport implementation is:
 
 Results are written under results/. Released fitted directions and projection statistics are under behaviour_specific/overconfidence/directions/.
 
+## Added evidence
+
+The depth sweep, the sequential-gate calibration, the equal-budget tuning, the
+capability and on-manifold diagnostics and the end-to-end latency measurement
+are listed with their commands in STEERING.md. `rebuttal/run/dispatch.py` fans
+a file of job chains out over several hosts' GPUs, and
+`rebuttal/run/finalize.sh` re-analyses every run directory, pulls the outputs
+back and rebuilds the PDF.
+
 ## Tables and paper
 
     uv run python paper/make_tables.py
     uv run python paper/make_multiseed.py
+    uv run python paper/make_rebuttal_tables.py
+    uv run python paper/make_figdata.py
+    uv run python paper/check_numbers.py    # every quantity the prose asserts
+    uv run python paper/style_check.py      # punctuation and register
     cd paper
     pdflatex -interaction=nonstopmode -halt-on-error paper.tex
     pdflatex -interaction=nonstopmode -halt-on-error paper.tex
