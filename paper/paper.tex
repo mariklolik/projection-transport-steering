@@ -729,7 +729,11 @@ method (M4, MMLU, seeds mean$\pm$std) & $\Delta$acc & ECE & AURC & cr\_keep & Se
 \hline
 \input{gen/tuned_table}
 \end{tabular}}
-\caption{Multi-seed head-to-head at equal tuning budget: every method runs the
+\caption{\textbf{Equal-budget head-to-head over five resampled MMLU
+subsets.} Our gated local action holds $+0.206\pm0.059$ selectivity at
+retention $0.713$, the smallest spread in the table, and the
+score-proportional dose reaches $+0.231$; the tuned additive dose reaches
+$+0.256$ by retaining $0.621$. Every method runs the
 configuration it won on the held-out tuning split (Appendix~\ref{app:parity}),
 over five evaluation subsets of $n{=}300$. Greedy decoding is deterministic, so
 seeds resample \emph{questions}, a stricter robustness axis than sampling
@@ -939,7 +943,10 @@ method (M4, tuned) & $\Delta$acc & ECE & Sel & $\Delta$acc & ECE & Sel & $\Delta
 \hline
 \input{gen/transfer_table}
 \end{tabular}}
-\caption{Cross-domain transfer with no refitting: every method keeps the
+\caption{\textbf{Cross-domain transfer with no refitting.} On GSM8K-MCQ,
+where the fitted tail is absent, every conditional operator of ours is the
+exact identity while the tuned additive dose removes all eleven \crok{} and
+the tuned CAST gate costs $6.3$ accuracy points. Every method keeps the
 configuration it won on the MMLU tuning split and is applied to
 ARC-Challenge and GSM8K-MCQ. $^{*}$ marks a bootstrap interval excluding
 zero. GSM8K-MCQ has $6$ baseline \ocw{} and $11$ \crok{}, so its selectivity
@@ -1879,7 +1886,10 @@ method & pass@1 & ppl & fluency ppl & distinct-3 & win rate & gate fires \\
 \hline
 \input{gen/capability_table}
 \end{tabular}}
-\caption{Capability preservation away from the fitted behavior. The
+\caption{\textbf{Capability away from the fitted behavior.} The published
+additive dose takes HumanEval pass@1 from $.396$ to $.128$ and makes $57.5\%$
+of open-ended generations degenerate; every projection-local operator and both
+gated operators sit at the unsteered value on all four measurements. The
 unconditional rows keep the action on for every token, so they bound what the
 gated operator can cost. WikiText is scored teacher-forced, which gives a
 sequential gate no generated prefix to read, so that cell is not applicable.

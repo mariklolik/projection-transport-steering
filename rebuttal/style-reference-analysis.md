@@ -357,11 +357,257 @@ deviation. It is defensible under current ICLR norms (which now encourage an
 explicit limitations statement) and I would **keep it**, but it should be written
 in the corpus's register: specific, short, each item tied to a numbered claim.
 
-### 4.6 Writer-persona pass on the source texts (grounded re-read)
+### 4.6 Writer-persona pass, paper by paper and section by section
 
-The two closest references were re-read in full from their arXiv sources
-rather than from memory, and three patterns in them were adopted verbatim as
-structure.
+Each of the five references was re-read from its arXiv source. The notes below
+are per paper and per section: what the section does, the tone it does it in,
+the design of its evidence, its vocabulary, and the narrative move it makes.
+Section 4.7 collects what was carried into the manuscript.
+
+---
+
+#### A. Editing Models with Task Arithmetic (ICLR 2023)
+
+*Abstract.* Eight sentences. Opens on the practice, not on a gap: "Changing
+how pre-trained models behave ... is a common practice." Pivots at sentence
+two with "In this work, we propose a new paradigm ... centered around task
+vectors", defines the object in one sentence, then gives one sentence per
+operation in the order the paper will present them, and closes on scope
+("several models, modalities and tasks") rather than on a headline number.
+Vocabulary is deliberately plain: *steer*, *edit*, *negate*, *add*,
+*combine*. No hedge markers at all; the claims are all existence claims the
+experiments will demonstrate.
+
+*Introduction.* One paragraph of context with four citation clusters, then
+the proposal, then three bolded run-in paragraphs — `Forgetting via
+negation.`, `Learning via addition.`, `Task analogies.` — each naming the
+operation, pointing at its section ("In Section 3, we negate a task
+vector..."), and carrying one number ("maintains 98.9% of the accuracy").
+Closes on cost and reuse ("no extra cost at inference time in terms of memory
+or compute") and a code link. The narrative shape is *one object, three
+operations*, and the introduction is an index to the paper rather than an
+argument.
+
+*Method.* Under three pages and almost no notation: a task vector is
+$\tau_t=\theta^t_{ft}-\theta_{pre}$, applied as $\theta+\lambda\tau$ with
+$\lambda$ "determined using held-out validation sets". The scaling
+hyperparameter is disclosed in the method, not hidden in an appendix. Where
+the method does not apply, the paper says so in one sentence and defers ("we
+could follow Matena & Raffel and merge only the shared weights, but this
+exploration is left for future work").
+
+*Experiments.* Each section opens with the claim it tests ("In this section,
+we show that negating a task vector is an effective way to reduce its
+performance on a target task, without substantially hurting performance
+elsewhere"), then motivates why one would want it, then states the control
+explicitly ("These interventions should not have a substantial effect ...
+Accordingly, we measure accuracy on control tasks"). Baselines include a
+**random vector matched in magnitude**, narrated as such ("As an experimental
+control, adding a random vector has little impact"). Table captions are full
+sentences that state the finding with its number: "Negating task vectors
+reduce the accuracy of a pre-trained ViT-L/14 by 45.8 percentage points on the
+target tasks, with little loss on the control task." Result paragraphs follow
+one template: *As shown in Table N, X is the most effective ... For example,
+[number]. In contrast, [baseline] ... while [other baseline] severely ...*
+
+*Discussion.* There is no limitations section; the scope limits are carried
+inline as one-sentence deferrals. The closing register is practical rather
+than reflective.
+
+---
+
+#### B. Discovering Latent Knowledge Without Supervision, CCS (ICLR 2023)
+
+*Abstract.* Seven sentences. Opens on a failure mode of existing techniques
+with two parallel clauses ("if we train models with imitation learning, they
+may reproduce errors ...; if we train them to generate text that humans rate
+highly, they may output errors ..."), then "We propose circumventing this
+issue by ...", "Specifically, we introduce ...", "It works by ...", a result
+stated with its scope ("across 6 models and 10 question-answering datasets, it
+outperforms zero-shot accuracy by 4% on average"), a second result, and a
+close on significance-with-a-limit: "Our results provide an initial step
+toward ...".
+
+*Introduction.* A two-paragraph problem build in which every claim carries a
+citation and the last sentence of each paragraph generalises the problem
+("this is an issue that stems from the misalignment between a training
+objective and the truth"; "it likely won't be solved by scaling up models
+alone"). Then the proposal, then one paragraph per finding, each ending in a
+section pointer. Closes on a proof-of-concept frame.
+
+*Method.* Written as a problem statement first and an algorithm second. The
+consistency property the method exploits is stated in words before it is
+stated in symbols.
+
+*Experiments.* Subsection titles are assertions: "CCS Is Robust To Misleading
+Prompts", "CCS Finds A Task-Agnostic Representation of Truth", "CCS Does Not
+Just Recover Model Outputs", "Truth is a Salient Feature". Each opens by
+naming the alternative hypothesis it is ruling out ("One possibility is that
+CCS can only recover knowledge already contained in a model's outputs"), then
+argues by consequence ("First, if CCS were just recovering knowledge in the
+model outputs, using the last layer should presumably outperform intermediate
+layers. However, ..."). Confounds are disclosed inside the result paragraph,
+not in a footnote: the misleading-prefix experiment says plainly that
+incorrect labels behaved like correct ones and that "the prefix may instead
+actually be reducing accuracy because it is out-of-distribution". Conclusion
+verbs are hedged where the inference is indirect — *provides evidence that*,
+*suggests that*, *we speculate that* — while the measurements themselves are
+flat.
+
+*Discussion.* Section 3.3 is titled "Analyzing CCS" and opens by questioning
+the paper's own interpretation: "we have described our motivation as
+discovering latent representations of truth ... but in practice CCS just finds
+a direction in representation space that attains high accuracy. This raises
+the question: in what sense is CCS actually finding 'truth' features?" The
+paper's own framing is the thing put on trial.
+
+---
+
+#### C. Mass-Editing Memory in a Transformer, MEMIT (ICLR 2023)
+
+*Abstract.* Five sentences, the shortest in the set. Prior work's promise, its
+limitation in one narrow sentence ("predominantly limited to updating single
+associations"), the method, the result with scale and models ("thousands of
+associations for GPT-J (6B) and GPT-NeoX (20B), exceeding prior work by orders
+of magnitude"), the code link. No closing significance sentence.
+
+*Introduction.* Opens on a question — "How many memories can we add to a deep
+network by directly editing its weights?" — then motivates by application, then
+sharpens the prior-work limitation with a number ("a recent study evaluates on
+a maximum of 75"). The figure caption doubles as a summary of the whole
+contribution and names where the aggregate metric is defined.
+
+*Related Work.* Bolded run-in topics, each ending by placing this paper inside
+the topic: "In this paper, we take on the update problem, asking how the
+implicit knowledge encoded within model parameters can be mass-edited."
+
+*Experiments.* Metrics are named, capitalised and abbreviated (Efficacy Score,
+Paraphrase Success, Neighborhood Success, Reference Score, Generation
+Entropy), and the trade-off is forced into a single aggregate — the Editing
+Score, a harmonic mean of three. The unedited model is a row in every table.
+The narration explains *where each baseline breaks and why*, including
+degenerate wins: "MEND ... curiously, having negligible effect on the model at
+n=10,000 (the high specificity score is achieved by leaving the model nearly
+unchanged)". A baseline's genuine win is conceded in one sentence with a
+mechanism attached: "At small n, ROME achieves better generalization at the
+cost of slightly lower specificity ... likely due to that method's hard
+equality constraint". Runtime is reported for every method, with the authors'
+own implementation criticised in the same breath ("its current implementation
+is naive and does not batch ... These computations are actually embarrassingly
+parallel").
+
+*Discussion.* Their own method's trade-offs are named by case: "although it
+also exhibits a trade-off in editing some relations such as P127 ... and
+P641".
+
+---
+
+#### D. Interpretability in the Wild, IOI (ICLR 2023)
+
+*Abstract.* Eight sentences and the closest register to ours. Field, then the
+gap in prior work stated as a disjunction ("either focuses on simple behaviors
+in small models or describes complicated behaviors in larger models with broad
+strokes"), then "In this work, we bridge this gap by ...", the scope as a
+count (26 heads, 7 classes), a superlative claim explicitly hedged ("To our
+knowledge, the largest end-to-end attempt"), the three evaluation criteria
+named, and then the sentence that matters most for us: "Though these criteria
+support our explanation, they also point to remaining gaps in our
+understanding." It closes on feasibility.
+
+*Introduction.* Standard build, then a bulleted "In particular:" list whose
+three items are all *awkward* findings — redundant heads, known structures
+used in unexpected ways, and heads writing in the opposite direction of the
+answer — introduced as "insights about the challenges of mechanistic
+interpretability". Negative results are the contribution, framed as insight.
+
+*Method.* The intervention is named and defined ("a causal intervention that
+we call path patching") and the supplementary techniques are listed in one
+sentence.
+
+*Experiments and validation.* A subsection is titled as the reader's question:
+"Did we miss anything? The Story of the Backup Name Movers Heads". Surprise is
+stated plainly ("To our surprise, the circuit still worked (only 5% drop in
+logit difference)"), the unexplained mechanism is flagged in one sentence
+("We hypothesize ... More work is needed to determine the origin of this
+phenomenon"), and Section 4 opens by restating what the previous section did
+*not* establish. The three criteria are defined formally, each with a toy
+counterexample before application. The adverse measurement is reported with
+its number and left open: "However, the third resulted in sets K that had high
+incompleteness score: up to 3.09 (87% of the original logit difference). These
+greedily-found sets were usually not semantically interpretable ... and
+investigating them would be an interesting direction of future work."
+
+*Discussion.* The paper's claim is bounded by its own criteria rather than by
+a separate limitations section.
+
+---
+
+#### E. Emergent World Representations, Othello-GPT (ICLR 2023)
+
+*Abstract.* Six sentences. Opens on a puzzle, states the research question as
+a literal question ("Do these networks just memorize a collection of surface
+statistics, or do they rely on internal representations of the process that
+generates the sequences they see?"), then the setting, then the central
+finding hedged at the verb — "we uncover evidence of an emergent nonlinear
+internal representation" — with the intervention result stated flat
+immediately after.
+
+*Introduction.* A two-sided debate: "Some have suggested that training on a
+sequence modeling task is inherently limiting ... On the other hand, some
+tantalizing clues suggest ...". The closest prior work is then named and its
+limitation given in one sentence: "The authors stop short, however, of
+exploring the form of any internal representations. Such an investigation will
+be the focus of this paper."
+
+*Method.* The intervention is a gradient step on the activation toward a target
+class score, given in one display equation, with hyperparameters deferred to
+an appendix and the sequential-layer subtlety explained in words ("if we change
+activations only at a middle layer, activations at higher layers are directly
+affected by pre-intervention information").
+
+*Experiments.* A purpose-built benchmark of 1000 natural and 1000 unnatural
+cases, where the unnatural subset is justified as a stress test ("designed to
+be a stringent test, since it is by definition far from anything encountered in
+the training distribution"). Results are reported against an explicit null
+intervention and the conclusion verb is hedged: "suggesting the emergent
+representations are causal to model predictions".
+
+*Discussion.* The method is turned into a downstream tool (latent saliency
+maps) and validated by a qualitative contrast between two trained models,
+again with a hedged verb ("suggests that the visualization technique is
+providing useful information").
+
+---
+
+### 4.7 What was carried into the manuscript
+
+1. Section pointers inside every contribution clause (Task Arithmetic, CCS).
+2. Results stated with their evaluation scope attached (CCS).
+3. The introduction closing on what the work establishes rather than on its
+   compute cost (CCS, IOI).
+4. Prior work's limitation named once, narrowly, with evidence (MEMIT,
+   Othello-GPT), and each Related Work paragraph closing on our position
+   (MEMIT).
+5. A baseline's genuine win conceded in one sentence with the mechanism
+   attached rather than defended (MEMIT). This is the register of the
+   head-to-head paragraph.
+6. Awkward findings presented as insights about the problem, with their
+   numbers, and the unexplained part flagged in one sentence (IOI). This is
+   the register of the design-ablation appendix.
+7. Table captions that state the finding with its number rather than only
+   describing the columns (Task Arithmetic, MEMIT).
+8. Hedge the interpretation, never the measurement (Othello-GPT, CCS).
+
+One idea was tested and **not** adopted: MEMIT's single aggregate score. We
+computed the harmonic mean of removal, retention and preserved accuracy over
+the five evaluation subsets. It does not change the ordering — the tuned
+additive dose leads at $0.710$, our score-proportional dose is second at
+$0.693$ and our gated local action third at $0.666$ — so introducing it would
+add a metric without adding information.
+
+### 4.8 Cross-paper summary (first pass, retained for the statistics)
+
+#### First-pass notes (superseded by 4.6, kept for the record)
 
 **Task Arithmetic (ICLR 2023), Introduction.** Opens on the practice in
 present tense with no citation and no number ("Pre-trained models are commonly
