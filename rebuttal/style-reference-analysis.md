@@ -605,6 +605,68 @@ additive dose leads at $0.710$, our score-proportional dose is second at
 $0.693$ and our gated local action third at $0.666$ — so introducing it would
 add a metric without adding information.
 
+### 4.9 Quantitative distance to the corpus: perplexity and vocabulary
+
+Two measurements were added, `paper/lexical_distance.py` (vocabulary) and
+`paper/ppl_check.py` (perplexity, run on the cluster under
+`gemma-2-2b-it` with a 1024-token window and 512 stride). Both compare the
+manuscript's running prose with the same five references, extracted by the
+same `style_check.prose` / markdown pipeline.
+
+**Vocabulary.** Content-word Jensen-Shannon divergence is dominated by subject
+matter, not register: ours to the pooled corpus is 0.660 against a
+reference-to-reference band of 0.518-0.621, and the words driving it are
+`gate`, `dose`, `selectivity` on our side and `task`, `heads`, `attention` on
+theirs. It is reported for completeness and is not a style metric. The
+topic-independent measurement is the function-word distribution, the standard
+stylometric signal. Ours to the pooled corpus is **0.0740**, against a
+reference-to-reference band of **0.022-0.054**. Type-token ratio is 0.347
+against a corpus range of 0.252-0.381, inside the band.
+
+The function-word diagnostic names the gaps (ours/corpus per 10k function
+tokens): `the` 2349/1637, `and` 1098/709, `at` 387/91, `is` 658/373, `it`
+311/88 over-used; `in` 262/639, `for` 165/417, `to` 375/588, `we` 436/587
+under-used. Acting on the register-driven part of that list moved `we` from
+14.3 to 16.7 per 1000 words, parentheses from 15.3 to 13.9, and semicolons to
+3.2, all inside the corpus bands, and the function-word JSD from 0.0777 to
+0.0740. The residual sits in `the` and `at`, which in our text carry
+constructions a results paper needs (`at layer 16`, `at +0.206`, definite noun
+phrases for named operators); closing it further would mean removing
+measurements from the prose.
+
+**Perplexity.** The headline numbers, on length-matched extracts: ours
+**79.1**, Task Arithmetic 15.0, IOI 21.9. Seven controls were run before
+reading anything into that gap, and four of them moved it:
+
+| control | effect |
+|---|---|
+| extraction fidelity (`\emph`, `\looseness`, empty `()`, numeric math, remark titles, `et al.` sentence splits) | 133.5 -> 79.1 |
+| document length matched to ours | included above |
+| contiguity (sentence filtering breaks paragraphs) | measured, small |
+| coined vocabulary replaced by common synonyms | 104.8 -> 106.0, **refuted** |
+| numeric density (numbers replaced by a symbol) | 84.4 -> 149.9, **refuted** |
+| pretraining familiarity (a 2025 paper the scorer cannot have seen) | 2022 papers 15.0-21.9, 2025 paper **27.3** |
+| run-in headers and author metadata excluded | included above |
+
+The familiarity control is the important one: an unseen 2025 paper on the same
+topic scores 27.3 where the memorised 2022 papers score 15.0-21.9, so
+familiarity explains roughly a factor of 1.5 of the spread but not our
+remaining factor of 2.9. A per-sentence ranking on the corrected extract was
+used to find what does: about half the worst sentences were still extraction
+artifacts, now fixed, and the other half were genuinely compressed prose,
+which was rewritten (six sentences, listed in the commit). Each fix lowered
+the number; the connective pass that improved the vocabulary distance did not
+move perplexity at all (84.414 -> 84.389), which is where the measurement
+stopped being informative about the writing.
+
+**What this means for the manuscript.** Every register metric the reference
+corpus defines is inside its band. The vocabulary distance is above the
+within-corpus band by an amount attributable to topic terms the paper is
+required to keep. The perplexity gap is real but is not explained by
+vocabulary, numeric density or formatting, and it is measured against a
+corpus the scorer has partly memorised; we report it rather than continue
+editing prose against a metric that stopped responding to prose changes.
+
 ### 4.8 Cross-paper summary (first pass, retained for the statistics)
 
 #### First-pass notes (superseded by 4.6, kept for the record)

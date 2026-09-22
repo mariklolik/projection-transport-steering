@@ -197,12 +197,12 @@ stated rate and so keeps the whole pipeline single-pass. Third, we obtain
 strong trade-offs at minimal action cost in the evaluated setting. Across five
 MMLU seeds our conditional operators reach selectivity $+0.22$--$0.28$ at zero
 accuracy cost, against $+0.00$ for additive steering at its published dose and
-$+0.20$ for prompting (Sec.~\ref{sec:results}). Given every method an equal
-tuning budget they keep that selectivity when the questions change, where a
-faithful reimplementation of MiMiC keeps half of its own, and they retain more
-\crok{} than any baseline that matches them (Sec.~\ref{sec:results}). They
-replicate at $4.5\times$ scale, transfer to ARC-Challenge and GSM8K with no
-refitting (Sec.~\ref{ssec:ninetb}), and every operator is $O(d)$ per token
+$+0.20$ for prompting. In Section~\ref{sec:results} we give every method an
+equal tuning budget and find that they keep that selectivity when the
+questions change, where a faithful reimplementation of MiMiC keeps half of its
+own, and that they retain more \crok{} than any baseline that matches them. In
+Section~\ref{ssec:ninetb} they replicate at $4.5\times$ scale and transfer to
+ARC-Challenge and GSM8K with no refitting, and every operator is $O(d)$ per token
 with 19~KB of state, the optimal order by Prop.~\ref{prop:compute}. Our
 results are a first account of \emph{why} a steering edit damages what it was
 not aimed at, and of how much of that damage the geometry forces rather than
@@ -219,13 +219,13 @@ direction everywhere~\cite{arditi2024refusal}, and SAE clamping fixes a feature
 value~\cite{templeton2024scaling}. All are special cases of our
 transfer-function family, and all are input-independent edits.
 AxBench~\cite{wu2025axbench} finds them weaker than prompting on
-instruction-following, which is the concrete gap this family has to close.
+instruction-following, the concrete gap this family has to close.
 CAST~\cite{lee2024cast} adds conditional \emph{gating}, but its action
 remains additive, and SADI~\cite{wang2025sadi} and KL-adaptive
 composition~\cite{scalena2024dynamic} adapt dose per input without changing
 its shape. In this paper we take the shape of the edit as the object of study,
-and derive locality, dose control and serving cost from one
-optimality statement rather than fixing them by hand.\looseness=-1
+and we derive locality, dose control and serving cost from one optimality
+statement rather than fixing them by hand.\looseness=-1
 
 \textbf{Distribution matching and optimality.} MiMiC~\cite{singh2024mimic}
 derives the Gaussian-$\Wtwo$ affine map, applied unconditionally in the full
@@ -234,18 +234,18 @@ LinEAS~\cite{rodriguez2025lineas} learns affine maps under a distributional
 loss. COAST~\cite{nguyen2026coast} proves \emph{pointwise} optimality of a
 covariance-weighted projection, which in our language is transport to a point
 mass under the $M$ of Prop.~\ref{prop:metric}, and A-LQR
-\cite{nguyen2026alqr} proves LQR-optimality of a control input. We prove a different statement in Theorem~\ref{thm:ot}, namely the optimal map
+Nguyen et al.~\cite{nguyen2026alqr} prove LQR-optimality of a control input. We prove a different statement in Theorem~\ref{thm:ot}, namely the optimal map
 between \emph{distributions} under a locality constraint, together with the
 conditional optimality and selectivity ceiling of
 Thms.~\ref{thm:gate}--\ref{thm:joint} that no prior steering work states. PCHI~\cite{liu2026probe} trains
 probe-conditioned head rescalings for the same behavior, and its additive
 baseline corrects $\approx0\%$, independently confirming
-Cor.~\ref{cor:additive}. That baseline is ungated, so its design leaves the
+Cor.~\ref{cor:additive}. We leave that baseline ungated, so its design leaves the
 gated-additive cell empty and confounds gating with the multiplicative head
 parameterisation, and our grid fills exactly that cell. It also contains a
 probe-conditioned member of the same family, a full-$d$ logistic gate composed
-with each action (Appendix~\ref{app:fulltables}). \cite{zhang2026wired} reports the dose--response
-our per-sample dose exploits.
+with each action (Appendix~\ref{app:fulltables}). Zhang et al.~\cite{zhang2026wired} report the dose--response our per-sample
+dose exploits.
 
 \textbf{Deciding during generation.} We are not the first to move the decision
 inside the loop. CAST~\cite{lee2024cast} compares each token's hidden state
@@ -340,8 +340,8 @@ Additive steering $g(p)=p+\alpha$ is the optimal map iff $\nu=\mu_V\!*\!\delta_\
 ``hedge only abnormal confidence'' requires ($\sigma_t<\sigma_s$), the optimal
 slope is $\sigma_t/\sigma_s<1$: the tail must move more than the bulk. A
 slope-1 map matched to the tail over-transports the bulk by the same constant,
-which is the observed \crok{} collapse. Moreover its selectivity between two subpopulations
-with equal projection laws is identically zero.
+the \crok{} collapse we observe. Its selectivity between two subpopulations
+with equal projection laws is then identically zero.
 \end{corollary}
 
 If no function of the confidence coordinate can separate the two
@@ -360,7 +360,7 @@ discriminant $w=\Sigma^{-1}(\mu_{\ocw}-\mu_{\lnot\ocw})$.
 $\max_\tau[\mathrm{TPR}-\mathrm{FPR}] \le 2\,\mathrm{AUC}-1$.
 \end{theorem}
 
-Gate and action can then be designed separately without losing optimality.
+We can then design gate and action separately without losing optimality.
 
 \begin{theorem}[joint optimality of gate $\times$ transport]
 \label{thm:joint}
@@ -373,7 +373,7 @@ $P(\Gamma)\,\Wtwo^2(\mu_V\!\mid\!\Gamma,\ \nu_\Gamma)$.
 
 Theorem~\ref{thm:joint} treats the gate as a switch. Nothing forces that: the
 same cost functional, asked for the best \emph{dose} rather than the best
-event, answers with a graded rule whose threshold is measured instead of
+event, answers with a graded rule whose threshold we measure instead of
 tuned.
 
 \begin{proposition}[the optimal dose is affine in the gate posterior]
@@ -410,9 +410,10 @@ traces. One slope $\rho=c(\beta_0+\beta_1)/d$ is left to search, in place of a
 threshold and an action.
 
 Theorem~\ref{thm:joint} says nothing about \emph{when} $\Gamma$ must be
-decided. Scoring a finished trace and regenerating it is one implementation.
-Deciding while the trace is written is another, and it is the one a server can
-afford. Write $z_t$ for the mean projection over the first $t$ generated
+decided. One way to implement the gate is to score a finished trace and then
+regenerate the traces it flags.
+Deciding while the trace is written gives another, and only the second one a
+server can afford. Write $z_t$ for the mean projection over the first $t$ generated
 positions and $z_\infty$ for the completed-trace summary the post-hoc gate
 uses.
 
@@ -465,7 +466,7 @@ the same operator has already edited degrades it~\cite{luo2026yopo}, and here
 the decision is a single commitment taken before anything is edited.
 \end{remark}
 
-Two properties of the operator remain to be stated: that it does not depend
+We state two further properties of the operator: that it does not depend
 on the Euclidean metric, and that it is as cheap as any such operator can be.
 
 \begin{proposition}[metric covariance]
@@ -556,8 +557,8 @@ first $t^\star$ generated positions rather than over the finished trace, is
 read at layer~16 while the action runs at layer~14 (Remark~\ref{rem:depth}),
 and the action switches on at token $t^\star$ and stays on. Fitting the head on
 the statistic the gate will actually have is what makes an early decision
-sound, and $t^\star$ and the threshold quantile are searched on the tuning
-split like every other hyperparameter. Nothing is regenerated. In both regimes the
+sound, and we search $t^\star$ and the threshold quantile on the tuning
+split like every other hyperparameter. We regenerate nothing. In both regimes the
 gate sees only the model's own activations, with no gold labels at
 inference.\looseness=-1
 
@@ -576,7 +577,7 @@ CAA~\cite{rimsky2024caa}, ablation~\cite{arditi2024refusal},
 CAST-style~\cite{lee2024cast}, MiMiC~\cite{singh2024mimic} and Linear-AcT
 per-neuron transport~\cite{rodriguez2025act}, all reimplemented and run
 on identical records, decoding, readouts, and metrics. Every method, ours
-included, is given the same tuning budget of eight configurations, searched on
+included, we give the same tuning budget of eight configurations, searched on
 the same held-out MMLU tuning split under one pre-declared rule. CAST gets its
 threshold and dose, MiMiC and Linear-AcT get layer selection, and our gate gets
 the depth it reads and the quantile it fires at
@@ -598,7 +599,8 @@ The \emph{state histogram} asks where the answers moved, and we report the
 counts of the four behavioral states before and after
 intervention.\looseness=-1
 
-The \emph{surgical metrics} ask whether it hit only its target. Pairing
+The \emph{surgical metrics} ask whether the edit hit only the behavior it
+was aimed at. Pairing
 answers by question, $\mathrm{ocw\_rm}=P(\text{left \ocw}\mid\text{was \ocw})$ is
 the fraction of the harmful state removed,
 $\mathrm{cr\_keep}=P(\text{stayed \crok}\mid\text{was \crok})$ the
@@ -621,8 +623,8 @@ it on held-out TruthfulQA panels for Mistral-7B, OLMo-2-7B, and Granite-8B. Each
 eligible architecture used the same 237-question composition (50 in-domain,
 187 shifted) and was compared with a norm-matched spherical action using
 10,000 paired BCa resamples, and the three architecture comparisons used
-Bonferroni-adjusted two-sided intervals. OLMo-2 subsequently faced seven
-pre-frozen construction and specificity controls. A separate six-cell
+Bonferroni-adjusted two-sided intervals. We then ran seven pre-registered construction and specificity controls on
+OLMo-2. A separate six-cell
 Mistral/OLMo-2/Granite $\times$ BBQ/ETHICS observer screen kept fitting,
 screening, and confirmatory units disjoint, and only Mistral/ETHICS advanced to a
 1,000-scenario confirmatory test, with intervals adjusted for the six planned
@@ -657,7 +659,7 @@ pairs are well separated ($d\approx0.6$).}
 \end{figure}
 
 \textbf{The confidence axis does not separate justified from unjustified
-confidence.} We first test the geometric premise of selective steering. In
+confidence.} We first test the geometric premise that selective steering relies on. In
 Figure~\ref{fig:cdf} the \ocw{} and \crok{} projection CDFs nearly coincide at
 $d=0.049$, while the confident and nonconfident pairs separate at
 $d\approx0.6$. We read this as the axis encoding \emph{whether} the model is
@@ -672,7 +674,7 @@ alike. The reliability literature reports the same quantity from the other
 side: steerability varies by behavior rather than by prompt construction, and
 what predicts it is how well the two subpopulations separate along the
 difference-in-means line~\cite{tan2024generalisation,braun2025unreliability}.
-Thm.~\ref{thm:gate}b is the statement that this is not a correlation to be
+Thm.~\ref{thm:gate}b states that this is not a correlation to be
 improved by better fitting but a ceiling.\looseness=-1
 
 \textbf{Projection-dependent actions reduce collateral damage.}
@@ -687,7 +689,9 @@ high-confidence activations must move more than ordinary ones, and ablation,
 clamp, and transport achieve that by conditioning on the input
 projection.\looseness=-1
 
-\textbf{Main result.} Across five MMLU subsets we find that gated ablation attains
+\textbf{Main result.} To measure how much of the behavior an operator can
+remove for what it damages, we compare across five MMLU subsets. We find that
+gated ablation attains
 selectivity $\mathbf{+0.279\pm0.090}$ (additive $+0.000\pm0.000$,
 prompting $+0.198\pm0.086$) at no detectable accuracy cost ($-0.003\pm0.050$),
 with the best ECE ($.094\pm.030$) and AURC ($.395\pm.038$), beating
@@ -777,7 +781,8 @@ $+0.245$, and the score-proportional dose of the next paragraph reaches
 $+0.267$, within noise of the tuned additive dose and above every other method. Table~\ref{tab:headtohead} carries those
 configurations, unchanged, to the five evaluation subsets.\looseness=-1
 
-\textbf{The subspace dimension is not the lever.} Theorem~\ref{thm:joint} says
+\textbf{The subspace dimension is not the lever.} To find out where in the
+family the strength lies, we tuned it end to end. Theorem~\ref{thm:joint} says
 our gate composes with any transport, so a full-space map is not a rival
 family but the $k{=}d$ member of ours, and we tuned the family end to end
 under one budget. We measure selectivity peaking at $k{=}2$, $+0.186$, and flat above
@@ -785,14 +790,15 @@ it, $+0.148$ at $k{=}8$ and again at $k{=}32$, so the two interpretable axes
 already carry this behavior and the extra $2302$ coordinates buy nothing. The
 $k{=}d$ member says the same thing from the other end. We measure the gate composed with MiMiC's own map
 at $+0.286$ on a $400$-question split and $+0.155$ on the $1200$-question one, the largest movement of any configuration we searched
-(Table~\ref{tab:split}), which is what a configuration selected on noise looks
-like when the noise is removed. We keep $k{=}2$ because the data says the
+(Table~\ref{tab:split}), the signature of a configuration selected on noise
+once that noise is removed. We keep $k{=}2$ because the data says the
 behavior lives there, not because the operator is cheaper there. The other
 members of the family, a token-local action and a posterior-weighted dose,
-are tuned and carried the same way in Appendix~\ref{app:ablation}.
+we tune and carry the same way in Appendix~\ref{app:ablation}.
 
-\textbf{What survives a change of questions.} Carried unchanged to five
-resampled question sets, the tuning-split ordering does not hold. MiMiC keeps
+\textbf{What survives a change of questions.} To separate what a method has
+learned about the behavior from what it has learned about one split, we carry
+each winner unchanged to five resampled question sets. In that setting the tuning-split ordering does not hold. MiMiC keeps
 half of what the layer search bought it, $+0.263$ on the split and
 $+0.132\pm0.103$ on the subsets, and gating the same map stabilises it at a
 lower level, $+0.155$ and $+0.146\pm0.042$. Our gated local action moves from
@@ -802,12 +808,12 @@ sample, and a two-dimensional edit behind a gate has little to overfit.
 
 \textbf{Spending the edit where the evidence is.} What the tuning data points
 at is retention rather than removal: at its selected threshold the hard gate
-fires on most flagged traces and full ablation on the marginal ones is what
-costs \crok{}. So we let the strength of the action follow the gate score
+fires on most flagged traces and full ablation on the marginal ones costs
+\crok{}. So we let the strength of the action follow the gate score
 instead of switching on it, the interpolation $g_\lambda$ the method already
-defines, and that is the best configuration any method reaches under the
-budget, $+0.267$ against $+0.271$ for the tuned additive dose and $+0.263$ for
-MiMiC. It does not win the way the diagnosis suggested. The
+defines. Under the budget it reaches $+0.267$, within noise of the tuned
+additive dose at $+0.271$ and above MiMiC at $+0.263$, and it does not win in
+the way the diagnosis suggested. The
 selected configuration widens exposure instead of narrowing it, firing at the
 10th percentile and scaling each edit by its margin, so grading the dose is
 what makes a permissive threshold affordable. On the evaluation subsets it
@@ -816,7 +822,7 @@ it is the best member we have at $+0.342$ with retention $0.815$, against
 $+0.290$ for the hard switch.\looseness=-1
 
 \textbf{Gate and action shape are complementary.}
-We can see \emph{why} gate and local action compose in the measured movement of
+To see \emph{why} gate and local action compose in the measured movement of
 real regenerated traces (Fig.~\ref{fig:plane}, Appendix~\ref{app:plane}). Additive steering moves all 50 \ocw{} far past the calibrated
 zone and drags all 76 \crok{} along. Gated ablation protects twice: 30
 \crok{} below
@@ -826,7 +832,7 @@ tail-local action barely moves typical activations. CAST-style has the
 first protection but not the second, and ungated clamp or transport has the
 second but not the first.\looseness=-1
 
-\textbf{Detection is the main remaining bottleneck.} We find the LDA gate separates \ocw{} from \crok{} at trace-level AUROC
+\textbf{Detection remains the main bottleneck.} We find the LDA gate separates \ocw{} from \crok{} at trace-level AUROC
 $\approx0.77$: it catches $41/50$, misses 9, and false-fires on $46/76$
 \crok{}. The diagnostic value $2\,\mathrm{AUROC}-1\approx0.538$ is close to
 twice the achieved selectivity. Thm.~\ref{thm:gate}b applies to the
@@ -834,8 +840,9 @@ twice the achieved selectivity. Thm.~\ref{thm:gate}b applies to the
 Detection, rather than the transport map, is nevertheless the binding
 empirical constraint, and Fig.~\ref{fig:benchgeo} (bottom) plots the gap
 against the label oracle. Five different actions inside the same gate buy
-removal at the same rate in retention (Appendix~\ref{app:ablation}), which is
-the practical form of that constraint. Because the constraint is detection, we ask where detection is best. We refit
+removal at the same rate in retention (Appendix~\ref{app:ablation}), the
+practical form of that constraint. Because the constraint is detection, we ask where in the network detection
+is best. We refit
 the gate at nine depths (Appendix~\ref{app:layers}) and find the separation is
 not monotone in depth. It peaks at layer~16, where AUROC is $0.799$ and the
 ceiling $0.599$, and collapses by layer~25 to $0.649$, where the residual
@@ -845,8 +852,8 @@ acting at layer~14.\looseness=-1
 
 \textbf{The edit costs nothing outside the behavior it was fitted for.}
 Selectivity inside MMLU says nothing about what an always-on edit does to
-generation it was never meant to touch, so we measure three tasks the
-directions never saw (Appendix~\ref{app:capability}). We find that the dose
+generation it was never meant to touch, so to test that we measure three tasks the
+directions never saw, reported in Appendix~\ref{app:capability}. We find that the dose
 that removes
 every \ocw{} takes HumanEval pass@1 from $.396$ to $.128$, doubles WikiText-103
 perplexity ($23.4\!\to\!47.3$), and makes $57.5\%$ of 200 open-ended
@@ -905,7 +912,8 @@ the head-to-head replicates at $4.5\times$ scale.}
 \end{table}
 
 
-\textbf{Cross-domain transfer.} We apply the MMLU-fitted directions, maps, and
+\textbf{Cross-domain transfer.} To test whether an operator fitted for one
+domain is safe in another, we apply the MMLU-fitted directions, maps and
 thresholds to ARC-Challenge and GSM8K-MCQ with no refitting
 (Table~\ref{tab:transfer}), and we plot the two geometries in
 Fig.~\ref{fig:benchgeo} (top).
@@ -925,13 +933,12 @@ MMLU threshold carried to another domain can fire on none of it or on all of
 it, and which way it errs depends on the axis the threshold sits on. The
 detector-axis gate at its default quantile over-fires on GSM8K-MCQ and takes
 \crok{} with it, at retention $0.182$ in Table~\ref{tab:defaults}; the tuned
-LDA gate errs the other way and fires on nothing, which is the direction we
-want an unrefitted threshold to fail in. Label-free re-anchoring of $\tau$ to
+LDA gate errs the other way and fires on nothing, the direction we want an
+unrefitted threshold to fail in. Label-free re-anchoring of $\tau$ to
 a domain gate-score quantile removes the choice
 (Appendix~\ref{app:fulltables}). The sequential gate needs no repair on this
 domain either, because a gate that reads a prefix and commits once degenerates
-to the identity where the behavior is absent, which is the behavior the
-framework asks of it.\looseness=-1
+to the identity where the behavior is absent, as the framework asks of it.\looseness=-1
 
 \begin{table}[!t]\footnotesize\setlength{\tabcolsep}{3pt}
 \centering
@@ -947,7 +954,7 @@ method (M4, tuned) & $\Delta$acc & ECE & Sel & $\Delta$acc & ECE & Sel & $\Delta
 where the fitted tail is absent, every conditional operator of ours is the
 exact identity while the tuned additive dose removes all eleven \crok{} and
 the tuned CAST gate costs $6.3$ accuracy points. Every method keeps the
-configuration it won on the MMLU tuning split and is applied to
+configuration it won on the MMLU tuning split, and we apply it to
 ARC-Challenge and GSM8K-MCQ. $^{*}$ marks a bootstrap interval excluding
 zero. GSM8K-MCQ has $6$ baseline \ocw{} and $11$ \crok{}, so its selectivity
 column is noisy by construction, and the accuracy column is not.}
@@ -974,7 +981,7 @@ stress that the edit is small because the target law says it should be, not
 because we tuned it to be.\looseness=-1
 
 \textbf{Geometry and behavior disagree, and both matter.} The two diagnostics
-do not rank the operators the same way, which is why we report both. Measured
+do not rank the operators the same way, so we report both. Measured
 by the KL the edit induces on the next-token distribution, the accepted
 locality criterion in this literature~\cite{arditi2024refusal}, the worst
 operator is a \emph{random} direction at the same norm as the additive dose:
@@ -1033,10 +1040,10 @@ trace costs $0.059$ of detector AUROC, $0.740$ against $0.799$
 (Appendix~\ref{app:layers}), and the tuning split selects exactly that budget
 with the threshold at the 30th percentile. The operator then takes one
 decision per trace, at token 16, and regenerates nothing. Measured end to end
-on the whole 300-question workload on one idle H100, that is the difference
-between $45.5$ and $85.8$ seconds against $43.5$ unsteered, or $1.05\times$
-against $1.97\times$, because the post-hoc gate must score every finished trace
-and regenerate the $223$ it flags.
+on the whole 300-question workload on one idle H100, the sequential gate takes
+$45.5$ seconds against $85.8$ for the post-hoc one and $43.5$ unsteered, or
+$1.05\times$ against $1.97\times$, because the post-hoc gate must score every
+finished trace and regenerate the $223$ it flags.
 
 \textbf{Serving cost.}\label{sec:serving} Per token and per behavior, we spend one
 $d$-dim dot product, a 41-knot lookup, and one FMA ($\approx4d$ FLOPs
@@ -1048,7 +1055,8 @@ worth a sentence. At this scale it does not separate the single-pass
 operators from each other: every one of them, MiMiC's $\Theta(d^2)$ map
 included, lands within $6\%$ of the unsteered time, because the extra
 arithmetic hides behind a memory-bound decode
-(Appendix~\ref{app:serving}). What it separates is the number of passes. Strength interpolates as
+(Appendix~\ref{app:serving}). What it separates instead is the number of
+passes. Strength interpolates as
 $g_\lambda=(1-\lambda)\,\mathrm{id}+\lambda g$, and the operator matches the
 vLLM residual-stream hook interface~\cite{vllmlens}.\looseness=-1
 
@@ -1058,14 +1066,15 @@ The optimality results bound activation displacement under a stated subspace,
 target law and locality constraint, with the usual regularity conditions on the
 Monge map. They do not show the projection is sufficient for downstream
 behavior, and the gate bound uses the concavified ROC, not raw AUROC.
-Evaluation seeds resample questions under deterministic decoding, not training
-runs. Architecture transfer is confirmed on OLMo-2/TruthfulQA, while other
+Because decoding is deterministic, our evaluation seeds resample the
+questions rather than the training runs. Architecture transfer is confirmed on OLMo-2/TruthfulQA, while other
 architecture--behavior cells did not clear every predeclared gate
 (Appendix~\ref{app:postreview}), so we claim no universal detector axis.
 
 \section{Conclusion}
 
-We turned an empirical steering failure into theorems and a method. The
+In this work we turned an empirical failure of activation steering into a
+set of theorems and a method. The
 additive edit is the wrong shape for a tail-compression target, optimal
 transport along a behavioral subspace is the provably minimal intervention,
 selectivity is constrained by detection as much as by the action, and the
@@ -1675,7 +1684,7 @@ Every method in Table~\ref{tab:headtohead} receives at least as many
 configurations as our own eight, on the same held-out MMLU tuning split of
 $n{=}1200$ questions,
 disjoint from the extraction split and from all five evaluation subsets, and we
-select among them by one pre-declared rule: the highest selectivity among
+select among them by one pre-declared rule, the highest selectivity among
 configurations whose accuracy change is at least $-0.01$. The additive baseline
 searches its dose, CAST searches threshold $\times$ dose, MiMiC searches layer
 $\times$ shrinkage, Linear-AcT searches layer $\times\lambda$, our conditional
@@ -1735,8 +1744,8 @@ uses the $n{=}1200$ winners throughout.}
 \section{Design ablations of the operator family}
 \label{app:ablation}
 
-Every member of the family Theorem~\ref{thm:ot} defines was tuned under the
-same budget and carried unchanged to the five evaluation subsets. The point of
+We tuned every member of the family Theorem~\ref{thm:ot} defines under the
+same budget and carried each unchanged to the five evaluation subsets. The point of
 the table is which design choices survive that carry. Raising the subspace
 dimension does not: the tuned $k$ falls to $+0.065$ on the subsets from
 $+0.186$ on the split. Making the action token-local rather than trace-local
@@ -1867,7 +1876,7 @@ near-identity.}
 \section{Capability outside the target behavior}
 \label{app:capability}
 
-The operators are fitted on multiple-choice reasoning traces, so the question
+We fit the operators on multiple-choice reasoning traces, so the question
 is what they do to generation that has nothing to do with the target behavior.
 Table~\ref{tab:capability} reports code synthesis (HumanEval pass@1, greedy,
 $n{=}164$), held-out language modelling (WikiText-103 perplexity, $n{=}300$
@@ -1891,7 +1900,7 @@ additive dose takes HumanEval pass@1 from $.396$ to $.128$ and makes $57.5\%$
 of open-ended generations degenerate; every projection-local operator and both
 gated operators sit at the unsteered value on all four measurements. The
 unconditional rows keep the action on for every token, so they bound what the
-gated operator can cost. WikiText is scored teacher-forced, which gives a
+gated operator can cost. We score WikiText teacher-forced, which gives a
 sequential gate no generated prefix to read, so that cell is not applicable.
 The win rate is order-consistent against the unsteered answer, judged by
 Qwen2.5-7B-Instruct in both presentation orders with ties counted as half, so

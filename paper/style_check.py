@@ -11,15 +11,42 @@ TARGET = {"semicolons": (0.6, 3.4), "colons": (0.0, 12.0), "parentheses": (7.5, 
           "em-dashes": (0.0, 2.5), "we": (15.0, 32.0)}
 
 
+MACROS = {r"\ocw{}": "overconfident-wrong", r"\crok{}": "confident-right"}
+
+
 def prose(tex: str) -> str:
     tex = tex[tex.index(r"\begin{abstract}"):tex.index(r"\begin{thebibliography}")]
+    for k, v in MACROS.items():
+        tex = tex.replace(k, v)
     for env in ("figure", r"figure\*", "table", r"table\*", "tabular", "tikzpicture", "axis"):
         tex = re.sub(r"\\begin\{%s\}.*?\\end\{%s\}" % (env, env), " ", tex, flags=re.S)
     tex = re.sub(r"(?m)(?<!\\)%.*", "", tex)
-    tex = re.sub(r"\$[^$]*\$", " X ", tex)
+    tex = re.sub(r"\\looseness\s*=\s*-?\d+", " ", tex)
+    # run-in bold headers and the contributions block are headings and
+    # metadata, not running prose; the reference corpus's own headings are
+    # likewise outside its body text
+    tex = re.sub(r"(?m)^\\textbf\{[^{}]*\}", " ", tex)
+    tex = re.sub(r"\\textbf\{(Mark|Alexander|Anna|Ekaterina|Maria)[^{}]*\}[^.]*\.", " ", tex)
+    for _ in range(3):                                   # keep the words inside
+        tex = re.sub(r"\\(emph|textbf|textit|texttt|mbox)\{([^{}]*)\}", r"\2", tex)
+    # numbers set in math mode are prose in the reference corpus, so unwrap
+    # them; only genuinely symbolic math becomes a placeholder
+    def _num(m):
+        inner = m.group(1).replace(r"\times", "x").replace(r"\%", "%").replace("{", "").replace("}", "")
+        inner = inner.replace(r"\pm", "+-").replace("\\,", "").strip()
+        return f" {inner} " if re.fullmatch(r"[-+0-9.,%x\s]+", inner) else " X "
+    tex = re.sub(r"\$([^$]*)\$", _num, tex)
+    tex = re.sub(r"\\begin\{(remark|theorem|corollary|proposition|definition|lemma)\}\[[^\]]*\]",
+                 " ", tex)
+    tex = tex.replace("``", '"').replace("''", '"')
+    tex = re.sub(r"(Sec|Table|Appendix|Fig|Thm|Prop|Cor|Eq)\w*\.?~?\\ref\{[^}]*\}",
+                 r"\1 1", tex)
     tex = re.sub(r"\\(cite|ref|eqref|label|verb)\w*\{[^}]*\}", " ", tex)
     tex = re.sub(r"\\[a-zA-Z]+\*?(\[[^\]]*\])?(\{[^{}]*\})?", " ", tex)
-    return re.sub(r"\s+", " ", re.sub(r"[{}~]", " ", tex))
+    tex = re.sub(r"[{}~]", " ", tex)
+    tex = re.sub(r"\(\s*\)", " ", tex)                       # parens emptied by a dropped ref
+    tex = re.sub(r"\s+([,.;:])", r"\1", tex)
+    return re.sub(r"\s+", " ", tex)
 
 
 def report(path: Path) -> None:
