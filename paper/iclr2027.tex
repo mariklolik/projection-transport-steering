@@ -86,21 +86,21 @@
 Activation steering edits a language model's residual stream at inference
 time, but most edits act on every input, so an edit strong enough to remove a
 behavior also changes inputs that never showed it. We propose
-Projection-Transport Steering (PTS), a framework that separates when to
-intervene from how. Its action is the optimal-transport map of a
+Projection-Transport Steering (PTS), a framework that splits steering into an
+action and a decision. The action is the optimal-transport map of a
 low-dimensional behavioral projection onto a target law, the unique
 minimum-displacement edit that leaves the rest of the residual stream
-untouched. Its decision is a likelihood-ratio test on a learned detection
+untouched. The decision is a likelihood-ratio test on a learned detection
 statistic. The selectivity of the composed operator decomposes exactly into the
 decision's error rates and the action's conversion rates, so one ungated run
-predicts gated selectivity and unsteered answers give the ceiling of a
-decision. On overconfident multiple-choice reasoning with Gemma-2-2B, PTS is
-the most selective of eight methods on held-out questions and lowers
+predicts gated selectivity and unsteered answers give the selectivity ceiling
+of a decision. On overconfident multiple-choice reasoning with Gemma-2-2B, PTS
+is the most selective of eight methods on held-out questions and lowers
 calibration error at non-inferior accuracy. On free-text toxicity in three
-model families, PTS is more selective than refusal and random directions on its
-own decision and, in two families, than a global shift and prompting; where the
-tuning rule selects an edit along the displacement field of the quantile
-transport map, it outperforms a shift of equal mean displacement.
+model families and two held-out prompt sets, PTS is more selective than
+refusing wherever its own decision fires. On Gemma, an edit along the
+displacement of the quantile transport map, selected on the tuning split, is
+more selective than a shift of equal mean displacement.
 \end{abstract}
 
 \section{Introduction}
@@ -116,12 +116,13 @@ needed to remove a behavior where it occurs also changes the inputs where it
 does not: a refusal vector at a useful strength raises refusal on harmful and
 harmless prompts alike~\citep{arditi2024refusal}.
 
-The difficulty is sharpest for a behavior that a model shows only on some
+The difficulty is sharpest for a behavior that a model shows on only some
 inputs, such as overconfidence in multiple-choice reasoning, where the answers
 to change and the answers to protect are both confident, one wrong and one
-right. On Gemma-2-2B, the global shift that eliminates every overconfident-wrong
-answer also eliminates every confident-right one (Figure~\ref{fig:frontier}a),
-because a shift moves the bulk of the distribution as far as it moves the tail.
+right, and the two states overlap on the model's confidence direction. On
+Gemma-2-2B, our main model, a global shift along it strong enough to remove
+every overconfident-wrong answer also removes every confident-right one
+(Figure~\ref{fig:frontier}a).
 
 In this paper we introduce Projection-Transport Steering (PTS), which splits a
 steering operator into an \emph{action} that sets how to edit and a
@@ -129,8 +130,11 @@ steering operator into an \emph{action} that sets how to edit and a
 function on the projection of the residual stream onto a behavioral subspace,
 a few directions read off the model's own labeled outputs. The decision is a
 likelihood-ratio test on a detection statistic fitted to tell the target state
-from the protected one, and the action runs only where the test fires.
-Table~\ref{tab:family} places published operators in this frame.
+from the protected one, and the action runs only where the test fires. Our
+method is based on the observation that this statistic, read from the full
+activation, separates the two confident states better than the coordinate the
+action moves (Sec.~\ref{sec:results}). Table~\ref{tab:family} places
+published operators in this frame.
 
 Given the subspace and a target law for the steered projection, the action is
 determined: the optimal-transport map between the two laws is the unique
@@ -149,21 +153,23 @@ also states when steering beats overwriting every flagged output.
 
 Our main contributions are:
 \begin{itemize}\setlength{\itemsep}{1pt}
-\item A framework and its theory: the optimal-transport characterization of
-projection-local steering and an exact decomposition of conditional
-selectivity, with the optimal decision and its ceiling (Sec.~\ref{sec:method});
-the decomposition predicts measured gated selectivity with correlation $0.97$
+\item The framework and its theory (Sec.~\ref{sec:method}), with a check of
+the decomposition: over 240 tuning-split configurations per model, it predicts
+gated selectivity with correlations of $0.97$ and $0.91$
 (Sec.~\ref{ssec:law}).
 \item Held-out evidence on overconfident reasoning, with every configuration
-committed before the held-out run: PTS is the most selective of eight methods
-on 3{,}000 MMLU questions for Gemma, lowers the share of overconfident-wrong answers by
-15 points, and its direction outperforms a hundred random directions sent
-through the same decision (Sec.~\ref{sec:results}).
+committed before the held-out run: on 3{,}000 MMLU questions for the main model,
+PTS is the most selective of eight methods, and its direction is more selective
+than each of a hundred random directions with the same decision and dose
+(Sec.~\ref{sec:results}).
 \item Free-text control of toxic continuation in three model families, where
-PTS is more selective than refusal on its own decision in each family and the
-edit along the transport displacement chosen by the tuning rule outperforms a
-shift of equal mean displacement; and a head-to-head in the setting of PCHI, where PTS is more
-selective than the learned head rescaling under the same probe
+PTS beats overwriting every flagged continuation with a refusal, in every
+family and on two disjoint prompt sets; on the main model, the edit along the
+transport displacement selected on the tuning split is more selective than a
+shift of equal mean displacement (Sec.~\ref{sec:transfer},
+Figure~\ref{fig:frontier}b).
+\item In the setting of PCHI, a PTS shift along one direction is more selective
+than PCHI's learned rescaling of attention heads under the same probe
 (Sec.~\ref{sec:transfer}).
 \end{itemize}
 
@@ -242,12 +248,12 @@ target law $\nu$ (Theorem~\ref{thm:ot}) and accounts for its decision exactly
 \node[anchor=north] at ($(mcq.south east)!0.5!(mcq.south east)+(0.7cm,-0.75cm)$) {\pgfplotslegendfromname{frontierlegend}};
 \end{tikzpicture}
 \caption{PTS removes more of the target behavior than the global shift at the
-same retention. Each marker is one method at its tuned configuration on
-Gemma, on held-out questions (a) and prompts (b); up and to the right is
-better, and dotted lines mark equal selectivity. The orange curve is one shift
-at increasing dose, gray points send random directions through the PTS
-decision, and the star is the main PTS arm (post-hoc shift in a, scaled
-transport displacement in b).}
+same retention. Held-out results on Gemma for overconfident answers (a) and
+toxic continuations (b); up and to the right is better, and dotted lines mark
+equal selectivity. The orange curve is the global shift at increasing dose,
+gray points are random directions sent through the PTS decision, and the star
+is the main PTS arm (post-hoc shift in a, scaled transport displacement in b);
+other markers are tuned methods.}
 \label{fig:frontier}
 \end{figure}
 
@@ -263,55 +269,56 @@ directional ablation~\citep{arditi2024refusal} removes one direction from every
 activation, and SAE clamping~\citep{templeton2024scaling} fixes one sparse
 feature. AxBench~\citep{wu2025axbench} finds prompting stronger than
 such edits, and reliability
-studies~\citep{tan2024generalisation,braun2025unreliability} find that their
-effect varies widely across inputs. All of these operators apply one edit to
-every input, with a shape fixed by hand; Theorem~\ref{thm:ot} derives the shape
-from a target law.
+studies~\citep{tan2024generalisation,braun2025unreliability} report that their
+effect varies widely across inputs. These operators act on every input
+with a transfer function chosen in advance; PTS derives the transfer function
+from a target law (Theorem~\ref{thm:ot}).
 
-\paragraph{Transport and distribution matching.} MiMiC~\citep{singh2024mimic}
-derives the affine map that matches the mean and covariance of two activation
-distributions, the Gaussian optimal-transport map, and applies it to the full
-activation. Linear-AcT~\citep{rodriguez2025act} fits a univariate affine
-transport map to each neuron with a strength $\lambda\in[0,1]$ and writes
-earlier edits as special cases; LinEAS~\citep{rodriguez2025lineas} learns such
-maps across layers end to end. COAST~\citep{nguyen2026coast} moves each
-activation, at fixed norm, to a fixed cosine with a target direction at the
-smallest second-moment-weighted displacement, which in our terms transports
-that cosine onto a point mass, and A-LQR~\citep{nguyen2026alqr} casts steering
-as linear-quadratic control. Unlike these maps, PTS transports only a
-$k$-dimensional projection and leaves its orthogonal complement fixed; for any
-target law, including one with atoms, the cost-minimal edit is then optimal
-transport in $k$ dimensions, in closed form for $k=1$.
+\paragraph{Transport maps.} MiMiC~\citep{singh2024mimic} applies to the full
+activation the affine map that matches the mean and covariance of two
+activation distributions, the Gaussian optimal-transport map.
+Linear-AcT~\citep{rodriguez2025act} fits a univariate affine transport map to
+each neuron, interpolated by a strength $\lambda\in[0,1]$, and writes earlier
+edits as its special cases; LinEAS~\citep{rodriguez2025lineas} learns such maps
+across layers end to end. COAST~\citep{nguyen2026coast} moves each activation,
+at fixed norm, to a fixed cosine with a target direction at the smallest
+second-moment-weighted displacement, which in our terms transports that cosine
+onto a point mass. A-LQR~\citep{nguyen2026alqr} casts steering as
+linear-quadratic control. Unlike these methods, PTS transports only a
+$k$-dimensional projection and leaves its orthogonal complement fixed, so the
+cost-minimal edit toward a target law is optimal transport in $k$ dimensions,
+with a closed form for $k=1$.
 
-\paragraph{Deciding when to act.} CAST~\citep{lee2024cast} compares the prompt's
-hidden state with a condition vector at a grid-searched threshold and adds a
-behavior vector when the comparison holds; we fit its condition on the labeled
-pool of our probe. DSAS~\citep{ferrando2026dsas} decouples when to steer from
-how, with a logistic gate that scales any steering map per token.
+\paragraph{Deciding when to act.} Activations predict whether an answer is
+right~\citep{kadavath2022know,azaria2023lying}, and \citet{zhao2026wired} trace
+inflated verbalized confidence to components that write at late token
+positions. The first generated tokens predict whether steering will
+succeed~\citep{steerable2026}, while probes of a finished behavior forecast it
+poorly from a prefix~\citep{fpcg2026}. Within one forward pass, a steering
+write can degrade a direction read after it~\citep{luo2026yopo}.
 SADI~\citep{wang2025sadi}, dynamic activation
 composition~\citep{scalena2024dynamic} and GAPS~\citep{gaps2026} adapt the edit
-per input, per generation step and per dimension, respectively.
+per input, per generation step and per dimension, respectively. Closer to our
+work, three methods separate the decision from the action.
+CAST~\citep{lee2024cast} compares the prompt's hidden state with a condition
+vector at a grid-searched threshold and adds a behavior vector when the
+comparison holds. DSAS~\citep{ferrando2026dsas} decouples when to steer from
+how, with a logistic gate that scales any steering map per token.
 PCHI~\citep{liu2026probe} conditions a learned rescaling of downstream
-attention heads on a frozen probe read at a confidence-template token; we run
-PTS in its setting (Sec.~\ref{sec:transfer}). \citet{zhao2026wired} trace
-inflated verbalized confidence to components that write at late token
-positions. Activations predict whether an
-answer is right~\citep{kadavath2022know,azaria2023lying} and the first
-generated tokens whether steering will succeed~\citep{steerable2026}; probes
-of a finished behavior forecast it poorly from a
-prefix~\citep{fpcg2026}, and a steering write earlier in the same pass can
-degrade a direction read after it~\citep{luo2026yopo}. Closer to our work,
-CAST, DSAS and PCHI already separate the decision from the action; PTS adds an
-exact account of the pair (Prop.~\ref{prop:account}), with the ceiling and the
-reference arms it implies, which we run for every conditional method.
+attention heads on a frozen probe read at a confidence-template token, and we
+run PTS in its setting (Sec.~\ref{sec:transfer}). PTS adds an exact account of
+the pair (Prop.~\ref{prop:account}), together with the ceiling and the
+reference arms it implies, and we run these arms for every conditional method
+of the multiple-choice comparison.
 
 \section{Projection-Transport Steering}
 \label{sec:method}
 
-A conditional steering operator has to settle what edit to apply and to which
-inputs. PTS answers with a transport map on a behavioral subspace and a
-likelihood-ratio test on a detection statistic, and accounts for how the two
-compose. Proofs are in Appendix~\ref{app:proofs}.
+To steer a behavior only where it occurs, an operator has to settle what edit
+to apply and to which inputs. PTS answers the first question with a transport
+map on a behavioral subspace and the second with a likelihood-ratio test on a
+detection statistic, and it accounts exactly for how the two compose. Proofs
+are in Appendix~\ref{app:proofs}.
 
 \paragraph{The action.} Let $h\in\mathbb{R}^d$ be the residual-stream activation
 at a fixed decoder layer, and let $V\in\mathbb{R}^{k\times d}$ have orthonormal
@@ -319,12 +326,12 @@ rows spanning what we call the behavioral subspace; $q=Vh$ is the projection.
 In our experiments $k=1$, and the row of $V$ is the unit difference of mean
 activations between confident and hesitant answers, which we call the
 confidence direction, with $q$ the confidence coordinate; on free text the
-direction separates toxic from clean continuations. We write
-$\mu$ for the law of $h$ under unsteered generation, $\mu_V$ for the induced
-law of $q$, and $\nu$ for a target law on $\mathbb{R}^k$. Our goal is an edit
-that gives the projection the law $\nu$, leaves the orthogonal complement
-untouched, and moves $h$ as little as possible, since large edits damage
-generation (Sec.~\ref{sec:results}).
+direction separates toxic from clean continuations. We write $\mu$ for the law
+of $h$ under unsteered generation, $\mu_V$ for the induced law of $q$, and
+$\nu$ for a target law on $\mathbb{R}^k$. Our goal is an edit that gives the
+projection the law $\nu$, leaves the orthogonal complement untouched, and
+moves $h$ as little as possible, since large edits degrade generation
+(Sec.~\ref{sec:results}).
 
 \begin{definition}[admissible steering]
 \label{def:local}
@@ -352,16 +359,16 @@ $\mu$-almost surely.
 In words, once the subspace and the target law are fixed, the edit is
 determined: it moves only the projection, by the transfer function $S$ ($g$ in
 Table~\ref{tab:family}). For $k=1$, $S=F_\nu^{-1}\circ F_{\mu_V}$ is the
-monotone rearrangement, stored as a 41-knot piecewise-linear lookup;
-atomlessness of $\mu_V$ then suffices and $\nu$ may have atoms. Directional
-ablation is the map onto $\delta_0$, a clamp at $c$ the map onto the law of
-$\min(q,c)$, and the shift $S(q)=q+\alpha$ the map onto a translate of
-$\mu_V$; for Gaussian marginals $S$ is
+monotone rearrangement, which we store as a 41-knot piecewise-linear lookup;
+here it suffices that $\mu_V$ has no atoms, and $\nu$ may have atoms.
+Directional ablation is then the map onto $\delta_0$, a clamp at $c$ is the map
+onto the law of $\min(q,c)$, and the shift $S(q)=q+\alpha$ is the map onto a
+translate of $\mu_V$; for Gaussian marginals $S$ is
 affine~\citep{knott1984optimal,gelbrich1990formula}. Since every nondecreasing
 transfer function is the optimal map onto its own image law,
 Theorem~\ref{thm:ot} turns the choice of edit into a choice of target law,
-made on a tuning split (Sec.~\ref{sec:exp}). For the shift, the theorem gives
-the following corollary.
+which we make on a tuning split (Sec.~\ref{sec:exp}). For the shift, the
+theorem gives the following corollary.
 
 \begin{corollary}[when additive steering is optimal, and its limit]
 \label{cor:additive}
@@ -372,19 +379,19 @@ probability that an input leaves its state depends on $h$ only through $q$,
 the edit changes the state of both at the same rate.
 \end{corollary}
 
-\paragraph{The decision and its accounting.} A decision is needed because the
-two states we must tell apart look alike to the action. Overconfident-wrong
-(\ocw{}) and confident-right (\crok{}) answers are both confident, and their
-laws on the confidence coordinate nearly coincide (Sec.~\ref{sec:results}), so
+\paragraph{The decision.} A decision is needed because the two states we must
+tell apart look alike to the action. Overconfident-wrong (\ocw{}) and
+confident-right (\crok{}) answers are both confident, and their laws on the
+confidence coordinate overlap (Sec.~\ref{sec:results}), so
 Corollary~\ref{cor:additive}(b) suggests that a transfer function of that
-coordinate changes both at similar rates, as the global shift largely does
-(Fig.~\ref{fig:frontier}). A decision therefore reads a second statistic $s$ of
-the input and runs the action on an event $\Gamma$ determined by $s$, in
+coordinate changes both states at similar rates, as the global shift largely
+does (Fig.~\ref{fig:frontier}). The decision therefore reads a second statistic
+$s$ of the input and runs the action on an event $\Gamma$ determined by $s$, in
 practice $\{s>\tau\}$ for a scalar score; off $\Gamma$ the output is exactly
 the unsteered one. We measure the result with selectivity,
-$\mathrm{Sel}=P(\text{leave \ocw}\mid\text{\ocw})-P(\text{leave \crok}\mid\text{\crok})$, the
-share of \ocw{} answers removed minus the share of \crok{} answers lost; on
-free text, toxic and clean continuations take their places. Write
+$\mathrm{Sel}=P(\text{leave \ocw}\mid\text{\ocw})-P(\text{leave \crok}\mid\text{\crok})$,
+the share of \ocw{} answers removed minus the share of \crok{} answers lost; on
+free text, toxic and clean continuations take their places. We write
 $\mathrm{TPR}$ and $\mathrm{FPR}$ for the rates at which the decision fires on
 \ocw{} and \crok{}, and $\rho_O,\rho_C$ for the rates at which the action
 changes the state of a flagged \ocw{} and a flagged \crok{} answer.
@@ -399,17 +406,19 @@ For any decision and action that leave unflagged outputs unchanged,
 \end{proposition}
 
 The proof is one line of total probability. The decision sets
-$(\mathrm{TPR},\mathrm{FPR})$, and the action sets $(\rho_O,\rho_C)$ on the
-flagged answers. Since a gated operator with a post-hoc or prompt decision
-returns, input by input, the unsteered or the ungated output, one ungated run
-per action composes every such configuration, and the ungated rates predict its
-selectivity when the action converts flagged and unflagged answers of a state
-alike (Sec.~\ref{ssec:law}). The decomposition also fixes three reference arms
-on the same decision: a no-edit arm measures what regeneration alone changes,
-a random direction at the same dose what any perturbation of that size
-changes, and an override of the reported confidence of every flagged answer
-($\rho_O=\rho_C=1$; on free text, a refusal) has selectivity
-$\mathrm{TPR}-\mathrm{FPR}$. The action beats that override exactly when
+$(\mathrm{TPR},\mathrm{FPR})$ and the action sets $(\rho_O,\rho_C)$ on the
+flagged answers. A gated operator with a post-hoc or prompt decision returns,
+input by input, either the unsteered or the ungated output, so one ungated run
+per action composes every such configuration; the ungated rates also predict
+its selectivity when the action converts flagged and unflagged answers of a
+state alike (Sec.~\ref{ssec:law}).
+
+The identity also fixes three reference arms on the same decision. A no-edit
+arm measures what regeneration alone changes, and a random direction at the
+same dose measures what any perturbation of that size changes. An override of
+the reported confidence of every flagged answer ($\rho_O=\rho_C=1$; on free
+text, a refusal) has selectivity $\mathrm{TPR}-\mathrm{FPR}$, and the action is
+more selective than this override exactly when
 \begin{equation}
 \mathrm{TPR}\,(1-\rho_O)<\mathrm{FPR}\,(1-\rho_C),
 \label{eq:override}
@@ -433,14 +442,16 @@ every decision $\{s>\tau\}$ has $\mathrm{TPR}-\mathrm{FPR}\le2\,\mathrm{AUC}-1$,
 which caps the override on it and any action with $\rho_O=\rho_C$.
 \end{theorem}
 
-Part (b) is the ceiling of the introduction: computed from unsteered answers
-alone, it bounds what a threshold decision contributes when the action
-converts both states alike, and Appendix~\ref{app:proofs} treats the general
-case in which conversion depends on $s$. In practice the decision is a
-logistic-regression probe, an estimate of the log-likelihood ratio up to a
-constant that $\tau$ absorbs, on the activations of the finished answer, its
-first $t$ tokens or the prompt, fitted on labeled answers disjoint from every
-tuning and evaluation split.
+Part (b) bounds, from unsteered answers alone, what a threshold decision
+contributes when the action converts both states alike, so the ceiling of a
+decision is known before any steered rollout; Appendix~\ref{app:proofs} treats
+the general case in which conversion depends on $s$. In the multiple-choice and free-text experiments the decision is a
+logistic-regression probe, which estimates the log-likelihood ratio up to a
+constant that $\tau$ absorbs. The probe reads the activations of the finished
+answer, of its first $t$ tokens or of the prompt, and we fit it on a labeled
+pool disjoint from every tuning and evaluation split. Once the decision is
+fixed, Theorem~\ref{thm:ot} carries over to the inputs it
+flags.
 
 \begin{theorem}[transport under a fixed decision]
 \label{thm:joint}
@@ -452,14 +463,13 @@ from $\mu_V(\cdot\mid\Gamma)$ to $\nu_\Gamma$, at cost
 $P(\Gamma)\,\Wtwo^2(\mu_V(\cdot\mid\Gamma),\nu_\Gamma)$.
 \end{theorem}
 
-The action can thus be fitted to the flagged population without giving up
-displacement optimality. The theorem holds the decision fixed: under a linear
-gain and a price on displacement, a graded dose, the form of the per-token
-interpolation of DSAS, beats the switch exactly when its optimum lies strictly
-between $0$ and $1$ with positive probability (Prop.~\ref{prop:dose}). A
-post-hoc decision scores the finished answer and regenerates the flagged
-inputs, so it generates them twice; Proposition~\ref{prop:seq} gives the
-single-pass alternative.
+Proposition~\ref{prop:dose} replaces the switch by a graded dose, the form
+of the per-token interpolation of DSAS, and shows that under a linear gain and
+a price on displacement the threshold gate is optimal exactly when the optimal
+dose is almost surely $0$ or $1$. A post-hoc decision
+scores the finished answer and regenerates the inputs it flags;
+Proposition~\ref{prop:seq} states when the decision and the action share one
+forward pass.
 
 \begin{proposition}[single-pass decision]
 \label{prop:seq}
@@ -475,85 +485,84 @@ $d$-dimensional dot products, one lookup and one vector update.
 \section{Experimental setup}
 \label{sec:exp}\label{sec:data}
 
-\paragraph{Models and behavior.} The main model is
-Gemma-2-2B-it~\citep{gemma2024} and the main behavior is overconfidence on
-MMLU~\citep{hendrycks2021mmlu}. The multiple-choice comparison is repeated on
-Qwen2.5-7B-Instruct, a second model family on which every component is
-refitted, and on ARC-Challenge~\citep{clark2018arc}, where every decision is
-refitted with ARC training and validation questions added to its pool; the
-free-text comparison adds Mistral-7B-Instruct-v0.3 as a third family. On
+The main model is Gemma-2-2B-it~\citep{gemma2024} and the main behavior is
+overconfidence on MMLU~\citep{hendrycks2021mmlu}. The multiple-choice
+comparison is repeated on Qwen2.5-7B-Instruct, a second model family on which
+every component is refitted, and on ARC-Challenge~\citep{clark2018arc}. On
 multiple-choice questions both models reason inside
-\texttt{<think>...</think>} and answer \verb|\boxed{letter}|, with greedy
-decoding. The action runs at layer 14 of 26 (Gemma) and 14 of 28 (Qwen), where
-the confidence direction separates confident from hesitant answers best or
-within $0.016$ AUROC of the best layer on the tuning split
-(Appendix~\ref{app:layers}). Section~\ref{sec:transfer} adds toxic continuation
-as a free-text behavior and the setting of PCHI~\citep{liu2026probe}, the
-closest conditional method.
+\texttt{<think>...</think>} and answer \verb|\boxed{letter}| under greedy
+decoding. Section~\ref{sec:transfer} adds toxic continuation as a
+free-text behavior, with Mistral-7B-Instruct-v0.3 as a third family, and the
+setting of PCHI~\citep{liu2026probe}, the closest conditional method. In both
+multiple-choice models the action runs at layer 14 (of 26 and 28 layers),
+where the confidence direction separates confident from hesitant answers of the
+tuning split within $0.016$ AUROC of the best layer
+(Appendix~\ref{app:layers}).
 
-\paragraph{Readout.} The primary readout (M5) scores the answer the model
-writes. Correctness compares the boxed letter with the gold answer. Confidence
-is $P(\mathrm{YES})$ when the model is then asked, in the same conversation,
+The MMLU splits are disjoint subsets of its test set: 400 questions to extract
+the directions and transport targets, a pool of 4{,}000 to fit the detection
+probe, 1{,}200 on which every configuration is tuned, and 3{,}000 used once for
+confirmation. On ARC every decision is refitted with 1{,}012 questions from the
+ARC training and validation sets added to its pool, 400 further questions from
+those sets tune the configurations, and the 1{,}165 test questions confirm
+them.
+
+The primary readout (M5) scores the answer the model writes. Correctness
+compares the boxed letter with the gold answer. Confidence is
+$P(\mathrm{YES})$ when the model is then asked, in the same conversation,
 whether that answer is correct, and a steered question is steered in both
 turns. Correctness and whether $P(\mathrm{YES})\ge0.5$ define four states;
 the two confident ones are overconfident-wrong (\ocw{}, wrong) and
-confident-right (\crok{}, right). Appendix~\ref{app:secondary} reports two
-secondary readouts, the letter logit of the same answer and a per-option
-verification, and Appendix~\ref{app:prompts} gives the prompts.
-
-\paragraph{Splits.} The MMLU splits are disjoint subsets of the test set: 400
-questions to extract the directions and transport targets, a pool of 4{,}000 to
-fit the detection probe, 1{,}200 on which every configuration is tuned, and
-3{,}000 used once for confirmation. ARC uses 1{,}012 probe and 400 tuning
-questions from its training and validation sets and its 1{,}165 test questions
-for confirmation.
-
-\paragraph{Metrics.} Each question is paired with itself before and after the
-edit. Removal is $P(\text{not }\ocw\mid\ocw)$, retention is
+confident-right (\crok{}, right). Each question is paired with itself before
+and after the edit. Removal is $P(\text{not }\ocw\mid\ocw)$, retention is
 $P(\crok\mid\crok)$, and $\mathrm{Sel}=\text{removal}-(1-\text{retention})$,
 which is $1$ for an edit that removes every \ocw{} and keeps every \crok{} and
 $0$ for one that treats the two states alike. Because selectivity conditions on
 the starting state, we also report, over all questions, the change in the share
 of \ocw{} answers, the 10-bin expected calibration error (ECE) of the stated
-confidence, and the change in accuracy.
+confidence, and the change in accuracy. Appendix~\ref{app:secondary} reports
+two secondary readouts, the letter logit of the same answer and a per-option
+verification, and Appendix~\ref{app:prompts} gives the prompts.
 
-\paragraph{Methods and tuning.} We compare PTS with seven baselines: prompting
-with a calibration instruction, additive CAA~\citep{rimsky2024caa}, directional
+PTS decides post-hoc, from the finished unsteered answer, and then regenerates
+the flagged questions; at the prompt, in one forward pass over it before
+generation; or at a prefix of $t\in\{16,32,64,128\}$ generated tokens, which
+keeps decision and edit in one pass. Its action moves only the projection. On
+multiple-choice questions it is a shift at one of several doses or an
+ablation, both transport maps of Theorem~\ref{thm:ot}; on free text it can
+also be the displacement of the quantile map onto the projection law of clean
+continuations, scaled by $\lambda\in\{1,2,3,4,6\}$, which at $\lambda=1$ is
+the map itself.
+
+We compare PTS with seven baselines: prompting with a calibration instruction,
+additive CAA~\citep{rimsky2024caa}, directional
 ablation~\citep{arditi2024refusal}, MiMiC~\citep{singh2024mimic},
 Linear-AcT~\citep{rodriguez2025act}, CAST with its prompt
 condition~\citep{lee2024cast} fitted on the same labeled pool as our probe, and
 a CAST-style trace condition, a shift conditioned on the finished trace that,
 like post-hoc PTS, regenerates the questions it flags. On free text the
 baselines are prompting, the global shift and CAST. All methods are
-reimplemented on our hooks and scored with the same readout. PTS decides
-post-hoc, from the finished unsteered answer, and regenerates the flagged
-questions; at the prompt, in one forward pass over it before generation; or at
-a prefix of $t\in\{16,32,64,128\}$ generated tokens, which keeps decision and
-edit in one pass. Its action is a transport map of Theorem~\ref{thm:ot} on the
-projection: shifts at several doses and ablation, and on free text also the
-displacement field of the quantile map onto the projection law of clean
-continuations, scaled by $\lambda\in\{1,2,3,4,6\}$. One rule
-selects every configuration on the tuning split: the highest selectivity among
+reimplemented on our hooks and scored with the same readout. One rule selects
+every configuration on the tuning split: the highest selectivity among
 configurations whose accuracy change is at least $-0.01$, or the highest
 overall when none meets that floor; every confirmatory number is a real run.
 The budgets are one configuration for prompting and for ablation, eight for
 CAA, nine each for MiMiC and Linear-AcT, and sixteen for each conditional
 method, ours and the two CAST variants alike (Appendix~\ref{app:tuning}).
 
-\paragraph{Reference arms and statistics.} Every conditional arm is run against
-three references that share its decision: a no-edit arm, which regenerates
-the flagged inputs with the identity action; random unit directions at the same
-dose (ten per conditional multiple-choice arm; one hundred for PTS, or thirty
-displaced as far as the selected ablation on Qwen-MMLU); and an override that
-marks every flagged answer as not confident, or replaces every flagged
-continuation by a refusal on free text. Intervals are $95\%$ paired bootstrap
-intervals over questions (prompts on free text) with $10^4$ resamples. The
-seven comparisons of PTS with the baselines are two-sided and Holm-adjusted
-within each setting, each later protocol Holm-adjusts its own tests, and an
-accuracy change is non-inferior when the lower end of its interval is above
-$-0.02$. Every protocol was committed before its held-out rollouts, the
-multiple-choice one with the hashes of its selected configurations and fitted
-detectors (Appendix~\ref{app:protocol}).
+Every conditional arm is run against three references that share its decision:
+a no-edit arm, which regenerates the flagged inputs with the identity action;
+random unit directions at the same dose (ten per conditional multiple-choice
+arm; one hundred for PTS, or thirty displaced as far as the ablation selected
+on the second family); and an override that marks every flagged answer as not
+confident or, on free text, replaces every flagged continuation by a refusal.
+Intervals are $95\%$ paired bootstrap intervals over questions (prompts on free
+text) with $10^4$ resamples. The seven comparisons of PTS with the baselines
+are two-sided and Holm-adjusted within each setting, each later protocol
+Holm-adjusts its own tests, and an accuracy change is non-inferior when the
+lower end of its interval is above $-0.02$. Every protocol was committed before
+its held-out rollouts, the multiple-choice one with the hashes of its selected
+configurations and fitted detectors (Appendix~\ref{app:protocol}).
 
 \section{Selective removal of overconfident answers}
 \label{sec:results}
@@ -591,7 +600,7 @@ detectors (Appendix~\ref{app:protocol}).
 \addlegendentry{PTS selectivity, held-out}
 \end{axis}
 \begin{axis}[at={(ceil.east)}, anchor=west, xshift=1.35cm, width=.35\linewidth, height=4.4cm,
-  title={(c) the prompt already decides}, title style={font=\footnotesize},
+  title={(c) early decisions}, title style={font=\footnotesize},
   xlabel={generated tokens read}, ylabel={held-out AUROC},
   xtick={0,64,128,256}, xticklabels={prompt,64,128,all}, ymin=0.6, ymax=0.82,
   grid=major, grid style={dashed,gray!18}, tick label style={font=\tiny},
@@ -605,42 +614,26 @@ detectors (Appendix~\ref{app:protocol}).
 \addlegendentry{Qwen}
 \end{axis}
 \end{tikzpicture}
-\caption{Proposition~\ref{prop:account} predicts gated selectivity, and the
-PTS probe raises the ceiling of a decision. (a) Gated selectivity of 480
-tuning-split configurations against its prediction from ungated runs, with
-equality dashed; (b) ceiling $\max(\mathrm{TPR}-\mathrm{FPR})$ of a threshold
-on each statistic, from unsteered answers, next to held-out PTS selectivity;
-(c) held-out AUROC of the PTS probe when it reads only the prompt or the first
-answer tokens.}
+\caption{Proposition~\ref{prop:account} predicts gated selectivity from
+ungated runs, and the PTS probe raises the ceiling of a threshold decision.
+(a) Gated selectivity of 480 tuning-split configurations (six actions, two
+decisions and 20 thresholds per model) against its prediction, with equality
+dashed; (b) ceiling $\max(\mathrm{TPR}-\mathrm{FPR})$ of a threshold on each
+statistic, from unsteered held-out answers, next to held-out PTS selectivity;
+(c) held-out AUROC of the PTS probe when it reads the prompt, a prefix of the
+answer or the whole answer.}
 \label{fig:law}\label{fig:decision}
 \end{figure}
 
-A learned detection statistic lifts the selectivity ceiling of a threshold
-decision above that of the confidence coordinate on both models. A global
-shift of that coordinate removes overconfident-wrong answers only together with
-confident-right ones (Fig.~\ref{fig:frontier}a): on the held-out questions the two
-confident states overlap on the coordinate, and the best threshold there
-separates them by $\max(\mathrm{TPR}-\mathrm{FPR})=0.216$ on Gemma and $0.072$
-on Qwen. The PTS probe, fitted on a separate pool of 4{,}000 labeled answers,
-raises this ceiling to $0.370$ and $0.449$ (AUROC $0.741$ and $0.785$;
-Fig.~\ref{fig:law}b). Both ceilings are computed from unsteered answers, before
-any steered rollout.
-
-\subsection{Gated selectivity from one ungated run}
-\label{ssec:law}
-
-Proposition~\ref{prop:account} turns one ungated run into a prediction for
-every decision placed in front of it. On the tuning split we measured the
-conversion rates of six actions once, composed each with two decisions at 20
-thresholds, and compared $\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ with the
-gated selectivity composed from the same run (Fig.~\ref{fig:law}a): the correlation is $0.97$
-over 240 configurations on Gemma and $0.91$ over 240 on Qwen. Because a gated
-arm with a post-hoc or prompt decision returns, question by question, either
-the unsteered or the ungated output, its selectivity can also be composed
-from one ungated run; on the three held-out splits, twelve real gated
-arms lie within $0.025$ of this composition, with a median gap of $0.005$
-(Appendix~\ref{app:law}), so tuning a gated operator costs one generation per
-action.
+The PTS probe raises the selectivity ceiling of a threshold decision
+(Theorem~\ref{thm:gate}b) above that of the confidence coordinate on both
+models. On the held-out questions the two confident states overlap on the
+coordinate, with AUROC $0.635$ on Gemma and $0.53$ on Qwen, in line with the
+frontier of the global shift in Fig.~\ref{fig:frontier}a. The best threshold on
+the coordinate separates them by $\max(\mathrm{TPR}-\mathrm{FPR})=0.216$ and
+$0.072$. With the PTS probe, fitted on a separate pool of 4{,}000 labeled
+answers, the ceiling is $0.370$ and $0.449$ (AUROC $0.741$ and $0.785$;
+Fig.~\ref{fig:law}b).
 
 \subsection{PTS on held-out questions}
 \label{ssec:confirm}
@@ -656,38 +649,59 @@ method & $\Delta$acc & removal & retention & Sel $\uparrow$ [95\% CI] & $\Delta$
 \hline
 \end{tabular}}
 \caption{PTS is the most selective of eight methods on held-out questions.
-Gemma, 3{,}000 MMLU questions (unsteered accuracy $0.559$, ECE $0.354$;
-$n_{\ocw}{=}963$, $n_{\crok}{=}1{,}399$); $\Delta$Sel is the row minus PTS
-post-hoc, with Holm-adjusted $p$ over the seven baselines. The middle block
-holds the PTS decisions taken before the answer; the last three rows keep the
-PTS decision with no edit, with a random direction at the PTS dose (mean of
-100), and with the reported confidence overridden (Eq.~\eqref{eq:override}). $^*$: $95\%$
-interval excludes $0$; $^\dagger$: accuracy interval reaches $-0.02$.}
+Gemma-2-2B, 3{,}000 MMLU questions (unsteered accuracy $0.559$, ECE $0.354$;
+$n_{\ocw}{=}963$, $n_{\crok}{=}1{,}399$), each method at the configuration
+selected on the tuning split; $\Delta$Sel is the row minus PTS post-hoc, with
+Holm-adjusted $p$ over the seven baselines. The middle block takes the PTS
+decision before the answer is finished; the last three rows keep the PTS
+decision with no edit, with a random direction at the PTS dose (mean of 100),
+and with the reported confidence overridden (Eq.~\eqref{eq:override}). $^*$:
+$95\%$ interval excludes $0$; $^\dagger$: accuracy interval reaches $-0.02$.}
 \label{tab:confirm}
 \end{table}
 
-With every method at the configuration it won on the tuning split, post-hoc
-PTS is the most selective of the eight on the held-out questions
-(Table~\ref{tab:confirm}). It reaches selectivity $0.294$ $[0.256, 0.334]$: it removes $49\%$
-of overconfident-wrong answers and keeps $80\%$ of confident-right ones. The
-closest baseline, the CAST-style trace condition, reaches $0.248$, and the
-other six trail PTS by $0.074$ to $0.233$; all seven differences survive Holm
-adjustment, and the lead over the CAST-style condition holds at confidence
-cutoffs of $0.4$ ($+0.044$ $[0.007, 0.080]$) and $0.6$ ($+0.068$
-$[0.028, 0.107]$). Over all questions, PTS lowers the share of
-overconfident-wrong answers by $15.0$ points $[13.7, 16.4]$ and the calibration
-error from $0.354$ to $0.255$, with an accuracy change of $+0.003$
-$[-0.009, 0.015]$. A decision read from the first 32 generated tokens, in a
-single pass, gives the same selectivity, $0.294$.
+Post-hoc PTS is the most selective of the eight methods on the 3{,}000
+held-out questions (Table~\ref{tab:confirm}). It removes $49\%$ of overconfident-wrong answers
+and keeps $80\%$ of confident-right ones, a selectivity of $0.294$
+$[0.256, 0.334]$. The closest baseline, the CAST-style trace condition,
+reaches $0.248$, and the other six trail PTS by $0.074$ to $0.233$; all seven
+differences survive Holm adjustment. The lead over the CAST-style condition
+also holds when the confidence threshold that defines the states moves from
+$0.5$ to $0.4$ ($+0.044$ $[0.007, 0.080]$) or to $0.6$ ($+0.068$
+$[0.028, 0.107]$).
 
-The confidence direction carries the edit. With the PTS decision and dose
-kept and the direction replaced by random unit directions, selectivity averages
-$0.131$ over one hundred draws; PTS is above every draw and above their mean by
-$0.163$ $[0.140, 0.188]$ (gray points in Fig.~\ref{fig:frontier}a). On code
-synthesis the prompt decision keeps the edit off: it fires on none of the
-HumanEval problems, so pass@1 stays at its unsteered $0.396$, whereas the same
-shift applied to every input lowers it to $0.281$
-(Appendix~\ref{app:capability}).
+Over all questions, PTS lowers the share of overconfident-wrong answers by
+$15.0$ points $[13.7, 16.4]$ and the calibration error from $0.354$ to
+$0.255$, with a non-inferior accuracy change of $+0.003$ $[-0.009, 0.015]$.
+The decision can also be taken before the answer is finished. The probe
+separates the two states from the prompt almost as well as from the finished
+answer (Fig.~\ref{fig:law}c), and a decision read from the first 32 generated
+tokens, in the same pass as the edit, gives the same selectivity, $0.294$.
+
+The edit along the confidence direction carries this selectivity. Under the
+PTS decision, regenerating the flagged questions without an edit gives
+$0.049$, and one hundred random unit directions at the PTS dose average
+$0.131$; PTS lies above all hundred and above their mean by $0.163$
+$[0.140, 0.188]$ (gray points in Fig.~\ref{fig:frontier}a). On code synthesis
+the prompt decision keeps the edit off: it fires on none of the 164 HumanEval
+problems, so pass@1 stays at its unsteered $0.396$, whereas the ungated shift
+at its selected dose lowers it to $0.281$ (Appendix~\ref{app:capability}).
+
+\subsection{Gated selectivity from one ungated run}
+\label{ssec:law}
+
+Proposition~\ref{prop:account} predicts the selectivity of every decision
+placed in front of an action from one ungated run of that action. On the
+tuning split we measured the conversion rates of six actions once, composed
+each with two decisions at 20 thresholds, and compared the prediction
+$\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ with the gated selectivity composed
+from the same run (Fig.~\ref{fig:law}a). The correlation is $0.97$ over 240
+configurations on Gemma and $0.91$ over 240 on Qwen. The composition that
+scores gated configurations during selection also matches real gated runs: on
+the three held-out splits, the twelve real gated arms lie within $0.025$ of
+their composition, with a median gap of $0.005$. For post-hoc and prompt
+decisions the tuning search thus needs one ungated generation per action
+(Appendix~\ref{app:law}).
 
 \section{PTS beyond the main setting}
 \label{sec:transfer}
@@ -703,26 +717,36 @@ method & $\Delta$acc & Sel $\uparrow$ [95\% CI] & $\Delta$Sel ($p$) & $\Delta$EC
 \inputtab{gen/confirm_qa}
 \hline
 \end{tabular}}
-\caption{On a second model family and a second benchmark, PTS stays above its
-no-edit reference arm. Notation as in Table~\ref{tab:confirm}; unsteered
-accuracy $0.737$ (Qwen) and $0.744$ (ARC). The random-direction row averages
-100 directions on ARC and, on Qwen, 30 directions displaced as far as the
-selected ablation; the last row overrides the reported confidence on the
-PTS decision.}
+\caption{PTS is above its no-edit reference arm on a second model family
+(left) and on a second benchmark (right). Notation as in Table~\ref{tab:confirm}; unsteered
+accuracy is $0.737$ on Qwen and $0.744$ on ARC. The random-direction row
+averages 100 directions on ARC and, on Qwen, 30 directions displaced as far as
+the selected ablation; the last row overrides the reported confidence of the
+answers the PTS decision flags.}
 \label{tab:confirm2}
 \end{table}
 
-\subsection{Further multiple-choice settings}
+PTS stays selective on a second model family and on a second benchmark
+(Table~\ref{tab:confirm2}). The tuning rule selects ablation as the action on
+Qwen, where PTS reaches selectivity $0.172$ $[0.136, 0.210]$, $0.081$ above
+regenerating the flagged questions without an edit and $0.132$ above the
+CAST-style trace condition. On ARC-Challenge PTS reaches $0.235$
+$[0.168, 0.303]$ and lowers the calibration error by $0.060$. There it is above
+Linear-AcT and the CAST prompt condition after Holm adjustment, and above the
+95th percentile of a hundred random directions sent through its decision.
 
-PTS remains selective on a second model family and on a second benchmark
-(Table~\ref{tab:confirm2}). On Qwen
-the tuning rule selects ablation as the action, and PTS reaches selectivity
-$0.172$ $[0.136, 0.210]$, $0.081$ above regenerating the flagged questions
-without an edit and significantly above the CAST-style trace condition. On
-ARC-Challenge, with every decision refitted, PTS reaches $0.235$
-$[0.168, 0.303]$, lowers the calibration error by $0.060$, is significantly
-above Linear-AcT and the CAST prompt condition, and lies above the 95th
-percentile of a hundred random directions sent through its decision.
+\subsection{The setting of PCHI}
+
+In the setting of PCHI~\citep{liu2026probe}, PTS is more selective than the
+learned head rescaling under the same probe. PCHI gates a rescaling of 128
+attention heads with a probe read where the model states its confidence. We
+rebuild this setting: Qwen3-4B-Instruct answers OpenMathInstruct-2 problems in
+a JSON format that ends with a yes/no confidence field, and a probe on the
+layer-18 state at that field flags overconfident-wrong answers. PTS keeps the
+probe and replaces the learned rescaling with a shift of the same state along
+one direction. On 3{,}183 held-out answers it reaches selectivity $0.438$,
+against $0.354$ for PCHI ($+0.084$ $[0.058, 0.110]$), and a calibration error
+of $0.188$ against $0.234$ (Appendix~\ref{app:pchi}).
 
 \subsection{Free text: toxic continuation}
 
@@ -737,96 +761,85 @@ method & rem./kept & Sel $\uparrow$ [95\% CI] & $\Delta$Sel ($p$) & rem./kept & 
 \inputtab{gen/toxicity}
 \hline
 \end{tabular}}
-\caption{PTS has the highest single-pass selectivity on free text in all three
-families. 3{,}000 held-out RealToxicityPrompts prompts per model; rem./kept is
-the percent of toxic continuations removed and of clean continuations kept
-(clean and within embedding cosine $0.5$ of the unsteered text), and $\Delta$Sel
-is the row minus PTS with the shift. Post-hoc PTS regenerates the prompts it
-flags, the scaled transport displacement is the tuning-rule choice on Gemma, and the last two
-rows keep the PTS decision.}
+\caption{Among single-pass methods, PTS is the most selective on free text in
+all three families. 3{,}000 held-out RealToxicityPrompts prompts per model;
+rem./kept is the percent of toxic continuations removed and of clean
+continuations kept (clean and within embedding cosine $0.5$ of the unsteered
+text), and $\Delta$Sel is the row minus PTS with the shift. Post-hoc PTS
+regenerates the prompts it flags, the scaled transport displacement is the
+tuning-rule choice on Gemma, and the last two rows keep the PTS decision.}
 \label{tab:toxicity}
 \end{table}
 
-Free text is the natural test of the action, because a continuation carries
-no single readout that a decision could overwrite in its place. We steer toxic continuation of
+We test the action on free text, where a continuation has no single readout
+that a decision could overwrite. We steer toxic continuation of
 RealToxicityPrompts~\citep{gehman2020realtoxicityprompts}, the setting in which
 Linear-AcT reports toxicity mitigation, in all three model families
 (Appendix~\ref{app:toxicity}). A RoBERTa classifier labels a continuation toxic
-at score $0.5$, and a clean continuation counts as kept only if the steered one
-is clean and within sentence-embedding cosine $0.5$ of the unsteered one, so
+at score $0.5$. A clean continuation counts as kept only if the steered one is
+clean and within sentence-embedding cosine $0.5$ of the unsteered one, so
 rewriting a clean text counts as damage. The direction is the difference of
 mean activations between toxic and clean continuations, and the decision is a
-probe on the prompt, read before generation.
+probe on the prompt, read before generation. Because the decision gates each
+row inside its original batch, every continuation it does not flag is
+identical to the unsteered one.
 
-On 3{,}000 held-out prompts per model (Table~\ref{tab:toxicity}), PTS is more
-selective in every family than refusing on its own decision, which gives up
-every clean continuation the decision flags, and lies above the 95th
-percentile of a hundred random directions sent through that decision; on Gemma
-and Qwen it is also more selective than the global shift and prompting. On
-Gemma the tuning rule selects $h+3V^\top(S(Vh)-Vh)$, three times the
-displacement of the quantile map $S$ from the law of the projection over toxic
-continuations to its law over clean ones. This edit reaches selectivity $0.584$
-$[0.542, 0.624]$, lowers the toxic rate from $15.0\%$ to $3.5\%$ while keeping
-$79\%$ of clean continuations, and is above a shift of the same mean
-displacement by $0.043$ $[0.012, 0.076]$ and above CAST by $0.069$
-$[0.021, 0.117]$. On Qwen, PTS reaches $0.534$ $[0.496, 0.570]$, also
-significantly above CAST, and on Mistral, where toxic continuations are rare,
-it lowers the toxic rate from $3.4\%$ to $1.4\%$ at selectivity $0.520$
-$[0.430, 0.605]$. For each of the seven gated arms we compared with refusal,
-Eq.~\eqref{eq:override} evaluated with tuning-split conversion rates predicts
-the held-out winner. On a second, previously unused set of 3{,}000 prompts per
-model, under a protocol pushed before its runs, PTS again exceeds refusal on
-its own decision by $0.15$ to $0.17$ and a hundred random directions by $0.23$
-to $0.43$ in all three families, and prompting in all three
+PTS is more selective than refusal on its own decision in every family, and it
+lies above the 95th percentile of a hundred random directions sent through
+that decision (Table~\ref{tab:toxicity}). For every gated arm that we compared
+with refusal, Eq.~\eqref{eq:override} evaluated with tuning-split conversion
+rates predicts the held-out winner. On Gemma and Qwen, PTS is also
+more selective than the global shift and prompting, and on Qwen it is above
+CAST, $0.534$ against $0.443$. With Mistral, whose continuations are rarely
+toxic, PTS lowers the toxic rate from $3.4\%$ to $1.4\%$ at selectivity $0.520$
+$[0.430, 0.605]$.
+
+On Gemma the tuning rule selects an edit along the transport displacement,
+and this edit is more selective than a shift of the same mean displacement.
+The edit is $h+3V^\top(S(Vh)-Vh)$, where $S$ is the quantile map from the law of
+the projection over toxic continuations to its law over clean ones. It reaches
+selectivity $0.584$ $[0.542, 0.624]$ and lowers the toxic rate from $15.0\%$ to
+$3.5\%$ with $79\%$ of clean continuations kept. Its lead is $0.043$
+$[0.012, 0.076]$ over the matched shift and $0.069$ $[0.021, 0.117]$ over
+CAST.
+
+On a second, previously unused set of 3{,}000 prompts per model, under a
+protocol pushed before any steered rollout, PTS again exceeds refusal on its
+own decision by $0.15$ to $0.17$ and a hundred random directions by $0.23$ to
+$0.43$ in every family. It is also above prompting in all three
 (Appendix~\ref{app:fresh}).
-
-\subsection{The setting of PCHI}
-
-In the setting of PCHI~\citep{liu2026probe}, a shift along one direction
-under the same probe is more selective than the learned head rescaling. PCHI
-gates a rescaling of 128 attention heads with a probe read where the model
-states its confidence. We rebuild its setting: Qwen3-4B-Instruct answers OpenMathInstruct-2
-problems in a JSON format that ends with a yes/no confidence field, and a
-probe on the layer-18 state at that field flags overconfident-wrong answers.
-PTS keeps the probe and replaces the learned rescaling by a shift of the same
-state along one direction. On 3{,}183 held-out answers PTS reaches selectivity
-$0.438$ against $0.354$ for PCHI ($+0.084$ $[0.058, 0.110]$) and a calibration
-error of $0.188$ against $0.234$ (Appendix~\ref{app:pchi}).
 
 \subsection{Inference cost}
 
 With a prompt decision, PTS adds $9\%$ to generation time. On one H100, 750
-toxicity continuations with Gemma take $5.79$ seconds unsteered and $6.31$
-seconds with PTS, of which $0.46$ seconds go to the pass over the prompts that
-reads the decision; a post-hoc decision regenerates the flagged half and takes
-$8.74$ seconds (Appendix~\ref{app:latency}).
+toxicity continuations of the main model take $5.79$ seconds unsteered and
+$6.31$ seconds with PTS, of which $0.46$ seconds go to the forward pass over the
+prompts that reads the decision. A post-hoc decision regenerates the flagged
+half and takes $8.74$ seconds (Appendix~\ref{app:latency}).
 
 \section{Limitations}
 
-Where a behavior has a single readout, as multiple-choice confidence does,
-overriding that readout on every answer the post-hoc PTS decision flags is at
-least as selective as the action (Appendix~\ref{app:refs}). On free text, a
-per-token gate without the input decision matches PTS on a fresh split
-(Appendix~\ref{app:fresh}). The evidence covers two behaviors in three model
-families of 2 to 7 billion parameters with one toxicity classifier, and the
-multiple-choice protocols became public together with their results.
+Overriding the single readout of multiple-choice confidence on every answer
+the post-hoc PTS decision flags is at least as selective as the action
+(Appendix~\ref{app:refs}). On a fresh free-text split, PTS does not exceed a
+per-token gate without the input decision, and the monotone transport map is
+level with an equal-displacement shift (Appendix~\ref{app:fresh}). The evidence
+covers two behaviors and three families of 2B to 7B models with one toxicity
+classifier; the multiple-choice protocols became public with their results.
 
 \section{Conclusion}
 
-We have introduced Projection-Transport Steering, which splits an activation
-edit into an action, a transport map on the projection onto a behavioral
-subspace, and a decision, a likelihood-ratio test that sets where the action
-runs. Once the subspace and the target law are fixed, the cost-minimal action
-is the optimal-transport map between the projection laws, and the selectivity
-of the composed operator equals the decision's error rates weighted by the
-action's conversion rates. This identity predicts gated configurations from one
-ungated run and bounds a decision from unsteered answers alone. In the
-main multiple-choice setting PTS was the most selective of eight methods, and
-on free-text toxicity it was more selective than refusal on its own decision in
-all three model families. We expect the same
-accounting to guide conditional control of other behaviors whose target and
-protected states share a representation.
-
+We have introduced PTS, which splits an activation edit into an action, a
+transport map on the projection onto a behavioral subspace, and a decision, a
+likelihood-ratio test that sets where the action runs. Once the subspace and
+the target law are fixed, the cost-minimal action is the optimal-transport map
+between the projection laws. The selectivity of the composed operator equals
+the decision's error rates weighted by the action's conversion rates, so one
+ungated run predicts gated configurations and unsteered answers alone give the
+ceiling of a threshold decision. In the main multiple-choice setting PTS is the
+most selective of eight methods on held-out questions, and on free-text
+toxicity it is more selective than refusal on its own decision in all three
+model families.
 \subsection*{AI use statement}
 
 We used generative AI tools to polish the manuscript and to retrieve related
