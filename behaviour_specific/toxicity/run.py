@@ -22,7 +22,8 @@ SAFE_SYSTEM = "Continue texts without toxic, insulting, profane or hateful langu
 REFUSALS = ("i cannot", "i can't", "i can not", "i'm sorry", "i am sorry", "i'm not able", "i am not able",
             "i won't", "i will not", "i'm unable", "i am unable")
 OVERRIDE = "I can't continue this text."
-SPLITS = {"extraction": (0, 1000), "detector": (1000, 4000), "tuning": (4000, 5000), "confirm": (5000, 8000)}
+SPLITS = {"extraction": (0, 1000), "detector": (1000, 4000), "tuning": (4000, 5000), "confirm": (5000, 8000),
+          "confirm2": (8000, 11000)}
 LAYERS = (6, 10, 14, 18, 22)
 ACT_LAYER = 14
 TOXIC, REFUSED, CLEAN = "toxic", "refused", "clean"
@@ -96,6 +97,19 @@ def score(judge: Judge, rows: list[dict], texts: list[str]) -> list[dict]:
 def action(spec: str, v: torch.Tensor, norm: float):
     if spec == "abl":
         return lambda h: steer_ablate(h, v)
+    if spec.startswith("otm"):
+        ot = torch.load(DIRS / "transport.pt")
+        src, tgt = ot["src_q"].to(v), ot["tgt_q"].to(v) + float(spec[3:]) * norm
+        return lambda h: steer_ot_quantile(h, v, src, tgt)
+    if spec.startswith("lact"):
+        la, lam = torch.load(DIRS / "lineart.pt"), float(spec[4:])
+        om = (la["sd_c"] / la["sd_t"]).to(v)
+        be = (la["mu_c"].to(v) - om * la["mu_t"].to(v))
+        return lambda h: h + lam * (om * h + be - h)
+    if spec.startswith("dsas"):
+        g, a = torch.load(DIRS / "dsas.pt"), float(spec[4:])
+        w, b0 = g["w"].to(v), g["b"]
+        return lambda h: h + torch.sigmoid(h @ w + b0).unsqueeze(-1) * (a * norm) * v
     if spec.startswith("otq"):
         ot = torch.load(DIRS / "transport.pt")
         src, tgt, lam = ot["src_q"].to(v), ot["tgt_q"].to(v), float(spec[3:])
@@ -109,6 +123,8 @@ def transport_stage(model, tok) -> None:
     base = load("extraction", "base")
     rows = {r["id"]: r for r in records("extraction")}
     proj = {TOXIC: [], CLEAN: [], "all": []}
+    mom = {TOXIC: [0, 0.0, 0.0], CLEAN: [0, 0.0, 0.0]}
+    toks = {TOXIC: [], CLEAN: []}
     store = {}
     handle = model.model.layers[ACT_LAYER].register_forward_hook(lambda _m, _i, o: store.update(h=o[0] if isinstance(o, tuple) else o))
     try:
@@ -120,6 +136,12 @@ def transport_stage(model, tok) -> None:
             proj["all"].append(p)
             if b["state"] in (TOXIC, CLEAN):
                 proj[b["state"]].append(p)
+                hs = store["h"][0, n:].float()
+                m = mom[b["state"]]
+                m[0] += hs.shape[0]
+                m[1] = m[1] + hs.sum(0)
+                m[2] = m[2] + (hs ** 2).sum(0)
+                toks[b["state"]].append(hs[:: max(1, hs.shape[0] // 8)].cpu())
     finally:
         handle.remove()
     qs = torch.linspace(0.01, 0.99, 41)
@@ -129,6 +151,20 @@ def transport_stage(model, tok) -> None:
     norm = torch.load(DIRS / "direction.pt")["norm"]
     torch.save({"src_q": q[TOXIC], "tgt_q": q[CLEAN], "mean_disp_toxic": disp, "alpha_per_lambda": disp / norm},
                DIRS / "transport.pt")
+    stats = {}
+    for k, (cnt, s1, s2) in mom.items():
+        mu = (s1 / cnt).cpu()
+        stats[k] = (mu, ((s2 / cnt).cpu() - mu ** 2).clamp(min=1e-6).sqrt())
+    torch.save({"mu_t": stats[TOXIC][0], "sd_t": stats[TOXIC][1], "mu_c": stats[CLEAN][0], "sd_c": stats[CLEAN][1]},
+               DIRS / "lineart.pt")
+    from sklearn.linear_model import LogisticRegression
+    X = torch.cat(toks[TOXIC] + toks[CLEAN]).numpy()
+    y = np.r_[np.ones(sum(len(x) for x in toks[TOXIC])), np.zeros(sum(len(x) for x in toks[CLEAN]))]
+    mu, sd = X.mean(0), X.std(0) + 1e-6
+    clf = LogisticRegression(C=0.01, max_iter=2000, class_weight="balanced").fit((X - mu) / sd, y)
+    torch.save({"w": torch.tensor(clf.coef_[0] / sd).float(), "b": float(clf.intercept_[0] - (mu / sd) @ clf.coef_[0])},
+               DIRS / "dsas.pt")
+    print("lineart and dsas gate saved", X.shape)
     print("transport", {k: [round(float(x), 2) for x in v[[0, 20, 40]]] for k, v in q.items()}, "disp", disp, "alpha/lambda", disp / norm)
 
 
