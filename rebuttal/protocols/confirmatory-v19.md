@@ -52,6 +52,16 @@ rollouts of the same split with the gate flags (Proposition 1 makes this exact
 up to batched-decoding nondeterminism); single-pass configurations are real
 runs. The confirmatory arms are real runs.
 
+Amendment B (before any confirmatory steered rollout). A CAST baseline
+faithful to the original condition mechanism is added: the condition vector is
+the difference of mean prompt activations between OCW and CR questions of the
+detector pool, the gate is its cosine similarity with the mean prompt
+activation, and the grid is condition layer {14,16} x cosine quantile {.3,.5} x
+shift {-0.25,-0.375,-0.5,-0.75} (16). The logistic probe on prompt activations
+is PTS with the decision taken at the prompt (t = 0); it is reported as a
+secondary PTS variant, not as a baseline. The primary comparison family is
+therefore seven baselines against PTS post-hoc.
+
 ## Arms on the confirmatory split
 
 Selected configurations are recorded in `results/v4_parity_m5/selection.json`
@@ -60,8 +70,9 @@ and copied into `results/v4_confirm/protocol.json` before launch.
 ## Endpoints and tests
 
 - Primary: pooled M5 selectivity, PTS post-hoc against each of prompting, tuned
-  additive, directional ablation, tuned CAST (trace condition), tuned CAST
-  (prompt condition), tuned MiMiC, tuned Linear-AcT. Question-level paired
+  additive, directional ablation, tuned CAST-style (trace condition), tuned
+  CAST (prompt condition, diff-in-means and cosine), tuned MiMiC, tuned
+  Linear-AcT. Question-level paired
   bootstrap, 10,000 resamples, two-sided; Holm adjustment over the seven
   comparisons. Superiority is claimed only where
   the Holm-adjusted p < 0.05.
