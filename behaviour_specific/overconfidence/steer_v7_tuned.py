@@ -158,10 +158,16 @@ if __name__ == "__main__":
         if args.variants and subset is not None:
             for var in args.variants.split(","):
                 saved = v.clone()
-                if var.startswith("rand"):
-                    g = torch.Generator().manual_seed(int(var[4:]))
-                    v.copy_(torch.nn.functional.normalize(torch.randn(v.shape[0], generator=g), dim=0).to(v))
-                run_once(f"{var}-{tag}", (lambda h: h) if var == "null" else fn, subset)
+                g = torch.Generator().manual_seed(int(var[5:] if var.startswith("randm") else var[4:] if var.startswith("rand") else 0))
+                r = torch.nn.functional.normalize(torch.randn(v.shape[0], generator=g), dim=0).to(v)
+                if var.startswith("randm"):
+                    fn_v = lambda h, r=r, v0=saved: h - (h @ v0).unsqueeze(-1) * r  # noqa: E731
+                elif var.startswith("rand"):
+                    v.copy_(r)
+                    fn_v = fn
+                else:
+                    fn_v = lambda h: h  # noqa: E731
+                run_once(f"{var}-{tag}", fn_v, subset)
                 v.copy_(saved)
             return
         run_once(tag, fn, subset)
