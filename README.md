@@ -1,22 +1,32 @@
-# What the Decision Buys
+# Projection-Transport Steering
 
-Reproducibility package for **What the Decision Buys: An Exact Account of Conditional Activation Steering**.
+Reproducibility package for **Projection-Transport Steering: Conditional Control of Reasoning Behavior in LLMs**.
 
 - [Paper PDF](paper/iclr2027.pdf)
 - [LaTeX source](paper/iclr2027.tex)
 - [Reproducibility guide](REPRODUCIBILITY.md)
 
-## Summary
+## Method
 
-A conditional activation edit makes two choices: which inputs to edit and how to edit them. Its selectivity equals the decision's error rates weighted by the rates at which the edit converts the flagged inputs. The paper uses this identity to predict gated edits from one ungated run, and to compare each conditional edit with three references built on the same decision: no edit, a random edit, and an override of the behavior's readout.
+PTS splits an activation edit into an action and a decision. The action is the optimal-transport map of a projection onto a behavioral subspace. Shifts, ablation, clamps and quantile maps are all members of this family. The decision is a likelihood-ratio test on a learned detection statistic, read after the answer (post-hoc) or from the prompt (single pass).
 
-Probe-Gated Steering (PGS) puts a correctness probe in front of a projection edit. Under the frozen protocols in `rebuttal/protocols/` (confirmatory splits of 3,000 MMLU questions per model and 1,165 ARC-Challenge questions):
+The selectivity of the composed operator is `TPR * rho_O - FPR * rho_C`. This caps what any decision can buy from unsteered answers alone, and it predicts every gated configuration from one ungated run.
 
-- Gemma-2-2B, MMLU: selectivity 0.294 [0.256, 0.334]. This is above all seven baselines after Holm adjustment, 0.245 above the no-edit null and 0.079 above the random-edit null, with ECE lower by 0.099.
-- Qwen2.5-7B, MMLU: 0.172, which is 0.081 above the no-edit null. A calibration prompt reaches 0.212.
-- Gemma-2-2B, ARC: 0.235, which is 0.219 above the no-edit null, with ECE lower by 0.060.
+## Results
 
-On Qwen, overriding the readout with the same probe reaches 0.433. `paper/recompute_from_records.py` recomputes every table cell from `results/release/records.csv.gz`.
+The frozen protocols are in `rebuttal/protocols/`.
+
+- **Overconfidence, Gemma-2-2B, 3,000 held-out MMLU questions.**
+  - Selectivity is 0.294 [0.256, 0.334], the highest of eight methods.
+  - The share of overconfident-wrong answers falls by 15.0 points, and ECE falls from 0.354 to 0.255.
+  - PTS scores above all 100 random directions sent through the same decision.
+- **Replications.** Qwen2.5-7B reaches 0.172 and ARC-Challenge reaches 0.235.
+- **Free-text toxicity, 3,000 held-out prompts per model.**
+  - Single-pass PTS reaches 0.526 on Gemma and 0.534 on Qwen.
+  - It scores above the global shift, prompting, and refusing on the same decision, and above CAST on Qwen.
+- **Latency.** Single-pass PTS runs at 1.01x the unsteered wall clock.
+
+`paper/recompute_from_records.py` recomputes the multiple-choice table cells from `results/release/records.csv.gz`.
 
 ## Repository map
 

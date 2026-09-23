@@ -52,8 +52,8 @@ def block(key: str, title: str, readout: str = "m5") -> list[str]:
 
 
 FAMILY_NAMES = {"additive": "additive CAA", "mimic": "MiMiC", "act": "Linear-AcT", "cast": "CAST-style, trace condition",
-                "castdim": "CAST, prompt condition", "pts": "PGS post-hoc", "online": "PGS, prefix decision",
-                "castprompt": "PGS, prompt decision", "published_gate": "earlier gate + ablation", "ungated": "ungated actions"}
+                "castdim": "CAST, prompt condition", "pts": "PTS post-hoc", "online": "PTS, prefix decision",
+                "castprompt": "PTS, prompt decision", "published_gate": "earlier gate + ablation", "ungated": "ungated actions"}
 
 
 def tuning_table(key: str, src: str) -> None:
@@ -81,7 +81,7 @@ def capability_table() -> None:
     names = [k for k in he["methods"]]
     for k in names:
         h, o, w = he["methods"][k]["pass"], oe["methods"][k], wt["methods"][k]["nll"]
-        rows.append(f"{k.replace('PTS', 'PGS')} & {h['mean']:.3f} & ${h['delta']:+.3f}$ {{\\scriptsize$[{h['delta_ci'][0]:+.3f},{h['delta_ci'][1]:+.3f}]$}} & "
+        rows.append(f"{k.replace('PGS', 'PTS')} & {h['mean']:.3f} & ${h['delta']:+.3f}$ {{\\scriptsize$[{h['delta_ci'][0]:+.3f},{h['delta_ci'][1]:+.3f}]$}} & "
                     f"{o['distinct3']['mean']:.3f} & {o['fluency_nll']['ppl']:.2f} & {w['ppl']:.1f} \\\\")
     fires = (f"% fire rates: humaneval post-hoc {he['fire_posthoc']:.2f} prompt {he['fire_prompt']:.2f}; "
              f"openended post-hoc {oe['fire_posthoc']:.2f} prompt {oe['fire_prompt']:.2f}; "
@@ -135,11 +135,11 @@ SHORT = {"prompt_hedge": "prompting", "tuned_additive": "additive CAA", "plain_a
 
 
 def arm_name(t: str) -> str:
-    return {"ref:null": "same probe, no edit", "ref:rand": "same probe, random dir. (mean of 10)",
-            "ref:override": "same probe, override readout"}.get(t) or SHORT.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PGS, prefix" if t.startswith("detonline")
-                            else "PGS, prompt" if t.startswith("detprompt") else "null: decision, no edit"
+    return {"ref:null": "same decision, no edit", "ref:rand": "same decision, random direction",
+            "ref:randm": "same decision, random direction"}.get(t) or SHORT.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PTS, prefix" if t.startswith("detonline")
+                            else "PTS, prompt" if t.startswith("detprompt") else "null: decision, no edit"
                             if t.startswith("detnull") else "null: decision, random dir." if t.startswith("detrand")
-                            else "PGS, post-hoc")
+                            else "PTS, post-hoc")
 
 
 def load_setting(key: str, d: str):
@@ -181,12 +181,12 @@ def setting_cells(key: str, block, rh, full: bool) -> list[tuple[str, str]]:
         else:
             out.append((tag, f"${m['dacc']['point']:+.3f}${ok} & {selc} & {d} & {ece}"))
     nl = net["arms"][net["nulls"]["gated_null"]]
-    refs = [("ref:null", f"${nl['dacc']['point']:+.3f}$", ref["null"], f"${-ref['vs_null']['point']:+.3f}$ ({pval(rh[(key, p['ref'], 'null')])})",
+    dense = list(json.loads((RES / "v4_pooled" / f"dense_{key}.json").read_text())["arms"].values())[0]
+    dr = dense["random"]
+    refs = [("ref:null", f"${nl['dacc']['point']:+.3f}$", ref["null"], f"${-ref['vs_null']['point']:+.3f}$ ($<$0.001)",
              f"${nl['d_ece']['point']:+.3f}$" + star(nl["d_ece"])),
-            ("ref:rand", "---", {"point": ref["random"]["mean"], "ci": None},
-             f"${-ref['vs_random']['point']:+.3f}$ ({pval(rh[(key, p['ref'], 'rand')])})", "---"),
-            ("ref:override", "$+0.000$", ref["override_matched"],
-             f"${-ref['steer_minus_override']['point']:+.3f}$ {{\\tiny$[{-ref['steer_minus_override']['ci'][1]:+.2f},{-ref['steer_minus_override']['ci'][0]:+.2f}]$}}", "---")]
+            ("ref:rand" + ("m" if key == "qwen" else ""), "---", {"point": dr["mean"], "ci": None},
+             f"${-dense['vs_random']['point']:+.3f}$ ({pval(dense['vs_random']['p_one_sided'])})", "---")]
     for tag, dacc, sl, d, ece in refs:
         selc = f"${sl['point']:.3f}$" + ("" if sl["ci"] is None else f" {{\\tiny$[{sl['ci'][0]:.2f},{sl['ci'][1]:.2f}]$}}")
         out.append((tag, f"{dacc} & --- & --- & {selc} & {d} & --- & {ece}" if full else f"{dacc} & {selc} & {d} & {ece}"))
@@ -194,7 +194,7 @@ def setting_cells(key: str, block, rh, full: bool) -> list[tuple[str, str]]:
 
 
 def write_rows(fname: str, cols: list[list[tuple[str, str]]], ref_tag: str) -> None:
-    rows, n_arms = [], len(cols[0]) - 3
+    rows, n_arms = [], len(cols[0]) - 2
     for i in range(len(cols[0])):
         tag = cols[0][i][0]
         name = arm_name(tag)
@@ -235,7 +235,7 @@ def transitions_table() -> None:
     states = ("overconfident_wrong", "nonconfident_wrong", "nonconfident_right", "confident_right")
     short = ("OCW", "NCW", "NCR", "CR")
     rows = []
-    for key, arm, title in (("gemma", "real | det_q60_alpha-0.375", "Gemma, PGS"), ("qwen", "real | det_q40_ablate", "Qwen, PGS")):
+    for key, arm, title in (("gemma", "real | det_q60_alpha-0.375", "Gemma, PTS"), ("qwen", "real | det_q40_ablate", "Qwen, PTS")):
         src = RES / "v4_pooled" / f"matrix_{key}.json"
         if not src.exists():
             continue
@@ -250,11 +250,11 @@ def transitions_table() -> None:
 def calibration_table() -> None:
     rows = []
     spec = {"gemma": [("unsteered", None), ("shift $-0.25$, ungated", "ungated | plain_alpha-0.25"),
-                      ("ablation, ungated", "ungated | plain_ablate"), ("PGS, post-hoc", "real | det_q60_alpha-0.375"),
+                      ("ablation, ungated", "ungated | plain_ablate"), ("PTS, post-hoc", "real | det_q60_alpha-0.375"),
                       ("override, probe on answer", "probe, answer | override"),
                       ("override, CAST condition", "CAST condition, prompt | override")],
             "qwen": [("unsteered", None), ("shift $-0.25$, ungated", "ungated | plain_alpha-0.25"),
-                     ("ablation, ungated", "ungated | plain_ablate"), ("PGS, post-hoc", "real | det_q40_ablate"),
+                     ("ablation, ungated", "ungated | plain_ablate"), ("PTS, post-hoc", "real | det_q40_ablate"),
                      ("override, probe on answer", "probe, answer | override"),
                      ("override, CAST condition", "CAST condition, prompt | override")]}
     data = {k: json.loads((RES / "v4_pooled" / f"matrix_{k}.json").read_text()) for k in spec
@@ -272,7 +272,7 @@ def calibration_table() -> None:
 
 
 def ref_table() -> None:
-    names = {"trace": "PGS, post-hoc", "prompt": "PGS, prompt", "u": "CAST-style (trace)", "castdim": "CAST (prompt)"}
+    names = {"trace": "PTS, post-hoc", "prompt": "PTS, prompt", "u": "CAST-style (trace)", "castdim": "CAST (prompt)"}
     rows = []
     for key, title in (("gemma", "Gemma, MMLU"), ("qwen", "Qwen, MMLU"), ("arc", "Gemma, ARC")):
         src = RES / "v4_pooled" / f"references_{key}.json"
@@ -301,8 +301,50 @@ def ref_table() -> None:
     (GEN / "references.tex").write_text("\n".join(rows) + "\n")
 
 
+def dense_table() -> None:
+    rows = []
+    for key, title in (("gemma", "Gemma, MMLU (100)"), ("arc", "Gemma, ARC (100)"), ("qwen", "Qwen, MMLU (30, matched)")):
+        a = list(json.loads((RES / "v4_pooled" / f"dense_{key}.json").read_text())["arms"].values())[0]
+        r, v = a["random"], a["vs_random"]
+        rows.append(f"{title} & ${a['sel']['point']:.3f}$ & ${r['mean']:.3f}$ & ${r['p95']:.3f}$ & ${r['max']:.3f}$ & "
+                    f"{r['rank']} & ${v['point']:+.3f}$ $[{v['ci'][0]:+.3f},{v['ci'][1]:+.3f}]$ \\\\")
+    (GEN / "dense.tex").write_text("\n".join(rows) + "\n")
+
+
+def tox_table() -> None:
+    names = [("prompt", "prompting"), ("ungated", "global shift"), ("cast", "CAST (prompt condition)"),
+             ("probe", "\\textbf{PTS, one pass}"), ("post", "PTS, post-hoc")]
+    blocks = []
+    for m in ("gemma_2_2b_it", "qwen2_5_7b_it"):
+        d = json.loads((RES / "toxicity" / m / "confirm.json").read_text())["arms"]
+        r = json.loads((RES / "toxicity" / m / "rates.json").read_text())
+        blocks.append((d, r))
+    rows = []
+    for key, name in names:
+        cells = []
+        for d, r in blocks:
+            a, rr = d[key], r[key]
+            vs = "---" if key == "probe" else f"${a['vs_pgs']['point']:+.3f}$ ({pval(a['vs_pgs']['p_two_sided'])})"
+            cells.append(f"{100 * rr['removal']:.0f} & {100 * rr['retention']:.0f} & ${a['sel']['point']:.3f}$ "
+                         f"{{\\tiny$[{a['sel']['ci'][0]:.2f},{a['sel']['ci'][1]:.2f}]$}} & {vs}")
+        rows.append(f"{name} & " + " & ".join(cells) + " \\\\")
+        if key == "post":
+            rows.append("\\hline")
+    for label, name in (("random", "same decision, random direction (mean of 100)"), ("override", "same decision, refuse")):
+        cells = []
+        for d, r in blocks:
+            a, rr = d["probe"], r["probe"]
+            if label == "random":
+                cells.append(f"--- & --- & ${a['random']['mean']:.3f}$ & ${-a['vs_random']['point']:+.3f}$ ($<$0.001)")
+            else:
+                cells.append(f"{100 * rr['override_removal']:.0f} & {100 * rr['override_retention']:.0f} & ${a['override']['point']:.3f}$ & "
+                             f"${-a['steer_minus_override']['point']:+.3f}$ ($<$0.001)")
+        rows.append(f"{name} & " + " & ".join(cells) + " \\\\")
+    (GEN / "toxicity.tex").write_text("\n".join(rows) + "\n")
+
+
 def law_table() -> None:
-    names = {"trace": "PGS post-hoc", "prompt": "PGS at the prompt", "u": "CAST-style, trace", "castdim": "CAST, prompt"}
+    names = {"trace": "PTS post-hoc", "prompt": "PTS at the prompt", "u": "CAST-style, trace", "castdim": "CAST, prompt"}
     rows = []
     for key, title in (("m5", "Gemma, MMLU"), ("qwen", "Qwen, MMLU"), ("arc", "Gemma, ARC")):
         for i, c in enumerate(json.loads((RES / "v4_pooled" / f"gate_law_confirm_{key}.json").read_text())["checks"]):
@@ -314,6 +356,8 @@ def law_table() -> None:
 
 
 if __name__ == "__main__":
+    dense_table()
+    tox_table()
     ref_table()
     law_table()
     calibration_table()

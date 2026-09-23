@@ -10,9 +10,6 @@ from behaviour_specific.overconfidence.law_confirm import decision_flags, featur
 from general.paths import RESULTS_DIR
 from general.storage import write_json
 
-SEEDS = range(10)
-
-
 def states(rows: list[dict], cut: float) -> tuple[np.ndarray, np.ndarray]:
     y = np.array([r["is_correct"] for r in rows], bool)
     c = np.array([r["confidence"] for r in rows]) >= cut
@@ -50,10 +47,13 @@ if __name__ == "__main__":
     ap.add_argument("--robust", default="")
     ap.add_argument("--iters", type=int, default=10000)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--seeds", type=int, default=10)
+    ap.add_argument("--rand", default="rand")
     args = ap.parse_args()
+    SEEDS, RAND = range(args.seeds), args.rand
 
     checks = [c.split(":") for c in args.checks.split(",")]
-    conds = sorted({x for arm, _, ung, _ in checks for x in (arm, ung, f"null-{arm}", *(f"rand{s}-{arm}" for s in SEEDS))})
+    conds = sorted({x for arm, _, ung, _ in checks for x in (arm, ung, f"null-{arm}", *(f"{RAND}{s}-{arm}" for s in SEEDS))})
     base, after = pooled_rows([args.dir], "m5", conds)
     n = len(base)
     X, Q = features(args.dir, [r["id"] for r in base])
@@ -64,8 +64,8 @@ if __name__ == "__main__":
         f = decision_flags(kind, cfg, X, Q).astype(float)
         s_pt, s_bs = sel(one, base, after[arm])[0], sel(w, base, after[arm])
         nl_pt, nl_bs = sel(one, base, after[f"null-{arm}"])[0], sel(w, base, after[f"null-{arm}"])
-        rd_pt = np.array([sel(one, base, after[f"rand{s}-{arm}"])[0] for s in SEEDS])
-        rd_bs = np.mean([sel(w, base, after[f"rand{s}-{arm}"]) for s in SEEDS], axis=0)
+        rd_pt = np.array([sel(one, base, after[f"{RAND}{s}-{arm}"])[0] for s in SEEDS])
+        rd_bs = np.mean([sel(w, base, after[f"{RAND}{s}-{arm}"]) for s in SEEDS], axis=0)
         ov_pt, ov_bs = override(one, base, f)[0], override(w, base, f)
         ung_law = law(base, after[ung], f, [0.5])
         tpr, fpr = ung_law["curve"][0]["tpr"], ung_law["curve"][0]["fpr"]
@@ -74,7 +74,8 @@ if __name__ == "__main__":
             "decision": kind, "sel": {"point": round(float(s_pt), 4), "ci": ci(s_bs)},
             "null": {"point": round(float(nl_pt), 4), "ci": ci(nl_bs)}, "vs_null": summary(s_pt - nl_pt, s_bs - nl_bs),
             "random": {"seeds": [round(float(x), 4) for x in rd_pt], "mean": round(float(rd_pt.mean()), 4),
-                       "max": round(float(rd_pt.max()), 4)},
+                       "max": round(float(rd_pt.max()), 4), "p95": round(float(np.quantile(rd_pt, 0.95)), 4),
+                       "rank": int((rd_pt >= s_pt).sum()), "n": len(rd_pt)},
             "vs_random": summary(s_pt - rd_pt.mean(), s_bs - rd_bs),
             "override_matched": {"point": round(float(ov_pt), 4), "ci": ci(ov_bs), "tpr": tpr, "fpr": fpr},
             "steer_minus_override": {"point": round(float(s_pt - ov_pt), 4), "ci": ci(s_bs - ov_bs)},

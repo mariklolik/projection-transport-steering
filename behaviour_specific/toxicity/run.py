@@ -65,13 +65,13 @@ def state(text: str, p: float) -> str:
     return REFUSED if degenerate(text) or any(k in text.lower()[:200] for k in REFUSALS) else CLEAN
 
 
-def generate_masked(model, tok, prompts: list[str], mask: np.ndarray, fn, bs: int) -> list[str]:
+def generate_masked(model, tok, prompts: list[str], mask: np.ndarray, fn, bs: int, decode_only: bool = False) -> list[str]:
     cur = {}
 
     def hook(_m, _inp, out):
         h = out[0] if isinstance(out, tuple) else out
         m = cur["m"]
-        if m.any():
+        if m.any() and not (decode_only and h.shape[1] > 1):
             h = h.clone()
             h[m] = fn(h[m].float()).to(h.dtype)
         return (h,) + out[1:] if isinstance(out, tuple) else h
@@ -210,6 +210,8 @@ if __name__ == "__main__":
                                                  for r in rows], ~ones, lambda h: h, args.batch_size)
         else:
             parts = arm.split("|")
+            decode_only = parts[0] == "gen"
+            parts = parts[1:] if decode_only else parts
             variant = parts[0] if parts[0] == "null" or parts[0].startswith("rand") else None
             spec = parts[1:] if variant else parts
             if len(spec) == 1:
@@ -222,6 +224,6 @@ if __name__ == "__main__":
                 g = torch.Generator().manual_seed(int(variant[4:]))
                 vec = torch.nn.functional.normalize(torch.randn(v.shape[0], generator=g), dim=0).to(v)
             fn = (lambda h: h) if variant == "null" else action(spec[-1], vec, d["norm"])
-            texts = generate_masked(model, tok, prompts, mask, fn, args.batch_size)
+            texts = generate_masked(model, tok, prompts, mask, fn, args.batch_size, decode_only)
         write_jsonl(shard_path(args.split, arm.replace("|", "_"), args.shard), score(judge, rows, texts))
         print(arm, flush=True)
