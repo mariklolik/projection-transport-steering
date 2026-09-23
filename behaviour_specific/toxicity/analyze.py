@@ -84,7 +84,7 @@ def tune() -> dict:
     base = [b[i] for i in ids]
     feats = load_feats("tuning")
     one = np.ones((1, len(ids)))
-    runs = {a: [load("tuning", a)[i] for i in ids] for a in UNGATED + ("prompt",)}
+    runs = {a: [r[i] for i in ids] for a in UNGATED + ("prompt",) for r in [load("tuning", a)]}
     grid = {a: float(sel(one, base, r)[0]) for a, r in runs.items()}
     for kind in DECISIONS:
         for q in QS:
@@ -106,26 +106,32 @@ def confirm(sel_cfg: dict, n_random: int, iters: int) -> dict:
     w = np.random.default_rng(0).multinomial(n, np.full(n, 1 / n), size=iters).astype(float)
     one = np.ones((1, n))
     tag = lambda a: a.replace(":", "").replace("|", "_")  # noqa: E731
-    get = lambda a: [load("confirm", tag(a))[i] for i in ids]  # noqa: E731
+    def get(a: str) -> list[dict]:
+        rows = load("confirm", tag(a))
+        return [rows[i] for i in ids]
     ref_arm = sel_cfg["probe"]
-    ref_bs = sel(w, base, get(ref_arm))
+    ref_rows = get(ref_arm)
+    ref_pt, ref_bs = float(sel(one, base, ref_rows)[0]), sel(w, base, ref_rows)
     out = {"n": n, "n_toxic": int(sum(r["state"] == TOXIC for r in base)), "n_clean": int(sum(r["state"] == CLEAN for r in base)),
            "arms": {}}
     for label, arm in sel_cfg.items():
         rows = get(arm)
         pt, bs = float(sel(one, base, rows)[0]), sel(w, base, rows)
         row = {"arm": arm, "sel": {"point": round(pt, 4), "ci": ci(bs)}, "vs_pgs": {
-            "point": round(pt - float(sel(one, base, get(ref_arm))[0]), 4), "ci": ci(bs - ref_bs),
+            "point": round(pt - ref_pt, 4), "ci": ci(bs - ref_bs),
             "p_two_sided": round(float(2 * min((bs - ref_bs <= 0).mean(), (bs - ref_bs >= 0).mean())), 4)}}
         if "|" in arm:
             kind, q, act = arm.split("|")
             f = flags("confirm", kind, int(q[1:]), base, feats)
             null = get(f"null|{arm}")
-            rand = [s for s in range(n_random) if load("confirm", tag(f"rand{s}|{arm}"))]
-            r_pt = np.array([sel(one, base, get(f"rand{s}|{arm}"))[0] for s in rand])
-            r_bs = np.mean([sel(w, base, get(f"rand{s}|{arm}")) for s in rand], axis=0)
+            rand = [get(f"rand{s}|{arm}") for s in range(n_random) if (OUT / "confirm" / f"{tag(f'rand{s}|{arm}')}__shard0.jsonl").exists()]
+            r_pt = np.array([sel(one, base, r)[0] for r in rand])
+            r_bs = np.mean([sel(w, base, r) for r in rand], axis=0)
             ov_pt, ov_bs = float(override_sel(one, base, f)[0]), override_sel(w, base, f)
-            ung = rates(base, get(act), f)
+            tb = load("tuning", "base")
+            tids = sorted(tb)
+            tbase, tact = [tb[i] for i in tids], load("tuning", act)
+            ung = rates(tbase, [tact[i] for i in tids], flags("tuning", kind, int(q[1:]), tbase, load_feats("tuning")))
             pred = ung["fpr"] * (1 - ung["rho_c"]) - ung["tpr"] * (1 - ung["rho_t"])
             row.update({
                 "null": {"point": round(float(sel(one, base, null)[0]), 4),
