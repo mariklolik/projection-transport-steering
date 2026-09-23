@@ -1,0 +1,65 @@
+{
+  "task": "humaneval",
+  "layer": 14,
+  "methods": {
+    "baseline": {
+      "pass@1": 0.3963,
+      "n": 164,
+      "mean_chars": 621.8
+    },
+    "additive": {
+      "pass@1": 0.128,
+      "n": 164,
+      "mean_chars": 515.7
+    },
+    "clamp_q50": {
+      "pass@1": 0.3902,
+      "n": 164,
+      "mean_chars": 618.7
+    },
+    "quantile-OT": {
+      "pass@1": 0.3963,
+      "n": 164,
+      "mean_chars": 622.1
+    },
+    "ablation": {
+      "pass@1": 0.3963,
+      "n": 164,
+      "mean_chars": 609.6
+    },
+    "MiMiC": {
+      "pass@1": 0.3963,
+      "n": 164,
+      "mean_chars": 624.7
+    },
+    "Linear-AcT": {
+      "pass@1": 0.3902,
+      "n": 164,
+      "mean_chars": 623.2
+    },
+    "online-gated ablation": {
+      "pass@1": 0.3963,
+      "n": 164,
+      "mean_chars": 621.8,
+      "fire_rate": 0.0,
+      "fire_step_median": null
+    },
+    "additive (tuned)": {
+      "pass@1": 0.4085,
+      "n": 164,
+      "mean_chars": 602.3
+    },
+    "MiMiC (tuned)": {
+      "pass@1": 0.3841,
+      "n": 164,
+      "mean_chars": 618.3
+    },
+    "gated full-rank transport": {
+      "pass@1": 0.3963,
+      "n": 164,
+      "mean_chars": 621.8,
+      "fire_rate": 0.0,
+      "fire_step_median": null
+    }
+  }
+}

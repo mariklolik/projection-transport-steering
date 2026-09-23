@@ -1,0 +1,150 @@
+{
+ "n_toxic": 102,
+ "n_clean": 2844,
+ "arms": {
+  "prompt": {
+   "arm": "prompt",
+   "sel": {
+    "point": 0.4189,
+    "ci": [
+     0.3266,
+     0.5076
+    ]
+   },
+   "removal": 0.7156862745098039,
+   "retention": 0.7032348804500703,
+   "toxic_after": 0.027,
+   "vs_pgs": {
+    "point": -0.1008,
+    "ci": [
+     -0.2152,
+     0.0156
+    ],
+    "p_two_sided": 0.0842
+   },
+   "p_one_sided_pts_above": 0.0421
+  },
+  "ungated": {
+   "arm": "add-0.5",
+   "sel": {
+    "point": 0.4288,
+    "ci": [
+     0.3369,
+     0.5176
+    ]
+   },
+   "removal": 0.7058823529411765,
+   "retention": 0.7229254571026723,
+   "toxic_after": 0.017333333333333333,
+   "vs_pgs": {
+    "point": -0.0909,
+    "ci": [
+     -0.2112,
+     0.0266
+    ],
+    "p_two_sided": 0.1338
+   },
+   "p_one_sided_pts_above": 0.0669
+  },
+  "cast": {
+   "arm": "cast|q30|add-0.5",
+   "sel": {
+    "point": 0.446,
+    "ci": [
+     0.3506,
+     0.54
+    ]
+   },
+   "removal": 0.6372549019607843,
+   "retention": 0.8087201125175809,
+   "toxic_after": 0.019333333333333334,
+   "vs_pgs": {
+    "point": -0.0738,
+    "ci": [
+     -0.195,
+     0.0451
+    ],
+    "p_two_sided": 0.22
+   }
+  },
+  "probe": {
+   "arm": "probe|q50|add-0.75",
+   "sel": {
+    "point": 0.5198,
+    "ci": [
+     0.4304,
+     0.6053
+    ]
+   },
+   "removal": 0.7352941176470589,
+   "retention": 0.7844585091420534,
+   "toxic_after": 0.013666666666666667,
+   "vs_pgs": {
+    "point": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ],
+    "p_two_sided": 2.0
+   },
+   "random": {
+    "mean": 0.2469,
+    "p95": 0.3425,
+    "max": 0.3727,
+    "rank": 0
+   },
+   "vs_random": {
+    "point": 0.2729,
+    "ci": [
+     0.2079,
+     0.338
+    ],
+    "p_one_sided": 0.0
+   },
+   "override": {
+    "point": 0.3053,
+    "ci": [
+     0.224,
+     0.3801
+    ],
+    "removal": 0.8137254901960784,
+    "retention": 0.49156118143459915
+   },
+   "steer_minus_override": {
+    "point": 0.2145,
+    "ci": [
+     0.1565,
+     0.2655
+    ],
+    "p_one_sided": 0.0
+   },
+   "eq2_predicted": 0.1966,
+   "eq2_agrees": true,
+   "null": {
+    "point": 0.0,
+    "identical": 3000
+   }
+  },
+  "post": {
+   "arm": "post|q70|add-1.0",
+   "sel": {
+    "point": 0.7122,
+    "ci": [
+     0.6459,
+     0.7722
+    ]
+   },
+   "removal": 0.8823529411764706,
+   "retention": 0.829817158931083,
+   "toxic_after": 0.004,
+   "vs_pgs": {
+    "point": 0.1924,
+    "ci": [
+     0.1015,
+     0.2823
+    ],
+    "p_two_sided": 0.0
+   }
+  }
+ }
+}

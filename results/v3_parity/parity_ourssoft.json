@@ -1,0 +1,92 @@
+{
+  "method": "ourssoft",
+  "n": 400,
+  "seed": 101,
+  "batch_size": 64,
+  "budget": 8,
+  "configs": {
+    "gl16_q10_kappa0.0": {
+      "ocw_rm": 0.557,
+      "cr_keep": 0.6667,
+      "selectivity": 0.2236,
+      "d_acc": 0.035,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 366
+    },
+    "gl16_q10_kappa0.5": {
+      "ocw_rm": 0.6076,
+      "cr_keep": 0.6569,
+      "selectivity": 0.2645,
+      "d_acc": 0.025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 366
+    },
+    "gl16_q10_kappa1.0": {
+      "ocw_rm": 0.5316,
+      "cr_keep": 0.6863,
+      "selectivity": 0.2179,
+      "d_acc": 0.01,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 366
+    },
+    "gl16_q10_kappa2.0": {
+      "ocw_rm": 0.4557,
+      "cr_keep": 0.6961,
+      "selectivity": 0.1518,
+      "d_acc": -0.0025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 366
+    },
+    "gl16_q30_kappa0.0": {
+      "ocw_rm": 0.481,
+      "cr_keep": 0.7353,
+      "selectivity": 0.2163,
+      "d_acc": 0.0,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 277
+    },
+    "gl16_q30_kappa0.5": {
+      "ocw_rm": 0.4684,
+      "cr_keep": 0.7647,
+      "selectivity": 0.2331,
+      "d_acc": -0.0025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 277
+    },
+    "gl16_q30_kappa1.0": {
+      "ocw_rm": 0.3924,
+      "cr_keep": 0.7843,
+      "selectivity": 0.1767,
+      "d_acc": 0.0025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 277
+    },
+    "gl16_q30_kappa2.0": {
+      "ocw_rm": 0.3924,
+      "cr_keep": 0.7647,
+      "selectivity": 0.1571,
+      "d_acc": -0.0025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 277
+    }
+  },
+  "winner": "gl16_q10_kappa0.5",
+  "winner_stats": {
+    "ocw_rm": 0.6076,
+    "cr_keep": 0.6569,
+    "selectivity": 0.2645,
+    "d_acc": 0.025,
+    "n_ocw": 79,
+    "n_cr": 102,
+    "n_flagged": 366
+  },
+  "seconds": 1927.4
+}

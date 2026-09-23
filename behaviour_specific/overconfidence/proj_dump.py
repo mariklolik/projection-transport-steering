@@ -1,7 +1,3 @@
-# Dump behavioral-plane coordinates: per-benchmark baseline clouds and
-# per-method measured before/after movements (figure data).
-# Run: python -m behaviour_specific.overconfidence.proj_dump
-
 from __future__ import annotations
 
 import argparse
@@ -15,13 +11,14 @@ from general.storage import read_jsonl
 
 MOVES = {
     "ours_gatedabl": "sweep_ocwcr-crq50_ablate",
+    "ours_online": "online_d0p05_q50_L16_ablate",
+    "ours_fullrank": "tuned_gatedmimic",
     "additive": "m4_conf_add_a-0.75",
     "cast": "cast_gate-cr_q50_add-0.75",
     "mimic": "mimic_full",
     "clamp": "m4_conf_clamp_q50",
 }
-BENCH_DIRS = {"mmlu": "steering_v2", "arc": "steering_v2_arc",
-              "gsm8k": "steering_v2_gsm8k", "gpqa": "steering_v2_gpqa"}
+BENCH_DIRS = {"mmlu": "v3_mmlu_s7", "arc": "v3_arc", "gsm8k": "v3_gsm8k"}
 
 
 def coords(model, tok, rec, layer, v, u):
@@ -33,6 +30,7 @@ def coords(model, tok, rec, layer, v, u):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--layer", type=int, default=14)
+    ap.add_argument("--main", default="v3_mmlu_s7", help="run dir holding the movement rollouts")
     args = ap.parse_args()
 
     from models_specific.active import load_model
@@ -42,6 +40,20 @@ if __name__ == "__main__":
     model, tok = load_model()
     out = RESULTS_DIR / "viz"
     out.mkdir(parents=True, exist_ok=True)
+
+    pstats = torch.load(DIRECTIONS_DIR / f"projection_stats_L{args.layer}.pt")
+    qs = pstats["quantiles"].tolist() if hasattr(pstats["quantiles"], "tolist") else pstats["quantiles"]
+    cr_q = pstats["trace_stats"]["ocw_vs_cr"]["confident_right"]["q"]
+    tau = float(cr_q[min(range(len(qs)), key=lambda i: abs(qs[i] - 0.5))])
+    (out / "tau.json").write_text(f'{{"tau": {tau:.4f}}}')
+    per_state = pstats["stats"]["m4_conf"]["per_state"]
+    names = ["overconfident_wrong", "confident_right", "nonconfident_right", "nonconfident_wrong"]
+    have = [n for n in names if n in per_state and "q" in per_state[n]]
+    with (out / "cdf_m4conf.csv").open("w") as f:
+        f.write("q," + ",".join(have) + "\n")
+        for i, qq in enumerate(qs):
+            f.write(f"{qq:.2f}," + ",".join(f"{per_state[n]['q'][i]:.3f}" for n in have) + "\n")
+    print(f"tau={tau:.2f}; cdf states {have}", flush=True)
 
     for bench, d in BENCH_DIRS.items():
         rd = RESULTS_DIR / d / "rollouts"
@@ -57,7 +69,7 @@ if __name__ == "__main__":
                 f.write(f"{x:.2f},{y:.2f},{st4.get(r['id'], 'na')}\n")
         print(f"plane_{bench}: {len(base)}", flush=True)
 
-    rd = RESULTS_DIR / "steering_v2" / "rollouts"
+    rd = RESULTS_DIR / args.main / "rollouts"
     base = {r["id"]: r for r in read_jsonl(rd / "baseline_m2__shard0.jsonl")}
     st4 = {r["id"]: r["state"] for r in read_jsonl(rd / "baseline_m4__shard0.jsonl")}
     bcoords = {}

@@ -1,0 +1,62 @@
+{
+  "layers": {
+    "19": {
+      "gate_auroc_ocw_vs_cr": 0.8066,
+      "gate_auroc_ocw_vs_rest": 0.7803,
+      "cohen_d_ocw_vs_cr_tokens": -0.427,
+      "cohen_d_confident_vs_not_tokens": 0.523,
+      "ceiling_selectivity": 0.6132
+    },
+    "21": {
+      "gate_auroc_ocw_vs_cr": 0.8025,
+      "gate_auroc_ocw_vs_rest": 0.7775,
+      "cohen_d_ocw_vs_cr_tokens": -0.4246,
+      "cohen_d_confident_vs_not_tokens": 0.5175,
+      "ceiling_selectivity": 0.605
+    },
+    "24": {
+      "gate_auroc_ocw_vs_cr": 0.7998,
+      "gate_auroc_ocw_vs_rest": 0.7776,
+      "cohen_d_ocw_vs_cr_tokens": -0.4414,
+      "cohen_d_confident_vs_not_tokens": 0.5011,
+      "ceiling_selectivity": 0.5996
+    },
+    "26": {
+      "gate_auroc_ocw_vs_cr": 0.7986,
+      "gate_auroc_ocw_vs_rest": 0.79,
+      "cohen_d_ocw_vs_cr_tokens": -0.4546,
+      "cohen_d_confident_vs_not_tokens": 0.5632,
+      "ceiling_selectivity": 0.5973
+    },
+    "28": {
+      "gate_auroc_ocw_vs_cr": 0.7828,
+      "gate_auroc_ocw_vs_rest": 0.7778,
+      "cohen_d_ocw_vs_cr_tokens": -0.4186,
+      "cohen_d_confident_vs_not_tokens": 0.5098,
+      "ceiling_selectivity": 0.5656
+    },
+    "30": {
+      "gate_auroc_ocw_vs_cr": 0.7847,
+      "gate_auroc_ocw_vs_rest": 0.7802,
+      "cohen_d_ocw_vs_cr_tokens": -0.415,
+      "cohen_d_confident_vs_not_tokens": 0.5304,
+      "ceiling_selectivity": 0.5694
+    },
+    "34": {
+      "gate_auroc_ocw_vs_cr": 0.7837,
+      "gate_auroc_ocw_vs_rest": 0.7845,
+      "cohen_d_ocw_vs_cr_tokens": -0.3868,
+      "cohen_d_confident_vs_not_tokens": 0.5349,
+      "ceiling_selectivity": 0.5674
+    },
+    "38": {
+      "gate_auroc_ocw_vs_cr": 0.806,
+      "gate_auroc_ocw_vs_rest": 0.8066,
+      "cohen_d_ocw_vs_cr_tokens": -0.3903,
+      "cohen_d_confident_vs_not_tokens": 0.575,
+      "ceiling_selectivity": 0.612
+    }
+  },
+  "n_traces": 400,
+  "best_layer_by_gate_auroc": 19
+}

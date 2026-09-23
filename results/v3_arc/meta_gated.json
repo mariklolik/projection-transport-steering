@@ -1,0 +1,33 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 7,
+    "layer": 14,
+    "benchmark": "arc",
+    "steer_direction": "m4_conf",
+    "gate": "ocw_vs_cr",
+    "taus": "cr_q50,cr_q70",
+    "actions": "otq_cal,clamp_q50",
+    "methods": "m2,m4",
+    "batch_size": 64,
+    "outdir": "v3_arc"
+  },
+  "gates": {
+    "cr_q50": {
+      "tau": -10.081700325012207,
+      "n_flagged": 153,
+      "flag_rate": 0.51,
+      "p_ocw_given_flagged": 0.3137,
+      "ocw_recall": 0.6154,
+      "cr_false_flag_rate": 0.4751
+    },
+    "cr_q70": {
+      "tau": -3.607220411300659,
+      "n_flagged": 68,
+      "flag_rate": 0.2267,
+      "p_ocw_given_flagged": 0.3235,
+      "ocw_recall": 0.2821,
+      "cr_false_flag_rate": 0.2081
+    }
+  }
+}

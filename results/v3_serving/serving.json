@@ -1,0 +1,70 @@
+{
+  "n": 300,
+  "batch_size": 64,
+  "layer": 14,
+  "methods": {
+    "baseline": {
+      "seconds": 43.5,
+      "passes": 1,
+      "tokens": 37692,
+      "latency_x_baseline": 1.0
+    },
+    "additive": {
+      "seconds": 45.17,
+      "passes": 1,
+      "tokens": 89226,
+      "latency_x_baseline": 1.038
+    },
+    "ablation": {
+      "seconds": 44.56,
+      "passes": 1,
+      "tokens": 32489,
+      "latency_x_baseline": 1.024
+    },
+    "clamp_q50": {
+      "seconds": 41.42,
+      "passes": 1,
+      "tokens": 33837,
+      "latency_x_baseline": 0.952
+    },
+    "quantile-OT": {
+      "seconds": 44.75,
+      "passes": 1,
+      "tokens": 36697,
+      "latency_x_baseline": 1.029
+    },
+    "MiMiC": {
+      "seconds": 42.86,
+      "passes": 1,
+      "tokens": 37453,
+      "latency_x_baseline": 0.985
+    },
+    "Linear-AcT": {
+      "seconds": 40.92,
+      "passes": 1,
+      "tokens": 37139,
+      "latency_x_baseline": 0.941
+    },
+    "gated ablation (two-pass)": {
+      "seconds": 85.75,
+      "passes": 2,
+      "n_regenerated": 223,
+      "breakdown": {
+        "generate": 43.76,
+        "gate_scoring": 7.15,
+        "regenerate": 34.84
+      },
+      "latency_x_baseline": 1.971
+    },
+    "gated ablation (online, ours)": {
+      "seconds": 45.49,
+      "passes": 1,
+      "tokens": 37217,
+      "fire_rate": 0.155,
+      "fire_step_median": 57,
+      "latency_x_baseline": 1.046
+    }
+  },
+  "baseline_repeat_seconds": 43.71,
+  "drift": 0.005
+}

@@ -1,8 +1,3 @@
-# Benchmark loaders behind one record schema {id, subject, question,
-# options[4], answer_idx}: mmlu, arc (ARC-Challenge), gsm8k (MCQ-ized with
-# seeded numeric distractors), gpqa (gated; accept terms on HF first).
-# Self-tests: python -m behaviour_specific.overconfidence.benchmarks
-
 from __future__ import annotations
 
 import json
@@ -28,22 +23,21 @@ def _load_cached(name: str, build_rows) -> list[dict]:
     return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
 
 
-def load_arc(n: int | None = None, seed: int = 0) -> list[dict]:
-    """ARC-Challenge test split, 4-option records only (~92% of the split)."""
+def load_arc(n: int | None = None, seed: int = 0, split: str = "test") -> list[dict]:
     def build():
         from datasets import load_dataset
 
-        ds = load_dataset("allenai/ai2_arc", "ARC-Challenge", split="test")
+        ds = load_dataset("allenai/ai2_arc", "ARC-Challenge", split=split)
         rows = []
         for i, r in enumerate(ds):
             labels, texts = r["choices"]["label"], r["choices"]["text"]
             if len(texts) != 4 or r["answerKey"] not in labels:
                 continue
-            rows.append({"id": f"arc-{i}", "subject": "arc_challenge", "question": r["question"],
-                         "options": texts, "answer_idx": labels.index(r["answerKey"])})
+            rows.append({"id": f"arc-{i}" if split == "test" else f"arc{split}-{i}", "subject": "arc_challenge",
+                         "question": r["question"], "options": texts, "answer_idx": labels.index(r["answerKey"])})
         return rows
 
-    records = _load_cached("arc_challenge_test", build)
+    records = _load_cached("arc_challenge_test" if split == "test" else f"arc_challenge_{split}", build)
     random.Random(seed).shuffle(records)
     return records if n is None else records[:n]
 
@@ -52,7 +46,6 @@ GSM_ANSWER_RE = re.compile(r"####\s*([\-0-9,\.]+)")
 
 
 def gsm_gold(answer_text: str) -> int | None:
-    """The '#### 42' gold integer of a GSM8K record (None if not an int)."""
     m = GSM_ANSWER_RE.search(answer_text)
     if not m:
         return None
@@ -64,11 +57,6 @@ def gsm_gold(answer_text: str) -> int | None:
 
 
 def gsm_distractors(gold: int, idx: int) -> list[int]:
-    """Three deterministic numeric distractors near the gold answer.
-
-    Candidates mix additive and multiplicative perturbations (both signs), so
-    the distractor scale tracks the answer scale; seeded by the record index.
-    """
     rng = random.Random(1000 + idx)
     cands = [gold + 1, gold - 1, gold + 2, gold - 2, gold + 10, gold - 10,
              gold * 2, max(0, gold // 2), round(gold * 1.5), round(gold * 0.8),
@@ -83,7 +71,6 @@ def gsm_distractors(gold: int, idx: int) -> list[int]:
 
 
 def load_gsm8k_mcq(n: int | None = None, seed: int = 0) -> list[dict]:
-    """GSM8K test, MCQ-ized: gold integer + 3 seeded numeric distractors."""
     def build():
         from datasets import load_dataset
 
@@ -108,7 +95,6 @@ def load_gsm8k_mcq(n: int | None = None, seed: int = 0) -> list[dict]:
 
 
 def load_gpqa(n: int | None = None, seed: int = 0, subset: str = "gpqa_main") -> list[dict]:
-    """GPQA (gated: accept terms on HF first). 4 options = gold + 3 written distractors."""
     def build():
         from datasets import load_dataset
 
@@ -135,7 +121,6 @@ LOADERS = {"mmlu": load_mmlu, "arc": load_arc, "gsm8k": load_gsm8k_mcq, "gpqa": 
 
 
 def load_records(benchmark: str, n: int | None = None, seed: int = 0) -> list[dict]:
-    """Dispatch: load `n` shuffled records of `benchmark` ∈ {mmlu, arc, gsm8k}."""
     if benchmark not in LOADERS:
         raise ValueError(f"unknown benchmark {benchmark!r}; have {sorted(LOADERS)}")
     return LOADERS[benchmark](n=n, seed=seed)
@@ -149,7 +134,7 @@ def _selftest():
         ds = gsm_distractors(42, idx)
         assert len(ds) == 3 and 42 not in ds and len(set(ds)) == 3
     ds1, ds2 = gsm_distractors(42, 5), gsm_distractors(42, 5)
-    assert ds1 == ds2  # deterministic per record
+    assert ds1 == ds2
     print("benchmarks self-test passed")
 
 

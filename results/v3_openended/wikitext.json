@@ -1,0 +1,54 @@
+{
+  "task": "wikitext",
+  "layer": 14,
+  "methods": {
+    "baseline": {
+      "nll": 3.1529,
+      "ppl": 23.403
+    },
+    "additive": {
+      "nll": 3.8561,
+      "ppl": 47.279
+    },
+    "clamp_q50": {
+      "nll": 3.1405,
+      "ppl": 23.114
+    },
+    "quantile-OT": {
+      "nll": 3.1501,
+      "ppl": 23.339
+    },
+    "ablation": {
+      "nll": 3.1355,
+      "ppl": 23.0
+    },
+    "MiMiC": {
+      "nll": 3.1882,
+      "ppl": 24.244
+    },
+    "Linear-AcT": {
+      "nll": 3.1534,
+      "ppl": 23.416
+    },
+    "online-gated ablation": {
+      "nll": 3.1529,
+      "ppl": 23.403,
+      "fire_rate": 0.0,
+      "fire_step_median": null
+    },
+    "additive (tuned)": {
+      "nll": 3.1633,
+      "ppl": 23.65
+    },
+    "MiMiC (tuned)": {
+      "nll": 3.2008,
+      "ppl": 24.552
+    },
+    "gated full-rank transport": {
+      "nll": 3.1529,
+      "ppl": 23.403,
+      "fire_rate": 0.0,
+      "fire_step_median": null
+    }
+  }
+}

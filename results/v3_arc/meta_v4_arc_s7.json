@@ -1,0 +1,72 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 7,
+    "layer": 14,
+    "benchmark": "arc",
+    "conditions": "all",
+    "probe_taus": "all_q60,all_q75",
+    "probe_actions": "clamp_q30,ablate,otq_cal",
+    "methods": "m2,m4",
+    "batch_size": 64,
+    "outdir": "v3_arc"
+  },
+  "gates": {
+    "cast_gate-cr_q50_add-0.75": {
+      "tau": -10.081700325012207,
+      "n_flagged": 153,
+      "flag_rate": 0.51,
+      "p_ocw_given_flagged": 0.3137,
+      "ocw_recall": 0.6154,
+      "cr_false_flag_rate": 0.4751
+    },
+    "probegate-all_q60_clamp_q30": {
+      "tau": -3.403064012527466,
+      "n_flagged": 175,
+      "flag_rate": 0.5833,
+      "p_ocw_given_flagged": 0.2914,
+      "ocw_recall": 0.6538,
+      "cr_false_flag_rate": 0.5611
+    },
+    "probegate-all_q60_ablate": {
+      "tau": -3.403064012527466,
+      "n_flagged": 175,
+      "flag_rate": 0.5833,
+      "p_ocw_given_flagged": 0.2914,
+      "ocw_recall": 0.6538,
+      "cr_false_flag_rate": 0.5611
+    },
+    "probegate-all_q60_otq_cal": {
+      "tau": -3.403064012527466,
+      "n_flagged": 175,
+      "flag_rate": 0.5833,
+      "p_ocw_given_flagged": 0.2914,
+      "ocw_recall": 0.6538,
+      "cr_false_flag_rate": 0.5611
+    },
+    "probegate-all_q75_clamp_q30": {
+      "tau": -2.8086142539978027,
+      "n_flagged": 148,
+      "flag_rate": 0.4933,
+      "p_ocw_given_flagged": 0.3041,
+      "ocw_recall": 0.5769,
+      "cr_false_flag_rate": 0.4661
+    },
+    "probegate-all_q75_ablate": {
+      "tau": -2.8086142539978027,
+      "n_flagged": 148,
+      "flag_rate": 0.4933,
+      "p_ocw_given_flagged": 0.3041,
+      "ocw_recall": 0.5769,
+      "cr_false_flag_rate": 0.4661
+    },
+    "probegate-all_q75_otq_cal": {
+      "tau": -2.8086142539978027,
+      "n_flagged": 148,
+      "flag_rate": 0.4933,
+      "p_ocw_given_flagged": 0.3041,
+      "ocw_recall": 0.5769,
+      "cr_false_flag_rate": 0.4661
+    }
+  }
+}
