@@ -169,6 +169,8 @@ if __name__ == "__main__":
             print(f"  {tag}_{mname}: {len(rows)}/{len(baselines[mname])} ({time.time() - t0:.0f}s)", flush=True)
 
     def ungated(name: str, w: dict):
+        if name == "null":
+            return lambda h: h
         if name == "ablate":
             return lambda h: steer_ablate(h, v)
         if name in conds:
@@ -270,15 +272,19 @@ if __name__ == "__main__":
                 rows = score_m5_batch(model, tok, [], lids, ids4, bs, m2_rows=m2)
             meta["gates"][method] = {"tau": float(tau), "n_flagged": len(flagged)}
             emit(method, {r["id"]: r for r in (rows if flagged else [])}, "m5")
-        elif method.startswith("det_") or method.startswith("detprompt_"):
-            det, sc = detector_scores() if method.startswith("det_") else prompt_scores()
+        elif method.startswith(("det_", "detprompt_", "detnull_", "detrand_")):
+            det, sc = prompt_scores() if method.startswith("detprompt_") else detector_scores()
             tau = q_at({"q": det["score_quantiles"].tolist()}, w["q"])
             flagged = [by_id[i] for i, x in sc.items() if x > tau and i in by_id]
             meta["gates"][method] = {"tau": float(tau), "n_flagged": len(flagged)}
-            if "alpha" in w:
-                fn = lambda h, a=w["alpha"]: steer_add(h, v, a * norm)
+            d = torch.nn.functional.normalize(torch.randn(v.shape[0], generator=torch.Generator().manual_seed(0)), dim=0).to(v) \
+                if method.startswith("detrand_") else v
+            if method.startswith("detnull_"):
+                fn = lambda h: h
+            elif "alpha" in w:
+                fn = lambda h, a=w["alpha"]: steer_add(h, d, a * norm)
             else:
-                fn = (lambda h: steer_ablate(h, v)) if w["action"] == "ablate" else conds[w["action"]](v)
+                fn = (lambda h: steer_ablate(h, d)) if w["action"] == "ablate" else conds[w["action"]](d)
             run_all(method, fn, flagged)
         elif method == "additive":
             run_all("tuned_additive", lambda h, a=w["alpha"]: steer_add(h, v, a * norm))
