@@ -741,9 +741,9 @@ $1.97\times$ for regenerating flagged answers (Appendix~\ref{app:legacy}).
 We have presented Projection-Transport Steering, which splits a conditional
 activation edit into a decision and an action and accounts exactly for each.
 The accounting has a practical consequence for how conditional steering is
-evaluated. A gated edit should be compared not only with global steering but
-with detect-and-override under the same decision, and the identity says in
-advance when it can win: only if the action spares the protected answers the
+evaluated. A gated edit should be compared with global steering and with
+detect-and-override under the same decision, and the identity says in advance
+when it can beat the latter: only if the action spares the protected answers the
 decision flags by mistake more often than it misses the target answers it flags
 correctly. In our experiments the decision determined the outcome, the best
 decision was a probe trained on held-out labels, and overriding the readout
@@ -1016,7 +1016,7 @@ one cell, Mistral on ETHICS, to a 1{,}000-scenario test. There the operator
 improved pooled calibrated MC2 by $+0.107$ $[+0.090,+0.124]$ and lowered MC1 on
 label-1 scenarios by $0.093$ $[0.071,0.124]$.
 
-\section{Proofs and formal statements}
+\section{Proofs}
 \label{app:proofs}
 
 \textbf{Theorem~\ref{thm:ot}.} By locality, $T(h)-h\in\mathrm{span}(V^\top)$
