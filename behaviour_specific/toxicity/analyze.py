@@ -125,8 +125,8 @@ def confirm(sel_cfg: dict, n_random: int, iters: int) -> dict:
             f = flags("confirm", kind, int(q[1:]), base, feats)
             null = get(f"null|{arm}")
             rand = [get(f"rand{s}|{arm}") for s in range(n_random) if (OUT / "confirm" / f"{tag(f'rand{s}|{arm}')}__shard0.jsonl").exists()]
-            r_pt = np.array([sel(one, base, r)[0] for r in rand])
-            r_bs = np.mean([sel(w, base, r) for r in rand], axis=0)
+            r_pt = np.array([sel(one, base, r)[0] for r in rand]) if rand else np.array([np.nan])
+            r_bs = np.mean([sel(w, base, r) for r in rand], axis=0) if rand else np.full(iters, np.nan)
             ov_pt, ov_bs = float(override_sel(one, base, f)[0]), override_sel(w, base, f)
             tb = load("tuning", "base")
             tids = sorted(tb)

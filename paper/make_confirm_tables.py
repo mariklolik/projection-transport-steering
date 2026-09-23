@@ -289,15 +289,6 @@ def ref_table() -> None:
                         f"${ov['point']:.3f}$ & ${d['point']:+.3f}$ {{\\tiny$[{d['ci'][0]:+.2f},{d['ci'][1]:+.2f}]$}} & "
                         f"{'yes' if a['eq2_agrees'] else 'no'} \\\\")
         rows.append("\\hline")
-    syc = RES / "v4_pooled" / "sycophancy.json"
-    if syc.exists():
-        c = json.loads(syc.read_text())["confirm"]
-        r, g = c.get("references"), c["gated"]
-        if r and r["random_mean"] is not None:
-            rows.append(f"Gemma, sycophancy & probe, deference edit & ${g['sel']:.3f}$ & --- & --- & ${r['random_mean']:.3f}$ & "
-                        f"${g['sel'] - r['random_mean']:+.3f}$ & ${r['override_matched']:.3f}$ & "
-                        f"${g['sel'] - r['override_matched']:+.3f}$ & {'yes' if r['eq2_agrees'] else 'no'} \\\\")
-            rows.append("\\hline")
     (GEN / "references.tex").write_text("\n".join(rows) + "\n")
 
 
@@ -312,33 +303,47 @@ def dense_table() -> None:
 
 
 def tox_table() -> None:
-    names = [("prompt", "prompting"), ("ungated", "global shift"), ("cast", "CAST (prompt)"),
-             ("probe", "\\textbf{PTS, prompt}"), ("post", "PTS, post-hoc")]
-    blocks = []
-    for m in ("gemma_2_2b_it", "qwen2_5_7b_it"):
+    def load_m(m):
         d = json.loads((RES / "toxicity" / m / "confirm.json").read_text())["arms"]
-        r = json.loads((RES / "toxicity" / m / "rates.json").read_text())
-        blocks.append((d, r))
+        r = RES / "toxicity" / m / "rates.json"
+        rates = json.loads(r.read_text()) if r.exists() else {k: {"removal": v["removal"], "retention": v["retention"]} for k, v in d.items()}
+        return d, rates
+    models = ("gemma_2_2b_it", "qwen2_5_7b_it", "mistral_7b_it")
+    data = {m: load_m(m) for m in models}
+    ot = json.loads((RES / "toxicity" / "gemma_2_2b_it" / "transport_confirm.json").read_text())
+    pv = lambda p: pval(p)  # noqa: E731
     rows = []
+    names = [("prompt", "prompting"), ("ungated", "global shift"), ("cast", "CAST"), ("probe", "\\textbf{PTS}, shift"),
+             ("ot", "\\textbf{PTS}, transport map"), ("post", "PTS, post-hoc")]
     for key, name in names:
         cells = []
-        for d, r in blocks:
-            a, rr = d[key], r[key]
-            vs = "---" if key == "probe" else f"${a['vs_pgs']['point']:+.3f}$ ({pval(a['vs_pgs']['p_two_sided'])})"
-            cells.append(f"{100 * rr['removal']:.0f} & {100 * rr['retention']:.0f} & ${a['sel']['point']:.3f}$ "
+        for m in models:
+            d, r = data[m]
+            if key == "ot":
+                if m != "gemma_2_2b_it":
+                    cells.append("\\multicolumn{3}{c|}{---}" if m != models[-1] else "\\multicolumn{3}{c}{---}")
+                    continue
+                o = ot["ot"]
+                cells.append(f"{100 * o['removal']:.0f}/{100 * o['retention']:.0f} & ${o['sel']:.3f}$ {{\\tiny$[{o['ci'][0]:.2f},{o['ci'][1]:.2f}]$}} & "
+                             f"${ot['ot_minus_pts_shift']['point']:+.3f}$ ({pv(2 * ot['ot_minus_pts_shift']['p_one_sided'])})")
+                continue
+            a = d[key]
+            vs = "---" if key == "probe" else f"${a['vs_pgs']['point']:+.3f}$ ({pv(a['vs_pgs']['p_two_sided'])})"
+            cells.append(f"{100 * r[key]['removal']:.0f}/{100 * r[key]['retention']:.0f} & ${a['sel']['point']:.3f}$ "
                          f"{{\\tiny$[{a['sel']['ci'][0]:.2f},{a['sel']['ci'][1]:.2f}]$}} & {vs}")
         rows.append(f"{name} & " + " & ".join(cells) + " \\\\")
-        if key == "post":
-            rows.append("\\hline")
-    for label, name in (("random", "same decision, random direction (mean of 100)"), ("override", "same decision, refuse")):
+    rows.append("\\hline")
+    for label, name in (("random", "same decision, random direction"), ("override", "same decision, refusal")):
         cells = []
-        for d, r in blocks:
-            a, rr = d["probe"], r["probe"]
+        for m in models:
+            d, r = data[m]
+            a = d["probe"]
             if label == "random":
-                cells.append(f"--- & --- & ${a['random']['mean']:.3f}$ & ${-a['vs_random']['point']:+.3f}$ ($<$0.001)")
+                cells.append(f"--- & ${a['random']['mean']:.3f}$ & ${-a['vs_random']['point']:+.3f}$ ($<$0.001)")
             else:
-                cells.append(f"{100 * rr['override_removal']:.0f} & {100 * rr['override_retention']:.0f} & ${a['override']['point']:.3f}$ & "
-                             f"${-a['steer_minus_override']['point']:+.3f}$ ($<$0.001)")
+                rem = r["probe"].get("override_removal", a["override"].get("removal"))
+                ret = r["probe"].get("override_retention", a["override"].get("retention"))
+                cells.append(f"{100 * rem:.0f}/{100 * ret:.0f} & ${a['override']['point']:.3f}$ & ${-a['steer_minus_override']['point']:+.3f}$ ($<$0.001)")
         rows.append(f"{name} & " + " & ".join(cells) + " \\\\")
     (GEN / "toxicity.tex").write_text("\n".join(rows) + "\n")
 
