@@ -96,6 +96,9 @@ if __name__ == "__main__":
         fit = torch.load(DIRECTIONS_DIR / f"deference_L{args.layer}.pt")
         d = fit["d"].to(model.device, torch.float32)
         kind, _, val = args.arm.partition(":")
+        if kind.startswith("rand"):
+            g = torch.Generator().manual_seed(int(kind[4:]))
+            d, kind = torch.nn.functional.normalize(torch.randn(d.shape[0], generator=g), dim=0).to(d), "add"
         fn = (lambda h: steer_ablate(h, d)) if kind == "ablate" else (lambda h, a=float(val): steer_add(h, d, a * fit["norm"]))
         handle = steering_hook(model.model.layers[args.layer], fn)
     try:

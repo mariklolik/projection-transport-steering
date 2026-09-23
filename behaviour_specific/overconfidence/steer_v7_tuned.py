@@ -99,6 +99,7 @@ if __name__ == "__main__":
     ap.add_argument("--prompt-configs", default="")
     ap.add_argument("--cast-configs", default="")
     ap.add_argument("--phase-configs", default="")
+    ap.add_argument("--variants", default="")
     args = ap.parse_args()
 
     _selftest()
@@ -154,6 +155,18 @@ if __name__ == "__main__":
         write_jsonl(out_dir / f"{tag}_{mname}__shard{args.shard}.jsonl", merged)
 
     def run_all(tag: str, fn, subset=None):
+        if args.variants and subset is not None:
+            for var in args.variants.split(","):
+                saved = v.clone()
+                if var.startswith("rand"):
+                    g = torch.Generator().manual_seed(int(var[4:]))
+                    v.copy_(torch.nn.functional.normalize(torch.randn(v.shape[0], generator=g), dim=0).to(v))
+                run_once(f"{var}-{tag}", (lambda h: h) if var == "null" else fn, subset)
+                v.copy_(saved)
+            return
+        run_once(tag, fn, subset)
+
+    def run_once(tag: str, fn, subset=None):
         for mname, scorer in scorers.items():
             t0 = time.time()
             recs = subset if subset is not None else records
