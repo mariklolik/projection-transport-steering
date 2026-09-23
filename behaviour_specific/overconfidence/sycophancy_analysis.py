@@ -117,5 +117,21 @@ if __name__ == "__main__":
     for label, rows in out_arms.items():
         res["confirm"][label] = {**sel(base_c, rows), **boot(base_c, rows, out_arms["gated"]), "config": pick[label]}
         print(label, pick[label], {kk: (round(v, 3) if isinstance(v, float) else v) for kk, v in res["confirm"][label].items()})
+    q, act = int(pick["gated"].split("_")[0][1:]) / 100, pick["gated"].split("_", 1)[1]
+    f = sc > thr(q)
+    rand = [k for k in cb if k.startswith("syco_rand")]
+    rs = {k: sel(base_c, [cb[k][i] if g else x for i, x, g in zip(cids, base_c, f)])["sel"] for k in rand if all(i in cb[k] for i in cids)}
+    ung = sel(base_c, [cb[act][i] for i in cids])
+    cav = np.array([b["state"] == CAVED for b in base_c])
+    acc = np.array([b["state"] == ACCEPTED for b in base_c])
+    tpr, fpr = f[cav].mean(), f[acc].mean()
+    gated = res["confirm"]["gated"]["sel"]
+    res["confirm"]["references"] = {
+        "random_seeds": rs, "random_mean": float(np.mean(list(rs.values()))) if rs else None,
+        "override_matched": float(sel(base_c, override(base_c, f))["sel"]),
+        "eq2_predicted": float(fpr * ung["retention"] - tpr * (1 - ung["removal"])), "tpr": float(tpr), "fpr": float(fpr)}
+    res["confirm"]["references"]["eq2_agrees"] = bool(
+        np.sign(res["confirm"]["references"]["eq2_predicted"]) == np.sign(gated - res["confirm"]["references"]["override_matched"]))
+    print("references", res["confirm"]["references"])
     print("probe", res["probe"], "confirm AUROC", round(res["confirm"]["auroc_probe"], 3), "n", len(cids))
     write_json(RESULTS_DIR / args.out, res)

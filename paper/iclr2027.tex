@@ -76,7 +76,7 @@
 \emergencystretch=1.8em
 \renewcommand{\UrlFont}{\ttfamily\small}
 
-\title{What the Decision Buys:\\ An Exact Account of Conditional Activation Steering}
+\title{Null and Override References for\\ Conditional Activation Steering}
 \author{Anonymous authors\\Paper under double-blind review}
 
 \begin{document}
@@ -84,20 +84,21 @@
 
 \begin{abstract}
 Conditional activation steering edits a language model only on inputs that a
-decision flags, and it is usually shown to beat steering every input. Such
-comparisons leave open how much of the gain comes from the decision and how
-much from the edit. We give an exact account: the selectivity of any
-conditional edit equals the decision's error rates weighted by the rates at
-which the edit converts the inputs it flags. The account predicts gated edits
-from a single ungated run, states when steering can beat overriding the
-behavior's readout with the same decision, and calls for two null arms that
-pass the same decision to no edit and to a random edit. We apply it to
-answer-level overconfidence with Probe-Gated Steering (PGS), a correctness
-probe in front of a projection edit. In pre-registered comparisons on two model
-families and two benchmarks, PGS exceeds its no-edit null in every setting and
-its random-edit null in two of three, and it is the most selective of eight
-methods on Gemma-MMLU while lowering calibration error. The decision carries
-most of the effect, which also transfers to sycophancy.
+decision flags, and it is usually compared with steering every input. We show
+that this comparison cannot tell a useful edit from a useful decision. The
+selectivity of a conditional edit decomposes into the decision's error rates
+and the rates at which the edit converts the flagged inputs, and the
+decomposition yields three references built on the same decision: no edit,
+which measures re-generation noise; a random edit of the same size; and an
+override of the behavior's readout. We apply the references, under
+pre-registered protocols, to four conditional methods on answer-level
+overconfidence in two model families and two benchmarks, and to sycophancy.
+Re-generation alone scores up to $0.09$ selectivity, and on Qwen three of four
+conditional methods do not beat a random direction through their own decision.
+Whether steering beats overriding with the same decision follows the sign
+predicted from ungated conversion rates in ten of thirteen cases. A
+probe-gated projection edit is the only method that clears both null
+references in every setting.
 \end{abstract}
 
 \section{Introduction}
@@ -106,60 +107,58 @@ most of the effect, which also transfers to sycophancy.
 Language models carry many behaviors along directions of their activations,
 and activation steering changes a behavior by moving the activation along such
 a direction~\citep{turner2023actadd,rimsky2024caa,zou2023repe,li2023iti,arditi2024refusal}.
-The edit costs one vector operation per token and is applied to every input, so
-a dose that removes a behavior also changes the inputs that never showed it.
-Conditional methods place a decision in front of the edit:
-CAST~\citep{lee2024cast} steers only when the prompt resembles a condition
-vector, and PCHI~\citep{liu2026probe} rescales attention heads only when a
-probe flags a wrong but confident answer. Both are compared with global
-steering, and both improve on it.
+The edit is applied to every input, so a dose that removes a behavior also
+changes the inputs that never showed it. Conditional methods place a decision
+in front of the edit: CAST~\citep{lee2024cast} steers only when the prompt
+resembles a condition vector, and PCHI~\citep{liu2026probe} rescales attention
+heads only when a probe flags a wrong but confident answer. Both are compared
+with global steering, and both improve on it.
 
 A conditional edit makes two choices, which inputs to edit and how to edit
-them, and a comparison with global steering credits the pair. We study
-overconfidence in multiple-choice reasoning, where the answers to change are
-the ones the model gets wrong while stating that it is right, and the answers
-to protect are the ones it gets right and says so. On
-\texttt{gemma-2-2b-it}, the additive dose that removes every
-overconfident-wrong answer also removes every confident-right one
-(Sec.~\ref{ssec:confirm}), so a decision is needed, and the open question is
-how much of the result it supplies.
+them, and a comparison with global steering measures the two together. Three simpler
+explanations of an improvement then remain open. Re-generating the flagged
+inputs may change their outputs through decoding nondeterminism alone. Any
+perturbation of the same size, sent through the same decision, may do as well
+as the chosen direction. And if the behavior has a readout, overwriting that
+readout on the flagged inputs may do better than editing activations at all.
+We study overconfidence in multiple-choice reasoning, where the answers to
+change are wrong answers the model states it is sure of and the answers to
+protect are right answers it states it is sure of, and we find that all three
+explanations matter.
 
-We answer it with an identity. The selectivity of any conditional edit equals
-the decision's true-positive rate times the rate at which the edit converts
-the flagged target answers, minus its false-positive rate times the rate at
-which it converts the flagged protected ones (Prop.~\ref{prop:account}). The
-identity gives three references that a conditional method can be held to: the
-same decision with no edit, which measures how often re-generation alone
-changes an answer; the same decision with a random edit of the same size; and
-the same decision overriding the behavior's readout, which converts every
-flagged answer. It also states in advance when steering beats the last of
-these (Eq.~\ref{eq:override}). We instantiate the account as Probe-Gated
-Steering (PGS): a logistic-regression probe, the estimate of the likelihood
-ratio that Theorem~\ref{thm:gate} shows to be the optimal decision, in front of
-a projection-local edit of the confidence direction.
+Our tool is a decomposition. The selectivity of a conditional edit equals the
+decision's true-positive rate times the rate at which the edit converts the
+flagged target answers, minus its false-positive rate times the rate at which
+it converts the flagged protected ones (Prop.~\ref{prop:account}). Each term
+has a reference arm with the same decision: an identity action, a random
+direction, and an override that converts every flagged answer. The same
+equation says in advance, from the conversion rates of an ungated run, whether
+steering or overriding is more selective at a given operating point
+(Eq.~\ref{eq:override}).
 
 Our main contributions are:
 \begin{itemize}\setlength{\itemsep}{1pt}
-\item An accounting identity for conditional edits, the condition under which
-steering is more selective than detect-and-override, and a Neyman--Pearson
-characterization of the optimal decision (Sec.~\ref{sec:method}). The
-identity predicts the selectivity of 480 gated configurations from ungated
-runs (correlation $0.97$ on Gemma, $0.91$ on Qwen) and composes the
-confirmatory gated arms of three settings to within $0.025$
-(Sec.~\ref{ssec:law}).
-\item A pre-registered comparison in which every method is tuned under one rule
-and run once on unseen questions, for two model families and a second
-benchmark, with null arms registered and timestamped before they were run.
-PGS is the most selective of eight methods on Gemma-MMLU, significantly so
-against all seven baselines, and it lowers expected calibration error there by
-$0.10$ and on ARC by $0.06$ (Sec.~\ref{ssec:confirm}).
-\item A decomposition of what the decision buys. Passing a random direction
-through the probe recovers $73\%$ of the selectivity of PGS on Gemma, and
-overriding the readout with the probe recovers all of it; across five
-decisions the override reference follows the probe's held-out AUROC, and the
-same account applies to sycophancy (Sec.~\ref{ssec:decides}).
-\item A one-pass form of the decision, read from the prompt or a short prefix,
-that matches the post-hoc decision on Gemma (Sec.~\ref{ssec:onepass-results}).
+\item The decomposition, the three references, and the condition under which a
+gated edit is more selective than overriding with its own decision
+(Sec.~\ref{sec:method}).
+\item A pre-registered application to four conditional methods, CAST with its
+prompt condition, a CAST-style trace condition, and a probe gate read after or
+before generation, on Gemma-2-2B and Qwen2.5-7B with MMLU and on Gemma with
+ARC, with protocols committed and pushed before the reference arms were run
+(Sec.~\ref{ssec:refs}). Eighteen of the 24 registered tests pass; the failures
+are all on Qwen or with the CAST prompt condition.
+\item Evidence that the references change conclusions. On Qwen, three of the
+four methods score at or below a random direction through their own decision.
+Steering beats the matched override for the CAST conditions, which fire on
+many protected answers, and loses to it for correctness probes, in the
+direction Eq.~\ref{eq:override} predicts in ten of thirteen cases, including
+sycophancy (Sec.~\ref{ssec:refs}).
+\item Probe-Gated Steering (PGS), a correctness probe in front of a
+projection-local edit, which is the only method that exceeds both null
+references in all three settings, ranks its direction above ten random ones in
+each, and is the most selective steering method on Gemma-MMLU against seven
+tuned baselines, with a net reduction in calibration error
+(Sec.~\ref{ssec:confirm}).
 \end{itemize}
 
 \begin{table}[t]\footnotesize\setlength{\tabcolsep}{4pt}
@@ -178,14 +177,14 @@ Linear-AcT~\citep{rodriguez2025act} & per-neuron affine map & --- & $\Theta(d)$ 
 CAST~\citep{lee2024cast} & $p+\alpha$ & cosine to a condition vector (prompt) & $\Theta(d)$ \\
 PCHI~\citep{liu2026probe} & learned head rescaling & probe (confidence template) & $\Theta(d)$ \\
 \hline
-PGS (ours) & any monotone $S$ (Prop.~\ref{prop:ot}) & likelihood-ratio probe (prompt, prefix or answer) & $\Theta(d)$ \\
+PGS & monotone $S$ (Prop.~\ref{prop:ot}) & logistic probe (prompt, prefix or answer) & $\Theta(d)$ \\
 \hline
 \end{tabular}}
 \caption{\textbf{Steering operators as a transfer function plus a decision.}
 Each operator applies a transfer function $S$ to a projection $p$ of the
 residual stream; the conditional ones add a decision.
-Proposition~\ref{prop:account} gives the selectivity of any row as a function
-of its decision and its action.}
+Proposition~\ref{prop:account} writes the selectivity of any conditional row
+in terms of its decision and its action.}
 \label{tab:family}
 \end{table}
 
@@ -197,59 +196,43 @@ CAA~\citep{rimsky2024caa} add a contrastive direction to the residual stream,
 ITI~\citep{li2023iti} shifts probe-selected attention heads,
 RepE~\citep{zou2023repe} reads and writes representation directions,
 directional ablation~\citep{arditi2024refusal} projects a direction out, and
-SAE clamping~\citep{templeton2024scaling} pins a feature. The same edit reaches
-every input, and AxBench~\citep{wu2025axbench} and studies of steering
+SAE clamping~\citep{templeton2024scaling} pins a feature. AxBench~\citep{wu2025axbench}
+and studies of steering
 reliability~\citep{tan2024generalisation,braun2025unreliability} find such
-edits brittle across inputs. MiMiC~\citep{singh2024mimic} derives the Gaussian
-optimal-transport map between two activation distributions,
-Linear-AcT~\citep{rodriguez2025act} transports each neuron with a univariate
-map, LinEAS~\citep{rodriguez2025lineas} learns affine maps end to end, and
+edits brittle across inputs, and AxBench shows that simple baselines often
+match more elaborate steering. MiMiC~\citep{singh2024mimic},
+Linear-AcT~\citep{rodriguez2025act} and LinEAS~\citep{rodriguez2025lineas}
+choose the edit by optimal transport between activation distributions, and
 COAST~\citep{nguyen2026coast} and A-LQR~\citep{nguyen2026alqr} minimise
-collateral change for a given target. These works choose the action; we keep
-the action simple and measure what the decision adds.
+collateral change for a given target. These works choose the action; we ask
+what a decision adds to it and against which references that should be judged.
 
 \textbf{Conditional steering.} CAST~\citep{lee2024cast} applies a behavior
-vector only when the prompt's hidden state is similar to a condition vector,
-and is the baseline closest to our design; we reimplement its prompt condition
-and give it the same labelled data as our probe. Dynamic and
-semantics-adaptive methods scale the edit per
+vector only when the prompt's hidden state is similar to a condition vector;
+we reimplement its prompt condition and give it the same labelled data as our
+probe. Dynamic and semantics-adaptive methods scale the edit per
 token~\citep{ferrando2026dsas,wang2025sadi,scalena2024dynamic}, and
 GAPS~\citep{gaps2026} gates individual dimensions. Closest in aim is
-PCHI~\citep{liu2026probe}, which also separates detection from intervention
-for verbalised overconfidence: a linear probe on the confidence template
-conditions a learned rescaling of attention heads. PCHI learns the action for
-a fixed readout position; we fix the action and ask what the decision
-contributes, when it can be taken, and against which references it should be
-judged. Probes read after a few generated tokens predict whether steering will
-succeed~\citep{steerable2026}, and detectors of a finished behavior forecast it
-less well from a prefix~\citep{fpcg2026}; we measure this prefix cost for our
-decision directly.
+PCHI~\citep{liu2026probe}, which conditions a learned rescaling of attention
+heads on a correctness probe read at the confidence template. We do not
+reimplement its learned action; its decision is a correctness probe of the
+kind our references are built for. Probes read after a few generated tokens
+predict whether steering will succeed~\citep{steerable2026}, and detectors of a
+finished behavior forecast it less well from a prefix~\citep{fpcg2026}.
 
-\textbf{Correctness probes.} That a model's activations predict whether its
-answer is right is well established~\citep{kadavath2022know,azaria2023lying},
+\textbf{Correctness probes and selective prediction.} A model's activations
+predict whether its answer is right~\citep{kadavath2022know,azaria2023lying},
 and reading a direction off already-edited activations degrades
-it~\citep{luo2026yopo}. Our override reference is selective prediction with
-such a probe, and the identity turns it into the baseline that a conditional
-edit of a confidence readout has to beat.
+it~\citep{luo2026yopo}. Overriding the stated confidence of the answers such a
+probe flags is selective prediction; the decomposition makes it the reference
+that a conditional edit of the same readout has to be compared with.
 
-\section{Probe-Gated Steering}
+\section{Decomposing a Conditional Edit}
 \label{sec:method}
 
-A conditional edit makes two choices: how to change an activation, and on which
-inputs to change it. We call the first the \emph{action} and the second the
-\emph{decision}. This section describes the family of actions
-(Sec.~\ref{ssec:action}), writes selectivity as a function of the two choices
-and derives the references (Sec.~\ref{ssec:decision}), and moves the decision
-into a single pass (Sec.~\ref{ssec:onepass}). Proofs are in
-Appendix~\ref{app:proofs}.
-
-\textbf{Setup.} Let $h\in\mathbb{R}^d$ be the residual-stream activation at a
-fixed layer and $V\in\mathbb{R}^{k\times d}$ a matrix with orthonormal rows
-that spans a behavioral subspace. We write $\mu_V$ for the law of the
-projection $Vh$ under unsteered generation and $\nu$ for a target law on
-$\mathbb{R}^k$. In our experiments $k=1$ and $V=\hat v^\top$ is the confidence
-direction, the difference of mean activations between confident and
-nonconfident answers on an extraction split (Sec.~\ref{sec:exp}).
+A conditional edit makes two choices: how to change an activation, and on
+which inputs to change it. We call the first the \emph{action} and the second
+the \emph{decision}. Proofs are in Appendix~\ref{app:proofs}.
 
 \begin{figure}[t]
 \centering
@@ -276,35 +259,7 @@ conversion rates on the flagged answers (Prop.~\ref{prop:account}).}
 \label{fig:pipeline}
 \end{figure}
 
-\subsection{The action}
-\label{ssec:action}
-
-Large edits are what damage generation (Appendix~\ref{app:capability}), so we
-restrict the action to the behavioral subspace. An edit $T$ is \emph{local} to
-$V$ if $(I-V^\top V)\,T(h)=(I-V^\top V)\,h$, and its cost is
-$\mathbb{E}\lVert T(h)-h\rVert^2$.
-
-\begin{proposition}[local edits]
-\label{prop:ot}
-Let $\mu_V$ be absolutely continuous and let $\mu_V,\nu$ have finite second
-moments. Among local edits under which $Vh$ has law $\nu$, the cost is
-minimised by $T(h)=h+V^\top\big(S(Vh)-Vh\big)$, where $S$ is the Brenier map
-from $\mu_V$ to $\nu$, and the minimum is $\Wtwo^2(\mu_V,\nu)$.
-\end{proposition}
-
-The result is Brenier's theorem applied to the projection, and we use it only
-to describe the family. For $k=1$, $S$ is the monotone
-rearrangement of quantiles; ablation is the map onto $\delta_0$, a clamp maps
-onto a truncated law, and the shift $S(p)=p+\alpha$ maps onto a translate of
-$\mu_V$. The tuning grid of every setting contains all three kinds of map, and
-the selection rule picks a shift or ablation each time
-(Appendix~\ref{app:tuning}). The reason is visible in the data: on Gemma the
-law of the confidence projection over calibrated answers differs from its
-unsteered law by $0.03$ standard deviations in mean and $4\%$ in spread, so the
-transport map onto it barely moves an activation, whereas the selected shift moves the projection
-by $3.2$ standard deviations.
-
-\subsection{The decision and its references}
+\subsection{Selectivity and its references}
 \label{ssec:decision}
 
 A decision reads a statistic $s$ of the input and runs the action on the event
@@ -317,7 +272,7 @@ $\mathrm{FPR}$ for the rates at which the decision fires on \ocw{} and \crok{},
 and $\rho_O$, $\rho_C$ for the rates at which the action changes the state of a
 flagged \ocw{} and a flagged \crok{} answer.
 
-\begin{proposition}[selectivity accounting]
+\begin{proposition}[decomposition]
 \label{prop:account}
 For any decision and action that leave unflagged outputs unchanged,
 \begin{equation}
@@ -326,126 +281,138 @@ For any decision and action that leave unflagged outputs unchanged,
 \end{equation}
 \end{proposition}
 
-Eq.~\eqref{eq:account} separates the two choices, and each of its terms has a
-reference arm. If the action converts flagged and unflagged answers of the same
-state at the same rate, $\rho_O$ and $\rho_C$ can be read off one ungated run,
-and the equation predicts the selectivity of every decision placed in front of
-that action. Re-generating the flagged answers without an edit gives
-$\rho_O,\rho_C>0$ through decoding nondeterminism alone, so the same decision
-with an identity action is the \emph{no-edit null}; the same decision with a
-norm-matched random direction is the \emph{random-edit null}, and it measures
-what any perturbation of that size achieves. Overriding the reported confidence
-of every flagged answer gives $\rho_O=\rho_C=1$ and reaches
-$\mathrm{TPR}-\mathrm{FPR}$. A gated edit is more selective than this
-\emph{detect-and-override} reference exactly when
+Eq.~\eqref{eq:account} is the law of total probability, and its use is in
+what it separates. Each factor has a reference arm with the same decision. An
+identity action re-generates the flagged answers, and its $\rho_O$ and
+$\rho_C$ are the rates at which decoding nondeterminism alone changes a state;
+we call it the \emph{no-edit null}. A unit random direction at the same dose
+measures what any perturbation of that size converts; we call the average over
+ten directions the \emph{random-edit null}. Overriding the stated confidence of
+every flagged answer gives $\rho_O=\rho_C=1$ and reaches
+$\mathrm{TPR}-\mathrm{FPR}$, the \emph{matched override}. A gated edit is more
+selective than its matched override exactly when
 \begin{equation}
 \mathrm{TPR}\,(1-\rho_O)<\mathrm{FPR}\,(1-\rho_C),
 \label{eq:override}
 \end{equation}
 that is, when the action spares the confident-right answers the decision
 flags by mistake more often than it fails on the overconfident-wrong answers
-it flags correctly. How large the decision term can be depends on how well $s$
-separates the two states.
+it flags correctly. With $\rho_O$ and $\rho_C$ read from an ungated run, the
+inequality is a prediction that can be checked against the gated run; it
+favours steering for decisions with a high false-positive rate and
+overriding for accurate ones. The same substitution predicts the selectivity
+of any decision placed in front of an action from one ungated run.
 
-\begin{theorem}[optimal decision and its ceiling]
+\begin{theorem}[decision and its ceiling]
 \label{thm:gate}
-Suppose that within each state the action's conversion probability does not
-depend on $s$. (a) For any objective increasing in TPR and decreasing in FPR,
-including Eq.~\eqref{eq:account}, thresholding the likelihood ratio of $s$
-between \ocw{} and \crok{} is optimal at every operating point. Without the
-assumption, the optimal decision thresholds the conversion-weighted ratio
+(a) If within each state the action's conversion probability does not depend
+on $s$, thresholding the likelihood ratio of $s$ between \ocw{} and \crok{} is
+optimal for Eq.~\eqref{eq:account} at every operating point. In general the
+optimal decision thresholds the conversion-weighted ratio
 $p_O(s)\,r_O(s)/\big(p_C(s)\,r_C(s)\big)$, where $p$ is the class-conditional
 density of $s$ and $r(s)$ the conversion probability given $s$. (b) If the
-concave hull of the ROC of $s$ has area $\mathrm{AUC}$, then
-$\max_\tau(\mathrm{TPR}-\mathrm{FPR})\le2\,\mathrm{AUC}-1$, which bounds the
-detect-and-override reference and any gated edit with $\rho_O=\rho_C$.
+concave hull of the ROC of $s$ has area $\mathrm{AUC}_{\mathrm{hull}}$, then
+$\max_\tau(\mathrm{TPR}-\mathrm{FPR})\le2\,\mathrm{AUC}_{\mathrm{hull}}-1$, which
+bounds the matched override and any gated edit with $\rho_O=\rho_C$.
 \end{theorem}
 
-We therefore implement the decision as a logistic-regression probe, an estimate
-of the log-likelihood ratio, fitted on answers labelled by the evaluation
-readout and judged by its AUROC on questions it was not fitted to. The same
-bound explains why the decision should not read the coordinate the action
-edits: on held-out questions the confidence projection separates \ocw{} from
-\crok{} at AUROC $0.64$ for Gemma and $0.53$ for Qwen.
+The premise of (a) does not hold on our data: flagged answers convert more
+often than unflagged answers of the same state (Appendix~\ref{app:law}), so a
+likelihood-ratio probe is a reasonable decision but not a provably optimal one.
+Part (b) needs no such premise and explains why the decision should not read
+the coordinate the action edits: on held-out questions the confidence
+projection separates \ocw{} from \crok{} at AUROC $0.64$ for Gemma and $0.53$
+for Qwen.
 
-\subsection{Deciding in one pass}
-\label{ssec:onepass}
+\subsection{The methods under study}
+\label{ssec:action}
 
-A decision that reads the finished answer requires generating every flagged
-question twice. The decision can instead read the prompt, or the mean
-activation over the first $t$ generated tokens, with a probe fitted on exactly
-that statistic. Theorem~\ref{thm:gate} applies to any such statistic, so the
-cost of deciding early is the AUROC lost relative to the finished answer. The
-reader sits at or above the layer the action writes, the action starts at the
-decision token, and positions written before it keep their cached keys. The
-operator then costs two $d$-dimensional dot products per token.
+All four conditional methods act on one direction at one layer. Let
+$h\in\mathbb{R}^d$ be the residual-stream activation and $V\in\mathbb{R}^{k\times d}$
+a matrix with orthonormal rows. An edit $T$ is \emph{local} to $V$ if
+$(I-V^\top V)\,T(h)=(I-V^\top V)\,h$.
+
+\begin{proposition}[local edits]
+\label{prop:ot}
+Let the law $\mu_V$ of $Vh$ be absolutely continuous and let $\mu_V$ and a target
+$\nu$ have finite second moments. Among local edits under which $Vh$ has law
+$\nu$, $\mathbb{E}\lVert T(h)-h\rVert^2$ is minimised by
+$T(h)=h+V^\top\big(S(Vh)-Vh\big)$, where $S$ is the Brenier map from $\mu_V$ to
+$\nu$.
+\end{proposition}
+
+This is Brenier's theorem applied to the projection, and it describes the
+family: for $k=1$, $S$ is a monotone map, and ablation, clamps and shifts are
+instances. We use $k=1$ and $V=\hat v^\top$, the confidence direction (the
+difference of mean activations between confident and nonconfident answers on
+an extraction split). Every tuning grid contains shifts, ablation, clamps and
+the transport map onto the law of the projection over calibrated answers; the
+selection rule picks a shift or ablation each time, because that target law
+differs from the unsteered one by only $0.03$ standard deviations in mean.
+
+The CAST methods apply a shift when the prompt's mean activation has cosine
+above a threshold with a condition vector (CAST prompt), or when the finished
+trace projects above a threshold onto an \ocw{}--\crok{} direction (CAST-style
+trace). \emph{Probe-Gated Steering} (PGS) applies the local edit when a
+logistic-regression probe on the mean activation of one layer, fitted to
+predict \ocw{} against \crok{} on held-out labelled answers, exceeds a
+threshold. Post-hoc PGS reads the finished unsteered answer and regenerates
+the flagged questions. Single-pass PGS reads the prompt, or the first $t$
+generated tokens with a probe fitted on that statistic, and acts from then
+on; the reader sits at or above the layer the action writes, positions written
+before the decision keep their cached keys, and the operator costs two
+$d$-dimensional dot products per token.
 
 \section{Experimental Setup}
 \label{sec:exp}\label{sec:data}
 
 \textbf{Models and task.} The main model is \texttt{gemma-2-2b-it}
-\citep{gemma2024}; the confirmatory comparison is repeated on
-\texttt{Qwen2.5-7B-Instruct}, a second model family, with its own directions,
-probes and tuning. Both reason inside \texttt{<think>...</think>} and answer
-\verb|\boxed{letter}| on MMLU~\citep{hendrycks2021mmlu}; decoding is greedy.
-The action is applied at layer 14 of 26 (Gemma) and 14 of 28 (Qwen). A
-replication on ARC-Challenge~\citep{clark2018arc} reuses the Gemma directions,
-refits every decision on ARC training questions, and follows the same protocol
-with its own tuning and confirmatory splits (Appendix~\ref{app:protocol}).
+\citep{gemma2024}; the comparison is repeated on \texttt{Qwen2.5-7B-Instruct}
+with its own directions, probes and tuning. Both reason inside
+\texttt{<think>...</think>} and answer \verb|\boxed{letter}| on
+MMLU~\citep{hendrycks2021mmlu}; decoding is greedy. The action is applied at
+layer 14 of 26 (Gemma) and 14 of 28 (Qwen). A replication on
+ARC-Challenge~\citep{clark2018arc} reuses the Gemma directions and refits every
+decision on ARC training questions.
 
-\textbf{Splits.} All splits are disjoint sets of MMLU test questions (ids in
-the released code): an \emph{extraction} split of 400 questions for the
-directions, a \emph{detector} pool of 4{,}000 for the probes, a \emph{tuning}
-split of 1{,}200 on which every method's configuration is chosen, and a
-\emph{confirmatory} split of 3{,}000 used once, under a protocol whose hashes
-were committed before its steered rollouts were generated
-(Appendix~\ref{app:protocol}).
+\textbf{Splits.} Disjoint sets of MMLU test questions: an \emph{extraction}
+split of 400 for the directions, a \emph{detector} pool of 4{,}000 for the
+probes, a \emph{tuning} split of 1{,}200 on which every configuration is
+chosen, and a \emph{confirmatory} split of 3{,}000 used once. ARC uses 1{,}012
+detector and 400 tuning questions from its training and validation sets and
+the 1{,}165 test questions as the confirmatory split.
 
 \textbf{What is measured.} The primary readout (M5) scores the answer the
-model actually generates. Correctness is the \verb|\boxed{}| letter against
-the gold answer; confidence is $P(\mathrm{YES})$ when the model is then asked,
-in the same conversation, whether that answer is correct. A steered question is
-steered for both the reasoning trace and the confidence query. Each question is
-in one of four states: \emph{overconfident-wrong} (\ocw{}, wrong with
-$P(\mathrm{YES})\ge0.5$), nonconfident-wrong, nonconfident-right, and
-\emph{confident-right} (\crok{}). Two secondary readouts, the letter-logit
-confidence of the same answer and a per-option verification readout, are
-reported in Appendix~\ref{app:secondary}; the prompts are in
-Appendix~\ref{app:prompts}.
+model generates: correctness is the boxed letter against the gold answer, and
+confidence is $P(\mathrm{YES})$ when the model is then asked, in the same
+conversation, whether that answer is correct. A steered question is steered in
+both turns. A question is \ocw{} if wrong with $P(\mathrm{YES})\ge0.5$ and
+\crok{} if right with $P(\mathrm{YES})\ge0.5$. Because Sel counts only answers
+that start in these states, we also report the change in the share of \ocw{}
+answers over all questions, $\Delta$ECE (10 bins) and $\Delta$acc. Two
+secondary readouts are in Appendix~\ref{app:secondary}.
 
-\textbf{Metrics.} Pairing each question with itself before and after the edit,
-removal is $P(\text{not }\ocw\text{ after}\mid\ocw\text{ before})$, retention
-is $P(\crok\text{ after}\mid\crok\text{ before})$, and
-$\mathrm{Sel}=\text{removal}-(1-\text{retention})$. Because Sel counts only
-answers that start in \ocw{} or \crok{}, we also report the net change in the
-share of \ocw{} answers, $\Delta$ECE (10 bins) and $\Delta$Brier of the stated
-confidence over all questions, and $\Delta$acc.
+\textbf{Methods and tuning.} Besides the four conditional methods we run
+prompting (a calibration instruction), additive CAA~\citep{rimsky2024caa},
+directional ablation~\citep{arditi2024refusal}, MiMiC~\citep{singh2024mimic}
+and Linear-AcT~\citep{rodriguez2025act}, all reimplemented on the same hooks
+and readouts. Budgets on the tuning split are 1 configuration for prompting and
+for ablation, 8 for CAA, 9 for MiMiC and for Linear-AcT, and 16 for each
+conditional method (Appendix~\ref{app:tuning}). One rule selects every
+configuration: the highest selectivity among those with $\Delta$acc at least
+$-0.01$.
 
-\textbf{Methods and tuning.} We compare prompting (a calibration instruction),
-additive CAA~\citep{rimsky2024caa}, directional
-ablation~\citep{arditi2024refusal}, MiMiC~\citep{singh2024mimic},
-Linear-AcT~\citep{rodriguez2025act} and two conditional shifts: CAST with its
-original prompt condition, fitted on the same labelled pool as our
-probe~\citep{lee2024cast}, and a CAST-style variant conditioned on the finished
-trace's projection onto an \ocw{}--\crok{} direction. All are reimplemented on
-the same hooks, records and readouts. The PGS probe is a logistic regression on
-the mean activation of one layer, with layer and regularisation chosen by AUROC
-on the tuning split. Each method searches a grid of 8 to 16 configurations on
-the tuning split, and one rule selects all of them: the highest selectivity
-among configurations whose $\Delta$acc is at least $-0.01$
-(Appendix~\ref{app:tuning}). Post-hoc PGS reads the finished unsteered answer
-and regenerates the flagged questions; single-pass PGS decides at the prompt,
-or after $t\in\{16,32,64,128\}$ generated tokens, and acts from then on.
-
-\textbf{Null arms and statistics.} On each confirmatory split we run the frozen
-PGS decision with an identity action (no-edit null) and with the selected
-action applied to a unit random direction (random-edit null). Their protocol
-was pushed to a public repository before they were run. The unit of analysis
-is the question; intervals are paired bootstrap intervals with $10^4$
-resamples. The seven comparisons of post-hoc PGS against the baselines are
-Holm-adjusted within each setting, and the six comparisons against the null
-arms are Holm-adjusted together. An accuracy change is non-inferior when the
-lower end of its $95\%$ interval is above $-0.02$.
+\textbf{Protocols and statistics.} The method comparison follows protocols
+whose configuration and probe hashes were committed locally before the
+confirmatory rollouts and first pushed together with the results; the null
+and reference arms follow two further protocols that were pushed to a public
+repository before any of their rollouts existed (Appendix~\ref{app:protocol}).
+The unit of analysis is the question, and intervals are paired bootstrap
+intervals with $10^4$ resamples. The seven comparisons of post-hoc PGS
+against the baselines are Holm-adjusted within each setting, and the 24
+reference tests (four methods, three settings, two nulls) are Holm-adjusted
+together. An accuracy change is non-inferior when the lower end of its $95\%$
+interval is above $-0.02$.
 
 \section{Results}
 \label{sec:results}
@@ -457,7 +424,7 @@ lower end of its $95\%$ interval is above $-0.02$.
   xlabel={predicted from ungated rates}, ylabel={composed gated selectivity},
   xmin=-0.01, xmax=0.39, ymin=-0.01, ymax=0.39, grid=major, grid style={dashed,gray!20},
   tick label style={font=\scriptsize}, every axis label/.append style={font=\footnotesize},
-  legend style={font=\tiny, draw=none, fill=white, fill opacity=.8, text opacity=1, at={(0.02,0.98)}, anchor=north west},
+  legend columns=2, legend style={font=\tiny, draw=none, fill=white, fill opacity=.85, text opacity=1, at={(0.01,0.99)}, anchor=north west, column sep=2pt},
   title={(a) selectivity factorises}, title style={font=\footnotesize}]
 \addplot[gray, dashed, forget plot] coordinates {(-0.01,-0.01) (0.39,0.39)};
 \addplot[only marks, mark=*, mark size=0.8pt, cadd, opacity=.6] table[x=law, y=sim, col sep=comma]{pic/v4_law.csv};
@@ -505,43 +472,73 @@ the trace direction used by the CAST-style condition.}
 \label{fig:law}\label{fig:decision}
 \end{figure}
 
-\subsection{The identity predicts gated edits}
+\subsection{The decomposition predicts gated edits}
 \label{ssec:law}
 
 On the Gemma tuning split we measure the conversion rates of six actions once,
-compose each with two decisions at 20 thresholds, and compare the prediction
+compose each with two decisions at 20 thresholds, and compare
 $\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ with the composed selectivity
-(Fig.~\ref{fig:law}a). The two agree with correlation $0.97$ over 240
-combinations, and with correlation $0.91$ over the 240 Qwen combinations,
-whose selectivities span a narrower range. The prediction is higher by $0.033$
-on average for Gemma and $0.012$ for Qwen, because the answers a decision
-flags are converted more often than the average answer of their state, and
-more so in the protected state; with the flagged conversion rates in place of
-the ungated ones the identity is exact. Because a post-hoc gated arm is,
-question by question, either its unsteered or its ungated output, its
-selectivity can be composed from one ungated run. On the confirmatory splits,
-twelve real gated arms across the three settings land within $0.025$ of their
-composition, with a median difference of $0.005$ (Appendix~\ref{app:law});
-this is how gated configurations are scored during tuning.
+(Fig.~\ref{fig:law}a). The correlation is $0.97$ over 240 combinations for
+Gemma and $0.91$ over 240 for Qwen, and the prediction is higher by $0.033$
+and $0.012$ on average, because flagged answers convert more often than the
+average answer of their state. On the confirmatory splits twelve real gated
+arms land within $0.025$ of the composition from one ungated run, with a
+median difference of $0.005$ (Appendix~\ref{app:law}).
 
-The identity also says what each choice contributes. The shift selected for
-Gemma, $S(p)=p-0.375\lVert h\rVert$, changes the state of $84\%$ of
-overconfident-wrong and $59\%$ of confident-right answers when applied
-everywhere. A decision therefore recovers $0.59$ for every confident-right
-answer it leaves alone and forfeits $0.84$ for every overconfident-wrong answer
-it misses, so the value of detection grows with how indiscriminate the action
-is. The probe reads the unsteered answer at held-out AUROC $0.74$, against
-$0.67$ for the direction that conditions the CAST-style baseline
-(Fig.~\ref{fig:law}b).
+\subsection{The references change the conclusions}
+\label{ssec:refs}
 
-\subsection{Pre-registered comparison}
+\begin{table}[t]\footnotesize\setlength{\tabcolsep}{2.5pt}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{ll|c|cc|cc|ccc}
+\hline
+ & & & \multicolumn{2}{c|}{no-edit null} & \multicolumn{2}{c|}{random-edit null} & \multicolumn{3}{c}{matched override} \\
+setting & method & Sel & Sel & $\Delta$ & mean Sel & $\Delta$ & Sel & steer $-$ override [95\% CI] & Eq.~\ref{eq:override} sign \\
+\hline
+\inputtab{gen/references}
+\end{tabular}}
+\caption{\textbf{Reference arms for every conditional method.} Confirmatory
+splits; every reference uses the method's own frozen decision and flags. The
+no-edit null regenerates the flagged questions with an identity action; the
+random-edit null averages ten unit random directions at the frozen dose; the
+matched override lowers the stated confidence of the flagged answers.
+$\Delta$ is the method minus the reference; $^*$: Holm-adjusted $p<0.05$ over
+the 24 registered tests. The last column reports whether the sign of
+steer~$-$~override agrees with Eq.~\eqref{eq:override} evaluated with ungated
+conversion rates. Sycophancy is exploratory (Appendix~\ref{app:sycophancy}).}
+\label{tab:refs}
+\end{table}
+
+Table~\ref{tab:refs} applies the three references to the four conditional
+methods. Regenerating the flagged questions with no edit scores between
+$0.016$ and $0.091$, because a question generated in a different batch can
+change its answer or its stated confidence; the largest values are on Qwen,
+where they are half of the selectivity of the best conditional method. On
+Gemma all four methods exceed both nulls. On Qwen three of the four do not
+exceed their random-edit null: a random direction at the CAST dose, sent
+through the CAST prompt condition, scores $0.182$ against $0.122$ for the
+confidence direction, and the same holds for the CAST-style trace condition
+and for the prompt-time probe. What these methods add on Qwen comes from their
+decisions, and a random perturbation of the flagged inputs adds as much.
+
+The matched override separates two regimes. The CAST conditions fire on many
+protected answers ($\mathrm{FPR}$ from $0.38$ to $0.77$), and the shift spares
+most of them, so steering is more selective than overriding with the same
+condition: by $0.025$ and $0.048$ on Gemma and by $0.144$ and $0.103$ on ARC.
+The answer probes flag fewer protected answers, and overriding with them is at
+least as selective as steering, by $0.025$ $[0.010, 0.041]$ for post-hoc PGS on
+Gemma and by $0.218$ on Qwen, where ablation converts only $24\%$ of
+overconfident-wrong answers. The prompt probe on ARC is weaker (AUROC $0.64$),
+and there steering is ahead of its override by $0.013$ $[0.005, 0.022]$. Eq.~\eqref{eq:override}, evaluated with ungated
+conversion rates before the gated runs, predicts the sign of this difference
+in ten of thirteen cases; the three misses are cases where the predicted
+difference is within $0.021$ of zero. The same pattern appears in
+sycophancy, where a correctness probe gates a deference edit and its matched
+override is more selective ($0.255$ against $0.096$).
+
+\subsection{Pre-registered method comparison}
 \label{ssec:confirm}
-
-A global shift trades one state for the other: on the Gemma tuning split, the
-shift $p-0.75\lVert h\rVert$ removes every overconfident-wrong answer and every
-confident-right one, at a cost of $15.3$ accuracy points.
-Tables~\ref{tab:confirm} and~\ref{tab:confirm2} report every method at its
-frozen configuration on the confirmatory splits.
 
 \begin{table}[t]\footnotesize\setlength{\tabcolsep}{3.5pt}
 \centering
@@ -553,16 +550,15 @@ method & $\Delta$acc & removal & retention & Sel $\uparrow$ [95\% CI] & $\Delta$
 \inputtab{gen/confirm_gemma}
 \hline
 \end{tabular}}
-\caption{\textbf{PGS is the most selective method on Gemma-MMLU, reduces
-overconfidence net of new errors, and exceeds both null arms.} 3{,}000
-confirmatory questions ($n_{\ocw}{=}963$, $n_{\crok}{=}1{,}399$), each method at
-the configuration it won on the tuning split under one rule. $\Delta$Sel is the
-method minus PGS post-hoc (paired bootstrap, $10^4$ resamples), with
-Holm-adjusted $p$ over the seven baselines and, for the two null arms, over the
-six null comparisons of the three settings. $\Delta$\ocw{} is the change in the
-share of overconfident-wrong answers among all questions. $^*$: $95\%$ interval
-excludes $0$; $^\dagger$: the $95\%$ interval of $\Delta$acc reaches below
-$-0.02$. Rows in the middle block are secondary.}
+\caption{\textbf{Gemma-MMLU: PGS is the most selective steering method, and
+the override with its own probe is more selective still.} 3{,}000
+confirmatory questions ($n_{\ocw}{=}963$, $n_{\crok}{=}1{,}399$).
+$\Delta$Sel is the row minus PGS post-hoc, with Holm-adjusted $p$ over the
+seven baselines and over the 24 reference tests for the null rows.
+$\Delta$\ocw{} is the change in the share of overconfident-wrong answers among
+all questions. $^*$: $95\%$ interval excludes $0$; $^\dagger$: the $95\%$
+interval of $\Delta$acc reaches below $-0.02$. The middle block is secondary;
+the bottom block holds the references of PGS post-hoc.}
 \label{tab:confirm}
 \end{table}
 
@@ -578,164 +574,59 @@ method & $\Delta$acc & Sel $\uparrow$ [95\% CI] & $\Delta$Sel ($p$) & $\Delta$EC
 \hline
 \end{tabular}}
 \caption{\textbf{Replications on a second model family and a second benchmark.}
-Same protocol and notation as Table~\ref{tab:confirm}; each setting has its
-own directions, probes and tuning split.}
+Same protocol and notation as Table~\ref{tab:confirm}.}
 \label{tab:confirm2}
 \end{table}
 
-\textbf{Gemma.} PGS reaches selectivity $0.294$ $[0.256, 0.334]$, removing
-$49\%$ of overconfident-wrong answers while keeping $80\%$ of confident-right
-ones. The strongest baseline, the CAST-style shift conditioned on the trace
-direction, reaches $0.248$, and the other six trail by $0.074$ to $0.233$; all
-seven differences remain significant after Holm adjustment. The gain is net:
-PGS lowers the share of overconfident-wrong answers among all questions by
-$15.0$ points $[13.7, 16.4]$, ECE by $0.099$ $[0.083, 0.117]$ and Brier score by
-$0.079$, at an accuracy change of $+0.003$ $[-0.009, 0.015]$. Re-generating the
-flagged answers without an edit reaches $0.049$, and PGS exceeds this no-edit
-null by $0.245$ $[0.207, 0.283]$. Against the same shift applied to every
-question, PGS keeps $0.80$ instead of $0.42$ of the confident-right answers.
+Tables~\ref{tab:confirm} and~\ref{tab:confirm2} compare every method at its
+frozen configuration. On Gemma, PGS post-hoc reaches selectivity $0.294$
+$[0.256, 0.334]$, removing $49\%$ of overconfident-wrong answers while keeping
+$80\%$ of confident-right ones. The strongest baseline, the CAST-style trace
+condition, reaches $0.248$, and all seven differences are significant after
+Holm adjustment. PGS lowers the share of overconfident-wrong answers among all
+questions by $15.0$ points and ECE by $0.099$, at an accuracy change of
+$+0.003$ $[-0.009, 0.015]$. Its lead over the CAST-style condition holds at
+confidence cutoffs of $0.4$ ($+0.044$ $[0.007, 0.080]$) and $0.6$ ($+0.068$
+$[0.028, 0.107]$); counting only traces that end in a box in both arms it is
+$+0.032$ $[-0.008, 0.071]$. The confidence direction scores above all ten
+random directions sent through the same probe in each of the three settings,
+and post-hoc PGS is the one conditional method that clears both null
+references everywhere.
 
-\textbf{Qwen and ARC.} On Qwen the tuning split selects ablation, which
-applied everywhere converts $24\%$ of overconfident-wrong and $8\%$ of
-confident-right answers; by Prop.~\ref{prop:account} a decision can recover at
-most that $8\%$ on each answer it leaves alone. PGS reaches $0.172$
-$[0.136, 0.210]$, exceeding its no-edit null by $0.081$ $[0.042, 0.121]$ and its
-random-edit null by $0.054$ $[0.012, 0.094]$; prompting ($0.212$) is the one
-method above it, by a difference that is not significant after Holm adjustment.
-On ARC the selected shift, $p-0.25\lVert h\rVert$, changes $51\%$ of
-overconfident-wrong and $22\%$ of confident-right answers everywhere, so a
-decision forfeits more on the answers it misses than it recovers. PGS reaches
-$0.235$ $[0.168, 0.303]$, exceeds its no-edit null by $0.219$
-$[0.154, 0.285]$, lowers ECE by $0.060$ $[0.037, 0.086]$, and is level with the
-ungated dose and the CAST-style shift (Holm $p=0.36$) and significantly above
-Linear-AcT and the CAST prompt condition, whose decision is at chance on ARC
-(AUROC $0.51$).
-
-\subsection{What the decision buys}
-\label{ssec:decides}
-
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}
-\begin{axis}[width=.62\linewidth, height=4.6cm, xlabel={held-out AUROC of the decision}, ylabel={selectivity},
-  xmin=0.49, xmax=0.8, ymin=0.0, ymax=0.48, grid=major, grid style={dashed,gray!20},
-  tick label style={font=\scriptsize}, every axis label/.append style={font=\footnotesize},
-  legend style={font=\tiny, draw=none, fill=none, at={(1.03,0.5)}, anchor=west}]
-\addplot[only marks, mark=*, mark size=1.6pt, cgate, error bars/.cd, y dir=both, y explicit]
-  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_gemma.csv};
-\addlegendentry{Gemma, gated edit}
-\addplot[only marks, mark=o, mark size=2pt, cgate!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_gemma.csv};
-\addlegendentry{Gemma, override}
-\addplot[only marks, mark=square*, mark size=1.5pt, cclamp, error bars/.cd, y dir=both, y explicit]
-  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_qwen.csv};
-\addlegendentry{Qwen, gated edit}
-\addplot[only marks, mark=square, mark size=2pt, cclamp!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_qwen.csv};
-\addlegendentry{Qwen, override}
-\addplot[only marks, mark=triangle*, mark size=1.8pt, cot, error bars/.cd, y dir=both, y explicit]
-  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_arc.csv};
-\addlegendentry{ARC, gated edit}
-\addplot[only marks, mark=triangle, mark size=2.2pt, cot!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_arc.csv};
-\addlegendentry{ARC, override}
-\end{axis}
-\end{tikzpicture}
-\caption{\textbf{The override reference rises with the held-out quality of the
-decision.} Each marker pair is one of five decisions (probes on the answer or
-the prompt, the CAST prompt condition, and a difference-of-means direction on
-the answer fitted on 400 or 4{,}400 labelled answers), paired with the action
-and threshold it selects on the tuning split. Selectivity is composed on the
-confirmatory split with $95\%$ bootstrap intervals; filled markers steer,
-hollow markers override the reported confidence of the flagged answers and
-edit nothing.}
-\label{fig:decides}
-\end{figure}
-
-The null arms and the override reference decompose the Gemma result into what
-the decision and the action each contribute. Re-generating the flagged answers
-reaches $0.049$; passing a random direction of the selected size through the
-same probe reaches $0.215$ $[0.180, 0.251]$; the confidence direction reaches
-$0.294$, $0.079$ $[0.050, 0.108]$ above the random direction; and overriding the
-readout of the flagged answers reaches $0.323$ $[0.284, 0.362]$. The decision
-thus accounts for $0.166$ of the $0.245$ that PGS adds over re-generation, and
-the direction for the remaining $0.079$. The pattern repeats on ARC, where the
-random direction through the probe reaches $0.194$ against $0.235$ for PGS.
-
-Fig.~\ref{fig:decides} extends the comparison to five decisions, each paired
-with the action it selects on the tuning split and with its own override
-reference. The override reference rises with the held-out AUROC of the
-decision, consistent with the ceiling of Theorem~\ref{thm:gate}: on Gemma it
-runs from $0.201$ for the CAST prompt condition (AUROC $0.63$) to $0.323$ for
-the probe (AUROC $0.74$), and on Qwen the probe reaches $0.433$
-$[0.393, 0.472]$ while lowering ECE from $0.216$ to $0.139$. Eq.~\eqref{eq:override}
-says when a gated edit can exceed its override, and the data follow it. On
-Gemma the frozen shift converts $91\%$ of flagged overconfident-wrong and
-$89\%$ of flagged confident-right answers, so steering with the probe comes
-close to its override without passing it. On ARC the difference-of-means
-direction fitted on 400 labels fires on $77\%$ of confident-right answers, and
-the shift spares most of them; steering then reaches $0.297$ against $0.134$
-for the override with the same decision.
-
-The account transfers to a second behavior. In a sycophancy setting on the
-Gemma confirmatory questions, the user disputes the model's first answer and
-the model either caves or holds; a probe on the first answer's trace predicts
-its correctness at AUROC $0.72$. Keeping the first answer whenever the probe
-judges it correct reaches selectivity $0.311$ $[0.277, 0.345]$ between caving
-and accepting a correction, at an accuracy gain of $17.5$ points, against
-$0.096$ for the best gated deference edit (Appendix~\ref{app:sycophancy}).
-
-\subsection{Where the edit acts}
-\label{ssec:where}
-
-We reran the frozen PGS decision with the action applied only during the
-reasoning trace, or only during the turn in which the model states its
-confidence. On Gemma, where the action is a shift, steering only the
-confidence turn reaches selectivity $0.274$ $[0.237, 0.312]$, close to the
-$0.294$ of the full edit, and steering only the trace reaches $0.159$. On Qwen,
-where the action is ablation, the pattern reverses: the trace-only edit reaches
-$0.172$, equal to the full edit, and the confidence-turn edit $0.006$. A shift
-of the confidence coordinate therefore acts mainly on the stated confidence,
-while ablation acts through the reasoning. The steered traces also change
-answers: on Gemma PGS turns $124$ of the $963$ overconfident-wrong answers into
-correct ones and $106$ of the $1{,}399$ confident-right answers into wrong ones
-(Appendix~\ref{app:secondary}).
-
-\subsection{Deciding in one pass}
-\label{ssec:onepass-results}
-
-Most of the detection is available before the answer is written.
-Fig.~\ref{fig:law}b plots the held-out AUROC of a probe fitted on each
-statistic. For Gemma the prompt alone reaches $0.720$ and the first 16 tokens
-$0.720$, against $0.741$ for the finished answer; for Qwen the prompt reaches
-$0.761$ against $0.785$. On Gemma the single-pass operators in
-Table~\ref{tab:confirm} match the post-hoc one: deciding at token 32 gives
-selectivity $0.294$ and lowers ECE by $0.136$, and deciding at the prompt gives
-$0.306$, with an accuracy interval that reaches the margin. A decision at the prompt costs one dot product on an activation the
-forward pass already computes, so the operator adds no generation.
+On Qwen the selected action is ablation, and PGS reaches $0.172$
+$[0.136, 0.210]$; prompting ($0.212$), additive CAA, ablation and MiMiC are
+not significantly different from it, and its no-edit null is $0.091$. On ARC
+PGS reaches $0.235$ $[0.168, 0.303]$ and lowers ECE by $0.060$; the ungated
+additive dose and the CAST-style condition are not significantly different.
+On Gemma the single-pass decisions match the post-hoc one (token 32: $0.294$;
+prompt: $0.306$) because the prompt alone predicts the state at AUROC $0.720$
+against $0.741$ for the finished answer (Fig.~\ref{fig:law}b); on Qwen they
+score $0.109$ and $0.120$. Restricting the Gemma edit to the confidence turn
+keeps $0.274$ of the $0.294$, while on Qwen the ablation acts through the
+reasoning trace (Appendix~\ref{app:decisions}).
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-We have presented an exact account of conditional activation steering and
-Probe-Gated Steering, the operator it leads to. The account changes how a
-conditional edit should be evaluated: next to global steering, it should be
-compared with the same decision passed to no edit, to a random edit, and to an
-override of the behavior's readout, and Eq.~\eqref{eq:override} says in
-advance when it can beat the last. Under a pre-registered protocol, PGS was
-the most selective of eight methods on Gemma-MMLU with a net reduction in
-calibration error, exceeded its no-edit null in all three settings, and most of
-what it bought came from the decision.
+A conditional activation edit should be reported with three references built
+on its own decision: no edit, a random edit of the same size, and an override
+of the behavior's readout. Under pre-registered protocols these references
+removed the apparent advantage of three of four conditional methods on one
+model, identified which decisions are better used to steer and which to
+override, and did so in the direction a one-line inequality predicts from an
+ungated run. A probe-gated projection edit cleared both null references in
+every setting and was the most selective steering method on Gemma-MMLU.
 
-Our study has several limitations. First, the evidence covers overconfidence
-and, in exploratory form, sycophancy, on two instruction-tuned models of up to
-7B parameters and two multiple-choice benchmarks. Second, on Qwen the edit
-removes overconfident-wrong answers about as often as it creates new ones, so
-the net calibration of that model does not change, and a calibration prompt is
-as selective there and on ARC. Third, the decision is a probe trained on
-labelled answers, and its threshold is tied to the distribution it was fitted
-on (Appendices~\ref{app:capability} and~\ref{app:transfer}). Where the
-behavior has a readout that can be overwritten, the override reference was at
-least as selective as steering with the same probe; for behaviors expressed in
-free text, the action's conversion rates become the whole question, and the
-identity measures them directly.
+Our study has several limitations. First, it covers overconfidence and, in
+exploratory form, sycophancy, on two instruction-tuned models of up to 7B
+parameters and two multiple-choice benchmarks. Second, the protocols of the
+method comparison were committed locally and pushed with their results; only
+the reference protocols carry an external timestamp before their runs. Third,
+on both behaviors the override with the same probe was at least as selective
+as steering with it, so the value of the edit itself remains to be shown on a
+behavior whose readout cannot be overwritten, such as free text; the
+references and Eq.~\eqref{eq:override} apply there unchanged. Fourth, we did
+not reimplement PCHI's learned action.
 
 \subsection*{AI use statement}
 
@@ -804,7 +695,7 @@ Evgenii Kortukov, Piotr Komorowski, Florian Klein, Paula Engl, Gabriele Sarti,
   future behaviors in reasoning models enables better steering},
   arXiv:2606.11172, 2026.
 
-\bibitem[Lee et al.(2024)]{lee2024cast}
+\bibitem[Lee et al.(2025)]{lee2024cast}
 Bruce~W. Lee, Inkit Padhi, Karthikeyan~Natesan Ramamurthy, Erik Miehling,
   Pierre Dognin, Manish Nagireddy, and Amit Dhurandhar, \emph{Programming
   refusal with conditional activation steering}, International Conference on
@@ -900,8 +791,9 @@ Andy Zou, Long Phan, Sarah Chen, James Campbell, et al., \emph{Representation
 \section{Confirmatory protocol}
 \label{app:protocol}
 
-The protocol was committed to the repository before any steered rollout on the
-confirmatory split was generated (\texttt{rebuttal/protocols/confirmatory-v19.md},
+The protocol was committed to the local repository before any steered rollout on the
+confirmatory split was generated, and first pushed together with the results, so this
+ordering rests on local commit times (\texttt{rebuttal/protocols/confirmatory-v19.md},
 with two amendments made after the tuning pass and before launch), together
 with the SHA-256 hashes of the selected configurations and of every fitted
 detector (\texttt{confirmatory-v19-gemma.sha256}).
@@ -954,12 +846,26 @@ random direction (seed 0), and an ungated rerun with an identity action. It
 registers two one-sided hypotheses per setting, PGS above each gated null, with
 Holm adjustment over the six tests, and the net measures of
 Appendix~\ref{app:net} for every arm. Five of the six tests pass; PGS against
-the random-edit null on ARC gives $+0.041$ $[-0.029, 0.109]$, Holm $p=0.12$.
+the single random direction on ARC gives $+0.041$ $[-0.029, 0.109]$, Holm
+$p=0.12$.
+
+\textbf{Reference arms.} A fourth protocol
+(\texttt{confirmatory-v22-references.md}), pushed before any of its rollouts
+existed, extends the no-edit null to all four conditional methods, replaces
+the single random direction by ten (seeds 0 to 9), and adds random directions
+for the sycophancy edit. It registers 24 one-sided tests (four methods, three
+settings, no-edit and random-edit null), Holm-adjusted together, of which 18
+pass (Table~\ref{tab:refs}); a count of the cases in which
+Eq.~\eqref{eq:override} with ungated conversion rates predicts the sign of
+steer minus matched override (10 of 13); and paired intervals for selectivity
+at cutoffs 0.4 and 0.6 and over boxed traces for PGS against the CAST-style
+condition on Gemma. The v22 random-edit null supersedes the single-direction
+test of v21.
 
 \textbf{Analyses added after the protocol.} The detect-and-override reference,
 the difference-of-means decision fitted on 4{,}400 labels, the decision-by-action
-matrix (Sec.~\ref{ssec:decides}), the trace-only and confidence-turn-only edits
-(Sec.~\ref{ssec:where}), the sycophancy experiment
+matrix and the trace-only and confidence-turn-only edits
+(Appendix~\ref{app:decisions}), the sycophancy experiment
 (Appendix~\ref{app:sycophancy}), calibration and the out-of-domain negatives were run
 after the confirmatory results were known. They use the same splits and the
 frozen decisions, and we report them as exploratory.
@@ -1411,6 +1317,61 @@ $[0.027, 0.085]$. The deference edit converts few flagged answers, so by
 Eq.~\eqref{eq:override} the override is the stronger use of the same probe.
 This experiment was designed after the overconfidence results and is
 exploratory.
+
+\section{Override references of five decisions}
+\label{app:decisions}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.62\linewidth, height=4.6cm, xlabel={held-out AUROC of the decision}, ylabel={selectivity},
+  xmin=0.49, xmax=0.8, ymin=0.0, ymax=0.48, grid=major, grid style={dashed,gray!20},
+  tick label style={font=\scriptsize}, every axis label/.append style={font=\footnotesize},
+  legend style={font=\tiny, draw=none, fill=none, at={(1.03,0.5)}, anchor=west}]
+\addplot[only marks, mark=*, mark size=1.6pt, cgate, error bars/.cd, y dir=both, y explicit]
+  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_gemma.csv};
+\addlegendentry{Gemma, gated edit}
+\addplot[only marks, mark=o, mark size=2pt, cgate!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_gemma.csv};
+\addlegendentry{Gemma, override}
+\addplot[only marks, mark=square*, mark size=1.5pt, cclamp, error bars/.cd, y dir=both, y explicit]
+  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_qwen.csv};
+\addlegendentry{Qwen, gated edit}
+\addplot[only marks, mark=square, mark size=2pt, cclamp!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_qwen.csv};
+\addlegendentry{Qwen, override}
+\addplot[only marks, mark=triangle*, mark size=1.8pt, cot, error bars/.cd, y dir=both, y explicit]
+  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_arc.csv};
+\addlegendentry{ARC, gated edit}
+\addplot[only marks, mark=triangle, mark size=2.2pt, cot!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_arc.csv};
+\addlegendentry{ARC, override}
+\end{axis}
+\end{tikzpicture}
+\caption{\textbf{The override reference rises with the held-out quality of the
+decision.} Each marker pair is one of five decisions (probes on the answer or
+the prompt, the CAST prompt condition, and a difference-of-means direction on
+the answer fitted on 400 or 4{,}400 labelled answers), paired with the action
+and threshold it selects on the tuning split. Selectivity is composed on the
+confirmatory split with $95\%$ bootstrap intervals; filled markers steer,
+hollow markers override the reported confidence of the flagged answers and
+edit nothing.}
+\label{fig:decides}
+\end{figure}
+
+Fig.~\ref{fig:decides} pairs each of five decisions with the action and
+threshold it selects on the tuning split and with its own override. Besides
+the three decisions of the protocol, it includes a difference-of-means
+direction on the answer fitted on 400 or 4{,}400 labelled answers. The
+override rises with the held-out AUROC of the decision: on Gemma from $0.201$
+for the CAST prompt condition (AUROC $0.63$) to $0.323$ $[0.284, 0.362]$ for the
+answer probe (AUROC $0.74$), and on Qwen to $0.433$ $[0.393, 0.472]$, where it
+also lowers ECE from $0.216$ to $0.139$. Cells are composed from ungated runs
+and selected after the protocol; the thresholds of the steered and overridden
+points differ, so the matched comparisons are those of Table~\ref{tab:refs}.
+
+\textbf{Where the edit acts.} We reran the frozen PGS decision with the action
+applied only during the reasoning trace or only during the confidence turn. On
+Gemma (shift) the confidence-turn edit reaches $0.274$ $[0.237, 0.312]$ and the
+trace-only edit $0.159$; on Qwen (ablation) the trace-only edit reaches
+$0.172$ and the confidence-turn edit $0.006$.
 
 \section{Capability away from the target behavior}
 \label{app:capability}

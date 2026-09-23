@@ -14,11 +14,12 @@ STATE = {"overconfident_wrong": "OCW", "nonconfident_wrong": "NCW", "nonconfiden
 
 def tex(s: str) -> str:
     s = re.sub(r"\s+", " ", s).strip().encode("ascii", "replace").decode()
-    for a, b in (("\\", r"\textbackslash{}"), ("{", r"\{"), ("}", r"\}"), ("_", r"\_"), ("%", r"\%"),
+    s = s.replace("\\", "\0")
+    for a, b in (("{", r"\{"), ("}", r"\}"), ("_", r"\_"), ("%", r"\%"),
                  ("&", r"\&"), ("#", r"\#"), ("$", r"\$"), ("^", r"\^{}"), ("~", r"\~{}"),
                  ("<", r"\textless{}"), (">", r"\textgreater{}")):
         s = s.replace(a, b)
-    return s
+    return s.replace("\0", r"\textbackslash{}")
 
 
 def clip(s: str, head: int = 420, tail: int = 160) -> str:
@@ -27,7 +28,8 @@ def clip(s: str, head: int = 420, tail: int = 160) -> str:
 
 
 def side(label: str, v: dict) -> str:
-    return (f"\\textbf{{{label}}} (answer {v['answer']}, $P(\\mathrm{{YES}})={v['p_yes']:.2f}$, {STATE[v['state']]}): "
+    forced = "" if "\\boxed" in v["trace"] else ", no box: letter read from the logits"
+    return (f"\\textbf{{{label}}} (answer {v['answer']}, $P(\\mathrm{{YES}})={v['p_yes']:.2f}$, {STATE[v['state']]}{forced}): "
             f"{{\\ttfamily {tex(clip(v['trace']))}}}")
 
 

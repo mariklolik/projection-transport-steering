@@ -15,6 +15,31 @@ from behaviour_specific.overconfidence.steer_v7_tuned import parse
 from general.paths import RESULTS_DIR
 from general.storage import write_json
 
+def decision_flags(kind: str, cfg: str, X: torch.Tensor, Q: torch.Tensor) -> np.ndarray:
+    w = parse(cfg)
+    if kind == "trace":
+        d = torch.load(DIRECTIONS_DIR / "detector_m5.pt")
+        s = X[:, LAYERS.index(d["layer"])] @ d["w"].float() + d["b"]
+        return (s > q_at({"q": d["score_quantiles"].tolist()}, w["q"])).numpy()
+    if kind == "prompt":
+        d = torch.load(DIRECTIONS_DIR / "detector_m5_prompt.pt")
+        s = Q[:, ("last", "mean").index(d["pos"]), LAYERS.index(d["layer"])] @ d["w"].float() + d["b"]
+        return (s > q_at({"q": d["score_quantiles"].tolist()}, w["q"])).numpy()
+    if kind == "castdim":
+        d = torch.load(DIRECTIONS_DIR / f"cast_condition_L{w['layer']}.pt")
+        z = Q[:, 1, LAYERS.index(w["layer"])]
+        s = (z @ d["c"].float()) / (z.norm(dim=1) * d["c"].float().norm())
+        return (s > q_at({"q": d["score_quantiles"].tolist()}, w["q"])).numpy()
+    tstats = torch.load(DIRECTIONS_DIR / "projection_stats_L14.pt")["trace_stats"]["ocw_vs_cr"]
+    u = torch.load(DIRECTIONS_DIR / "pts_L14.pt")["dirs"]["ocw_vs_cr"].float()
+    return (X[:, LAYERS.index(14)] @ u > q_at(tstats["confident_right"], w["cr_q"])).numpy()
+
+
+def features(d: str, ids: list[str]) -> tuple[torch.Tensor, torch.Tensor]:
+    F, P = load_blob([d], "feats"), load_blob([d], "prompt")
+    return torch.stack([F[i] for i in ids]), torch.stack([P[i] for i in ids])
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", default="v4_confirm")
@@ -24,32 +49,10 @@ if __name__ == "__main__":
 
     checks = [c.split(":") for c in args.checks.split(",")]
     base, after = pooled_rows([args.dir], "m5", sorted({x for c in checks for x in (c[0], c[2])}))
-    ids = [r["id"] for r in base]
-    F, P = load_blob([args.dir], "feats"), load_blob([args.dir], "prompt")
-    X, Q = torch.stack([F[i] for i in ids]), torch.stack([P[i] for i in ids])
-    tstats = torch.load(DIRECTIONS_DIR / "projection_stats_L14.pt")["trace_stats"]["ocw_vs_cr"]
-    u = torch.load(DIRECTIONS_DIR / "pts_L14.pt")["dirs"]["ocw_vs_cr"].float()
-
-    def flags(kind: str, cfg: str) -> np.ndarray:
-        w = parse(cfg)
-        if kind == "trace":
-            d = torch.load(DIRECTIONS_DIR / "detector_m5.pt")
-            s = X[:, LAYERS.index(d["layer"])] @ d["w"].float() + d["b"]
-            return (s > q_at({"q": d["score_quantiles"].tolist()}, w["q"])).numpy()
-        if kind == "prompt":
-            d = torch.load(DIRECTIONS_DIR / "detector_m5_prompt.pt")
-            s = Q[:, ("last", "mean").index(d["pos"]), LAYERS.index(d["layer"])] @ d["w"].float() + d["b"]
-            return (s > q_at({"q": d["score_quantiles"].tolist()}, w["q"])).numpy()
-        if kind == "castdim":
-            d = torch.load(DIRECTIONS_DIR / f"cast_condition_L{w['layer']}.pt")
-            z = Q[:, 1, LAYERS.index(w["layer"])]
-            s = (z @ d["c"].float()) / (z.norm(dim=1) * d["c"].float().norm())
-            return (s > q_at({"q": d["score_quantiles"].tolist()}, w["q"])).numpy()
-        return (X[:, LAYERS.index(14)] @ u > q_at(tstats["confident_right"], w["cr_q"])).numpy()
-
+    X, Q = features(args.dir, [r["id"] for r in base])
     out = []
     for real, kind, ungated, cfg in checks:
-        f = flags(kind, cfg)
+        f = decision_flags(kind, cfg, X, Q)
         sim = law(base, after[ungated], f.astype(float), [0.5])
         rl = law(base, after[real], np.ones(len(base)), [0.0])
         row = {"arm": real, "decision": kind, "sel_real": rl["curve"][0]["sel_sim"], "sel_sim": sim["curve"][0]["sel_sim"],

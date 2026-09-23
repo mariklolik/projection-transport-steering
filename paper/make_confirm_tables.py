@@ -135,7 +135,8 @@ SHORT = {"prompt_hedge": "prompting", "tuned_additive": "additive CAA", "plain_a
 
 
 def arm_name(t: str) -> str:
-    return SHORT.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PGS, prefix" if t.startswith("detonline")
+    return {"ref:null": "same probe, no edit", "ref:rand": "same probe, random dir. (mean of 10)",
+            "ref:override": "same probe, override readout"}.get(t) or SHORT.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PGS, prefix" if t.startswith("detonline")
                             else "PGS, prompt" if t.startswith("detprompt") else "null: decision, no edit"
                             if t.startswith("detnull") else "null: decision, random dir." if t.startswith("detrand")
                             else "PGS, post-hoc")
@@ -151,49 +152,49 @@ def load_setting(key: str, d: str):
     return p, r, net, adj
 
 
-def null_holm() -> dict[tuple[str, str], float]:
+def ref_holm() -> dict[tuple[str, str, str], float]:
     ps = {}
-    for key, d in SETTINGS:
-        net = json.loads((RES / "v4_pooled" / f"net_{key}.json").read_text())
-        for label in ("gated_null", "gated_random"):
-            ps[(key, net["nulls"][label])] = net["arms"][net["nulls"][label]]["vs_ref"]["p_one_sided"]
-    return holm({k: 1 - v for k, v in ps.items()})
+    for key, _ in SETTINGS:
+        for arm, r in json.loads((RES / "v4_pooled" / f"references_{key}.json").read_text())["arms"].items():
+            ps[(key, arm, "null")], ps[(key, arm, "rand")] = r["vs_null"]["p_one_sided"], r["vs_random"]["p_one_sided"]
+    return holm(ps)
 
 
-def setting_cells(key: str, block, nh, full: bool) -> list[tuple[str, str]]:
+def setting_cells(key: str, block, rh, full: bool) -> list[tuple[str, str]]:
     p, r, net, adj = block
-    n_arms = len(p["arms"])
+    ref = json.loads((RES / "v4_pooled" / f"references_{key}.json").read_text())["arms"][p["ref"]]
+    star = lambda x: "" if x["ci"][0] < 0 < x["ci"][1] else "$^*$"  # noqa: E731
     out = []
-    for i in range(n_arms + 2):
-        if i < n_arms:
-            tag = p["arms"][i]["tag"]
-            m = r["methods"][tag]
-            ok = "" if m["dacc"]["ci"][0] > -0.02 else "$^\\dagger$"
-            vs = m.get("vs_ref", {}).get("sel")
-            d = "---" if vs is None else f"${vs['point']:+.3f}$" + (f" ({pval(adj[tag])})" if tag in adj else "")
-            sel, dacc = m["sel"], m["dacc"]["point"]
-        else:
-            tag = net["nulls"][("gated_null", "gated_random")[i - n_arms]]
-            m = net["arms"][tag]
-            ok, sel, dacc = "", m["sel"], m["dacc"]["point"]
-            d = f"${m['vs_ref']['point']:+.3f}$ ({pval(nh[(key, tag)])})"
-        n = net["arms"][tag]
-        star = lambda x: "" if x["ci"][0] < 0 < x["ci"][1] else "$^*$"  # noqa: E731
-        ece = f"${n['d_ece']['point']:+.3f}$" + star(n["d_ece"])
+    for a in p["arms"]:
+        tag = a["tag"]
+        m, n = r["methods"][tag], net["arms"][tag]
+        ok = "" if m["dacc"]["ci"][0] > -0.02 else "$^\\dagger$"
+        vs = m.get("vs_ref", {}).get("sel")
+        d = "---" if vs is None else f"${vs['point']:+.3f}$" + (f" ({pval(adj[tag])})" if tag in adj else "")
+        sel = m["sel"]
         selc = f"${sel['point']:.3f}$ {{\\tiny$[{sel['ci'][0]:.2f},{sel['ci'][1]:.2f}]$}}"
+        ece = f"${n['d_ece']['point']:+.3f}$" + star(n["d_ece"])
         if full:
-            rm = r["methods"][tag]["ocw_rm"]["point"] if i < n_arms else None
-            kp = r["methods"][tag]["cr_keep"]["point"] if i < n_arms else None
-            f2 = lambda x: "---" if x is None else f"{x:.2f}"  # noqa: E731
             ocw = f"${100 * n['d_ocw']['point']:+.1f}$" + star(n["d_ocw"])
-            out.append((tag, f"${dacc:+.3f}${ok} & {f2(rm)} & {f2(kp)} & {selc} & {d} & {ocw} & {ece}"))
+            out.append((tag, f"${m['dacc']['point']:+.3f}${ok} & {m['ocw_rm']['point']:.2f} & {m['cr_keep']['point']:.2f} & "
+                             f"{selc} & {d} & {ocw} & {ece}"))
         else:
-            out.append((tag, f"${dacc:+.3f}${ok} & {selc} & {d} & {ece}"))
+            out.append((tag, f"${m['dacc']['point']:+.3f}${ok} & {selc} & {d} & {ece}"))
+    nl = net["arms"][net["nulls"]["gated_null"]]
+    refs = [("ref:null", f"${nl['dacc']['point']:+.3f}$", ref["null"], f"${-ref['vs_null']['point']:+.3f}$ ({pval(rh[(key, p['ref'], 'null')])})",
+             f"${nl['d_ece']['point']:+.3f}$" + star(nl["d_ece"])),
+            ("ref:rand", "---", {"point": ref["random"]["mean"], "ci": None},
+             f"${-ref['vs_random']['point']:+.3f}$ ({pval(rh[(key, p['ref'], 'rand')])})", "---"),
+            ("ref:override", "$+0.000$", ref["override_matched"],
+             f"${-ref['steer_minus_override']['point']:+.3f}$ {{\\tiny$[{-ref['steer_minus_override']['ci'][1]:+.2f},{-ref['steer_minus_override']['ci'][0]:+.2f}]$}}", "---")]
+    for tag, dacc, sl, d, ece in refs:
+        selc = f"${sl['point']:.3f}$" + ("" if sl["ci"] is None else f" {{\\tiny$[{sl['ci'][0]:.2f},{sl['ci'][1]:.2f}]$}}")
+        out.append((tag, f"{dacc} & --- & --- & {selc} & {d} & --- & {ece}" if full else f"{dacc} & {selc} & {d} & {ece}"))
     return out
 
 
 def write_rows(fname: str, cols: list[list[tuple[str, str]]], ref_tag: str) -> None:
-    rows, n_arms = [], len(cols[0]) - 2
+    rows, n_arms = [], len(cols[0]) - 3
     for i in range(len(cols[0])):
         tag = cols[0][i][0]
         name = arm_name(tag)
@@ -208,10 +209,10 @@ def write_rows(fname: str, cols: list[list[tuple[str, str]]], ref_tag: str) -> N
 
 def side_by_side() -> None:
     blocks = {k: load_setting(k, d) for k, d in SETTINGS}
-    nh = null_holm()
+    rh = ref_holm()
     ref = blocks["gemma"][0]["ref"]
-    write_rows("confirm_gemma.tex", [setting_cells("gemma", blocks["gemma"], nh, True)], ref)
-    write_rows("confirm_qa.tex", [setting_cells(k, blocks[k], nh, False) for k in ("qwen", "arc")], ref)
+    write_rows("confirm_gemma.tex", [setting_cells("gemma", blocks["gemma"], rh, True)], ref)
+    write_rows("confirm_qa.tex", [setting_cells(k, blocks[k], rh, False) for k in ("qwen", "arc")], ref)
 
 
 def net_table() -> None:
@@ -270,6 +271,36 @@ def calibration_table() -> None:
     (GEN / "calibration.tex").write_text("\n".join(rows) + "\n")
 
 
+def ref_table() -> None:
+    names = {"trace": "PGS, post-hoc", "prompt": "PGS, prompt", "u": "CAST-style (trace)", "castdim": "CAST (prompt)"}
+    rows = []
+    for key, title in (("gemma", "Gemma, MMLU"), ("qwen", "Qwen, MMLU"), ("arc", "Gemma, ARC")):
+        src = RES / "v4_pooled" / f"references_{key}.json"
+        if not src.exists():
+            continue
+        arms = json.loads(src.read_text())["arms"]
+        for i, a in enumerate(arms.values()):
+            lead = f"\\multirow{{{len(arms)}}}{{*}}{{{title}}}" if i == 0 else ""
+            ov, d = a["override_matched"], a["steer_minus_override"]
+            vn, vr = a["vs_null"], a["vs_random"]
+            sig = lambda x: "$^*$" if x["ci"][0] > 0 else ""  # noqa: E731
+            rows.append(f"{lead} & {names[a['decision']]} & ${a['sel']['point']:.3f}$ & ${a['null']['point']:.3f}$ & "
+                        f"${vn['point']:+.3f}${sig(vn)} & ${a['random']['mean']:.3f}$ & ${vr['point']:+.3f}${sig(vr)} & "
+                        f"${ov['point']:.3f}$ & ${d['point']:+.3f}$ {{\\tiny$[{d['ci'][0]:+.2f},{d['ci'][1]:+.2f}]$}} & "
+                        f"{'yes' if a['eq2_agrees'] else 'no'} \\\\")
+        rows.append("\\hline")
+    syc = RES / "v4_pooled" / "sycophancy.json"
+    if syc.exists():
+        c = json.loads(syc.read_text())["confirm"]
+        r, g = c.get("references"), c["gated"]
+        if r and r["random_mean"] is not None:
+            rows.append(f"Gemma, sycophancy & probe, deference edit & ${g['sel']:.3f}$ & --- & --- & ${r['random_mean']:.3f}$ & "
+                        f"${g['sel'] - r['random_mean']:+.3f}$ & ${r['override_matched']:.3f}$ & "
+                        f"${g['sel'] - r['override_matched']:+.3f}$ & {'yes' if r['eq2_agrees'] else 'no'} \\\\")
+            rows.append("\\hline")
+    (GEN / "references.tex").write_text("\n".join(rows) + "\n")
+
+
 def law_table() -> None:
     names = {"trace": "PGS post-hoc", "prompt": "PGS at the prompt", "u": "CAST-style, trace", "castdim": "CAST, prompt"}
     rows = []
@@ -283,6 +314,7 @@ def law_table() -> None:
 
 
 if __name__ == "__main__":
+    ref_table()
     law_table()
     calibration_table()
     transitions_table()
