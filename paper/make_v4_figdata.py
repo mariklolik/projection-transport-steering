@@ -40,6 +40,20 @@ def law_qwen() -> None:
     (PIC / "v4_law_qwen.csv").write_text("law,sim\n" + "\n".join(rows) + "\n")
 
 
+def auroc_sel() -> None:
+    for model in ("gemma", "qwen", "arc"):
+        src = RES / f"matrix_{model}.json"
+        if not src.exists():
+            continue
+        r = json.loads(src.read_text())
+        rows = ["name,auroc,steer,steer_lo,steer_hi,override,ov_lo,ov_hi"]
+        for name, info in r["confirm"].items():
+            st, ov = r["arms"][f"{name} | steer"]["sel"], r["arms"][f"{name} | override"]["sel"]
+            rows.append(f"{name.replace(',', ';')},{info['auroc_heldout']:.4f},{st['point']:.4f},{st['ci'][0]:.4f},{st['ci'][1]:.4f},"
+                        f"{ov['point']:.4f},{ov['ci'][0]:.4f},{ov['ci'][1]:.4f}")
+        (PIC / f"v4_auroc_sel_{model}.csv").write_text("\n".join(rows) + "\n")
+
+
 def decision() -> None:
     for model in ("gemma", "qwen"):
         src = RES / f"decision_auroc_{model}.json"
@@ -53,4 +67,5 @@ def decision() -> None:
 if __name__ == "__main__":
     law()
     law_qwen()
+    auroc_sel()
     decision()

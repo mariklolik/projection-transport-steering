@@ -167,7 +167,24 @@ def side_by_side() -> None:
     (GEN / "confirm_side.tex").write_text("\n".join(rows) + "\n")
 
 
+def transitions_table() -> None:
+    states = ("overconfident_wrong", "nonconfident_wrong", "nonconfident_right", "confident_right")
+    short = ("OCW", "NCW", "NCR", "CR")
+    rows = []
+    for key, arm, title in (("gemma", "real | det_q60_alpha-0.375", "Gemma, PTS"), ("qwen", "real | det_q40_ablate", "Qwen, PTS")):
+        src = RES / "v4_pooled" / f"matrix_{key}.json"
+        if not src.exists():
+            continue
+        t = json.loads(src.read_text())["arms"][arm]["transitions"]
+        for i, st in enumerate(states):
+            lead = f"\\multirow{{4}}{{*}}{{{title}}}" if i == 0 else ""
+            rows.append(f"{lead} & {short[i]} & " + " & ".join(str(t[st][u]) for u in states) + " \\\\")
+        rows.append("\\hline")
+    (GEN / "transitions.tex").write_text("\n".join(rows) + "\n")
+
+
 if __name__ == "__main__":
+    transitions_table()
     side_by_side()
     secondary_table("gemma")
     secondary_table("qwen")

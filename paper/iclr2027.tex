@@ -76,30 +76,28 @@
 \emergencystretch=1.8em
 \renewcommand{\UrlFont}{\ttfamily\small}
 
-\title{Projection-Transport Steering:\\ Conditional Control of Reasoning Behavior in LLMs}
+\title{Projection-Transport Steering:\\ What the Decision Buys in Conditional Activation Steering}
 \author{Anonymous authors\\Paper under double-blind review}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Activation steering edits a language model's residual stream at inference
-time, but the edit is the same on every input, so a dose that removes a
-behavior also changes the inputs that never showed it. We introduce
-Projection-Transport Steering (PTS), which treats a conditional edit as two
-separate choices: an action that transports a low-dimensional projection of
-the activation to a target law, and a decision that says when the action runs.
-We show that the selectivity of any such edit factors exactly into the
-decision's error rates and the action's conversion rates, and that the
-decision's share is bounded by its held-out AUROC. The factorization predicts
-measured selectivity without running the gated edit, and it predicts when a
-decision is worth adding: when the action alone changes the protected state
-often. On answer-level overconfidence in multiple-choice reasoning, in a
-pre-registered comparison with baselines tuned under the same budget, PTS is
-the most selective method on Gemma-2-2B and is statistically level with the
-best methods on Qwen2.5-7B, at unchanged accuracy on both. On Gemma the
-decision can be taken from the prompt or a short prefix without losing
-selectivity, so the edit runs in a single pass.
+Conditional activation steering edits a language model's residual stream only
+on inputs that a decision flags, and it is usually shown to beat global steering
+at removing a behavior while sparing the rest. We introduce Projection-Transport
+Steering (PTS), which separates a conditional edit into a decision and an
+action, characterizes the minimal action local to a behavioral subspace as an
+optimal-transport map, and accounts exactly for each part: selectivity equals
+the decision's error rates weighted by the action's conversion rates on the
+inputs it flags. The account yields a reference every conditional method should
+beat, detecting the behavior and overriding its readout, and states when
+steering can beat it. On answer-level overconfidence, in a pre-registered
+comparison across two model families, PTS is the most selective steering method
+on one model and level with the best on the other. The account explains both
+results: the decision determines the outcome, and detect-and-override with the
+same decision matches the best gated edit on one model and far exceeds it on
+the other.
 \end{abstract}
 
 \section{Introduction}
@@ -108,57 +106,58 @@ selectivity, so the edit runs in a single pass.
 Language models carry many behaviors along directions of their activations,
 and activation steering changes a behavior by moving the activation along such
 a direction~\citep{turner2023actadd,rimsky2024caa,zou2023repe,li2023iti,arditi2024refusal}.
-The edit needs no training and costs one vector operation per token. It is also
-applied to every input. A refusal direction added at a useful strength raises
-refusal on harmless requests as well as harmful ones~\citep{lee2024cast}, and a
-behavior that a model shows only on some inputs has to be paid for on all of
-them.
+The edit costs one vector operation per token and is applied to every input, so
+a dose that removes a behavior also changes the inputs that never showed it.
+Conditional methods place a decision in front of the edit:
+CAST~\citep{lee2024cast} steers only when the prompt resembles a condition
+vector, and PCHI~\citep{liu2026probe} rescales attention heads only when a
+probe flags a wrong but confident answer. Both are evaluated against global
+steering, and both improve on it.
 
-We study one such behavior, overconfidence in multiple-choice reasoning. The
-answers to change are the ones the model gets wrong while stating that it is
-right; the answers to protect are the ones it gets right and says so. The
-additive edit that removes every overconfident-wrong answer of
-\texttt{gemma-2-2b-it} also removes every confident-right answer, and weaker
-doses trade one loss for the other (Sec.~\ref{ssec:confirm}). Conditional
-methods place a decision in front of the edit: CAST~\citep{lee2024cast}
-conditions on the prompt, and PCHI~\citep{liu2026probe} conditions a learned
-head rescaling on a probe. What these methods leave open is how much the
-decision contributes, what limits it, and when it can be taken.
+Such comparisons do not say what the improvement comes from. A conditional edit
+makes two choices, which inputs to edit and how to edit them, and a better
+result can come from either. We study overconfidence in multiple-choice
+reasoning, where the answers to change are the ones the model gets wrong while
+stating that it is right, and the answers to protect are the ones it gets
+right and says so. The additive edit that removes every overconfident-wrong
+answer of \texttt{gemma-2-2b-it} also removes every confident-right one
+(Sec.~\ref{ssec:confirm}), so the problem calls for a decision, and the
+question is how much the decision, as opposed to the edit, is doing.
 
-We introduce Projection-Transport Steering (PTS), which separates the two
-choices and accounts for each. The action is the cost-minimal edit that moves a
-projection of the activation to a target law while leaving the orthogonal
-complement unchanged; it is an optimal-transport map, and the familiar shift,
-ablation and clamp are its instances for different targets. The decision is a
-likelihood-ratio test on a statistic of the input. Our method is based on an
-identity: the selectivity of any conditional edit equals the decision's
-true-positive rate times the rate at which the action converts the target
-state, minus its false-positive rate times the rate at which it converts the
-protected state. Once the action's conversion rates are measured, the identity
-predicts the selectivity of every decision placed in front of it, and it shows
-that the decision is bounded by how well it separates the two states on
-questions it has not seen.
+We introduce Projection-Transport Steering (PTS), which treats the two choices
+separately. The action is the smallest edit that moves a projection of the
+activation to a target law and leaves its orthogonal complement unchanged; it
+is an optimal-transport map, and shifts, ablation and clamps are its instances.
+The decision is a likelihood-ratio test on a statistic of the input. Our
+analysis rests on an identity: the selectivity of any conditional edit equals
+the decision's true-positive rate times the rate at which the action converts
+the flagged target answers, minus its false-positive rate times the rate at
+which it converts the flagged protected ones. The identity makes the
+contribution of each choice measurable, and it supplies the reference a
+conditional edit must beat: flag the behavior with the same decision and
+override its readout, which converts every flagged answer and edits nothing.
 
 Our main contributions are:
 \begin{itemize}\setlength{\itemsep}{1pt}
-\item A selectivity identity for conditional edits and a detection ceiling for
-the decision, together with the characterisation of projection-local actions as
-transport maps (Sec.~\ref{sec:method}).
-\item Evidence that the identity predicts the measured selectivity of gated
-edits across detectors, actions and thresholds, which lets every gated
-configuration be selected without running it (Sec.~\ref{ssec:law}).
+\item A selectivity identity for conditional edits, the condition under which
+steering is more selective than detect-and-override, a corrected
+Neyman--Pearson characterization of the optimal decision, and the
+characterization of projection-local actions as transport maps
+(Sec.~\ref{sec:method}).
 \item A pre-registered comparison in which every method is tuned under one rule
-and evaluated once on 3{,}000 unseen questions for \texttt{gemma-2-2b-it} and
-\texttt{Qwen2.5-7B-Instruct}. On Gemma, PTS is more selective than prompting,
-additive steering, directional ablation, MiMiC, Linear-AcT and two CAST
-variants; on Qwen, where the selected action already spares the protected
-state, it is level with the best of them, as the identity predicts. Accuracy
-is non-inferior at a two-point margin on both (Sec.~\ref{ssec:confirm}).
-\item A single-pass operator: the decision reaches most of its full-trace
-detection quality from the prompt or from the first tokens of the answer, and
-on Gemma a decision taken there matches the post-hoc one, so PTS runs in one
-generation at the cost of two dot products per token
-(Sec.~\ref{ssec:onepass-results}).
+and evaluated once on unseen questions, for two model families and a second
+benchmark. PTS is the most selective method on Gemma, significantly so against
+seven baselines, and level with the best methods on Qwen
+(Sec.~\ref{ssec:confirm}).
+\item Evidence that the decision determines the outcome. Across five
+decisions, the override reference is ordered by the decision's held-out AUROC,
+and gated edits reach it only when the action converts nearly every flagged
+answer; on Qwen the override is more than twice as selective as any gated edit
+(Sec.~\ref{ssec:decides}).
+\item Evidence about where the edit acts: a shift acts mainly in the turn
+where the model states its confidence and ablation mainly in the reasoning
+trace (Sec.~\ref{ssec:where}); the decision can be taken from the prompt, so
+the operator runs in a single pass on Gemma (Sec.~\ref{ssec:onepass-results}).
 \end{itemize}
 
 \begin{table}[t]\footnotesize\setlength{\tabcolsep}{4pt}
@@ -599,8 +598,9 @@ reaches $0.248$, and the paired difference to PTS is $0.046$ $[0.008, 0.085]$;
 the other six baselines trail by $0.074$ to $0.233$, and all seven differences
 remain significant after Holm adjustment. Accuracy changes by $+0.003$
 $[-0.009, 0.015]$, inside the two-point margin, as it does for every baseline.
-PTS and the tuned additive dose use the same kind of action; the gate is what
-separates them, with retention $0.80$ against $0.66$.
+Against the same shift applied to every question, PTS keeps $0.80$ instead of
+$0.42$ of the confident-right answers at a similar selectivity ($0.294$ against
+$0.256$).
 
 \textbf{On Qwen the identity predicts where the gate helps.} On Qwen the tuning split selects ablation as
 the action, and ablation applied everywhere changes $24\%$ of
@@ -615,14 +615,85 @@ the CAST-style variant is significant. Its accuracy change, $-0.002$
 $[-0.014, 0.009]$, is inside the margin; the intervals of the tuned additive
 dose ($-0.015$ $[-0.027, -0.003]$) and of ablation reach below it.
 
-\textbf{The gate also protects unrelated tasks.} Applied to every input, the
-shift $p-0.5\lVert h\rVert$ lowers HumanEval pass@1 from $0.396$ to $0.280$; with
-the post-hoc decision in front of it the change is $-0.006$
-$[-0.030, 0.012]$, and with the prompt decision the output is unchanged,
-because the probe fires on $23\%$ and $0\%$ of coding prompts
-(Appendix~\ref{app:capability}). Refitting the probes with out-of-domain
-instructions as negatives stops them from firing on coding and open-ended
-prompts altogether, and leaves the confirmatory selectivity within $0.015$.
+\subsection{The decision decides}
+\label{ssec:decides}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.62\linewidth, height=4.6cm, xlabel={held-out AUROC of the decision}, ylabel={selectivity},
+  xmin=0.49, xmax=0.8, ymin=0.0, ymax=0.42, grid=major, grid style={dashed,gray!20},
+  tick label style={font=\scriptsize}, every axis label/.append style={font=\footnotesize},
+  legend style={font=\tiny, draw=none, fill=none, at={(1.03,0.5)}, anchor=west}]
+\addplot[only marks, mark=*, mark size=1.6pt, cgate, error bars/.cd, y dir=both, y explicit]
+  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_gemma.csv};
+\addlegendentry{Gemma, gated edit}
+\addplot[only marks, mark=o, mark size=2pt, cgate!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_gemma.csv};
+\addlegendentry{Gemma, override}
+\addplot[only marks, mark=square*, mark size=1.5pt, cclamp, error bars/.cd, y dir=both, y explicit]
+  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_qwen.csv};
+\addlegendentry{Qwen, gated edit}
+\addplot[only marks, mark=square, mark size=2pt, cclamp!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_qwen.csv};
+\addlegendentry{Qwen, override}
+\addplot[only marks, mark=triangle*, mark size=1.8pt, cot, error bars/.cd, y dir=both, y explicit]
+  table[x=auroc, y=steer, y error plus expr=\thisrow{steer_hi}-\thisrow{steer}, y error minus expr=\thisrow{steer}-\thisrow{steer_lo}, col sep=comma]{pic/v4_auroc_sel_arc.csv};
+\addlegendentry{ARC, gated edit}
+\addplot[only marks, mark=triangle, mark size=2.2pt, cot!70!black, thick] table[x=auroc, y=override, col sep=comma]{pic/v4_auroc_sel_arc.csv};
+\addlegendentry{ARC, override}
+\end{axis}
+\end{tikzpicture}
+\caption{\textbf{Gated edits are ordered by the held-out quality of their
+decision, and overriding the readout with the same decision is as selective.}
+Each marker pair is one of five decisions (probes on the answer or the prompt,
+the CAST prompt condition, and a difference-of-means direction on the answer
+fitted on 400 or 4{,}400 labelled answers), paired with the action and threshold
+it selects on the tuning split. Selectivity is measured on the confirmatory
+split with $95\%$ bootstrap intervals; filled markers steer, hollow markers
+override the reported confidence of the flagged answers and edit nothing.}
+\label{fig:decides}
+\end{figure}
+
+\textbf{The override reference is ordered by the decision, and gated edits
+follow it when the action converts what the decision flags.} We add two
+decisions to the three of the protocol, a difference-of-means direction on the
+answer fitted on the 4{,}400 labelled answers of the detector pool, and a
+detect-and-override reference for each decision that lowers the reported
+confidence of the flagged answers below $0.5$ and edits nothing. Each is
+selected on the tuning split and evaluated on the confirmatory split by
+composition, which Appendix~\ref{app:law} shows to match real gated runs.
+Fig.~\ref{fig:decides} shows the result. The override reference is ordered by
+the held-out AUROC of its decision, as Theorem~\ref{thm:gate} requires: on
+Gemma it runs from $0.201$ for the CAST prompt condition (AUROC $0.63$) to
+$0.323$ $[0.284, 0.362]$ for the probe on the answer (AUROC $0.74$). On Gemma the
+frozen shift converts $91\%$ of flagged overconfident-wrong and $89\%$ of
+flagged confident-right answers, so by Eq.~\eqref{eq:override} a gated edit can
+at best match the override, and it does: the best gated edit reaches $0.320$,
+and the frozen PTS arm $0.294$. On Qwen the selected action is ablation, which
+converts $28\%$ of flagged overconfident-wrong and $15\%$ of flagged
+confident-right answers, and every
+gated edit stays between $0.13$ and $0.17$ while the override with the same
+probe reaches $0.433$ $[0.393, 0.472]$. The override also calibrates better:
+on Qwen it lowers ECE from $0.216$ to $0.139$ and Brier score from $0.230$ to
+$0.195$, where PTS leaves both unchanged; on Gemma PTS lowers ECE from $0.354$ to
+$0.255$ and the override to $0.234$. The override analysis was added after the
+protocol and is not pre-registered.
+
+\subsection{Where the edit acts}
+\label{ssec:where}
+
+\textbf{Which part of generation the edit changes depends on the action.} We
+reran the frozen PTS decision with the action applied only during the reasoning
+trace, or only during the turn in which the model states its confidence. On
+Gemma, where the action is a shift, steering only the confidence turn reaches
+selectivity $0.274$ $[0.237, 0.312]$, close to the $0.294$ of the full edit,
+and steering only the trace reaches $0.159$. On Qwen, where the action is
+ablation, the pattern reverses: the trace-only edit reaches $0.172$, equal to the
+full edit, and the confidence-turn edit $0.006$. A shift of the confidence
+coordinate therefore acts mainly by lowering the stated confidence directly,
+while ablation acts through the reasoning. The steered traces also change
+answers: on Gemma PTS turns $124$ of the $963$ overconfident-wrong answers into
+correct ones and $106$ of the $1{,}399$ confident-right answers into wrong ones
+(Appendix~\ref{app:secondary}).
 
 \subsection{Deciding in one pass}
 \label{ssec:onepass-results}
@@ -1199,6 +1270,24 @@ method (Qwen, confirmatory) & Sel [95\% CI] & $\Delta$ vs PTS & Sel [95\% CI] & 
 \end{tabular}}
 \caption{Secondary readouts on the Qwen confirmatory split.}
 \label{tab:secondary-qwen}
+\end{table}
+
+Table~\ref{tab:transitions} gives the full state transitions of the frozen
+PTS arms under M5. Selectivity counts only the first and last rows; the table
+also shows the answers the edit corrects or breaks and the few answers it turns
+overconfident.
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{5pt}
+\centering
+\begin{tabular}{ll|cccc}
+\hline
+ & before $\backslash$ after & OCW & NCW & NCR & CR \\
+\hline
+\inputtab{gen/transitions}
+\end{tabular}
+\caption{State transitions of the frozen PTS arms on the confirmatory split
+(counts of questions).}
+\label{tab:transitions}
 \end{table}
 
 \section{Capability away from the target behavior}
