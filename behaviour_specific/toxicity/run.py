@@ -12,8 +12,9 @@ import torch
 from behaviour_specific.overconfidence.fit_detector import CS, fit
 from behaviour_specific.overconfidence.gate_law import auroc
 from general.inference import _length_buckets, generate_batch, get_activations_all_layers, get_trace_activations
+from models_specific.active import chat_prompt
 from general.paths import RESULTS_DIR
-from general.steering import steer_ablate, steer_add
+from general.steering import steer_ablate, steer_add, steer_ot_quantile
 from general.storage import read_jsonl, write_jsonl
 
 PROMPT = "Continue the following text.\n\n{x}"
@@ -95,7 +96,40 @@ def score(judge: Judge, rows: list[dict], texts: list[str]) -> list[dict]:
 def action(spec: str, v: torch.Tensor, norm: float):
     if spec == "abl":
         return lambda h: steer_ablate(h, v)
+    if spec.startswith("otq"):
+        ot = torch.load(DIRS / "transport.pt")
+        src, tgt, lam = ot["src_q"].to(v), ot["tgt_q"].to(v), float(spec[3:])
+        return lambda h: h + lam * (steer_ot_quantile(h, v, src, tgt) - h)
     return lambda h, a=float(spec[3:]): steer_add(h, v, a * norm)
+
+
+@torch.no_grad()
+def transport_stage(model, tok) -> None:
+    v = torch.load(DIRS / "direction.pt")["v"].to(model.device)
+    base = load("extraction", "base")
+    rows = {r["id"]: r for r in records("extraction")}
+    proj = {TOXIC: [], CLEAN: [], "all": []}
+    store = {}
+    handle = model.model.layers[ACT_LAYER].register_forward_hook(lambda _m, _i, o: store.update(h=o[0] if isinstance(o, tuple) else o))
+    try:
+        for i, b in base.items():
+            prompt = chat_prompt(tok, PROMPT.format(x=rows[i]["text"]))
+            n = len(tok(prompt, add_special_tokens=False).input_ids)
+            model(**tok(prompt + b["text"], return_tensors="pt", add_special_tokens=False).to(model.device))
+            p = (store["h"][0, n:].float() @ v).cpu()
+            proj["all"].append(p)
+            if b["state"] in (TOXIC, CLEAN):
+                proj[b["state"]].append(p)
+    finally:
+        handle.remove()
+    qs = torch.linspace(0.01, 0.99, 41)
+    q = {k: torch.quantile(torch.cat(x), qs) for k, x in proj.items()}
+    tox = torch.cat(proj[TOXIC])
+    disp = float((torch.from_numpy(np.interp(tox.numpy(), q[TOXIC].numpy(), q[CLEAN].numpy())) - tox).mean())
+    norm = torch.load(DIRS / "direction.pt")["norm"]
+    torch.save({"src_q": q[TOXIC], "tgt_q": q[CLEAN], "mean_disp_toxic": disp, "alpha_per_lambda": disp / norm},
+               DIRS / "transport.pt")
+    print("transport", {k: [round(float(x), 2) for x in v[[0, 20, 40]]] for k, v in q.items()}, "disp", disp, "alpha/lambda", disp / norm)
 
 
 def decision_scores(kind: str, base: list[dict], feats: dict) -> np.ndarray:
@@ -169,7 +203,7 @@ def fit_stage() -> None:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--stage", required=True, choices=("base", "fit", "steer"))
+    ap.add_argument("--stage", required=True, choices=("base", "fit", "steer", "transport"))
     ap.add_argument("--split", default="tuning")
     ap.add_argument("--shard", type=int, default=0)
     ap.add_argument("--nshards", type=int, default=4)
@@ -184,6 +218,9 @@ if __name__ == "__main__":
     from models_specific.active import chat_prompt, load_model
 
     model, tok = load_model()
+    if args.stage == "transport":
+        transport_stage(model, tok)
+        raise SystemExit
     judge = Judge()
     rows = records(args.split)[args.shard::args.nshards]
     prompts = [chat_prompt(tok, PROMPT.format(x=r["text"])) for r in rows]
