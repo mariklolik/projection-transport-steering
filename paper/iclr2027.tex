@@ -93,8 +93,8 @@ minimum-displacement edit that leaves the rest of the residual stream
 untouched. The decision is a likelihood-ratio test on a learned detection
 statistic. The selectivity of the composed operator decomposes exactly into the
 decision's error rates and the action's conversion rates, so one ungated run
-predicts gated selectivity and unsteered answers give the selectivity ceiling
-of a decision. On overconfident multiple-choice reasoning with Gemma-2-2B, PTS
+predicts gated selectivity and, for an action that converts both states
+alike, unsteered answers give the selectivity ceiling of a decision. On overconfident multiple-choice reasoning with Gemma-2-2B, PTS
 is the most selective of eight methods on held-out questions and lowers
 calibration error at non-inferior accuracy. On free-text toxicity in three
 model families and two held-out prompt sets, PTS is more selective than
@@ -168,8 +168,8 @@ family and on two disjoint prompt sets; on the main model, the edit along the
 transport displacement selected on the tuning split is more selective than a
 shift of equal mean displacement (Sec.~\ref{sec:transfer},
 Figure~\ref{fig:frontier}b).
-\item In the setting of PCHI, a PTS shift along one direction is more selective
-than PCHI's learned rescaling of attention heads under the same probe
+\item In the setting of PCHI, PTS with the same probe is more selective than
+PCHI's learned rescaling of attention heads
 (Sec.~\ref{sec:transfer}).
 \end{itemize}
 
@@ -384,8 +384,9 @@ tell apart look alike to the action. Overconfident-wrong (\ocw{}) and
 confident-right (\crok{}) answers are both confident, and their laws on the
 confidence coordinate overlap (Sec.~\ref{sec:results}), so
 Corollary~\ref{cor:additive}(b) suggests that a transfer function of that
-coordinate changes both states at similar rates, as the global shift largely
-does (Fig.~\ref{fig:frontier}). The decision therefore reads a second statistic
+coordinate changes both states at comparable rates, so the global shift
+removes confident-right answers along with overconfident-wrong ones
+(Fig.~\ref{fig:frontier}a). The decision therefore reads a second statistic
 $s$ of the input and runs the action on an event $\Gamma$ determined by $s$, in
 practice $\{s>\tau\}$ for a scalar score; off $\Gamma$ the output is exactly
 the unsteered one. We measure the result with selectivity,
@@ -684,8 +685,8 @@ $0.049$, and one hundred random unit directions at the PTS dose average
 $0.131$; PTS lies above all hundred and above their mean by $0.163$
 $[0.140, 0.188]$ (gray points in Fig.~\ref{fig:frontier}a). On code synthesis
 the prompt decision keeps the edit off: it fires on none of the 164 HumanEval
-problems, so pass@1 stays at its unsteered $0.396$, whereas the ungated shift
-at its selected dose lowers it to $0.281$ (Appendix~\ref{app:capability}).
+problems, so pass@1 stays at its unsteered $0.396$, whereas the same shift
+applied to every problem lowers it to $0.281$ (Appendix~\ref{app:capability}).
 
 \subsection{Gated selectivity from one ungated run}
 \label{ssec:law}
@@ -743,8 +744,8 @@ attention heads with a probe read where the model states its confidence. We
 rebuild this setting: Qwen3-4B-Instruct answers OpenMathInstruct-2 problems in
 a JSON format that ends with a yes/no confidence field, and a probe on the
 layer-18 state at that field flags overconfident-wrong answers. PTS keeps the
-probe and replaces the learned rescaling with a shift of the same state along
-one direction. On 3{,}183 held-out answers it reaches selectivity $0.438$,
+probe and replaces the learned rescaling with a shift of the same state
+strong enough to convert every flagged answer. On 3{,}183 held-out answers it reaches selectivity $0.438$,
 against $0.354$ for PCHI ($+0.084$ $[0.058, 0.110]$), and a calibration error
 of $0.188$ against $0.234$ (Appendix~\ref{app:pchi}).
 
@@ -1065,8 +1066,13 @@ recomputes each selectivity and paired interval in Tables~\ref{tab:confirm}
 and~\ref{tab:confirm2}, including the null arms, from that file alone.
 \texttt{results/release/toxicity.csv.gz} holds every confirmatory continuation
 of the free-text setting with its judge score and state (texts omitted for the
-random-direction arms), and \texttt{results/release/pchi\_val.csv.gz} the
-held-out readout gaps of every arm of the PCHI setting.
+random-direction arms), \texttt{results/release/toxicity\_fresh.csv.gz} the
+same for the fresh split, analysed by \texttt{behaviour\_specific/toxicity/fresh.py},
+and \texttt{results/release/pchi\_val.csv.gz} the held-out readout gaps of every
+arm of the PCHI setting. \texttt{behaviour\_specific/overconfidence/ceiling.py}
+writes the ceilings of Fig.~\ref{fig:law}b to
+\texttt{results/v4\_pooled/ceiling\_\{gemma,qwen\}.json}, and
+\texttt{behaviour\_specific/toxicity/latency.py} times Appendix~\ref{app:latency}.
 
 \textbf{ARC replication.} A second protocol
 (\texttt{confirmatory-v20-arc.md}), frozen before any steered ARC rollout,
@@ -1163,8 +1169,10 @@ $S_M=M_V^{-1/2}\circ\nabla\varphi\circ M_V^{1/2}$, $\varphi$ convex.
 \emph{Proof.} Locality writes $\Delta h=V^\top a$ with $a\in\mathbb{R}^k$, and
 the goal constraint with $VV^\top=I_k$ fixes $a=S(Vh)-Vh$ for the map $S$ in
 use. Then $\lVert\Delta h\rVert_M^2=a^\top M_Va$. The cost is a latent-space
-Mahalanobis cost on $\mathbb{R}^k$; it is not the full-space Mahalanobis
-distance of $\Delta h$ unless $M$ commutes with $V^\top V$. In the coordinates
+Mahalanobis cost on $\mathbb{R}^k$. It exceeds, in general, the least
+$M$-cost of a full-space displacement with the same projection,
+$a^\top(VM^{-1}V^\top)^{-1}a$, because locality confines $\Delta h$ to the row
+space of $V$. In the coordinates
 $z=M_V^{1/2}q$ it is Euclidean, the change of variables is internal to
 $\mathbb{R}^k$, and Brenier's theorem in $z$ (the pushforward of an absolutely
 continuous law under an invertible linear map is absolutely continuous) gives
