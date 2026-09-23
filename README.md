@@ -1,28 +1,22 @@
-# Projection-Transport Steering
+# What the Decision Buys
 
-Minimal reproducibility package for **Projection-Transport Steering: Conditional Control of Reasoning Behavior in LLMs**.
+Reproducibility package for **What the Decision Buys: An Exact Account of Conditional Activation Steering**.
 
 - [Paper PDF](paper/iclr2027.pdf)
 - [LaTeX source](paper/iclr2027.tex)
 - [Reproducibility guide](REPRODUCIBILITY.md)
 
-## Method
+## Summary
 
-![Measured activation movement under additive steering and gated ablation](docs/assets/measured-trace-movement.png)
+A conditional activation edit makes two choices: which inputs to edit and how to edit them. Its selectivity equals the decision's error rates weighted by the rates at which the edit converts the flagged inputs. The paper uses this identity to predict gated edits from one ungated run, and to compare each conditional edit with three references built on the same decision: no edit, a random edit, and an override of the behavior's readout.
 
-*Measured trace movement on the representative MMLU subset. Additive steering moves harmful and useful confidence together; gated ablation moves most overconfident-wrong traces toward the calibrated region while leaving part of the confident-right population untouched.*
+Probe-Gated Steering (PGS) puts a correctness probe in front of a projection edit. Under the frozen protocols in `rebuttal/protocols/` (confirmatory splits of 3,000 MMLU questions per model and 1,165 ARC-Challenge questions):
 
-## Results
+- Gemma-2-2B, MMLU: selectivity 0.294 [0.256, 0.334]. This is above all seven baselines after Holm adjustment, 0.245 above the no-edit null and 0.079 above the random-edit null, with ECE lower by 0.099.
+- Qwen2.5-7B, MMLU: 0.172, which is 0.081 above the no-edit null. A calibration prompt reaches 0.212.
+- Gemma-2-2B, ARC: 0.235, which is 0.219 above the no-edit null, with ECE lower by 0.060.
 
-Projection-Transport Steering separates two decisions that fixed-vector methods conflate: when the model should be changed and how its activations should move. Across five resampled MMLU subsets, gated ablation reaches **+0.279 selectivity with no detectable accuracy change**. The fixed additive edit is essentially nonselective and lowers accuracy, showing that stronger global steering is not a substitute for targeted control.
-
-![Selectivity and accuracy trade-off across steering methods](docs/assets/selectivity-accuracy-frontier.png)
-
-*Selectivity-accuracy trade-off on the representative MMLU subset; right and up are better. Gated ablation achieves the strongest observed selectivity without the accuracy loss of additive and CAST-style actions. The paragraph above reports the five-subset mean.*
-
-The held-out confirmation reaches the same conclusion beyond Gemma. On OLMo-2/TruthfulQA, the detector-axis action improves calibrated truthfulness by **+0.137** over a norm-matched action, also improves correct-answer selection, and passes all seven predeclared construction controls.
-
-The practical result is simple: detect whether intervention is warranted, then apply an input-dependent edit confined to the behavioral projection. Claims remain limited to the evaluated settings; the appendix and rebuttal packet preserve the full stress-test boundary.
+On Qwen, overriding the readout with the same probe reaches 0.433. `paper/recompute_from_records.py` recomputes every table cell from `results/release/records.csv.gz`.
 
 ## Repository map
 

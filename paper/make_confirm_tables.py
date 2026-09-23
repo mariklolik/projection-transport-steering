@@ -52,8 +52,8 @@ def block(key: str, title: str, readout: str = "m5") -> list[str]:
 
 
 FAMILY_NAMES = {"additive": "additive CAA", "mimic": "MiMiC", "act": "Linear-AcT", "cast": "CAST-style, trace condition",
-                "castdim": "CAST, prompt condition", "pts": "PTS post-hoc", "online": "PTS, prefix decision",
-                "castprompt": "PTS, prompt decision", "published_gate": "earlier gate + ablation", "ungated": "ungated actions"}
+                "castdim": "CAST, prompt condition", "pts": "PGS post-hoc", "online": "PGS, prefix decision",
+                "castprompt": "PGS, prompt decision", "published_gate": "earlier gate + ablation", "ungated": "ungated actions"}
 
 
 def tuning_table(key: str, src: str) -> None:
@@ -81,7 +81,7 @@ def capability_table() -> None:
     names = [k for k in he["methods"]]
     for k in names:
         h, o, w = he["methods"][k]["pass"], oe["methods"][k], wt["methods"][k]["nll"]
-        rows.append(f"{k} & {h['mean']:.3f} & ${h['delta']:+.3f}$ {{\\scriptsize$[{h['delta_ci'][0]:+.3f},{h['delta_ci'][1]:+.3f}]$}} & "
+        rows.append(f"{k.replace('PTS', 'PGS')} & {h['mean']:.3f} & ${h['delta']:+.3f}$ {{\\scriptsize$[{h['delta_ci'][0]:+.3f},{h['delta_ci'][1]:+.3f}]$}} & "
                     f"{o['distinct3']['mean']:.3f} & {o['fluency_nll']['ppl']:.2f} & {w['ppl']:.1f} \\\\")
     fires = (f"% fire rates: humaneval post-hoc {he['fire_posthoc']:.2f} prompt {he['fire_prompt']:.2f}; "
              f"openended post-hoc {oe['fire_posthoc']:.2f} prompt {oe['fire_prompt']:.2f}; "
@@ -124,59 +124,117 @@ def secondary_table(key: str) -> None:
         if not m2 or not m4:
             continue
         d2, d4 = m2.get("vs_ref", {}).get("sel"), m4.get("vs_ref", {}).get("sel")
-        rows.append(f"{a['name']} & {cell(m2['sel'])} & {cell(d2) if d2 else '---'} & "
+        rows.append(f"{arm_name(a['tag'])} & {cell(m2['sel'])} & {cell(d2) if d2 else '---'} & "
                     f"{cell(m4['sel'])} & {cell(d4) if d4 else '---'} \\\\")
     (GEN / f"secondary_{key}.tex").write_text("\n".join(rows) + "\n")
 
 
-def side_by_side() -> None:
-    blocks = {}
-    for key, d in (("gemma", "v4_confirm"), ("qwen", "v5q_confirm"), ("arc", "v6a_confirm")):
-        proto, res = RES / d / "protocol.json", RES / "v4_pooled" / f"confirm_{key}.json"
-        if not proto.exists() or not res.exists():
-            continue
-        p, r = json.loads(proto.read_text()), json.loads(res.read_text())["m5"]
-        extra = RES / "v4_pooled" / f"confirm_{key}_extra.json"
-        if extra.exists():
-            r["methods"] = {**json.loads(extra.read_text())["m5"]["methods"], **r["methods"]}
-        adj = holm({a["tag"]: r["methods"][a["tag"]]["vs_ref"]["sel"]["p_two_sided"] for a in p["arms"] if a.get("primary")})
-        blocks[key] = (p, r, adj)
-    short = {"prompt_hedge": "prompting", "tuned_additive": "additive CAA", "plain_ablate": "dir. ablation",
-             "tuned_mimic": "MiMiC", "tuned_act": "Linear-AcT", "tuned_cast": "CAST-style (trace)"}
-    rows = []
-    ref_tag = blocks["gemma"][0]["ref"]
-    for i, arm in enumerate(blocks["gemma"][0]["arms"]):
-        cells = []
-        for key in ("gemma", "qwen", "arc"):
-            if key not in blocks:
-                continue
-            p, r, adj = blocks[key]
-            a = p["arms"][i]
-            m = r["methods"][a["tag"]]
+SETTINGS = (("gemma", "v4_confirm"), ("qwen", "v5q_confirm"), ("arc", "v6a_confirm"))
+SHORT = {"prompt_hedge": "prompting", "tuned_additive": "additive CAA", "plain_ablate": "dir. ablation",
+         "tuned_mimic": "MiMiC", "tuned_act": "Linear-AcT", "tuned_cast": "CAST-style (trace)", "plain_null": "rerun, no edit"}
+
+
+def arm_name(t: str) -> str:
+    return SHORT.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PGS, prefix" if t.startswith("detonline")
+                            else "PGS, prompt" if t.startswith("detprompt") else "null: decision, no edit"
+                            if t.startswith("detnull") else "null: decision, random dir." if t.startswith("detrand")
+                            else "PGS, post-hoc")
+
+
+def load_setting(key: str, d: str):
+    p, r = json.loads((RES / d / "protocol.json").read_text()), json.loads((RES / "v4_pooled" / f"confirm_{key}.json").read_text())["m5"]
+    extra = RES / "v4_pooled" / f"confirm_{key}_extra.json"
+    if extra.exists():
+        r["methods"] = {**json.loads(extra.read_text())["m5"]["methods"], **r["methods"]}
+    net = json.loads((RES / "v4_pooled" / f"net_{key}.json").read_text())
+    adj = holm({a["tag"]: r["methods"][a["tag"]]["vs_ref"]["sel"]["p_two_sided"] for a in p["arms"] if a.get("primary")})
+    return p, r, net, adj
+
+
+def null_holm() -> dict[tuple[str, str], float]:
+    ps = {}
+    for key, d in SETTINGS:
+        net = json.loads((RES / "v4_pooled" / f"net_{key}.json").read_text())
+        for label in ("gated_null", "gated_random"):
+            ps[(key, net["nulls"][label])] = net["arms"][net["nulls"][label]]["vs_ref"]["p_one_sided"]
+    return holm({k: 1 - v for k, v in ps.items()})
+
+
+def setting_cells(key: str, block, nh, full: bool) -> list[tuple[str, str]]:
+    p, r, net, adj = block
+    n_arms = len(p["arms"])
+    out = []
+    for i in range(n_arms + 2):
+        if i < n_arms:
+            tag = p["arms"][i]["tag"]
+            m = r["methods"][tag]
             ok = "" if m["dacc"]["ci"][0] > -0.02 else "$^\\dagger$"
             vs = m.get("vs_ref", {}).get("sel")
-            d = "---" if vs is None else f"${vs['point']:+.3f}$" + (f" ({pval(adj[a['tag']])})" if a["tag"] in adj else "")
-            sel = m["sel"]
-            sel_cell = f"${sel['point']:.3f}$ {{\\tiny$[{sel['ci'][0]:.2f},{sel['ci'][1]:.2f}]$}}"
-            if key == "arc":
-                cells.append(f"${m['dacc']['point']:+.3f}${ok} & {sel_cell} & {d}")
-            else:
-                cells.append(f"${m['dacc']['point']:+.3f}${ok} & {m['cr_keep']['point']:.2f} & {sel_cell} & {d}")
-        t = arm["tag"]
-        name = short.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PTS, prefix" if t.startswith("detonline")
-                                else "PTS, prompt" if t.startswith("detprompt") else "PTS, post-hoc")
-        name = f"\\textbf{{{name}}}" if t == ref_tag else name
-        rows.append(f"{name} & " + " & ".join(cells) + " \\\\")
-        if t == ref_tag:
+            d = "---" if vs is None else f"${vs['point']:+.3f}$" + (f" ({pval(adj[tag])})" if tag in adj else "")
+            sel, dacc = m["sel"], m["dacc"]["point"]
+        else:
+            tag = net["nulls"][("gated_null", "gated_random")[i - n_arms]]
+            m = net["arms"][tag]
+            ok, sel, dacc = "", m["sel"], m["dacc"]["point"]
+            d = f"${m['vs_ref']['point']:+.3f}$ ({pval(nh[(key, tag)])})"
+        n = net["arms"][tag]
+        star = lambda x: "" if x["ci"][0] < 0 < x["ci"][1] else "$^*$"  # noqa: E731
+        ece = f"${n['d_ece']['point']:+.3f}$" + star(n["d_ece"])
+        selc = f"${sel['point']:.3f}$ {{\\tiny$[{sel['ci'][0]:.2f},{sel['ci'][1]:.2f}]$}}"
+        if full:
+            rm = r["methods"][tag]["ocw_rm"]["point"] if i < n_arms else None
+            kp = r["methods"][tag]["cr_keep"]["point"] if i < n_arms else None
+            f2 = lambda x: "---" if x is None else f"{x:.2f}"  # noqa: E731
+            ocw = f"${100 * n['d_ocw']['point']:+.1f}$" + star(n["d_ocw"])
+            out.append((tag, f"${dacc:+.3f}${ok} & {f2(rm)} & {f2(kp)} & {selc} & {d} & {ocw} & {ece}"))
+        else:
+            out.append((tag, f"${dacc:+.3f}${ok} & {selc} & {d} & {ece}"))
+    return out
+
+
+def write_rows(fname: str, cols: list[list[tuple[str, str]]], ref_tag: str) -> None:
+    rows, n_arms = [], len(cols[0]) - 2
+    for i in range(len(cols[0])):
+        tag = cols[0][i][0]
+        name = arm_name(tag)
+        name = f"\\textbf{{{name}}}" if tag == ref_tag else name
+        if i == n_arms:
             rows.append("\\hline")
-    (GEN / "confirm_side.tex").write_text("\n".join(rows) + "\n")
+        rows.append(f"{name} & " + " & ".join(c[i][1] for c in cols) + " \\\\")
+        if tag == ref_tag:
+            rows.append("\\hline")
+    (GEN / fname).write_text("\n".join(rows) + "\n")
+
+
+def side_by_side() -> None:
+    blocks = {k: load_setting(k, d) for k, d in SETTINGS}
+    nh = null_holm()
+    ref = blocks["gemma"][0]["ref"]
+    write_rows("confirm_gemma.tex", [setting_cells("gemma", blocks["gemma"], nh, True)], ref)
+    write_rows("confirm_qa.tex", [setting_cells(k, blocks[k], nh, False) for k in ("qwen", "arc")], ref)
+
+
+def net_table() -> None:
+    rows = []
+    for key, d in SETTINGS:
+        p, r, net, _ = load_setting(key, d)
+        title = {"gemma": "Gemma-2-2B, MMLU", "qwen": "Qwen2.5-7B, MMLU", "arc": "Gemma-2-2B, ARC"}[key]
+        rows += [f"\\multicolumn{{10}}{{l}}{{\\textit{{{title}}}}} \\\\"]
+        for tag in [a["tag"] for a in p["arms"]] + list(net["nulls"].values()):
+            m = net["arms"][tag]
+            f = lambda x: f"${100 * m[x]['point']:+.1f}$"  # noqa: E731
+            rows.append(f"{arm_name(tag)} & ${m['sel']['point']:.3f}$ & ${m['net_gated_null']['point']:+.3f}$ & {f('d_ocw')} & "
+                        f"{f('d_conf_wrong')} & {f('d_conf_right')} & {cell(m['d_ece'], ci=False)} & {cell(m['d_brier'], ci=False)} & "
+                        f"{f('d_forced')} & ${m['sel_unforced']:.3f}$ \\\\")
+        rows.append("\\hline")
+    (GEN / "net_table.tex").write_text("\n".join(rows) + "\n")
 
 
 def transitions_table() -> None:
     states = ("overconfident_wrong", "nonconfident_wrong", "nonconfident_right", "confident_right")
     short = ("OCW", "NCW", "NCR", "CR")
     rows = []
-    for key, arm, title in (("gemma", "real | det_q60_alpha-0.375", "Gemma, PTS"), ("qwen", "real | det_q40_ablate", "Qwen, PTS")):
+    for key, arm, title in (("gemma", "real | det_q60_alpha-0.375", "Gemma, PGS"), ("qwen", "real | det_q40_ablate", "Qwen, PGS")):
         src = RES / "v4_pooled" / f"matrix_{key}.json"
         if not src.exists():
             continue
@@ -191,11 +249,11 @@ def transitions_table() -> None:
 def calibration_table() -> None:
     rows = []
     spec = {"gemma": [("unsteered", None), ("shift $-0.25$, ungated", "ungated | plain_alpha-0.25"),
-                      ("ablation, ungated", "ungated | plain_ablate"), ("PTS, post-hoc", "real | det_q60_alpha-0.375"),
+                      ("ablation, ungated", "ungated | plain_ablate"), ("PGS, post-hoc", "real | det_q60_alpha-0.375"),
                       ("override, probe on answer", "probe, answer | override"),
                       ("override, CAST condition", "CAST condition, prompt | override")],
             "qwen": [("unsteered", None), ("shift $-0.25$, ungated", "ungated | plain_alpha-0.25"),
-                     ("ablation, ungated", "ungated | plain_ablate"), ("PTS, post-hoc", "real | det_q40_ablate"),
+                     ("ablation, ungated", "ungated | plain_ablate"), ("PGS, post-hoc", "real | det_q40_ablate"),
                      ("override, probe on answer", "probe, answer | override"),
                      ("override, CAST condition", "CAST condition, prompt | override")]}
     data = {k: json.loads((RES / "v4_pooled" / f"matrix_{k}.json").read_text()) for k in spec
@@ -212,10 +270,24 @@ def calibration_table() -> None:
     (GEN / "calibration.tex").write_text("\n".join(rows) + "\n")
 
 
+def law_table() -> None:
+    names = {"trace": "PGS post-hoc", "prompt": "PGS at the prompt", "u": "CAST-style, trace", "castdim": "CAST, prompt"}
+    rows = []
+    for key, title in (("m5", "Gemma, MMLU"), ("qwen", "Qwen, MMLU"), ("arc", "Gemma, ARC")):
+        for i, c in enumerate(json.loads((RES / "v4_pooled" / f"gate_law_confirm_{key}.json").read_text())["checks"]):
+            lead = f"\\multirow{{4}}{{*}}{{{title}}}" if i == 0 else ""
+            rows.append(f"{lead} & {names[c['decision']]} & {c['tpr']:.3f} & {c['fpr']:.3f} & {c['rho_o']:.3f} & {c['rho_c']:.3f} & "
+                        f"${c['sel_law']:+.3f}$ & ${c['sel_sim']:+.3f}$ & ${c['sel_real']:+.3f}$ \\\\")
+        rows.append("\\hline")
+    (GEN / "law_confirm.tex").write_text("\n".join(rows) + "\n")
+
+
 if __name__ == "__main__":
+    law_table()
     calibration_table()
     transitions_table()
     side_by_side()
+    net_table()
     secondary_table("gemma")
     secondary_table("qwen")
     legacy_table()

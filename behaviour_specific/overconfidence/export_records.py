@@ -25,6 +25,6 @@ if __name__ == "__main__":
             for tag, rows in sorted(collect(RESULTS_DIR / d / "rollouts").items()):
                 arm, readout = tag.rsplit("_", 1)
                 for r in rows:
-                    w.writerow((model, d, arm, readout, r["id"], r.get("gold"), r.get("final_answer"), int(r["is_correct"]),
+                    w.writerow((model, d, arm, readout, r["id"], r.get("gold"), r.get("final_answer", r.get("a2")), int(r["is_correct"]),
                                 round(r["confidence"], 4), r["state"], r.get("m2_state", "")))
     print("->", out)
