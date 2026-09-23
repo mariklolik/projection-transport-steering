@@ -1,0 +1,14 @@
+\multicolumn{7}{l}{\texttt{gemma-2-2b-it}, $n=3000$, $n_{\ocw}=963$, $n_{\crok}=1399$, unsteered accuracy $0.559$} \\
+\hline
+prompting & 1 & $+0.005$\,{\scriptsize$[-0.011,+0.020]$} & $0.415$ & $0.785$ & $+0.200$\,{\scriptsize$[+0.162,+0.238]$} & $-0.094$\,{\scriptsize$[-0.142,-0.045]$} ($<$0.001) \\
+additive CAA \citep{rimsky2024caa} & 8 & $-0.001$\,{\scriptsize$[-0.016,+0.015]$} & $0.559$ & $0.661$ & $+0.220$\,{\scriptsize$[+0.180,+0.259]$} & $-0.074$\,{\scriptsize$[-0.124,-0.026]$} (0.008) \\
+directional ablation \citep{arditi2024refusal} & 1 & $+0.009$\,{\scriptsize$[-0.007,+0.024]$} & $0.456$ & $0.718$ & $+0.173$\,{\scriptsize$[+0.134,+0.212]$} & $-0.121$\,{\scriptsize$[-0.172,-0.070]$} ($<$0.001) \\
+MiMiC \citep{singh2024mimic} & 9 & $+0.000$\,{\scriptsize$[-0.015,+0.015]$} & $0.313$ & $0.805$ & $+0.117$\,{\scriptsize$[+0.082,+0.154]$} & $-0.177$\,{\scriptsize$[-0.226,-0.127]$} ($<$0.001) \\
+Linear-AcT \citep{rodriguez2025act} & 9 & $+0.005$\,{\scriptsize$[-0.005,+0.015]$} & $0.137$ & $0.924$ & $+0.061$\,{\scriptsize$[+0.036,+0.088]$} & $-0.233$\,{\scriptsize$[-0.278,-0.189]$} ($<$0.001) \\
+CAST, prompt condition \citep{lee2024cast} & 16 & $-0.002$\,{\scriptsize$[-0.016,+0.012]$} & $0.459$ & $0.758$ & $+0.217$\,{\scriptsize$[+0.179,+0.256]$} & $-0.077$\,{\scriptsize$[-0.123,-0.031]$} (0.004) \\
+CAST-style, trace condition & 16 & $-0.005$\,{\scriptsize$[-0.017,+0.009]$} & $0.543$ & $0.705$ & $+0.248$\,{\scriptsize$[+0.208,+0.288]$} & $-0.046$\,{\scriptsize$[-0.085,-0.008]$} (0.020) \\
+\textbf{PTS, post-hoc (two passes)} & 16 & $+0.003$\,{\scriptsize$[-0.009,+0.015]$} & $0.492$ & $0.802$ & $+0.294$\,{\scriptsize$[+0.256,+0.334]$} & --- \\
+PTS, decides at token 32 (one pass) & 16 & $-0.008$\,{\scriptsize$[-0.019,+0.003]$} & $0.562$ & $0.733$ & $+0.294$\,{\scriptsize$[+0.256,+0.333]$} & $+0.000$\,{\scriptsize$[-0.033,+0.034]$} \\
+PTS, decides at the prompt (one pass) & 16 & $-0.012$\,{\scriptsize$[-0.025,+0.001]$} & $0.548$ & $0.758$ & $+0.306$\,{\scriptsize$[+0.267,+0.345]$} & $+0.012$\,{\scriptsize$[-0.024,+0.047]$} \\
+\hline
+\multicolumn{7}{l}{\texttt{Qwen2.5-7B-Instruct}: pending} \\

@@ -16,7 +16,7 @@
 \usepackage{placeins}
 \usepackage{longtable}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta}
+\usetikzlibrary{arrows.meta,positioning,calc}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16}
 \usepackage[hidelinks]{hyperref}
@@ -60,6 +60,7 @@
   ptrest/.style={only marks, mark=*, mark size=0.7pt, gray!55},
   disp/.style={-stealth, cgate, thick, quiver={u=\thisrow{u}, v=\thisrow{v}}}
 }
+\makeatletter\newcommand\inputtab[1]{\@@input #1.tex }\makeatother
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
 \newtheorem{proposition}{Proposition}
@@ -82,769 +83,542 @@
 \maketitle
 
 \begin{abstract}
-Activation steering controls the behavior of a language model at inference
-time by editing its residual stream, without touching the weights. The edits
-in use are global: one vector is added at every token, so an edit strong
-enough to remove a behavior reaches the inputs on which it was never present.
-In this paper we propose Projection-Transport Steering (PTS), a framework that
-separates when to intervene from how to intervene. PTS takes the action to be
-the optimal transport map onto a target law in a low-dimensional behavioral
-subspace, and the decision to be a likelihood-ratio test on a second,
-detection axis. We show that this map is the unique minimum-displacement edit
-local to the subspace, that the selectivity of any decision rule is capped by
-how well its axis separates the subpopulations it must distinguish, and that
-gate and map are jointly optimal. Using PTS, one can remove most of a reasoning
-behavior while keeping three quarters of the answers that never exhibited it,
-and leave task accuracy, calibration, code synthesis and open-ended generation
-at their unsteered values. The operator can also abstain: carried without refitting to
-a domain that carries six instances of the behavior in three hundred, it is
-the exact identity, at two dot products and a table lookup per token. Our
-experiments across two model scales and three reasoning benchmarks show that a behavior edit can be
-made local in the space it acts on and conditional on the input it acts for.
+Activation steering edits a language model's residual stream at inference
+time, but the edit is the same on every input, so a dose that removes a
+behavior also changes the inputs that never showed it. We introduce
+Projection-Transport Steering (PTS), which treats a conditional edit as two
+separate choices: an action that transports a low-dimensional projection of
+the activation to a target law, and a decision that says when the action runs.
+We show that the selectivity of any such edit factors exactly into the
+decision's error rates and the action's conversion rates, and that the
+decision's share is bounded by its held-out AUROC. The factorization predicts
+measured selectivity without running the gated edit and identifies detection
+as the lever. On answer-level overconfidence in multiple-choice reasoning, PTS
+is more selective than every baseline tuned under the same budget in a
+pre-registered comparison on two model families, at unchanged accuracy, and it
+can decide from the prompt or a short prefix in a single pass.
 \end{abstract}
 
 \section{Introduction}
 \label{sec:intro}
 
-A striking feature of large language models is that high-level behaviors are
-carried by directions in their activations. This has given rise to activation
-steering~\citep{turner2023actadd,rimsky2024caa,zou2023repe,li2023iti}, a family
-of inference-time interventions that read such a direction off contrastive
-examples and add it back to the residual stream, changing how a model refuses,
-hedges, or writes, at the cost of one vector addition per token and no
-retraining at all.
+Language models carry many behaviors along directions of their activations,
+and activation steering changes a behavior by moving the activation along such
+a direction~\citep{turner2023actadd,rimsky2024caa,zou2023repe,li2023iti,arditi2024refusal}.
+The edit needs no training and costs one vector operation per token. It is also
+applied to every input. A refusal direction added at a useful strength raises
+refusal on harmless requests as well as harmful ones~\citep{lee2024cast}, and a
+behavior that a model shows only on some inputs has to be paid for on all of
+them.
 
-\textbf{Problem: a steering edit cannot tell where the behavior is.} The edit
-these methods apply is the same on every input. A refusal vector added at a
-useful strength raises refusal on harmful and harmless prompts
-alike~\citep{arditi2024refusal}, and the difficulty compounds when the target
-is a behavior the model shows only sometimes. Consider overconfidence in
-multiple-choice reasoning. The states a practitioner wants to separate are two
-\emph{confident} ones, wrong and right, and the dose that removes the first
-also removes the second: in our measurements the additive edit that eliminates
-every overconfident-wrong answer eliminates every confident-right answer with
-it, and takes code synthesis and fluent generation down with them
-(Figure~\ref{fig:plane}, left). Tuning the coefficient trades one failure for
-the other rather than escaping either, because a constant shift moves the bulk
-of the distribution exactly as far as it moves the tail.
+We study one such behavior, overconfidence in multiple-choice reasoning. The
+answers to change are the ones the model gets wrong while stating that it is
+right; the answers to protect are the ones it gets right and says so. The
+additive edit that removes every overconfident-wrong answer of
+\texttt{gemma-2-2b-it} also removes every confident-right answer, and weaker
+doses trade one loss for the other (Sec.~\ref{ssec:confirm}). Conditional
+methods place a decision in front of the edit: CAST~\citep{lee2024cast}
+conditions on the prompt, and PCHI~\citep{liu2026probe} conditions a learned
+head rescaling on a probe. What these methods leave open is how much the
+decision contributes, what limits it, and when it can be taken.
 
-\textbf{Contribution: separating when to intervene from how.} We introduce
-Projection-Transport Steering, a framework in which an edit is two independent
-objects. The \emph{action} is a transfer function on the projection of the
-residual stream onto a behavioral subspace, and we ask which transfer function
-is cost-minimal instead of fixing it by hand. The \emph{decision} is a test
-on a second axis, fitted to tell the two confident states apart, that
-determines whether the action runs at all. Table~\ref{tab:family} places the
-published methods in this frame: they occupy the top rows, differing only in
-the shape of the transfer function, and the column that decides when to act is
-almost empty. Figure~\ref{fig:plane} shows what filling it buys on real
-reasoning traces.
+We introduce Projection-Transport Steering (PTS), which separates the two
+choices and accounts for each. The action is the cost-minimal edit that moves a
+projection of the activation to a target law while leaving the orthogonal
+complement unchanged; it is an optimal-transport map, and the familiar shift,
+ablation and clamp are its instances for different targets. The decision is a
+likelihood-ratio test on a statistic of the input. Our method is based on an
+identity: the selectivity of any conditional edit equals the decision's
+true-positive rate times the rate at which the action converts the target
+state, minus its false-positive rate times the rate at which it converts the
+protected state. Once the action's conversion rates are measured, the identity
+predicts the selectivity of every decision placed in front of it, and it shows
+that the decision is bounded by how well it separates the two states on
+questions it has not seen.
 
-\textbf{Steering is optimal transport.} Once the subspace and the target law
-are fixed, there is nothing left to design. In Section~\ref{sec:method} we
-prove that the optimal transport map between the projection laws is the unique
-minimal-perturbation intervention local to that subspace, and that additive
-steering is the optimal map exactly when the target is a pure location shift,
-which is why the same edit that governs refusal cannot govern a behavior whose
-target compresses a tail.
+Our main contributions are:
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item A selectivity identity for conditional edits and a detection ceiling for
+the decision, together with the characterisation of projection-local actions as
+transport maps (Sec.~\ref{sec:method}).
+\item Evidence that the identity predicts the measured selectivity of gated
+edits across detectors, actions and thresholds, which lets every gated
+configuration be selected without running it (Sec.~\ref{ssec:law}).
+\item A pre-registered comparison in which every method is tuned under one rule
+and evaluated once on 3{,}000 unseen questions for \texttt{gemma-2-2b-it} and
+\texttt{Qwen2.5-7B-Instruct}. PTS is more selective than prompting, additive
+steering, directional ablation, MiMiC, Linear-AcT and two CAST variants, with
+accuracy non-inferior at a two-point margin (Sec.~\ref{ssec:confirm}).
+\item A single-pass operator: the decision reaches nearly its full-trace
+detection quality from the prompt or from the first tokens of the answer, so
+PTS runs in one generation at the cost of two dot products per token
+(Sec.~\ref{ssec:onepass-results}).
+\end{itemize}
 
-\textbf{A ceiling that can be measured before intervening.} Selectivity is
-bounded by geometry, not by effort. In Section~\ref{sec:method} we show that
-the removal an edit can buy on an axis, net of the damage it does, is capped
-by how well that axis separates the subpopulations it must distinguish, and in
-Section~\ref{sec:results} we measure that separation on the confidence axis
-and find it near zero. The cap follows from a few hundred unsteered traces and
-costs no steered rollout, so a practitioner can know in advance that no
-coefficient will work, and can look for a second axis instead.
-
-\textbf{Deciding once, from a prefix.} A gate that scores a finished trace and
-regenerates what it flags doubles the cost of serving. In
-Section~\ref{sec:method} we show that a likelihood-ratio gate is optimal at
-every operating point, that composing it with the transport map is jointly
-optimal in its class, and that the same decision can be taken from a prefix of
-the generated trace, so the operator runs in a single pass, at
-$O(d)$ per token and nineteen kilobytes of state.
-
-\begin{figure}[!t]
-\centering
-\begin{tikzpicture}
-\matrix[column sep=3mm, row sep=2mm] {
-\begin{axis}[qpanel, title={additive steering (prior standard)},
-  ylabel={\textbf{wrong \& overconfident}\\[-1pt]\scriptsize detection projection $\langle h,\hat u\rangle$},
-  ylabel style={cadd!80!black, align=center}]
-\qdecor
-\addplot[arocw] table[col sep=comma]{pic/viz/cls_additive_ocw_ar.csv};
-\node[anchor=south west, font=\tiny, align=left, fill=white, fill opacity=.9, text opacity=1, inner sep=1.5pt]
-  at (axis cs:-30,-52) {moves all 50/50, far past the\\calibrated zone (off-manifold)};
-\end{axis} &
-\begin{axis}[qpanel, title={gated ablation (ours)}]
-\qdecor
-\addplot[arocw] table[col sep=comma]{pic/viz/cls_ours_gatedabl_ocw_ar.csv};
-\addplot[stillocw] table[x=x,y=y,col sep=comma]{pic/viz/cls_ours_gatedabl_ocw_still.csv};
-\node[anchor=south west, font=\tiny, align=left, fill=white, fill opacity=.9, text opacity=1, inner sep=1.5pt]
-  at (axis cs:-30,-52) {41/50 move into the calibrated\\zone; 9 below the gate stay (dots)};
-\end{axis} \\
-\begin{axis}[qpanel, ylabel={\textbf{right \& confident}\\[-1pt]\scriptsize detection projection $\langle h,\hat u\rangle$},
-  ylabel style={cclamp!80!black, align=center},
-  xlabel={confidence projection $\langle h,\hat v\rangle$}]
-\qdecor
-\addplot[arcr] table[col sep=comma]{pic/viz/cls_additive_cr_ar.csv};
-\node[anchor=south west, font=\tiny, align=left, fill=white, fill opacity=.9, text opacity=1, inner sep=1.5pt]
-  at (axis cs:-30,-52) {collateral damage: all 76/76\\correct answers dragged out too};
-\end{axis} &
-\begin{axis}[qpanel, xlabel={confidence projection $\langle h,\hat v\rangle$}]
-\qdecor
-\addplot[arcr] table[col sep=comma]{pic/viz/cls_ours_gatedabl_cr_ar.csv};
-\addplot[stillcr] table[x=x,y=y,col sep=comma]{pic/viz/cls_ours_gatedabl_cr_still.csv};
-\node[anchor=south west, font=\tiny, align=left, fill=white, fill opacity=.9, text opacity=1, inner sep=1.5pt]
-  at (axis cs:-30,-52) {30 untouched (dots); the 46 gated\\barely move, 54\% keep their state};
-\end{axis} \\
-};
-\end{tikzpicture}
-\caption{Each dot is one reasoning trace before steering, an arrow is its
-measured movement after steering on real rollouts, and a bold dot without an
-arrow was left untouched. The horizontal axis is the confidence projection
-$\langle h,\hat v\rangle$ and the vertical axis the detection projection
-$\langle h,\hat u\rangle$. The pink band is gate ON and the green ellipse is
-the $2\sigma$ contour of the calibrated extraction-split states
-(Appendix~\ref{app:defs}). Additive steering (left) overshoots all 50 \ocw{} far past the
-calibrated zone and drags all 76 \crok{} along. Gated ablation (right) moves
-\ocw{} into the zone and leaves 30 \crok{} bitwise untouched.}
-\label{fig:plane}
-\end{figure}
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{5pt}
+\begin{table}[t]\footnotesize\setlength{\tabcolsep}{4pt}
 \centering
 \resizebox{\linewidth}{!}{%
-\begin{tabular}{l|l|c|c}
+\begin{tabular}{l|l|l|c}
 \hline
-method & transfer function $g(p)$ & decides when & cost / token \\
+method & transfer function $S(p)$ & decision (reads) & cost / token \\
 \hline
 ActAdd, CAA~\citep{turner2023actadd,rimsky2024caa} & $p+\alpha$ & --- & $\Theta(d)$ \\
 ITI~\citep{li2023iti} & $p+\alpha$ on probe-selected heads & --- & $\Theta(d)$ \\
-RepE~\citep{zou2023repe} & $p+\alpha(x)$ & --- & $\Theta(d)$ \\
 directional ablation~\citep{arditi2024refusal} & $0$ & --- & $\Theta(d)$ \\
 SAE clamping~\citep{templeton2024scaling} & $c$ & --- & $\Theta(d\,d_{\mathrm{sae}})$ \\
-CAST~\citep{lee2024cast} & $p+\alpha\mathbf{1}[p>\tau]$ & prompt similarity & $\Theta(d)$ \\
 MiMiC~\citep{singh2024mimic} & full-space affine map & --- & $\Theta(d^2)$ \\
-Linear-AcT~\citep{rodriguez2025act} & $(1{-}\lambda)p+\lambda(\omega p+\beta)$, per neuron & --- & $\Theta(d)$ \\
+Linear-AcT~\citep{rodriguez2025act} & per-neuron affine map & --- & $\Theta(d)$ \\
+CAST~\citep{lee2024cast} & $p+\alpha$ & cosine to a condition vector (prompt) & $\Theta(d)$ \\
+PCHI~\citep{liu2026probe} & learned head rescaling & probe (confidence template) & $\Theta(d)$ \\
 \hline
-\textbf{PTS (ours)} & $S(p)$, the transport map to $\nu$ & Neyman--Pearson gate & $\Theta(kd)$ \\
+PTS (ours) & transport map to a target law & likelihood-ratio probe (prompt, prefix or trace) & $\Theta(d)$ \\
 \hline
 \end{tabular}}
-\caption{\textbf{Linear activation steering is one family.} Every operator in
-this literature is a transfer function $g$ applied to a $k$-dimensional
-projection of the residual stream, with $k{=}1$ on a behavioral direction for
-the top rows, $k{=}d_{\mathrm{sae}}$ for SAE clamping and $k{=}d$ for the
-full-space maps. The published methods differ only in the shape of $g$, in the
-$k$ it acts on, and in whether anything decides when to apply it. Theorem~\ref{thm:ot} identifies the
-cost-minimal $g$ for a given target law, Cor.~\ref{cor:additive} says which
-row is optimal and when, and Thm.~\ref{thm:gate} bounds what any
-\emph{decides when} column can buy.}
+\caption{\textbf{Steering operators as a transfer function plus a decision.}
+Each operator applies a transfer function $S$ to a projection $p$ of the
+residual stream; the conditional ones add a decision. For $k=1$,
+Theorem~\ref{thm:ot} identifies the cost-minimal $S$ for a target law, and
+Proposition~\ref{prop:account} gives the selectivity of any row as a function
+of its decision and its action.}
 \label{tab:family}
 \end{table}
 
 \section{Related Work}
 \label{sec:related}
 
-\textbf{Linear steering.} ActAdd~\citep{turner2023actadd} builds a shift vector
-from a single contrast prompt and adds it to the residual stream at a chosen
-layer. CAA~\citep{rimsky2024caa} computes the same shift as a difference in
-means over a dataset of contrast pairs. ITI~\citep{li2023iti} estimates a shift
-on attention heads selected by a linear probe, and RepE~\citep{zou2023repe}
-computes reading and control vectors from prompt pairs. Directional
-ablation~\citep{arditi2024refusal} removes one direction from every activation
-rather than adding to it, and SAE clamping~\citep{templeton2024scaling} pins a
-sparse feature to a fixed value. All of these apply the same edit to every
-input, since nothing in them reads the activation before deciding how much to
-move it, and AxBench~\citep{wu2025axbench} finds the family weaker than
-prompting on instruction-following as a result. We take the
-\emph{shape} of the edit as the object of study, and derive it instead of
-fixing it by hand.
+\textbf{Global steering.} ActAdd~\citep{turner2023actadd} and
+CAA~\citep{rimsky2024caa} add a contrastive direction to the residual stream,
+ITI~\citep{li2023iti} shifts probe-selected attention heads,
+RepE~\citep{zou2023repe} reads and writes representation directions,
+directional ablation~\citep{arditi2024refusal} projects a direction out, and
+SAE clamping~\citep{templeton2024scaling} pins a feature. The same edit is
+applied to every input, and AxBench~\citep{wu2025axbench} and studies of
+steering reliability~\citep{tan2024generalisation,braun2025unreliability}
+report that such edits are brittle across inputs. Table~\ref{tab:family}
+places these operators in one family of transfer functions.
 
 \textbf{Distribution matching.} MiMiC~\citep{singh2024mimic} derives the
-Gaussian-$\Wtwo$ affine map between two activation distributions and applies it
-unconditionally in the full space. Linear-AcT~\citep{rodriguez2025act} fits a
-univariate transport map per neuron, controlled by a strength parameter
-between no transport and full transport, and LinEAS~\citep{rodriguez2025lineas}
-learns affine maps end to end under a distributional loss.
-COAST~\citep{nguyen2026coast} establishes pointwise optimality of a
-covariance-weighted projection, which in our language is transport onto a point
-mass, and A-LQR~\citep{nguyen2026alqr} establish optimality of a control input
-under a linear-quadratic objective. These results hold for the map alone,
-since none of them constrains the edit to a subspace or asks what a decision
-rule can add. We prove the optimal map between
-\emph{distributions} under a locality constraint, and pair it with a ceiling
-on what any decision rule can buy.
+Gaussian optimal-transport affine map between two activation distributions in
+the full space, Linear-AcT~\citep{rodriguez2025act} transports each neuron
+with a univariate map and a strength parameter, and
+LinEAS~\citep{rodriguez2025lineas} learns affine maps end to end.
+COAST~\citep{nguyen2026coast} characterises the covariance-weighted projection
+that minimises collateral damage for a point target, and
+A-LQR~\citep{nguyen2026alqr} treats steering as linear-quadratic control. These
+results concern the action. Theorem~\ref{thm:ot} is the projection-local
+version of the same transport argument, and we do not claim it as the source
+of the empirical gains; what is new is its pairing with an exact account of
+what a decision adds.
 
-\textbf{Deciding during generation.} CAST~\citep{lee2024cast} compares each
-token's hidden state with a condition vector at a threshold set by grid search,
-and applies an additive behavior vector when the comparison holds.
-DSAS~\citep{ferrando2026dsas} computes context-dependent per-token scales, and
-GAPS~\citep{gaps2026} applies dimension-level gates at $O(d)$ per token.
-Steerability can also be anticipated from a probe read after a few generated
-tokens~\citep{steerable2026}, and YOPO~\citep{luo2026yopo} avoids a second clean
-pass by reconstructing the unsteered residual before reading its direction.
-Two findings in this line shape our design: reading a direction off
-already-steered activations degrades it~\citep{luo2026yopo}, so our reader sits
-above the action, and a feature that \emph{detects} a behavior in finished text
-predicts it poorly from a prefix~\citep{fpcg2026}, so we refit the head on the
-budget the gate will have. Our decision carries an error guarantee, since it is a likelihood-ratio test whose online form is tied to the
-post-hoc one at a stated rate.
+\textbf{Conditional steering.} CAST~\citep{lee2024cast} applies a behavior
+vector only when the prompt's hidden state is similar to a condition vector,
+and is the baseline closest to our design; we reimplement its prompt-level
+condition and give it the same labelled data as our detector. Dynamic and
+semantics-adaptive methods scale the edit per
+token~\citep{ferrando2026dsas,wang2025sadi,scalena2024dynamic}, and
+GAPS~\citep{gaps2026} gates individual dimensions. Closest in aim is
+PCHI~\citep{liu2026probe}, which also separates detection from intervention
+for verbalised overconfidence: a linear probe on the confidence template
+conditions a learned rescaling of attention heads, reaching large
+wrong-confident corrections at small damage on mathematics questions. PCHI
+learns the action for a fixed readout position; we keep the action fixed and
+ask what the decision contributes, when it can be taken, and how much it can
+buy. The accounting identity and ceiling of Sec.~\ref{sec:method} apply to
+PCHI as well. Probes read after a few generated tokens predict whether steering
+will succeed~\citep{steerable2026}, detectors of a finished behavior forecast it
+worse from a prefix~\citep{fpcg2026}, and reading a direction off already-edited
+activations degrades it~\citep{luo2026yopo}; we measure the prefix cost
+directly and place the reader above the actor.
 
-\section{Method: Projection-Transport Steering}
+\section{Projection-Transport Steering}
 \label{sec:method}
 
-In this section we define the object a steering operator acts on, state which
-operator is cost-minimal once that object is fixed (Thm.~\ref{thm:ot}), bound
-what any decision rule on an axis can buy (Thm.~\ref{thm:gate}), and show that
-the two can be designed separately without loss (Thm.~\ref{thm:joint}).
+A conditional edit makes two choices: how to change an activation, and on which
+inputs to change it. We call the first the \emph{action} and the second the
+\emph{decision}. This section fixes the action by a displacement criterion
+(Sec.~\ref{ssec:action}), writes selectivity as a function of the two choices
+(Sec.~\ref{ssec:decision}), and describes how the decision is taken in a single
+pass (Sec.~\ref{ssec:onepass}). Proofs are in Appendix~\ref{app:proofs}.
 
-A behavioral subspace is a small set of directions along which the behavior we
-want to change is legible, read off the model's own labeled traces. Here it is
-spanned by two axes obtained by difference in means: a \emph{confidence} axis,
-which separates confident answers from hesitant ones, and a \emph{detection}
-axis, which separates the confident answers that are wrong from those that are
-right. The action moves the confidence coordinate and the decision reads both.
+\textbf{Setup.} Let $h\in\mathbb{R}^d$ be the residual-stream activation at a
+fixed layer and $V\in\mathbb{R}^{k\times d}$ a matrix with orthonormal rows
+that spans a behavioral subspace. We write $q=Vh$ for the projection, $\mu$ for
+the law of $h$ under unsteered generation, $\mu_V$ for the law of $q$, and $\nu$
+for a target law on $\mathbb{R}^k$. In our experiments $k=1$ and $V=\hat v^\top$
+is the confidence direction, the difference of mean activations between
+confident and nonconfident answers on an extraction split
+(Sec.~\ref{sec:exp}).
 
-More formally, let $h\in\mathbb{R}^d$ be the residual-stream activation at a
-fixed decoder layer, and let $V\in\mathbb{R}^{k\times d}$ have orthonormal rows
-spanning that subspace, with $k{=}2$ in the deployed operator. We write
-$q=Vh\in\mathbb{R}^k$ for the projection, $\mu$ for the law of $h$ under
-natural generation, $\mu_V$ for the induced law of $q$, and $\nu$ for a target
-law on $\mathbb{R}^k$. The transfer function of Table~\ref{tab:family} is the
-map that takes $q$ to its steered value, and the question of this section is
-which one to use.
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\footnotesize, >=Stealth,
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=4pt, minimum height=1.05cm},
+  lab/.style={font=\scriptsize\itshape, text=gray!70!black}]
+\node[box, fill=gray!8, minimum width=2.2cm] (x) {question\\[1pt]\scriptsize prompt tokens};
+\node[box, fill=cgate!12, right=0.7cm of x, minimum width=3.4cm] (dec) {\textbf{decision}\\[1pt]
+  \scriptsize probe $s$ on prompt, prefix or answer\\ \scriptsize fire iff $s>\tau$};
+\node[box, fill=cot!12, right=0.7cm of dec, minimum width=3.9cm] (act) {\textbf{action} at layer $\ell$\\[1pt]
+  \scriptsize $h\leftarrow h+V^{\top}\!\big(S(Vh)-Vh\big)$\\ \scriptsize $S$: transport map to $\nu$};
+\node[box, fill=gray!8, right=0.7cm of act, minimum width=2.1cm] (y) {answer and\\ stated confidence};
+\draw[->, thick] (x) -- (dec);
+\draw[->, thick] (dec) -- node[above, lab]{fires} (act);
+\draw[->, thick] (act) -- (y);
+\draw[->, thick, gray] (dec.south) -- ++(0,-0.45) -| (y.south);
+\node[lab, anchor=north] at ($(dec.south)!0.5!(y.south)+(0,-0.47)$) {silent: the unsteered output is kept};
+\end{tikzpicture}
+\caption{\textbf{PTS separates when to edit from how to edit.} A probe reads
+the input and decides whether to act; the action moves the projection $Vh$ of
+the residual stream to a target law and leaves the orthogonal complement
+unchanged. The selectivity of the combination is the decision's error rates
+weighted by the action's conversion rates of the two states
+(Prop.~\ref{prop:account}).}
+\label{fig:pipeline}
+\end{figure}
 
-\begin{definition}[admissible steering]
-$T:\mathbb{R}^d\to\mathbb{R}^d$ is admissible for $(V,\nu)$ if
-(i) $(I-V^\top V)\,T(h)=(I-V^\top V)\,h$ $\mu$-a.s.\ (\emph{locality}: the
-orthogonal complement is untouched), and (ii) $(V\!\circ T)_{\#}\mu=\nu$, i.e.\ the pushforward of $\mu$ equals the target law
-(\emph{goal}: steered projections follow the target law). The cost is
+\subsection{The action}
+\label{ssec:action}
+
+Large edits are what damage generation (Appendix~\ref{app:capability}), so we
+ask for the smallest edit that moves the projection to a given target law and
+leaves the rest of the activation alone.
+
+\begin{definition}[projection-local steering]
+\label{def:local}
+An edit $T:\mathbb{R}^d\to\mathbb{R}^d$ is \emph{local} to $V$ if
+$(I-V^\top V)\,T(h)=(I-V^\top V)\,h$, and it \emph{reaches} $\nu$ if $Vh'$ is
+distributed as $\nu$ when $h\sim\mu$ and $h'=T(h)$. Its cost is
 $C(T)=\mathbb{E}_\mu\lVert T(h)-h\rVert^2$.
 \end{definition}
 
-We regularize by that cost because large interventions are what empirically
-destroy generation, as we show in Sec.~\ref{sec:results}, and because under a
-Fisher pullback the cost approximates the KL drift of the next-token
-distribution (Prop.~\ref{prop:metric}). The operator we deploy uses the
-Euclidean case $M_V=I_k$, so on that operator the regularizer is justified by
-the measurements of Sec.~\ref{sec:results} rather than by the KL link. The first result says that once the
-subspace and the target law are fixed, there is nothing left to design.
-
-\begin{theorem}[steering is optimal transport of the projection]
+\begin{theorem}[local steering is transport]
 \label{thm:ot}
-$\min_T C(T) = \Wtwo^2(\mu_V,\nu)$ over admissible $T$, attained by
-$T^*(h)=h+V^\top\!\big(S(Vh)-Vh\big)$ where $S$ is the ($\mu_V$-a.s.\ unique) optimal
-Monge map from $\mu_V$ to $\nu$. Any optimal $T$ satisfies $V T(h)=S(Vh)$
-almost surely, so the optimal intervention is a deterministic function of the
-projection alone and conditioning on $h_\perp$ cannot reduce the cost.
+Let $\mu_V$ be absolutely continuous with finite second moment, and let $\nu$
+have finite second moment. Among local edits that reach $\nu$, the cost is
+minimised by
+\begin{equation}
+T(h)=h+V^\top\big(S(Vh)-Vh\big),
+\label{eq:edit}
+\end{equation}
+where $S$ is the optimal-transport (Brenier) map from $\mu_V$ to $\nu$; the
+minimum cost is $\Wtwo^2(\mu_V,\nu)$, and every minimiser agrees with
+Eq.~\eqref{eq:edit} on the projection.
 \end{theorem}
 
-\begin{proof}[Proof sketch]
-Locality collapses the cost to the projection, and $(Vh,VT(h))$ couples
-$(\mu_V,\nu)$, so $C(T)\ge\Wtwo^2$. Brenier's map attains it.
-\end{proof}
-
-For $k=1$ the map $S=F_\nu^{-1}\!\circ F_{\mu_V}$ is the monotone quantile
-map, and we implement it as a 41-knot piecewise-linear lookup. For Gaussian
-marginals it is affine~\citep{knott1984optimal,gelbrich1990formula},
-$S(q)=m_t+A(q-m_s)$ with
-$A=\Sigma_s^{-1/2}\big(\Sigma_s^{1/2}\Sigma_t\Sigma_s^{1/2}\big)^{1/2}\Sigma_s^{-1/2}$.
-
-\textbf{Choosing the subspace.} Theorem~\ref{thm:ot} holds for any orthonormal
-$V$, so $k$ is a design parameter and not a fixed property of the behavior. Two
-interpretable axes make the geometry legible and are what the gate needs, but
-the action is free to use more: the natural larger choice is the subspace an
-unconditional full-space map actually moves, the mean shift $m_t-m_s$ together
-with the leading eigenvectors of $A-I$, at $\Theta(kd)$ per token instead of
-$\Theta(d^2)$. At the far end $V=I$ recovers the full-space Gaussian map that
-MiMiC~\citep{singh2024mimic} applies unconditionally, so one family runs from a
-single interpretable axis to a dense $\Theta(d^2)$ operator and
-Theorem~\ref{thm:joint} gates every point of it. We select $k$ on the tuning
-split like every other hyperparameter, and on this behavior it buys less than
-the construction suggests (Appendix~\ref{app:parity}).
-
-Reading Theorem~\ref{thm:ot} backwards tells us when the workhorse edit is
-already the right one, and when it cannot be.
-
-\begin{corollary}[additive steering is forced to be global]
+\begin{corollary}[what a transfer function can and cannot do]
 \label{cor:additive}
-Additive steering $g(p)=p+\alpha$ is the optimal map iff $\nu=\mu_V\!*\!\delta_\alpha$
-(pure shift). If the target compresses the spread, which is what
-``hedge only abnormal confidence'' requires ($\sigma_t<\sigma_s$), the optimal
-slope is $\sigma_t/\sigma_s<1$: the tail must move more than the bulk. A
-slope-1 map matched to the tail over-transports the bulk by the same constant,
-the \crok{} collapse we observe. Its selectivity between two subpopulations
-with equal projection laws is then identically zero, provided the probability
-that a trace changes state depends on $h$ only through the projection and its
-displacement.
+(a) The shift $S(p)=p+\alpha$ is the optimal map iff $\nu$ is a translate of
+$\mu_V$. (b) If two groups of inputs have the same law of $p$ and the event that
+an input changes state depends on $h$ only through $p$, every transfer function
+changes both groups at the same rate.
 \end{corollary}
 
-If no function of the confidence coordinate can separate the two
-subpopulations, we need a second coordinate and a decision rule on it. The next
-result says what the best such rule is, and how much it can buy.
+In words, once the subspace and the target are fixed, the only freedom left is
+the one-dimensional map $S$, and the cheapest $S$ is the monotone
+rearrangement of quantiles. Table~\ref{tab:family} lists the operators this
+covers. Directional ablation is the map onto $\delta_0$, a clamp is the map
+onto a truncated law, and the additive shift $S(p)=p+\alpha$ is the map onto a
+shifted copy of $\mu_V$. A shift is optimal exactly when the target is a pure
+translation (Cor.~\ref{cor:additive}); it is the member we end up selecting,
+and the theorem says it spends no displacement off the confidence coordinate.
 
-\begin{theorem}[optimal gate and selectivity ceiling]
-\label{thm:gate}
-Let a gate fire iff a trace statistic $s>\tau$, with
-$\mathrm{TPR}(\tau)=P(s>\tau\mid \ocw)$, $\mathrm{FPR}(\tau)=P(s>\tau\mid \crok)$.
-(a) For any objective increasing in TPR and decreasing in FPR, the
-likelihood-ratio test is optimal at every operating point (Neyman--Pearson).
-Under equal-covariance Gaussian class conditionals it reduces to the linear
-discriminant $w=\Sigma^{-1}(\mu_{\ocw}-\mu_{\crok})$, the contrast whose error rates the statement bounds.
-(b) For any statistic with concavified ROC area $\mathrm{AUC}$,
-$\max_\tau[\mathrm{TPR}-\mathrm{FPR}] \le 2\,\mathrm{AUC}-1$.
-\end{theorem}
+\subsection{The decision}
+\label{ssec:decision}
 
-The action can then be designed for a fixed gate event without losing displacement optimality; the gate is optimal for a different objective, and Appendix~\ref{app:ablation} reports what that separation does and does not buy.
+A decision reads a statistic $s$ of the input and runs the action on the event
+$\Gamma=\{s>\tau\}$; elsewhere the output is exactly the unsteered one. We
+measure the result with selectivity,
+$\mathrm{Sel}=P(\text{leave }\ocw\mid\ocw)-P(\text{leave }\crok\mid\crok)$, the
+share of overconfident-wrong answers (\ocw{}) the edit removes minus the share
+of confident-right answers (\crok{}) it destroys. Write $\mathrm{TPR}$ and
+$\mathrm{FPR}$ for the rates at which the decision fires on \ocw{} and \crok{},
+and $\rho_O$, $\rho_C$ for the rates at which the action changes the state of a
+flagged \ocw{} and a flagged \crok{} answer.
 
-\begin{theorem}[optimal transport under a fixed gate event]
-\label{thm:joint}
-Among interventions that are local to $V$, identity off the gate event
-$\Gamma=\{s>\tau\}$, and achieve target law $\nu_\Gamma$ on $\Gamma$, the
-cost-minimal intervention applies Theorem~\ref{thm:ot}'s map for the conditional
-law $(\mu_V\mid\Gamma)\to\nu_\Gamma$ on $\Gamma$; its cost is
-$P(\Gamma)\,\Wtwo^2(\mu_V\!\mid\!\Gamma,\ \nu_\Gamma)$.
-\end{theorem}
-
-Theorem~\ref{thm:joint} treats the gate as a switch. Nothing forces that: the
-same cost functional, asked for the best \emph{dose} rather than the best
-event, answers with a graded rule. Proposition~\ref{prop:dose}
-(Appendix~\ref{app:proofs}) gives the optimal dose as a nondecreasing function
-of the gate posterior $\pi(s)=P(\ocw\mid s)$, affine in it wherever the
-expected per-state displacement is constant in $s$, clipped to $[0,1]$ and zero
-exactly on $\{\pi\le\tau\}$, with $\tau$ a ratio of two measured rates: the
-collateral and the removal a full dose produces. The hard gate is its
-free-displacement limit and is strictly suboptimal at any finite price of
-displacement whenever $\pi$ has no atom at $\tau$. So the operating point is
-read off the tuning split rather than searched, and one slope is left to search
-in place of a threshold and an action.
-
-Theorem~\ref{thm:joint} says nothing about \emph{when} $\Gamma$ must be
-decided. One way to implement the gate is to score a finished trace and then
-regenerate the traces it flags.
-Deciding while the trace is written gives another, and only the second one a
-server can afford. Write $z_t$ for the mean projection over the first $t$ generated
-positions and $z_\infty$ for the completed-trace summary the post-hoc gate
-uses.
-
-\begin{theorem}[single-pass gating]
-\label{thm:seq}
-(a) Among all gates measurable with respect to $\sigma(z_t)$, the
-likelihood-ratio test on $z_t$ is optimal at every operating point, and under
-equal-covariance Gaussian class conditionals it is the linear discriminant
-fitted on $z_t$ --- Theorem~\ref{thm:gate} applied to the statistic the gate
-actually has. Its ceiling is $2\,\mathrm{AUC}(z_t)-1$, which is what a
-prefix budget costs.
-(b) If instead the gate insists on the whole-trace statistic, let the
-contributions form a martingale difference sequence around $z_\infty$ with
-conditionally $\sigma$-sub-Gaussian increments and fire at the first $t$ with
-$s_t>\tau+B_t(\delta)$, where
-$B_t(\delta)=1.7\,\sigma\sqrt{(\log\log 2t+0.72\log(5.2/\delta))/t}$ is the
-stitched finite-law-of-the-iterated-logarithm boundary of
-\cite{howard2021confseq}.
-Then it fires on a trace with $s_\infty\le\tau$ with probability at most
-$\delta$, simultaneously over all $t$, and on a trace with margin
-$\Delta=s_\infty-\tau>0$ it fires, with probability at least $1-\delta$, by the first $t$ with
-$B_t(\delta)\le\Delta/2$, after $O(\sigma^2\Delta^{-2}\log(1/\delta))$ positions, up to an iterated logarithm in $t$,
-positions.
-(c) Either way the composed operator is single-pass: the action starts at the
-firing position, costs $O(d)$ per token, keeps $O(1)$ extra state, and
-invalidates no cache entry, because positions written before the switch keep
-the keys they were written with.
-\end{theorem}
-
-\begin{proof}[Proof sketch]
-Part (a) is Theorem~\ref{thm:gate} with $z_t$ in place of $z$ and assumes
-nothing about how $z_t$ relates to $z_\infty$; part (b) buys a time-uniform
-guarantee by assuming that relation, and is the confidence sequence of
-\cite{howard2020supermartingale,howard2021confseq}, and part (c) follows from
-the order of the two hooks.
-\end{proof}
-
-\begin{remark}[detection and action need not share a depth]
-\label{rem:depth}
-Nothing in Theorems~\ref{thm:ot}--\ref{thm:seq} forces the gate to read the
-layer the action writes. Placing the reader above the actor costs one position
-of lag and lets each sit where it is best. On \texttt{gemma-2-2b-it} the
-detection contrast peaks at layer~16, where the trace-level AUROC is $0.799$
-against $0.769$ at layer~14, and the gap holds for the prefix heads the
-sequential gate uses ($0.691$ against $0.666$ at the 32-token budget it runs
-at), so we
-let the reader sit at layer~16 while the action stays at layer~14
-(Appendix~\ref{app:layers}). The order also removes an interference the
-single-pass setting would otherwise have: reading a direction off activations
-the same operator has already edited degrades it~\citep{luo2026yopo}, and here
-the decision is a single commitment taken before anything is edited.
-\end{remark}
-
-\begin{proposition}[computational optimality]
-\label{prop:compute}
-Any algorithm implementing a non-degenerate intervention local to a subspace
-spanned by a dense direction must read all $d$ coordinates of $h$, i.e.\ costs
-$\Omega(d)$ per token. PTS costs $\Theta(kd+k\log K)$, which matches that lower
-bound for constant $k$ and $K$. The contrast that matters is not with the
-additive edit, which is also $\Theta(d)$, but with $\Theta(d^2)$ for a
-full-space affine map (MiMiC), $\Theta(d\,d_{\mathrm{sae}})$ for SAE steering, and a full extra
-forward pass for KL-adaptive dosing. Proof in Appendix~\ref{app:proofs}.
+\begin{proposition}[selectivity accounting]
+\label{prop:account}
+For any decision and action that leave unflagged outputs unchanged,
+\begin{equation}
+\mathrm{Sel}=\mathrm{TPR}\cdot\rho_O-\mathrm{FPR}\cdot\rho_C .
+\label{eq:account}
+\end{equation}
 \end{proposition}
+
+Eq.~\eqref{eq:account} is an identity, and it separates the two choices. The
+decision sets $(\mathrm{TPR},\mathrm{FPR})$ and the action sets
+$(\rho_O,\rho_C)$. If the action converts flagged and unflagged answers of the
+same state at the same rate, $\rho_O$ and $\rho_C$ can be read off an ungated
+run, and the equation predicts the selectivity of every gated variant before
+it is run. We use this prediction to select configurations cheaply and test it
+in Sec.~\ref{sec:results}.
+
+The decision term is bounded by how well $s$ separates the two states.
+
+\begin{theorem}[optimal decision and its ceiling]
+\label{thm:gate}
+(a) For any objective increasing in TPR and decreasing in FPR, including
+Eq.~\eqref{eq:account}, thresholding the likelihood ratio of $s$ between \ocw{}
+and \crok{} is optimal at every operating point. (b) If the concave ROC of $s$
+has area $\mathrm{AUC}$, then $\max_\tau(\mathrm{TPR}-\mathrm{FPR})\le2\,\mathrm{AUC}-1$;
+for an action with $\rho_O=\rho_C=\rho$ this gives
+$\mathrm{Sel}\le\rho\,(2\,\mathrm{AUC}-1)$.
+\end{theorem}
+
+We therefore implement the decision as a logistic-regression probe, an estimate
+of the log-likelihood ratio, fitted on answers labelled by the evaluation
+readout, and we judge it by its AUROC on questions it was not fitted to. The
+same bound explains why the decision should not read the coordinate the action
+edits. On held-out questions the confidence projection separates \ocw{} from
+\crok{} at AUROC $0.64$ for Gemma and $0.53$ for Qwen, so a threshold on it buys
+little, and an edit that depends only on that coordinate changes both states
+at rates that differ only through the rest of the activation
+(Cor.~\ref{cor:additive}).
+
+\subsection{Deciding in one pass}
+\label{ssec:onepass}
+
+A decision that reads the finished answer requires generating every flagged
+question twice. The decision can instead read the prompt, or the mean
+activation over the first $t$ generated tokens, with a probe fitted on exactly
+that statistic. Theorem~\ref{thm:gate} applies to any such statistic, so the
+cost of deciding early is the AUROC lost relative to the finished trace. The
+reader sits at or above the layer the action writes, the action starts at the decision
+token, and positions written before it keep their cached keys. The operator
+then costs two $d$-dimensional dot products per token.
 
 \section{Experimental Setup}
 \label{sec:exp}\label{sec:data}
 
-\textbf{Models, datasets, and splits.} The main experiments use
-\texttt{gemma-2-2b-it}~\citep{gemma2024}, and the central comparison is repeated
-on \texttt{gemma-2-9b-it} at 2B and 9B (Sec.~\ref{ssec:ninetb}). Both
-models reason inside \texttt{<think>...</think>} and answer
-\verb|\boxed{letter}|. Decoding is greedy, so evaluation ``seeds'' resample
-\emph{questions}, not decoding noise. We read and modify activations at
-layer 14/26 (2B) and 24/42 (9B). Benchmarks:
-MMLU~\citep{hendrycks2021mmlu} (fitting and primary evaluation),
-ARC-Challenge~\citep{clark2018arc}, and GSM8K~\citep{cobbe2021gsm8k} as 4-option
-MCQ with seeded distractors (GSM8K-MCQ, Appendix~\ref{app:gsm}), $n{=}300$
-questions each, disjoint from all fitting data. We fit directions, maps, and
-gate parameters \emph{once} per scale, on a 400-question MMLU extraction split
-($\sim$50k trace tokens), and reuse them everywhere, so cross-benchmark results
-are transfer rather than refits. We run the main comparison on five resampled
-MMLU subsets and the 9B replication on three.
+\textbf{Models and task.} The main model is \texttt{gemma-2-2b-it}
+\citep{gemma2024}; the confirmatory comparison is repeated on
+\texttt{Qwen2.5-7B-Instruct}, a second model family, with its own directions,
+detector and tuning. Both reason inside \texttt{<think>...</think>} and answer
+\verb|\boxed{letter}| on MMLU~\citep{hendrycks2021mmlu}; decoding is greedy.
+The action is applied at layer 14 of 26 (Gemma) and 14 of 28 (Qwen).
 
-\textbf{Behavioral states and confidence readouts.} Every answer gets one of
-four labels --- \emph{overconfident-wrong} (\ocw), \emph{nonconfident-wrong},
-\emph{nonconfident-right}, \emph{confident-right} (\crok) --- under two
-independent readouts: the \emph{letter-logit} readout M2 (softmax of the letter
-logits at the trace's own answer position) and the \emph{yes-probability}
-readout M4 (normalized $P(\mathrm{YES})$ over per-option yes/no reformulations,
-one forward per option). The M4 prompt is given verbatim in Appendix~\ref{app:defs}. On
-identical questions the readouts disagree sharply (ECE $0.39$ against $0.10$,
-Appendix~\ref{sec:measure}): M2 is strongly overconfident, M4 much better
-calibrated. M4 is therefore the primary readout, and agreement under the letter-logit
-readout is a robustness requirement; absolute counts differ between them by up
-to a factor of $2.6$ on our headline operator. Full grids:
-Appendix~\ref{app:fulltables}.\looseness=-1
+\textbf{Splits.} All splits are disjoint sets of MMLU test questions (ids in
+the released code): an \emph{extraction} split of 400 questions for the
+directions and transport targets, a \emph{detector} pool of 4{,}000 for the
+detector, a \emph{tuning} split of 1{,}200 on which every method's
+configuration is chosen, and a \emph{confirmatory} split of 3{,}000 used once,
+under a protocol frozen before its steered rollouts were generated
+(Appendix~\ref{app:protocol}).
 
-\textbf{Directions and the trace-level gate.} On the extraction split we fit a
-\emph{confidence} axis $\hat v$, the steering axis, and a \emph{detection} axis
-$\hat u$, both by diff-in-means, and orthonormalize them into $V=(\hat v,\hat
-u)$. We keep the two contrasts disjoint by construction: the first separates the
-two \emph{confident} states $\{\ocw,\crok\}$ from the two nonconfident ones, so
-$\hat v$ encodes confidence irrespective of correctness, and the second
-separates \ocw{} from \crok{}, so $\hat u$ encodes whether that confidence is
-warranted. A completed trace of length $T$ is summarized by its mean
-projections $z=\big(\tfrac1T\sum_t\langle h_t,\hat v\rangle,\ \tfrac1T\sum_t
-\langle h_t,\hat u\rangle\big)$, and an LDA head gives the gate score
-$s(z)=w^\top z+b$, firing iff $s(z)>\tau$; $w$ and $b$ come from the
-equal-covariance LDA solution and $\tau$ is a quantile of the extraction-split
-score distribution (the median unless stated), never a quantity fitted on
-evaluation data. We run the gate in two regimes. \emph{Post-hoc} (two-pass):
-generate unsteered, keep that output if the gate is silent, and otherwise
-regenerate with the intervention active during reasoning. \emph{Sequential}
-(single-pass, Thm.~\ref{thm:seq}): a second LDA head, fitted on the mean
-projection over the first $t^\star$ generated positions rather than over the
-finished trace, is read at layer~16 while the action runs at layer~14
-(Remark~\ref{rem:depth}), and the action switches on at token $t^\star$ and
-stays on. Fitting the head on the statistic the gate will actually have is what
-makes an early decision sound, and we search $t^\star$ and the threshold
-quantile on the tuning split. In both regimes the gate sees only the model's
-own activations, with no gold labels at inference.\looseness=-1
+\textbf{What is measured.} The primary readout (M5) scores the answer the
+model actually generates. Correctness is the \verb|\boxed{}| letter against
+the gold answer; confidence is $P(\mathrm{YES})$ when the model is then asked,
+in the same conversation, whether that answer is correct. A steered question is
+steered for both the reasoning trace and the confidence query, so the answer and
+its confidence come from the same edited model. Each question is in one of four
+states: \emph{overconfident-wrong} (\ocw{}, wrong with $P(\mathrm{YES})\ge0.5$),
+nonconfident-wrong, nonconfident-right, and \emph{confident-right} (\crok{}).
+Two secondary readouts, the letter-logit confidence of the same answer
+and a per-option verification readout, are reported in
+Appendix~\ref{app:secondary}; the prompts are in Appendix~\ref{app:prompts}.
 
-\textbf{Steering methods.} All operators act through $p_t=\langle h_t,\hat
-v\rangle$ (Sec.~\ref{sec:method}). \emph{Additive} is $h_t'=h_t+\alpha\hat v$
-at $\alpha=-0.75\lVert h\rVert$, the dose that eliminates \ocw{} under the
-calibrated readout. \emph{Ablation} is $h_t'=h_t-p_t\hat v$, and \emph{clamp}
-is $p_t'=\min(p_t,c)$ at a source quantile. \emph{Quantile, Gaussian and
-Bures--Wasserstein transport} map onto a target law fitted on the extraction
-split. We form \emph{conditional variants} by composing the trace gate with
-each action, giving CAST-style gate$+$additive, gated clamp, gated ablation,
-gated OT and LDA-gated subspace BW; in each the gate controls \emph{exposure}
-and the action controls \emph{severity}. We compare against prompting, additive
-CAA~\citep{rimsky2024caa}, ablation~\citep{arditi2024refusal},
-CAST-style~\citep{lee2024cast}, MiMiC~\citep{singh2024mimic} and Linear-AcT
-per-neuron transport~\citep{rodriguez2025act}, all reimplemented and run on
-identical records, decoding, readouts, and metrics. Every method, ours
-included, we give at least eight configurations in the comparison set, searched on
-the same held-out MMLU tuning split under one pre-declared rule: CAST gets its
-threshold and dose, MiMiC and Linear-AcT get layer selection, and our gate gets
-the depth it reads and the quantile it fires at (Appendix~\ref{app:parity}).
+\textbf{Metrics.} Pairing each question with itself before and after the
+edit, removal is $P(\text{not }\ocw\text{ after}\mid\ocw\text{ before})$ over
+the $n_{\ocw}$ questions that started in \ocw{}, retention is
+$P(\crok\text{ after}\mid\crok\text{ before})$ over the $n_{\crok}$ that
+started in \crok{}, and selectivity is
+$\mathrm{Sel}=\text{removal}-(1-\text{retention})$: $1$ for an edit that
+removes every \ocw{} and keeps every \crok{}, $0$ for one that treats them
+alike. $\Delta$acc is the change in accuracy over all questions, and ECE is
+the 10-bin expected calibration error of the confidence.
 
-\textbf{Metrics and statistical protocol.} \emph{Accuracy} asks whether the
-edit hurt task performance and we report the change $\Delta$acc against the
-unsteered model; \emph{ECE} asks whether the confidence numbers can be
-trusted. The \emph{surgical metrics} ask whether the edit hit only what it
-aimed at: pairing answers by question,
-$\mathrm{ocw\_rm}=P(\text{left \ocw}\mid\text{was \ocw})$ is the share of the
-harmful state removed, $\mathrm{cr\_keep}=P(\text{stayed \crok}\mid\text{was
-\crok})$ the share of the healthy state preserved, and selectivity
-$\mathrm{Sel}=\mathrm{ocw\_rm}-(1-\mathrm{cr\_keep})$ combines them, $+1$ a
-perfect scalpel and $0$ indiscriminate. Both are conditional on the state a
-question started in, so an operator can also move traces \emph{into} the
-target state and we report the post-intervention population separately
-(Table~\ref{tab:main}). \emph{AURC} asks whether confidence still ranks right
-answers above wrong ones. Single-subset results carry paired-bootstrap 95\%
-CIs, and multi-subset results are reported as a mean with its spread over five
-independently resampled subsets.\looseness=-1
+\textbf{Methods and tuning.} We compare prompting (a calibration instruction),
+additive CAA~\citep{rimsky2024caa}, directional
+ablation~\citep{arditi2024refusal}, MiMiC~\citep{singh2024mimic},
+Linear-AcT~\citep{rodriguez2025act} and two conditional shifts: CAST with its
+original prompt condition, a cosine threshold to a condition vector computed
+from the same labelled pool our detector uses~\citep{lee2024cast}, and a
+CAST-style variant conditioned on the finished trace's projection onto the
+extraction-split \ocw{}--\crok{} direction. All are reimplemented on the same
+hooks, records and readouts. The PTS decision is a logistic-regression probe on
+the mean activation of one layer, fitted on the detector pool, with its layer
+and regularisation chosen by AUROC on the tuning split; the action is ablation
+or a shift of the confidence coordinate. Each method searches a grid of 8 to 16
+configurations on the tuning split, and one rule selects all of them: the
+highest selectivity among configurations whose $\Delta$acc is at least $-0.01$
+(Appendix~\ref{app:tuning}). Post-hoc PTS reads the finished unsteered answer
+and regenerates the flagged questions; single-pass PTS decides at the prompt,
+or after $t\in\{16,32,64,128\}$ generated tokens with a probe fitted on that
+prefix, and acts from then on.
 
-\section{Removing a Behavior Without Removing the Model}
+\textbf{Statistics.} The unit of analysis is the question. Intervals are
+question-level paired bootstrap intervals with $10^4$ resamples; comparisons
+between methods resample the same questions for both. The six primary
+comparisons of post-hoc PTS against the baselines are Holm-adjusted. We call
+an accuracy change non-inferior when the lower end of its $95\%$ interval is
+above $-0.02$, a margin fixed in the protocol.
+
+\section{Results}
 \label{sec:results}
 
-\begin{figure}[!t]
+\begin{figure}[t]
 \centering
 \begin{tikzpicture}
-\begin{axis}[width=.62\linewidth, height=2.8cm, xlabel={projection onto confidence axis},
-  ylabel={CDF}, grid=major, grid style={dashed,gray!20},
-  legend style={font=\scriptsize,draw=none, at={(1.03,0.5)}, anchor=west},
+\begin{axis}[name=law, width=.5\linewidth, height=4.8cm,
+  xlabel={predicted from ungated runs}, ylabel={measured selectivity},
+  xmin=-0.01, xmax=0.39, ymin=-0.01, ymax=0.39, grid=major, grid style={dashed,gray!20},
+  tick label style={font=\scriptsize}, every axis label/.append style={font=\footnotesize},
+  legend style={font=\tiny, draw=none, fill=white, fill opacity=.8, text opacity=1, at={(0.02,0.98)}, anchor=north west},
+  title={(a) selectivity factorises}, title style={font=\footnotesize}]
+\addplot[gray, dashed, forget plot] coordinates {(-0.01,-0.01) (0.39,0.39)};
+\addplot[only marks, mark=*, mark size=0.8pt, cadd, opacity=.6] table[x=law, y=sim, col sep=comma]{pic/v4_law.csv};
+\addlegendentry{shift}
+\addplot[only marks, mark=square*, mark size=0.8pt, cclamp, opacity=.6] table[x=law, y=sim, col sep=comma]{pic/v4_law_ablate.csv};
+\addlegendentry{ablation}
+\addplot[only marks, mark=triangle*, mark size=1pt, cot, opacity=.6] table[x=law, y=sim, col sep=comma]{pic/v4_law_mimic.csv};
+\addlegendentry{MiMiC}
+\addplot[only marks, mark=diamond*, mark size=0.9pt, cgate, opacity=.6] table[x=law, y=sim, col sep=comma]{pic/v4_law_clamp.csv};
+\addlegendentry{clamp}
+\addplot[only marks, mark=star, mark size=2.6pt, black, thick] table[x=law, y=real, col sep=comma]{pic/v4_law_real.csv};
+\addlegendentry{confirmatory arms}
+\end{axis}
+\begin{axis}[at={(law.east)}, anchor=west, xshift=1.2cm, width=.5\linewidth, height=4.8cm,
+  xlabel={generated tokens read by the decision}, ylabel={held-out AUROC},
+  xtick={0,32,64,128,256}, xticklabels={prompt,32,64,128,all}, ymin=0.6, ymax=0.82,
+  grid=major, grid style={dashed,gray!20}, tick label style={font=\scriptsize},
   every axis label/.append style={font=\footnotesize},
-  tick label style={font=\scriptsize}, ymin=0, ymax=1]
-\addplot[cadd, very thick] table[x=overconfident_wrong, y=q, col sep=comma]{pic/cdf_m4conf.csv};
-\addlegendentry{overconfident-wrong}
-\addplot[cclamp, very thick, dashed] table[x=confident_right, y=q, col sep=comma]{pic/cdf_m4conf.csv};
-\addlegendentry{confident-right}
-\addplot[cot, thick] table[x=nonconfident_right, y=q, col sep=comma]{pic/cdf_m4conf.csv};
-\addlegendentry{nonconfident-right}
-\addplot[cgate, thick, dashed] table[x=nonconfident_wrong, y=q, col sep=comma]{pic/cdf_m4conf.csv};
-\addlegendentry{nonconfident-wrong}
+  legend style={font=\tiny, draw=none, fill=none, at={(0.98,0.02)}, anchor=south east},
+  title={(b) the decision can be taken early}, title style={font=\footnotesize}]
+\addplot[cgate, thick, mark=*, mark size=1.2pt, error bars/.cd, y dir=both, y explicit]
+  table[x=t, y=auroc, y error plus expr=\thisrow{hi}-\thisrow{auroc}, y error minus expr=\thisrow{auroc}-\thisrow{lo}, col sep=comma]{pic/v4_decision_gemma.csv};
+\addlegendentry{Gemma-2-2B}
+\addplot[cclamp, thick, dashed, mark=square*, mark size=1.2pt, error bars/.cd, y dir=both, y explicit]
+  table[x=t, y=auroc, y error plus expr=\thisrow{hi}-\thisrow{auroc}, y error minus expr=\thisrow{auroc}-\thisrow{lo}, col sep=comma]{pic/v4_decision_qwen.csv};
+\addlegendentry{Qwen2.5-7B}
+\addplot[gray, densely dotted, thick, forget plot] coordinates {(0,0.669) (256,0.669)};
+\node[font=\tiny, gray, anchor=south west] at (axis cs:2,0.669) {CAST-style condition};
 \end{axis}
 \end{tikzpicture}
-\caption{Token-level projection CDFs on the confidence axis by behavioral state
-(extraction split, $\sim$50k tokens). The \ocw{} and \crok{} curves are nearly
-identical (Cohen's $d=0.049$; $d=-0.155$ measured per trace,
-Table~\ref{tab:layers}), while the confident and nonconfident pairs are well
-separated ($d\approx0.6$). A decision rule on this coordinate is therefore
-close to a coin flip, which is why the gate reads a second axis.}
-\label{fig:cdf}
+\caption{\textbf{The decision is the lever, and it can be taken early.}
+(a) Each point is a decision--action--threshold combination on the Gemma
+tuning split (240 in total). The horizontal axis is
+$\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ computed from the ungated run of the
+action; the vertical axis is the selectivity of the gated edit. Stars are the
+four gated arms of the confirmatory split, measured on real runs.
+(b) AUROC between \ocw{} and \crok{} on the 3{,}000 confirmatory questions of
+a probe that reads the prompt, the first $t$ generated tokens, or the whole
+answer; bars are $95\%$ bootstrap intervals, and the dotted line is the
+trace direction used by the CAST-style condition.}
+\label{fig:law}\label{fig:decision}
 \end{figure}
 
-\textbf{Result: the dose that removes the behavior removes the model with it.}
-We begin from the operator the literature ships, at the dose that meets its
-stated goal of eliminating overconfident-wrong answers. On the representative
-subset that dose leaves none of the $76$ confident-right answers standing
-while it removes all $50$ overconfident-wrong ones, at a cost of $15.0$
-accuracy points (Table~\ref{tab:main}). We find the damage is not confined to the benchmark: HumanEval pass@1 falls from $.396$ to $.128$, WikiText-103
-perplexity doubles, and $77\%$ of reasoning traces degenerate
-(Tables~\ref{tab:traces}, \ref{tab:capability}). We see the mechanism in Figure~\ref{fig:plane}, and it is the one Cor.~\ref{cor:additive} names: a constant
-shift moves the bulk of the distribution as far as it moves the tail, so every
-confident state leaves the calibrated zone together.
+\subsection{The selectivity identity predicts gated edits}
+\label{ssec:law}
 
-\textbf{Property: the ceiling is geometric, and it can be read before
-intervening.} We first test the premise selective steering relies on, that the edited axis
-separates the states we must tell apart. We measure the two confident
-states as nearly coincident in Figure~\ref{fig:cdf} on the confidence axis at Cohen's $d=0.049$, while the
-confident and nonconfident pairs separate at $d\approx0.6$: the axis encodes
-whether the model is confident, not whether that confidence is warranted.
-Reading that effect size as an area under an equal-variance Gaussian ROC gives
-$\mathrm{AUC}=0.514$, and Thm.~\ref{thm:gate}b turns it into a cap of $0.028$
-on any decision rule on this coordinate, and Cor.~\ref{cor:additive} extends it
-to any edit whose strength does not vary with the projection. Both come from
-$400$ unsteered traces and cost no steered rollout. Across five resampled
-subsets we measure an additive selectivity of $+0.000$ with a standard
-deviation of zero,. A
-practitioner can therefore know in advance that no coefficient will work on
-this axis, and can look for a second one instead.
+\textbf{The identity turns one ungated run into a prediction for every
+decision.} On the Gemma tuning split we measure the conversion rates of six
+actions once, compose each with two decisions at 20 thresholds, and compare
+the prediction $\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ with the measured
+selectivity (Fig.~\ref{fig:law}a). The two agree with correlation $0.97$ over
+240 combinations; the prediction is higher by $0.033$ on average, because the
+answers a detector flags are slightly harder to convert than the average
+answer of their state. With the flagged conversion rates in place of the
+ungated ones the identity is exact, and on the confirmatory split the four
+gated arms land within $0.010$ of the value composed from their ungated runs.
+We use this to score every gated configuration on the tuning split without
+running it (Appendix~\ref{app:protocol}).
 
-\textbf{Result: conditioning the action on the projection returns the model.}
-We next ask what an action that reads the projection buys. We clamp the abnormal tail, one scalar and no gate. Across five subsets we find it
-holds accuracy at the unsteered value and keeps $53$ of the $76$
-confident-right answers, and quantile transport keeps $67$ of them
-(Table~\ref{tab:headtohead}). Both leave code synthesis, held-out perplexity
-and open-ended generation where they found them
-(Table~\ref{tab:capability}). This is Cor.~\ref{cor:additive} read forwards:
-abnormal activations must move further than ordinary ones, and an edit of the
-right shape does that with no threshold to tune.
+\textbf{The identity also says what each choice contributes.} The shift the
+selection rule picks for Gemma, $S(p)=p-0.375\lVert h\rVert$, changes the state
+of $84\%$ of overconfident-wrong and $59\%$ of confident-right answers when
+applied everywhere. By Prop.~\ref{prop:account}, a decision recovers $0.59$ for
+every confident-right answer it leaves alone and forfeits $0.84$ for every
+overconfident-wrong answer it misses, so the value of detection grows with how
+indiscriminate the action is. The probe reads the unsteered answer at held-out
+AUROC $0.74$, against $0.67$ for the direction that conditions the CAST-style
+baseline (Fig.~\ref{fig:law}b); at its selected threshold it fires on $54\%$ of
+overconfident-wrong and $22\%$ of confident-right answers.
 
-\textbf{Result: the gate returns eight answers for four removals.} We isolate what the gate contributes by comparing it against the strongest
-operator we have without one, directional ablation, the
-$g{=}0$ row of Table~\ref{tab:family},  Over five resampled subsets we find the gate gives
-up $4$ of the $50$ overconfident removals and returns $8$ of the $76$ correct
-answers, a trade of two to one at the same accuracy cost
-(Table~\ref{tab:headtohead}). Figure~\ref{fig:pareto} places the comparison on
-the removal--retention frontier: three of its four non-dominated points are
-ours, and the gated operators hold the high-removal end. A matched tuning
-budget compresses the field without reordering it: the tuned additive dose
-reaches the highest mean in that grid at the retention Cor.~\ref{cor:additive}
-says a shift must spend, $47$ of $76$ against our $54$, and every gap in the
-column sits inside its spread (Appendix~\ref{app:parity}).
-The gate buys retention, and it buys the right to leave most of the input
-untouched.
+\subsection{Pre-registered comparison on two model families}
+\label{ssec:confirm}
 
-\begin{figure}[!t]
-\centering
-\begin{tikzpicture}
-\begin{axis}[width=.95\linewidth, height=5.6cm, xlabel={selectivity},
-  ylabel={\crok{} retention}, clip=false, grid=major, grid style={dashed,gray!20},
-  every axis label/.append style={font=\footnotesize},
-  tick label style={font=\scriptsize}, scaled ticks=false,
-  yticklabel style={/pgf/number format/fixed},
-  xticklabel style={/pgf/number format/fixed},
-  xmin=0.09, xmax=0.42, ymin=0.36, ymax=0.97]
-\input{gen/pareto_iclr}
+\textbf{A global shift trades one state for the other.} On the Gemma tuning
+split, the shift $p-0.75\lVert h\rVert$ removes every overconfident-wrong
+answer and every confident-right one, at a cost of $15.3$ accuracy points;
+smaller doses keep more of both (Appendix~\ref{app:tuning}). The tuned dose,
+$p-0.25\lVert h\rVert$, reaches selectivity $0.197$ there.
 
-\end{axis}
-\end{tikzpicture}
-\caption{The removal--retention frontier. Every point is an across-subset mean
-of Table~\ref{tab:headtohead}, at the published configuration, and the spreads
-are in that table; the dashed line is perfect retention. The additive edit
-(orange) buys its removal by spending every confident-correct answer, and
-CAST-style keeps $0.400$ of them. Ungated distribution matching (green) is safe
-but weakly selective. The gated tail-local operators (pink) sit in the
-upper-right region, and directional ablation (blue) reaches comparable
-selectivity at $0.111$ less retention.}
-\label{fig:pareto}
-\end{figure}
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{table}[t]\footnotesize\setlength{\tabcolsep}{3pt}
 \centering
 \resizebox{\linewidth}{!}{%
-\begin{tabular}{l|cccccc}
+\begin{tabular}{l|c|c|cc|c|c}
 \hline
-method (M4, MMLU, seeds mean$\pm$std) & $\Delta$acc & ECE & AURC & ocw\_rm & cr\_keep & Sel \\
+method & configs & $\Delta$acc [95\% CI] & removal $\uparrow$ & retention $\uparrow$ & Sel $\uparrow$ [95\% CI] & $\Delta$Sel vs PTS (Holm $p$) \\
 \hline
-\input{gen/headtohead_table}
+\inputtab{gen/confirm_table}
 \end{tabular}}
-\caption{\textbf{Head-to-head over five resampled MMLU subsets}, every method
-at its published configuration. Reading the two rows of the ablation family:
-the gate returns $0.111$ of the confident-right answers the ungated action
-destroys for $0.086$ less removal, at the same accuracy cost, and our gated
-clamp keeps $0.820$ of them. Selectivity is paired on the state a question
-started in, so an operator can also move traces \emph{into} the target state;
-the post-intervention counts are Table~\ref{tab:main}. Greedy decoding is
-deterministic, so seeds resample \emph{questions}, a stricter robustness axis
-than sampling seeds.}
-\label{tab:headtohead}
+\caption{\textbf{PTS is the most selective method on Gemma at unchanged
+accuracy.} Confirmatory split of 3{,}000 MMLU questions, each method at the
+configuration it won on the tuning split under one rule; removal is over the
+questions that started overconfident-wrong, retention over those that started
+confident-right. Intervals are question-level paired bootstrap intervals
+($10^4$ resamples); $\Delta$Sel is paired against PTS post-hoc, with $p$ Holm-adjusted
+over the seven baselines. The single-pass rows are secondary and are compared
+without adjustment.}
+\label{tab:confirm}
 \end{table}
 
-\textbf{Property: the two protections compound.} Figure~\ref{fig:plane} shows
-where the saved answers come from. We find thirty confident-right traces fall below the gate and are returned bitwise unchanged. Of the $46$ the gate does flag,
-$25$ keep their state, because the tail-local action barely moves a typical
-activation. The gate alone reaches a Youden index of $0.215$ on this subset
-while the composed operator reaches $0.304$, so the action contributes on the
-gate's own false positives. CAST-style has the first protection and not the
-second; an ungated clamp or transport has the second and not the first.
+\textbf{PTS is the most selective method on Gemma.} Table~\ref{tab:confirm}
+reports the frozen configurations on the 3{,}000 confirmatory questions.
+PTS reaches selectivity $0.294$ $[0.256, 0.334]$, removing $49\%$ of
+overconfident-wrong answers while keeping $80\%$ of confident-right ones. The
+strongest baseline, the CAST-style shift conditioned on the trace direction,
+reaches $0.248$, and the paired difference to PTS is $0.046$ $[0.008, 0.085]$;
+the other six baselines trail by $0.074$ to $0.233$, and all seven differences
+remain significant after Holm adjustment. Accuracy changes by $+0.003$
+$[-0.009, 0.015]$, inside the two-point margin, as it does for every baseline.
+PTS and the tuned additive dose use the same kind of action; the gate is what
+separates them, with retention $0.80$ against $0.66$.
 
-\textbf{Result: the edit is invisible outside the behavior it was fitted for.}
-An always-on edit spends most of its life on inputs we did not build it for,
-so we measure three tasks the directions never saw
-(Table~\ref{tab:capability}). We find our projection-local operators at the unsteered value on every one: pass@1 between $.390$ and $.396$ against $.396$,
-perplexity between $23.1$ and $23.3$ against $23.4$, distinct-3 between $.946$
-and $.954$ against $.953$, and an order-consistent win rate within four points
-of the $.5$ tie value. We find the published additive dose takes pass@1 to $.128$ and doubles
-perplexity. We see the same separation in the geometry: that dose
-puts every MMLU token outside the $99\%$ conditional ellipsoid, where our
-clamp and transport actions stay within a point of the unsteered rate
-(Appendix~\ref{app:manifold}).
+\textbf{On Qwen the identity predicts where the gate helps.} @QWENPARA@
 
-\section{The Operator Scales, Transfers, and Abstains}
-\label{ssec:ninetb}
+\textbf{The gate also protects unrelated tasks.} Applied to every input, the
+shift $p-0.5\lVert h\rVert$ lowers HumanEval pass@1 from $0.396$ to $0.280$; with
+the post-hoc decision in front of it the change is $-0.006$
+$[-0.030, 0.012]$, and with the prompt decision the output is unchanged,
+because the probe fires on $23\%$ and $0\%$ of coding prompts
+(Appendix~\ref{app:capability}).
 
-\textbf{Result: scale makes the global shift costlier, not more selective.} We
-rerun the additive, CAST-style and projection-local conditions at $4.5\times$
-the parameter count (Table~\ref{tab:ninetb}). We find the additive dose now costs $18.4$ accuracy points and keeps none of the confident-right answers. We find the CAST-style gate reaches the highest selectivity in that table and pays $11.4$
-accuracy points and $55\%$ of those answers for it. Our operators gain
-accuracy, hold retention above $0.88$, and remove $30\%$ of the target state.
+\subsection{Deciding in one pass}
+\label{ssec:onepass-results}
 
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{4pt}
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|cccccc}
-\hline
-method (M4, 9B, 3 seeds) & $\Delta$acc & ECE & ocw\_rm & cr\_keep & AURC & Sel \\
-\hline
-\input{gen/table_9b}
-\end{tabular}}
-\caption{\texttt{gemma-2-9b-it}, MMLU, layer 24, $n{=}300\times3$ seeds. The
-global shift loses $18.4$ accuracy points and every confident-right answer;
-the CAST-style gate buys its removal with $11.4$ points and $0.55$ of them.
-Our operators gain accuracy and hold retention above $0.88$.}
-\label{tab:ninetb}
-\end{table}
-
-
-\textbf{Result: the operator is the exact identity where the behavior is
-absent.} We carry the MMLU-fitted directions, maps and thresholds to two
-further benchmarks with no refitting (Table~\ref{tab:transfer}). GSM8K-MCQ
-carries $6$ overconfident-wrong answers in $300$, and we find all three
-hard-gated operators are the exact identity there, leaving accuracy unchanged and
-calibration unchanged to the third decimal. We find every unconditional operator moves accuracy on the visit, by $3.0$ points for prompting and for the tuned
-additive dose and by $6.3$ for the tuned CAST gate. We read this as the gate reading the input, not firing on a schedule: on ARC-Challenge, which carries a real
-overconfident tail, the same thresholds reach $+0.342$ at retention $0.815$
-and $+0.290$ at retention $0.901$. 
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{3pt}
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|ccc|ccc|ccc}
-\hline
- & \multicolumn{3}{c|}{MMLU} & \multicolumn{3}{c|}{ARC-Challenge} & \multicolumn{3}{c}{GSM8K-MCQ} \\
-method (M4, tuned) & $\Delta$acc & ECE & Sel & $\Delta$acc & ECE & Sel & $\Delta$acc & ECE & Sel \\
-\hline
-\input{gen/transfer_table}
-\end{tabular}}
-\caption{\textbf{Cross-domain transfer with no refitting.} Unsteered accuracy is
-$0.480$ on MMLU, $0.683$ on ARC-Challenge and $0.553$ on GSM8K-MCQ, so the
-$\Delta$acc column is anchored on all three. Every method keeps the
-configuration it won on the MMLU tuning split; prompting and directional
-ablation carry no configuration and are run as published. $^{*}$ marks a
-bootstrap interval excluding zero, on both the $\Delta$acc and Sel columns.
-GSM8K-MCQ has $6$ baseline \ocw{} and $11$ \crok{}, so its selectivity column
-is noisy by construction and its accuracy column is not.}
-\label{tab:transfer}
-\end{table}
-
-\textbf{Result: the detector axis holds on a held-out architecture.} We froze a
-simplified detector-axis action and evaluated it on held-out TruthfulQA panels
-under a pre-registered protocol (Appendix~\ref{app:postreview}). We find on OLMo-2 that it improves both primary metrics over a norm-matched spherical action of the same
-size, and passes every pre-frozen construction control, so intervention magnitude alone
-does not explain the effect. One of the six cells the protocol declared in
-advance confirmed; transfer across further models and behaviors is not
-established (Appendix~\ref{app:postreview}).
-
-\textbf{Result: one decision per trace, at $1.05\times$ the unsteered wall
-clock.} Theorem~\ref{thm:seq} lets the same gate decide from a prefix, and we
-measure both sides of that on the whole 300-question workload on one idle H100
-(Appendix~\ref{app:serving}). We measure the sequential gate at $45.5$ seconds against $43.5$ unsteered. We measure scoring finished traces and regenerating the ones they flag at
-$85.8$. A gate that commits once therefore costs a twentieth of the
-unsteered budget where a post-hoc gate costs another whole pass.
-
-\textbf{Property: the operator ships inside a residual-stream hook.}\label{sec:serving} Per token and per behavior we spend
-two $d$-dim dot products, one for the action and one for the gate, a 41-knot
-lookup and one FMA, $\approx10^{-4}$ of a layer and the optimal order of
-Prop.~\ref{prop:compute}, for a total state of $\approx$19~KB, with no extra
-forward pass and no KV-cache invalidation.
-
-\section{Limitations and Assumptions}
-
-Our work has a number of limitations. PTS relies on an axis along which the
-two subpopulations separate: Thm.~\ref{thm:gate} says that when none exists,
-no decision rule on any coordinate can be surgical and the operator degenerates
-to an unconditional edit. It assumes the behavior is legible in a
-low-dimensional projection, so that locality off the subspace costs nothing;
-when the behavior is carried by the complement, the constraint is the wrong
-one. Every deployed-operator result comes from one behavior and one model
-family, on five resampled subsets whose spreads differ by a factor of two, and
-the counts depend on the confidence readout. In future work we plan on
-learning the detection axis rather than reading it off contrasts, and on
-transport under a Fisher metric.
+\textbf{Most of the detection is available before the answer is written.}
+Fig.~\ref{fig:law}b plots the held-out AUROC of a probe fitted on each
+statistic. For Gemma the prompt alone reaches $0.720$ and the first 16 tokens
+$0.720$, against $0.741$ for the finished answer; for Qwen the prompt reaches
+$0.761$ against $0.785$. The single-pass operators in Table~\ref{tab:confirm}
+match the post-hoc one: deciding at token 32 gives selectivity $0.294$ and
+deciding at the prompt $0.306$, with paired differences to the post-hoc
+decision of $0.000$ and $+0.012$. A decision at the prompt costs one dot
+product on an activation the forward pass already computes, so the operator
+adds no generation; in an end-to-end measurement of the earlier prefix gate the
+single-pass operator ran at $1.05\times$ the unsteered wall clock, against
+$1.97\times$ for regenerating flagged answers (Appendix~\ref{app:legacy}).
 
 \section{Conclusion}
+\label{sec:conclusion}
 
-In this paper we introduce Projection-Transport Steering, a framework in which
-an activation edit is two separable objects: a transfer function on a
-behavioral subspace and a decision rule on a second axis. Once the subspace
-and the target law are fixed, the cost-minimal transfer function is the
-transport map between the projection laws, and the additive edit the
-literature uses is optimal only when the target is a pure relocation. What any
-decision rule can buy on an axis is capped by how well that axis separates the
-states it must tell apart. Composing the decision with the map leaves the map
-optimal, and the same decision can be taken from a prefix of the generated
-trace.
+Our study has several limitations. First, the evidence covers one behavior on
+one benchmark family in two instruction-tuned models; an earlier form of the
+operator passed on one of three models on TruthfulQA, and in the one of six
+model--behavior cells that reached testing it helped one metric and hurt
+another (Appendix~\ref{app:postreview}). Second, the decision is a probe trained on
+labelled MMLU answers, and its threshold is tied to that distribution: it
+fires on part of the open-ended instructions it should leave alone
+(Appendix~\ref{app:capability}) and too rarely on ARC-Challenge
+(Appendix~\ref{app:transfer}). Third, the transport characterisation fixes the
+action for a target law but does not choose the target; we choose it on the
+tuning split.
 
-Because the operator reads the activation before it acts, it does nothing on
-inputs where the behavior it targets is absent, and because it moves only the
-coordinates that carry that behavior, it leaves the rest of the model's
-generation where it found it. The state it carries is two directions and a
-lookup table, so the whole operator ships inside a residual-stream hook. The
-most useful consequence for a practitioner needs no steered rollout at all:
-four hundred unsteered traces give the ceiling on what any edit along a
-candidate axis can achieve, and on the axis the field has been using for
-confidence that ceiling is $0.028$.
+We have presented Projection-Transport Steering, which splits a conditional
+activation edit into an action and a decision and accounts for each. The
+selectivity identity turns the design of a conditional edit into two
+measurements, the conversion rates of an action and the held-out error rates
+of a decision, and in our experiments it is the decision, not the action, that
+separates the methods.
 
 \subsection*{AI use statement}
 
@@ -1036,19 +810,52 @@ Andy Zou, Long Phan, Sarah Chen, James Campbell, et al., \emph{Representation
 
 \appendix
 
-\section{Post-review stress-test boundary}
+\section{Confirmatory protocol}
+\label{app:protocol}
+
+The protocol was committed to the repository before any steered rollout on the
+confirmatory split was generated (\texttt{rebuttal/protocols/confirmatory-v19.md},
+with two amendments made after the tuning pass and before launch), together
+with the SHA-256 hashes of the selected configurations and of every fitted
+detector (\texttt{confirmatory-v19-gemma.sha256}).
+
+\textbf{Splits.} All splits are subsets of the 14{,}042-question MMLU test set,
+identified by index and constructed by \texttt{label\_pool.split\_records}. The
+extraction split (400) excludes the first evaluation subset of the earlier
+version; the tuning split (1{,}200) excludes the extraction split and the five
+earlier evaluation subsets; the detector pool (4{,}000) and the confirmatory
+split (3{,}000) are consecutive blocks of a seeded permutation of the
+remaining questions. No question appears in two of the four splits.
+
+\textbf{Selection rule.} For every method the configuration with the highest
+tuning-split selectivity among those with $\Delta\mathrm{acc}\ge-0.01$ is
+carried unchanged to the confirmatory split. Gated configurations are scored on
+the tuning split by combining the ungated rollouts of the same split with the
+gate's flags (Prop.~\ref{prop:account} makes this exact up to batched-decoding
+nondeterminism; Appendix~\ref{app:law}); single-pass configurations are real
+runs. Every confirmatory number is a real run.
+
+\textbf{Tests.} Primary: PTS post-hoc against each of the seven baselines on
+pooled M5 selectivity, question-level paired bootstrap with $10^4$ resamples,
+two-sided, Holm-adjusted over the seven comparisons. Accuracy: an arm is
+non-inferior if the lower end of the $95\%$ interval of its accuracy change is
+above $-0.02$. The single-pass and prompt-decision variants, M4 and M2
+selectivities, removal, retention and ECE are secondary and reported without
+a claim.
+
+
+\section{An earlier operator on other models and behaviors}
 \label{app:postreview}
 
-Three terms are used below. An \emph{observer} cell is a model/benchmark pair
-scored on a held-out screening split before any confirmatory test is run, and
-it is \emph{eligible} when its screening effect clears a pre-declared minimum
-on both primary metrics; only eligible cells were opened. The \emph{joint
-gate} is the pre-declared requirement that both primary metrics improve with
-adjusted intervals excluding zero. The \emph{planned denominator} is the number
-of cells fixed before the program ran, six, which we report against whatever
-the outcome.
+Before the present protocol we froze a simplified operator, an action along a
+detection direction, after a development analysis on Qwen3, and tested it on
+held-out TruthfulQA panels of 237 questions (50 in-domain, 187 shifted) for
+Mistral-7B, OLMo-2-7B and Granite-8B. Each comparison was against a
+norm-matched spherical action, with 10{,}000 paired BCa resamples and
+Bonferroni-adjusted two-sided intervals, and a model passed only if calibrated
+MC2 and MC1 both improved with intervals excluding zero.
 
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{3pt}
 \centering
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{llrrl}
@@ -1068,221 +875,180 @@ construction controls of the seven-control family, all of which pass.}
 \label{tab:postreview}
 \end{table}
 
+On OLMo-2 the operator passed against the matched action and against all seven
+pre-registered construction controls (Table~\ref{tab:postreview}). Mistral
+improved calibrated MC2 by $+0.153$ $[+0.108,+0.197]$, but its MC1 interval
+$[-0.059,+0.122]$ included zero, and Granite did not clear the screening
+threshold. A separate screen of the same three models on BBQ and ETHICS, six
+model--behavior cells with disjoint fitting, screening and test units, advanced
+one cell, Mistral on ETHICS, to a 1{,}000-scenario test. There the operator
+improved pooled calibrated MC2 by $+0.107$ $[+0.090,+0.124]$ and lowered MC1 on
+label-1 scenarios by $0.093$ $[0.071,0.124]$.
 
-\textbf{Post-review validation protocol.} We froze a simplified detector-axis
-action after a development-only Qwen3 component analysis, and we then evaluated
-it on held-out TruthfulQA panels for Mistral-7B, OLMo-2-7B, and Granite-8B. Each
-eligible architecture used the same 237-question composition (50 in-domain,
-187 shifted) and was compared with a norm-matched spherical action using
-10,000 paired BCa resamples, and the three architecture comparisons used
-Bonferroni-adjusted two-sided intervals. We then ran seven pre-registered construction and specificity controls on
-OLMo-2. A separate six-cell
-Mistral/OLMo-2/Granite $\times$ BBQ/ETHICS observer screen kept fitting,
-screening, and confirmatory units disjoint, and only Mistral/ETHICS advanced to a
-1,000-scenario confirmatory test, with intervals adjusted for the six planned
-cells. Only observer-eligible cells were opened, and the planned denominator remained six.
-
-The confirmatory program preserved every planned cell in the denominator.
-Mistral/TruthfulQA improved calibrated MC2 by $+.153$ with adjusted 95\% CI
-$[+.108,+.197]$, but its MC1 interval $[-.059,+.122]$ crossed the
-predeclared joint gate; Granite/TruthfulQA stopped at observer eligibility.
-Five of six BBQ/ETHICS observer cells did not advance. Mistral/ETHICS did
-advance and improved pooled calibrated MC2 by $+.107$ $[+.090,+.124]$, but
-its label-1 MC1 changed by $-.093$ $[-.124,-.071]$. Thus the OLMo-2 result is
-a confirmed architecture transfer, while model-wide and behavior-wide
-generalization remain unsupported. All intervals use 10,000 paired BCa
-resamples with the predeclared Bonferroni family.
-
-\section{Full proofs}
+\section{Proofs and formal statements}
 \label{app:proofs}
 
-Theorem~\ref{thm:joint} treats the gate as a switch. Nothing forces that: the
-same cost functional, asked for the best \emph{dose} rather than the best
-event, answers with a graded rule whose threshold we measure instead of
-tuned.
+\textbf{Theorem~\ref{thm:ot}.} By locality, $T(h)-h\in\mathrm{span}(V^\top)$
+$\mu$-a.s., hence $\lVert T(h)-h\rVert^2=\lVert VT(h)-Vh\rVert^2$ because the
+rows of $V$ are orthonormal, and $C(T)=\mathbb{E}\lVert VT(h)-Vh\rVert^2$. The
+joint law $\gamma$ of $(Vh,VT(h))$ is a coupling of $(\mu_V,\nu)$ by the goal
+constraint, so $C(T)=\int\lVert y-x\rVert^2d\gamma\ge\Wtwo^2(\mu_V,\nu)$.
+Because $\mu_V$ is absolutely continuous and both laws have finite second
+moments, Brenier's theorem gives a unique optimal coupling, induced by
+$S=\nabla\varphi$ with $\varphi$ convex. $T^*(h)=h+V^\top(S(Vh)-Vh)$ is
+admissible ($VV^\top=I_k$ gives $VT^*(h)=S(Vh)$, and the complement is
+untouched) and attains the bound. For any minimiser the induced coupling is
+optimal, hence equal to the unique one, so $VT(h)=S(Vh)$ a.s.\ \qed
 
-\begin{proposition}[the optimal dose is affine in the gate posterior]
-\label{prop:dose}
-Let $T_\lambda(h)=h+\lambda\,V^\top\!\big(S(Vh)-Vh\big)$ interpolate between the
-identity and the map of Thm.~\ref{thm:ot}, and let the dose $\lambda$ be any
-$[0,1]$-valued function of the gate statistic $s$. Write $\pi(s)=P(\ocw\mid s)$,
-$d(s)=\mathbb{E}[\lVert S(Vh)-Vh\rVert^2\mid s]$, and let the behavioral gain of
-a dose be linear in it with class slopes $\beta_1$ on \ocw{} and $-\beta_0$ on
-\crok{}. Then the dose maximising gain minus displacement priced at $1/2c$ is
-\[
-\lambda^*(s)=\Big[\tfrac{c(\beta_0+\beta_1)}{d(s)}\big(\pi(s)-\tau\big)\Big]_0^1,
-\qquad \tau=\frac{\beta_0}{\beta_0+\beta_1},
-\]
-nondecreasing in $\pi$, zero exactly on $\{\pi\le\tau\}$, and converging
-pointwise to $\mathbf{1}[\pi(s)>\tau]$ as $c/d\to\infty$. The hard gate is thus
-the free-displacement limit of the graded operator, and it is strictly
-suboptimal at any finite price of displacement whenever $\pi$ has no atom at
-$\tau$.
-\end{proposition}
-
-\begin{proof}[Proof sketch]
-The dose is $s$-measurable, so the objective splits as an integral over $s$ of a
-strictly concave quadratic in $\lambda$; maximise it pointwise on $[0,1]$.
-\end{proof}
-
-Two things follow that the switch does not give us. The operating point $\tau$
-is a ratio of two measured rates, the collateral and the removal a full dose
-produces, so it is read off the tuning split rather than searched; and because
-the linear discriminant of Thm.~\ref{thm:gate}a is the log-likelihood ratio,
-$\pi(s)$ is $\sigma(s)$ up to the prior term, which we fit on the extraction
-traces. One slope $\rho=c(\beta_0+\beta_1)/d$ is left to search, in place of a
-threshold and an action.
-
+For $k=1$ absolute continuity can be weakened to atomlessness of $\mu_V$: the
+monotone rearrangement $F_\nu^{-1}\circ F_{\mu_V}$ is then an optimal map for
+every $\nu$ with a finite second moment, including targets with atoms such as
+$\delta_0$ (ablation) or a law truncated at $c$ (clamp); uniqueness of the map
+can fail only on a $\mu_V$-null set.
 
 \begin{proposition}[metric covariance]
 \label{prop:metric}
-If cost is $(\Delta h)^\top M(\Delta h)$ with $M\succ0$ (e.g.\ a Fisher/Gauss--Newton
-pullback, so cost approximates the induced next-token KL), the admissible problem
-reduces to optimal transport of $\mu_V$ to $\nu$ \emph{inside} $\mathbb{R}^k$
-under the Mahalanobis cost $M_V=VMV^\top\succ0$: the optimal map is
-$S_M=M_V^{-1/2}\!\circ\nabla\varphi\circ M_V^{1/2}$ with $\varphi$ convex, and the
-operator is again $T^*(h)=h+V^\top(S_M(Vh)-Vh)$. Euclidean PTS is $M_V=I_k$.
-Proof in Appendix~\ref{app:proofs}.
+If the cost is $(\Delta h)^\top M(\Delta h)$ with $M\succ0$, the admissible
+problem is optimal transport of $\mu_V$ to $\nu$ in $\mathbb{R}^k$ under the
+cost $\lVert\cdot\rVert^2_{M_V}$, $M_V=VMV^\top\succ0$, and the optimal
+operator is $T^*(h)=h+V^\top(S_M(Vh)-Vh)$ with
+$S_M=M_V^{-1/2}\circ\nabla\varphi\circ M_V^{1/2}$, $\varphi$ convex.
 \end{proposition}
 
-\begin{remark}[support preservation]
-\label{rem:support}
-The quantile map never leaves the target's empirical support. An additive
-map violates support for every $\alpha\neq0$, consistent with the observed
-generation collapse at $|\alpha|=1.5\lVert h\rVert$.
-\end{remark}
+\emph{Proof.} Locality writes $\Delta h=V^\top a$ with $a\in\mathbb{R}^k$, and
+the goal constraint with $VV^\top=I_k$ fixes $a=S(Vh)-Vh$ for the map $S$ in
+use. Then $\lVert\Delta h\rVert_M^2=a^\top M_Va$. The cost is a latent-space
+Mahalanobis cost on $\mathbb{R}^k$; it is not the full-space Mahalanobis
+distance of $\Delta h$ unless $M$ commutes with $V^\top V$. In the coordinates
+$z=M_V^{1/2}q$ it is Euclidean, the change of variables is internal to
+$\mathbb{R}^k$, and Brenier's theorem in $z$ (the pushforward of an absolutely
+continuous law under an invertible linear map is absolutely continuous) gives
+$\nabla\varphi$; mapping back gives $S_M$. \qed
 
-\textbf{Theorem~\ref{thm:ot}.} By locality, $T(h)-h\in\mathrm{span}(V)$
-$\mu$-a.s., hence $\lVert T(h)-h\rVert^2=\lVert VT(h)-Vh\rVert^2$ and
-$C(T)=\mathbb{E}\lVert VT(h)-Vh\rVert^2$. Let $\gamma$ be the joint law of
-$(Vh,\,VT(h))$; by the goal constraint $\gamma$ is a coupling of $(\mu_V,\nu)$
-and $C(T)=\int\lVert y-x\rVert^2\,d\gamma\ge\Wtwo^2(\mu_V,\nu)$. Since
-$\mu_V$ is absolutely continuous with respect to Lebesgue measure on
-$\mathbb{R}^k$ with finite second moment (for $k{=}1$ atomlessness already
-suffices), Brenier's theorem gives a unique optimal coupling induced by a map
-$S=\nabla\varphi$, $\varphi$ convex; $T^*(h)=h+V^\top\!\big(S(Vh)-Vh\big)$ is admissible
-and attains the bound. For any optimal $T$, the induced coupling must equal the
-unique optimal one, i.e.\ $VT(h)=S(Vh)$ a.s. Since $S$ depends only on $Vh$, the
-optimal intervention is $\sigma(Vh)$-measurable: conditioning on $h_\perp$ cannot reduce the displacement cost.
-\qed
+\textbf{Corollary~\ref{cor:additive}.} (a) If $\nu=\mu_V*\delta_\alpha$ the
+map $x\mapsto x+\alpha$ is the gradient of a convex function pushing $\mu_V$
+to $\nu$, hence the Brenier map. Conversely, if the optimal map is
+$x+\alpha$ then $\nu$ is its pushforward, the shift. For one-dimensional
+Gaussians the monotone map is $x\mapsto m_t+(\sigma_t/\sigma_s)(x-m_s)$, with
+slope $\sigma_t/\sigma_s$. (b) Let $E$ be the event that a trace changes state
+under the edit and suppose $P(E\mid h)=g(p,S(p))$. For subpopulation $A$,
+$P(E\mid A)=\mathbb{E}[g(p,S(p))\mid A]=\int g(p,S(p))\,d\mu^A_p$, and the same
+for $B$. If $\mu^A_p=\mu^B_p$ the two integrals coincide. \qed
 
-\textbf{Corollary~\ref{cor:additive}.} If $\nu=\mu_V*\delta_\alpha$ the monotone
-map is $x\mapsto x+\alpha$. Conversely if the optimal map is $x+\alpha$ then
-$\nu$ is the shift of $\mu_V$. For Gaussians with $\sigma_t\neq\sigma_s$, after
-the best shift the remaining distance is
-$\Wtwo^2(\mu_V*\delta_\alpha,\nu)=(\sigma_s-\sigma_t)^2>0$. Selectivity: let two
-subpopulations have the same law of $p$. Any transfer function $g$ then induces
-the same law of displacements $\Delta=(g(p)-p)\hat v$ on both, so no choice of
-$g$ can address one and spare the other: the operator carries no information
-that distinguishes them. If in addition the state-change probability depends on
-$h$ only through $(p,\Delta)$ --- equivalently $h_\perp$ is conditionally
-independent of the subpopulation given $p$ --- the two marginal change rates
-coincide and selectivity is zero in expectation. Without that conditional
-independence a residual gap can survive through $h_\perp$, but it is a property
-of the downstream geometry. The equality is exact only in the limit: here the
-two laws differ at Cohen's $d=0.049$, and what that residual permits does
-depend on the shape of $g$, because a map whose displacement is constant in $p$
-spends it uniformly over both subpopulations while a map whose displacement
-grows with $p$ concentrates it on the tail. That is the difference between
-$+0.000$ for the additive dose and $+0.145$ for the median clamp in
-Table~\ref{tab:headtohead}. What the corollary forbids is a selectivity that
-survives \emph{exact} equality, and empirically the additive selectivity
-is $+0.000\pm0.000$ at the dose that removes the behavior
-(Table~\ref{tab:headtohead}). \qed
+The premise of (b) is a conditional-independence assumption: given $p$, the
+state change must not depend on the complement $h_\perp$ or on the
+subpopulation. It is the premise, not the conclusion, that the data reject
+(Sec.~\ref{sec:method}).
+
+\textbf{Proposition~\ref{prop:account}.} Let $R$ be the event that an \ocw{}
+trace leaves \ocw{} and $L$ the event that a \crok{} trace leaves \crok{}. Off
+$\Gamma$ the output equals the unsteered output, which is in its original state
+by definition, so $R\subseteq\Gamma$ and $L\subseteq\Gamma$ up to null sets.
+Then $P(R\mid\ocw)=P(\Gamma\mid\ocw)P(R\mid\ocw,\Gamma)=\mathrm{TPR}\,\rho_O$, and
+likewise $P(L\mid\crok)=\mathrm{FPR}\,\rho_C$; subtracting gives
+Eq.~\eqref{eq:account}. If, within \ocw{}, the indicator that the action
+converts the trace is independent of $\Gamma$, then
+$\rho_O=P(R^{\mathrm{ungated}}\mid\ocw)$, and likewise for \crok{}; the ungated
+selectivity is $\rho_O-\rho_C$, and the difference is
+$\rho_C(1-\mathrm{FPR})-\rho_O(1-\mathrm{TPR})$. \qed
+
+The identity requires that the unflagged output be exactly the unsteered one.
+The post-hoc gate satisfies this by construction. The single-pass gate
+satisfies it for traces on which it never fires, since the action hook is the
+identity until the decision token.
 
 \textbf{Theorem~\ref{thm:gate}.} (a) is the Neyman--Pearson lemma applied to the
-class-conditional laws of $s$; monotone-likelihood-ratio families reduce the LR
-test to thresholding, and for $\mathcal{N}(\mu_{\ocw},\Sigma)$ vs
-$\mathcal{N}(\mu_G,\Sigma)$ the log-LR is an affine function of the trace
-feature $z$, $\log\mathrm{LR}(z)=w^\top z+b$ with $w=\Sigma^{-1}(\mu_B-\mu_G)$;
-thresholding the scalar $s(z)=w^\top z+b$ is therefore the LR test (LDA). (b) The concavified ROC contains the segment
-path $(0,0)\to(\mathrm{FPR}^*,\mathrm{TPR}^*)\to(1,1)$ through the
-Youden-optimal point; its area is
-$\tfrac12(1+\mathrm{TPR}^*-\mathrm{FPR}^*)=\tfrac{1+J}{2}\le\mathrm{AUC}$. \qed
+class-conditional laws of $s$: among tests of size at most $\mathrm{FPR}$ the
+likelihood-ratio test maximises TPR, so every objective increasing in TPR and
+decreasing in FPR is maximised on the likelihood-ratio ROC curve. When $s$ has
+a monotone likelihood ratio this is a threshold on $s$. Our detector is a
+logistic-regression probe, a discriminative estimate of the log-likelihood
+ratio up to the prior term; (a) states what the probe approximates, not that
+the fitted probe is optimal. (b) The concavified ROC contains the path
+$(0,0)\to(\mathrm{FPR}^*,\mathrm{TPR}^*)\to(1,1)$ through the Youden-optimal
+point, whose area is $\tfrac12(1+J)$, so $J\le2\,\mathrm{AUC}-1$. With
+$\rho_O=\rho_C=\rho$, Eq.~\eqref{eq:account} gives $\mathrm{Sel}=\rho\,J$. \qed
 
-\textbf{Theorem~\ref{thm:joint}.} Decompose
-$C(T)=P(\Gamma)\mathbb{E}[\lVert\Delta\rVert^2\mid\Gamma]+P(\Gamma^c)\mathbb{E}[\lVert\Delta\rVert^2\mid\Gamma^c]$.
-Identity off $\Gamma$ zeroes the second term and is forced by the constraint;
-the first term with the conditional goal constraint is exactly the
-Theorem~\ref{thm:ot} problem for $\mu(\cdot\mid\Gamma)$. The constraints and
-objective separate over the partition $\{\Gamma,\Gamma^c\}$, so the piecewise
-optimum is global. \qed
+\begin{proposition}[transport under a fixed decision]
+\label{prop:joint}
+Among interventions local to $V$, equal to the identity off $\Gamma$, and whose
+projections on $\Gamma$ follow $\nu_\Gamma$, the cost-minimal one applies the
+Brenier map of $(\mu_V\mid\Gamma)\to\nu_\Gamma$ on $\Gamma$, at cost
+$P(\Gamma)\,\Wtwo^2(\mu_V\!\mid\!\Gamma,\nu_\Gamma)$, provided
+$\mu_V(\cdot\mid\Gamma)$ is absolutely continuous.
+\end{proposition}
 
-\textbf{Proposition~\ref{prop:dose}.} The displacement of $T_\lambda$ is
-$\lambda(s)^2\lVert S(Vh)-Vh\rVert^2$, so its expectation is
-$\mathbb{E}_s[\lambda(s)^2 d(s)]$ because $\lambda$ is $s$-measurable. The same
-measurability makes the gain $\mathbb{E}_s[\lambda(s)(\beta_1\pi(s)-\beta_0(1-\pi(s)))]$.
-The objective is therefore an integral over $s$ of
-$\lambda(\beta_1\pi-\beta_0(1-\pi))-\lambda^2 d/2c$, strictly concave in
-$\lambda$ for $d(s)>0$, and the constraint set $[0,1]$ is separable in $s$, so
-the integral is maximised by maximising the integrand at each $s$. Setting the
-derivative to zero gives $\lambda=c((\beta_0+\beta_1)\pi-\beta_0)/d$ and the
-clip enforces $[0,1]$; factoring $\beta_0+\beta_1$ out of the bracket gives
-$\pi-\tau$ with $\tau=\beta_0/(\beta_0+\beta_1)$. Monotonicity in $\pi$ and the
-zero set are immediate. As $c/d\to\infty$ the unclipped value diverges in sign
-according to $\pi-\tau$, so $\lambda^*\to\mathbf{1}[\pi>\tau]$ wherever
-$\pi(s)\ne\tau$, which is $P$-a.s.\ when $\pi$ has no atom at $\tau$; at any
-finite $c/d$ the objective at $\lambda^*$ strictly exceeds its value at the
-indicator on the event $\{0<\lambda^*<1\}$, which then has positive
-probability. \qed
+\emph{Proof.} Split $C(T)$ over $\Gamma$ and $\Gamma^c$. The second term is
+zero by the identity constraint; the first, with the conditional goal
+constraint, is Theorem~\ref{thm:ot} for $\mu(\cdot\mid\Gamma)$. \qed
 
-\textbf{Theorem~\ref{thm:seq}.} (a) The first $t$ positions generate a
-$\sigma$-algebra $\mathcal{F}_t$; a gate measurable with respect to
-$\mathcal{F}_t$ is a test between the class-conditional laws of $z_t$, so
-Theorem~\ref{thm:gate}(a) applies verbatim and its concavified-ROC bound gives
-the ceiling $2\,\mathrm{AUC}(z_t)-1$. Nothing is assumed about how $z_t$
-relates to $z_\infty$: the head is fitted on $z_t$ itself. (b) Write $X_r$ for
-the gate contribution of position $r$ and $D_r=X_r-s_\infty$. By assumption
-$(D_r)$ is a martingale difference sequence with conditionally
-$\sigma$-sub-Gaussian increments, so
-$\exp(\lambda\sum_{r\le t}D_r-\lambda^2\sigma^2t/2)$ is a nonnegative
-supermartingale for every $\lambda$~\cite{howard2020supermartingale}. Stitching
-these over geometric epochs and applying Ville's inequality gives the
-finite-law-of-the-iterated-logarithm boundary and
-$P\big(\exists t:\ |s_t-s_\infty|>B_t(\delta)\big)\le\delta$
-(\cite{howard2021confseq}, Eq.~11 at $\eta{=}2$, $s{=}1.4$). We measure
-$\sigma$ rather than assume it: with $\lVert w\rVert{=}1$ and calibration
-activation norms bounded by $R$, Hoeffding's lemma makes each contribution
-$R$-sub-Gaussian, and we fit the working $\sigma$ to the deviation profile of
-the extraction traces. On $\{s_\infty\le\tau\}$ the firing event
-$s_t>\tau+B_t(\delta)$ implies $s_t-s_\infty>B_t(\delta)$, which that bound
-excludes except on a set of measure $\delta$; on the complement,
-$s_t\ge\tau+\Delta-B_t(\delta)$, which exceeds $\tau+B_t(\delta)$ as soon as
-$B_t(\delta)\le\Delta/2$, and solving
-$\sigma\sqrt{2\log(\log 2t/\delta)/t}\le\Delta/2$ gives
-$t=O(\sigma^2\Delta^{-2}\log(1/\delta))$ up to an iterated logarithm in $t$. (c) The reader is registered on a
-layer at or above the actor, so within one forward pass the actor for position
-$t$ observes the state accumulated over positions $<t$; the running mean needs
-one scalar sum and one counter per sequence, and the edit at position $t$
-changes only the keys and values written at position $t$, which have not yet
-been consumed. \qed
+This result fixes the decision. It does not say that a threshold gate is the
+best decision for the displacement-priced objective; the next statement shows
+that it generally is not, and when it is.
 
-\textbf{Proposition~\ref{prop:metric}.} We argue in the latent space rather
-than through a global change of variables, because a general $M$ does not
-preserve the duality between the measurement matrix $V$ and the displacement
-subspace $\mathrm{span}(V^\top)$. Locality writes $\Delta h=V^\top a$ with
-$a\in\mathbb{R}^k$, and since $VV^\top=I_k$ the goal constraint fixes
-$a=S(Vh)-Vh$ for whichever map $S$ is used. Hence
-$\lVert\Delta h\rVert_M^2=a^\top(VMV^\top)a=\lVert S(q)-q\rVert_{M_V}^2$ with
-$q=Vh$: minimising $C$ over admissible $T$ is exactly the Monge problem on
-$\mathbb{R}^k$ with cost $\lVert\cdot\rVert_{M_V}^2$. That cost is a Euclidean
-square in the coordinates $z=M_V^{1/2}q$ --- a change of variables internal to
-$\mathbb{R}^k$, so the locality constraint is untouched --- and Brenier's theorem
-in $z$ gives the unique optimal $\nabla\varphi$; mapping back yields
-$S_M=M_V^{-1/2}\!\circ\nabla\varphi\circ M_V^{1/2}$. For $M=I$, $M_V=I_k$ and
-$S_M$ is Theorem~\ref{thm:ot}'s map. \qed
+\begin{proposition}[graded dose]
+\label{prop:dose}
+Let $T_\lambda(h)=h+\lambda(s)\,V^\top(S(Vh)-Vh)$ with a dose
+$\lambda:\mathbb{R}\to[0,1]$ measurable in the detector statistic $s$. Write
+$\pi(s)=P(\ocw\mid s)$, $d(s)=\mathbb{E}[\lVert S(Vh)-Vh\rVert^2\mid s]>0$, and
+suppose the behavioral gain is linear in the dose, with slope $\beta_1>0$ on
+\ocw{} and $-\beta_0<0$ on \crok{}. The dose maximising gain minus
+displacement priced at $1/(2c)$ is
+\[
+\lambda^*(s)=\Big[\tfrac{c\,(\beta_0+\beta_1)\,(\pi(s)-\tau)}{d(s)}\Big]_0^1,\qquad
+\tau=\tfrac{\beta_0}{\beta_0+\beta_1}.
+\]
+It is zero exactly on $\{\pi\le\tau\}$ and nondecreasing in the ratio
+$(\pi(s)-\tau)/d(s)$. It is nondecreasing in $\pi$ when $d$ is constant, but
+not in general. The threshold gate $\mathbf{1}[\pi>\tau]$ is optimal iff
+$\lambda^*\in\{0,1\}$ almost surely, and strictly suboptimal iff
+$P(0<\lambda^*<1)>0$.
+\end{proposition}
 
-\textbf{Proposition~\ref{prop:compute}.} \emph{Lower bound:} let $\hat v_j$ be
-dense ($(\hat v_j)_i\neq0$ for all $i$) and $g$ non-constant in $p_j$. If an
-algorithm leaves coordinate $i$ unread, an adversary perturbs $h_i$; this
-changes $p_j=\langle h,\hat v_j\rangle$ and hence, on a set of positive
-measure, the correct output $T(h)$, while the algorithm's output is unchanged;
-contradiction. Learned diff-in-means directions are dense almost surely.
-\emph{Upper bound:} PTS computes $p=Vh$ ($kd$ multiply-adds), a monotone
-$K$-knot lookup ($O(\log K)$ by binary search), and $h+V^\top(g(p)-p)$ ($kd$
-more): $\Theta(kd+k\log K)$ total. Memory $\Theta(kd+kK)$: reproducing a target
-marginal at quantile resolution $1/K$ requires $\Omega(K)$ parameters, and
-specifying the subspace requires $kd$. \qed
+\emph{Proof.} The displacement of $T_\lambda$ is
+$\lambda(s)^2\lVert S(Vh)-Vh\rVert^2$, with expectation
+$\mathbb{E}_s[\lambda(s)^2d(s)]$; the gain is
+$\mathbb{E}_s[\lambda(s)((\beta_0+\beta_1)\pi(s)-\beta_0)]$. The objective is
+an integral over $s$ of a strictly concave quadratic in $\lambda$, maximised
+pointwise on $[0,1]$ by the clipped stationary point. It is the unique
+maximiser a.s., so the indicator is optimal iff it agrees with $\lambda^*$
+a.s., i.e.\ iff $\lambda^*\in\{0,1\}$ a.s.; otherwise the objective is strictly
+larger at $\lambda^*$ on a set of positive measure. For non-monotonicity in
+$\pi$, take $s_1,s_2$ with $\pi(s_1)=0.6<\pi(s_2)=0.7$, $\tau=0.5$,
+$c(\beta_0+\beta_1)=1$, $d(s_1)=0.2$ and $d(s_2)=1$: then
+$\lambda^*(s_1)=0.5>\lambda^*(s_2)=0.2$. For a counterexample to strict
+suboptimality at every finite price, let $\pi$ take only the values $0.1$ and
+$0.9$ with $\tau=0.5$ and $d\le0.4\,c(\beta_0+\beta_1)$: then
+$\lambda^*\in\{0,1\}$ a.s.\ and the threshold gate is optimal. \qed
+
+\textbf{Single-pass decision.} Let $\mathcal{F}_t$ be generated by the first $t$
+generated tokens and $z_t$ the mean detector feature over them. A decision
+measurable with respect to $\sigma(z_t)$ is a test between the
+class-conditional laws of $z_t$, so Theorem~\ref{thm:gate} applies with $z_t$
+in place of $s$ and nothing is assumed about how $z_t$ relates to the finished
+trace. The reader hook sits at a layer at or above the actor; within one
+forward pass the actor at position $t$ sees the decision accumulated over
+positions $<t$, the running mean needs one sum and one counter per sequence,
+and an edit at position $t$ changes only the keys and values written at $t$.
+An earlier version of this paper also stated a time-uniform guarantee for a
+running-mean gate; it assumed the token contributions form a sub-Gaussian
+martingale-difference sequence around the finished-trace statistic, which we
+cannot verify for this statistic, and we no longer use it.
+
+\begin{proposition}[computational cost]
+\label{prop:compute}
+Any algorithm implementing a non-degenerate intervention local to a subspace
+spanned by a dense direction reads all $d$ coordinates of $h$, so it costs
+$\Omega(d)$ per token. Eq.~\eqref{eq:edit} costs $\Theta(kd+k\log K)$ with a
+$K$-knot lookup, and the detector adds one $d$-dimensional dot product per
+token.
+\end{proposition}
+
+\emph{Proof.} If a coordinate $i$ with $(\hat v)_i\neq0$ is never read, an
+adversary perturbs $h_i$, which changes $p=\langle h,\hat v\rangle$ and, on a
+set of positive measure, the correct output, while the algorithm's output is
+unchanged. The upper bound counts $Vh$, a binary search in the lookup, and
+$h+V^\top(\cdot)$. \qed
 
 \section{GSM8K MCQ construction}
 \label{app:gsm}
@@ -1294,606 +1060,271 @@ gold into four options. This converts free-form arithmetic into selection while
 keeping the reasoning burden; we report transfer numbers on it and do not claim
 GSM8K free-form results.
 
-\section{The behavior across domains and scales (measurement study)}
-\label{sec:measure}
+\section{Tuning grids}
+\label{app:tuning}
 
-\textbf{Overconfidence is model $\times$ instrument (2B).} Five confidence
-readouts on identical MMLU questions ($n{=}1000\times3$ seeds) disagree
-categorically: ECE ranges from $.391\,[.374,.409]$ (letter-logit M2, the
-literature default) through $.249$/$.177$ (self-report/answer-distribution)
-to $.104\,[.086,.120]$ (per-option yes/no M4); disjoint CIs; the
-instruments even disagree on the answer (all five agree on $28.9\%$ of
-questions). Hence our protocol requires every steering claim to hold under
-multiple readouts. \textbf{Domains:} on MMLU the model is overconfident
-(50/300 \ocw{}), on GSM8K-MC and GPQA \emph{under}confident (6 and 27
-\ocw{}); the failure mode is domain-dependent, and the input-dependent
-operators inherit exactly this dependence (Table~\ref{tab:transfer}).
+Every configuration searched on the tuning split, with the selected one marked
+$\star$. Gated rows are scored by composing the ungated rollouts of the same
+split with the decision's flags (Appendix~\ref{app:law}); single-pass rows are
+real runs. The rule is the highest selectivity among configurations with
+$\Delta\mathrm{acc}\ge-0.01$, and, when no configuration of a family meets the
+floor, the highest selectivity overall; this fallback applies to the additive,
+CAST and prompt-decision families on Qwen, where every shift in the grid costs
+more than one accuracy point.
 
-\textbf{Scale replication (9B).} The full pipeline was replicated on
-\texttt{gemma-2-9b-it} (42 layers, $d{=}3584$, layer 24) over the same
-domains. Method-dependence survives scale (MMLU ECE $.126$--$.266$, GPQA
-$.177$--$.499$, same instrument ranking); scale \emph{polarizes} rather than
-cures (GSM8K nearly solved and calibrated, gap $-0.015$; GPQA confidence
-grows faster than knowledge, M2 conf $.86$ at acc $.36$); the confidence
-cone replicates (cosines $0.63$--$0.83$); confidence becomes \emph{more}
-linearly readable (trace-level detector AUROC to $0.83$ against $0.77$ at 2B), so the
-Thm.~\ref{thm:gate}b ceiling rises with scale; and steering remains
-one-directional, as Cor.~\ref{cor:additive} predicts.
-
-
-\section{What each method does: measured movement of real traces}
-\label{app:plane}
-
-\subsection*{Where the benchmarks live, and how we compare with the label oracle}
-Figure~\ref{fig:benchgeo} (left) plots each transfer benchmark's baseline
-traces in the same plane: MMLU and ARC carry a real overconfident-wrong mass
-in the gated (upper-right) region, while GSM8K and GPQA have almost none.
-That is the geometric reason Table~\ref{tab:transfer} shows activity on the
-former and near-identity on the latter. Figure~\ref{fig:benchgeo} (right)
-compares our intervention to the \emph{label oracle}, the conditional
-steering that moves exactly the overconfident-wrong points onto the calibrated
-centroid: our gate catches $41/50$ of the oracle's targets
-(recall $0.82$), misses $9$, and false-fires on $46/76$ confident-right
-points (which the tail-local action then mostly spares: $25/46$ keep their
-state). The remaining gap to the oracle is exactly the detection gap of
-Thm.~\ref{thm:gate}b.
-
-\begin{figure}[!t]
-\centering
-\begin{tikzpicture}
-\matrix {
-\begin{axis}[planepanel, width=.5\linewidth, title={ARC-Challenge},
-  ylabel={proj.\ on $\hat u$}]
-\addplot[ptrest] table[x=x,y=y,col sep=comma]{pic/viz/pl_arc_ncw.csv};
-\addplot[ptrest] table[x=x,y=y,col sep=comma]{pic/viz/pl_arc_ncr.csv};
-\addplot[ptcr] table[x=x,y=y,col sep=comma]{pic/viz/pl_arc_cr.csv};
-\addplot[ptocw] table[x=x,y=y,col sep=comma]{pic/viz/pl_arc_ocw.csv};
-\addplot[gray, dashed, thick] coordinates {(-35,-10.08) (95,-10.08)};
-\end{axis} &
-\begin{axis}[planepanel, width=.5\linewidth, title={GSM8K-MC}]
-\addplot[ptrest] table[x=x,y=y,col sep=comma]{pic/viz/pl_gsm8k_ncw.csv};
-\addplot[ptrest] table[x=x,y=y,col sep=comma]{pic/viz/pl_gsm8k_ncr.csv};
-\addplot[ptcr] table[x=x,y=y,col sep=comma]{pic/viz/pl_gsm8k_cr.csv};
-\addplot[ptocw] table[x=x,y=y,col sep=comma]{pic/viz/pl_gsm8k_ocw.csv};
-\addplot[gray, dashed, thick] coordinates {(-35,-10.08) (95,-10.08)};
-\end{axis} \\
-};
-\end{tikzpicture}\\[4pt]
-\begin{tikzpicture}
-\begin{axis}[planepanel, width=.8\linewidth, height=5.6cm,
-  title={ours vs the label oracle (MMLU)},
-  xlabel={proj.\ on $\hat v$ (confidence)}, ylabel={proj.\ on $\hat u$ (detect)}]
-\addplot[ptrest] table[x=x,y=y,col sep=comma]{pic/viz/pl_mmlu_ncw.csv};
-\addplot[ptrest] table[x=x,y=y,col sep=comma]{pic/viz/pl_mmlu_ncr.csv};
-\addplot[ptcr] table[x=x,y=y,col sep=comma]{pic/viz/pl_mmlu_cr.csv};
-\addplot[-stealth, gray!60, dashed, quiver={u=\thisrow{u}, v=\thisrow{v}}]
-  table[col sep=comma]{pic/viz/orc_oracle.csv};
-\addplot[disp] table[col sep=comma]{pic/viz/orc_hits.csv};
-\addplot[-stealth, gray!85!black, thin, quiver={u=\thisrow{u}, v=\thisrow{v}}]
-  table[col sep=comma]{pic/viz/orc_ff.csv};
-\addplot[only marks, mark=o, mark size=2.4pt, cadd, very thick]
-  table[x=x,y=y,col sep=comma]{pic/viz/orc_miss.csv};
-\end{axis}
-\end{tikzpicture}
-\caption{Top: transfer benchmarks in the behavioral plane (gate threshold
-dashed): ARC has an overconfident-wrong tail above the gate, GSM8K almost
-none, and transfer activity follows the geometry. Bottom: gray dashed arrows
-$=$ the label oracle (move every overconfident-wrong point to the calibrated
-centroid); pink $=$ our measured moves on the same points ($41/50$ caught);
-hollow orange circles $=$ the $9$ misses; dark-gray thin arrows $=$ false fires on
-confident-right (mostly state-preserving). The oracle--ours difference is the
-detection gap that bounds selectivity (Thm.~\ref{thm:gate}b).}
-\label{fig:benchgeo}
-\end{figure}
-
-\section{Sample traces before and after gated ablation}
-\label{app:samples}
-
-\textbf{Qualitative effects.} We find gated ablation does not induce hedging:
-hedge markers per trace drop from $0.25$ to $0.13$ while traces get shorter,
-from $86$ to $71$ words, and the answer-emission rate rises from $0.91$ to
-$0.95$ (Table~\ref{tab:traces}).
-
-
-On the 223/300 gated questions, gated ablation does not induce hedging:
-hedge markers \emph{drop} from $0.25$ to $0.13$ per trace and length from
-$86$ to $71$ words, $29$ of the $50$ \ocw{} leave that state and $12$ come
-back correct. Typical
-outcomes: an associative wrong argument replaced by an explicit
-derivation, better-calibrated reasoning with the same letter, and a flagged
-\crok{} rephrased but preserved (strong additive or CAST doses instead yield
-repetition loops). The excerpts below are truncated, and complete rollouts
-ship with the released artifact.\looseness=-1
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{4pt}
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|ccccc|cc}
+{\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{l|l|c|cc|c}
+\caption{Tuning split, \texttt{gemma-2-2b-it} ($n=1{,}200$, M5).}\label{tab:tune-gemma}\\
 \hline
-condition (MMLU, M2 traces) & words & closes & boxed & distinct-3 & degen.\% & hedge & certainty \\
+family & configuration & $\Delta$acc & removal & retention & Sel \\
 \hline
-\input{gen/trace_table}
-\end{tabular}}
-\caption{What each operator does to the reasoning trace. ``Closes'' is the
-fraction of traces that emit \texttt{</think>} and ``boxed'' the fraction that
-emit an answer; degen.\% counts traces with distinct-3 below $0.5$; hedge and
-certainty are marker counts per trace from the fixed lexicons of
-Appendix~\ref{app:defs}.}
-\label{tab:traces}
+\endfirsthead
+\hline
+family & configuration & $\Delta$acc & removal & retention & Sel \\
+\hline
+\endhead
+\inputtab{gen/tuning_gemma}
+\hline
+\end{longtable}}
+
+{\scriptsize\setlength{\tabcolsep}{3pt}
+\begin{longtable}{l|l|c|cc|c}
+\caption{Tuning split, \texttt{Qwen2.5-7B-Instruct} ($n=1{,}200$, M5).}\label{tab:tune-qwen}\\
+\hline
+family & configuration & $\Delta$acc & removal & retention & Sel \\
+\hline
+\endfirsthead
+\hline
+family & configuration & $\Delta$acc & removal & retention & Sel \\
+\hline
+\endhead
+\inputtab{gen/tuning_qwen}
+\hline
+\end{longtable}}
+
+\section{The selectivity identity in practice}
+\label{app:law}
+
+Proposition~\ref{prop:account} needs the output to be unchanged wherever the
+decision does not fire. For the post-hoc and prompt decisions this holds by
+construction, so a gated arm equals, question by question, either its unsteered
+row or its ungated row. Composing the two requires one ungated run per action
+and one set of decision scores, and it differs from a real gated run only
+through batched-decoding nondeterminism: a flagged question is generated in a
+different batch in the two cases. Table~\ref{tab:law-confirm} compares the
+composition with the real run for the four gated arms of the confirmatory
+split, and reports the prediction from the ungated conversion rates
+(independence within each state).
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{4pt}
+\centering
+\begin{tabular}{l|cc|cc|ccc}
+\hline
+arm (Gemma, confirmatory) & TPR & FPR & $\rho_O$ & $\rho_C$ & predicted & composed & real run \\
+\hline
+PTS post-hoc & 0.541 & 0.222 & 0.841 & 0.585 & $+0.325$ & $+0.296$ & $+0.294$ \\
+PTS at the prompt & 0.549 & 0.242 & 0.981 & 0.872 & $+0.328$ & $+0.306$ & $+0.306$ \\
+CAST-style, trace & 0.603 & 0.380 & 0.841 & 0.585 & $+0.285$ & $+0.244$ & $+0.248$ \\
+CAST, prompt & 0.805 & 0.635 & 0.559 & 0.339 & $+0.234$ & $+0.207$ & $+0.217$ \\
+\hline
+\end{tabular}
+\caption{Real gated runs against the composition of ungated runs and against
+the prediction $\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ with ungated
+conversion rates.}
+\label{tab:law-confirm}
 \end{table}
 
-\input{gen/samples}
-\input{gen/samples_cross}
+The prediction is higher than the measurement in all four rows, by $0.017$ to
+$0.037$. The same bias appears on the tuning split (Fig.~\ref{fig:law}a): the
+answers a detector flags are converted less often than the average answer of
+their state, so the independence assumption of Prop.~\ref{prop:account} holds
+only approximately. The composition, which uses no such assumption, is what
+scores the gated configurations during selection.
 
-\section{Where to read and where to act: the layer sweep}
-\label{app:layers}
+\section{Secondary readouts}
+\label{app:secondary}
 
-\textbf{Where the gate reads.} We never required the gate to read the layer the
-action writes (Remark~\ref{rem:depth}), and refitting it at nine depths shows
-the contrast is not monotone: it peaks at layer~16 at AUROC $0.799$ against
-$0.769$ at layer~14, and layer~16 leads layer~14 at all six prefix budgets. The
-sequential gate takes that split; the post-hoc gate the tuning split selected
-reads at layer~14 (Appendix~\ref{app:layers}). We designed the gate to be
-permissive --- it fires on $223$ of $300$ MMLU questions --- and what keeps the
-edit local is that the action does almost nothing to the traces it wrongly
-flags. Five alternative actions inside the same gate span $+0.042$ to $+0.231$
-in selectivity, so gate and action have to be chosen
-together.\looseness=-1
+Table~\ref{tab:secondary} reports the Gemma confirmatory arms under the two
+secondary readouts. The letter-logit confidence M2 assigns confidence above
+$0.5$ to nearly every answer, so its \ocw{} stratum is close to the set of wrong
+answers and every method moves it little. Under M4 the edits act on four
+separate verification generations; PTS is level with the ungated edits there,
+which is expected for a decision fitted to M5 labels.
 
-
-\textbf{Where the gate reads, and where the action writes.} The framework never
-required the gate to read the layer the action writes (Remark~\ref{rem:depth}),
-so we ask where the contrast is most readable. We refit the gate at nine depths
-(Appendix~\ref{app:layers}) and find the separation is not monotone: it peaks
-at layer~16 at AUROC $0.799$ against $0.769$ at layer~14, and falls by
-layer~25 to $0.649$, where the residual stream has already committed to an
-answer. Reading at layer~16 while acting at layer~14 buys that gap for one
-position of lag, and a larger one for the prefix heads the sequential gate
-uses. The gate is permissive by design: at its selected threshold it fires on $223$
-of $300$ MMLU questions, and what keeps the edit local is that the action does
-almost nothing to the traces it wrongly flags. Five alternative actions inside
-the same gate span $+0.042$ to $+0.231$ in selectivity
-(Appendix~\ref{app:ablation}), so the action is not interchangeable either, and
-the two choices have to be made together.\looseness=-1
-
-
-Table~\ref{tab:layers} refits both axes and the gate at nine depths of
-\texttt{gemma-2-2b-it} on the same 400 extraction traces. Two quantities move
-in opposite directions. Token-level confidence separation broadly grows
-with depth (Cohen's $d$ from $0.53$ to $0.70$), because late layers carry the
-answer itself. Detector quality, the quantity Theorem~\ref{thm:gate}b turns
-into a selectivity ceiling, peaks in the middle and collapses in the last
-layers, where the residual stream has already committed. Layer~14 is inside
-the plateau and layer~16 is its maximum; the gap between them,
-$2\,\mathrm{AUROC}-1$ of $0.538$ against $0.599$, is why the sequential gate
-reads two layers above the layer it edits (Remark~\ref{rem:depth}).
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{5pt}
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{3pt}
 \centering
 \begin{tabular}{l|cc|cc}
 \hline
-layer & Cohen's $d$ conf. & Cohen's $d$ \ocw{}/\crok{} & gate AUROC & ceiling $2\mathrm{AUC}{-}1$ \\
+ & \multicolumn{2}{c|}{M2 (letter logit)} & \multicolumn{2}{c}{M4 (verification)} \\
+method (Gemma, confirmatory) & Sel [95\% CI] & $\Delta$ vs PTS & Sel [95\% CI] & $\Delta$ vs PTS \\
 \hline
-\input{gen/layer_table}
+\inputtab{gen/secondary_gemma}
 \end{tabular}
-\caption{Layer sweep on the extraction split ($400$ traces, both axes and the
-LDA gate refit at each depth). $\star$ marks the depth the sequential gate
-reads. The \ocw{}/\crok{} column is measured on the axis refit at that
-depth and is per trace rather than per token, so it is not the $d=0.049$ of
-Fig.~\ref{fig:cdf}, which is a token-level statistic over $\sim$50k positions.
-The two estimates differ in sign and the trace-level one is the larger in
-magnitude; at $|d|=0.155$ the ceiling of Thm.~\ref{thm:gate}b is still only
-$0.087$, so the argument the small effect size supports does not turn on which
-estimate is used.}
-\label{tab:layers}
+\caption{Secondary readouts on the confirmatory split; paired bootstrap
+intervals, no multiplicity adjustment.}
+\label{tab:secondary}
 \end{table}
 
-\subsection*{What a prefix budget costs the gate}
-
-A head fitted on completed traces is a detector, and a detector is not
-automatically a predictor: features that recognise a behavior in finished text
-forecast it poorly~\citep{fpcg2026} from a prefix~\cite{fpcg2026}. We therefore do
-not reuse the whole-trace head online. For each budget $t$ we refit the LDA on
-the mean projection over the first $t$ generated positions and measure its
-AUROC on the same contrast (Table~\ref{tab:prefix}). Deciding early costs less than a prefix budget might suggest: at layer~16 a head that sees eight
-generated tokens reaches $0.736$ against $0.799$ for the whole trace, and by
-128 tokens the gap is $0.016$. The dip at $t{=}32$ is sampling noise in a
-two-feature fit on 400 traces and does not survive at either neighbour. Layer
-16 dominates layer 14 at every budget, which is why the sequential gate reads
-there.
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{6pt}
-\centering
-\begin{tabular}{l|cccccc}
-\hline
-gate AUROC (\ocw{} vs \crok{}) & $t{=}8$ & 16 & 32 & 64 & 128 & 256 \\
-\hline
-\input{gen/prefix_table}
-\end{tabular}
-\caption{Detector quality as a function of the generated-token budget the gate
-is allowed to see, with the head refitted for each budget. The whole-trace
-values are $0.769$ at layer~14 and $0.799$ at layer~16.}
-\label{tab:prefix}
-\end{table}
-
-\section{Equal-budget tuning}
-\label{app:parity}
-
-Under this budget the tuned additive dose attains the highest mean selectivity
-$+0.256\pm0.133$ and the untuned directional ablation the second
-$+0.254\pm0.109$, with our graded dose third $+0.231\pm0.120$, the tuned CAST
-gate fourth $+0.227\pm0.082$ and our gated ablation fifth $+0.206\pm0.059$.
-The gaps are inside the spreads, which differ by more than a factor of two.
-Deciding from a 32-token prefix rather than a finished trace takes our
-selectivity from $+0.206\pm0.059$ to $+0.079\pm0.050$ at retention $0.897$.
-
-\textbf{What equal tuning changes, and what it does not.} The first question to
-ask of a head-to-head is whether the baselines were tuned as hard as the
-method, so we gave every operator with a searchable configuration at least as
-many as our own eight, on the same held-out split of $n{=}1200$ questions,
-under one pre-declared rule (Appendix~\ref{app:parity},
-Table~\ref{tab:tuned}). We find tuning compresses the field. The additive dose
-falls to a third of the published one and reaches $+0.256\pm0.133$, directional
-ablation sits second at $+0.254\pm0.109$ without a configuration to search, the
-tuned CAST gate reaches $+0.227\pm0.082$, our score-proportional dose
-$+0.231\pm0.120$ and our gated ablation $+0.206\pm0.059$. We do not read the
-head of that column as a result, because the gaps are inside the spreads. We
-observe that the spreads themselves differ by more than a factor of two,
-$\pm0.059$ against $\pm0.133$, which five subsets are too few to test. What separates the families is the mechanism
-Cor.~\ref{cor:additive} names --- the tuned dose keeps $0.621$ of the
-confident-correct answers --- and what happens when the domain
-changes.\looseness=-1
-
-
-\textbf{The subspace dimension is not the lever.} To find out where in the
-family the strength lies, we tuned it end to end. Theorem~\ref{thm:joint} says
-our gate composes with any transport, so a full-space map is not a rival
-family but the $k{=}d$ member of ours, and we tuned the family end to end
-under one budget. We measure selectivity peaking at $k{=}2$, $+0.186$, and flat above
-it, $+0.148$ at $k{=}8$ and again at $k{=}32$, so the two interpretable axes
-already carry this behavior and the extra $2302$ coordinates buy nothing. The
-$k{=}d$ member says the same thing from the other end. We measure the gate composed with MiMiC's own map
-at $+0.286$ on a $400$-question split and $+0.155$ on the $1200$-question one, the largest movement of any configuration we searched
-(Table~\ref{tab:split}), the signature of a configuration selected on noise
-once that noise is removed. We keep $k{=}2$ because the data says the
-behavior lives there, not because the operator is cheaper there. The other
-members of the family, a token-local action and a posterior-weighted dose,
-we tune and carry the same way in Appendix~\ref{app:ablation}.
-
-Every method in Table~\ref{tab:headtohead} receives at least as many
-configurations as our own eight, on the same held-out MMLU tuning split of
-$n{=}1200$ questions,
-disjoint from the extraction split and from all five evaluation subsets, and we
-select among them by one pre-declared rule, the highest selectivity among
-configurations whose accuracy change is at least $-0.01$. The additive baseline
-searches its dose, CAST searches threshold $\times$ dose, MiMiC searches layer
-$\times$ shrinkage, Linear-AcT searches layer $\times\lambda$, our conditional
-ablation searches the depth the gate reads $\times$ the quantile it fires at
-$\times$ the local action, our transport variant searches the subspace
-dimension $k$ $\times$ the gate quantile, and the sequential gate searches its
-prefix budget $t^\star\times$ the gate quantile. We report each winner in
-Table~\ref{tab:parity}, and those configurations, unchanged, produce the
-evaluation-seed numbers in the main text. The split has to be that large. On a
-$400$-question split seven of the nine winners are different, and among the two
-configurations that do hold fixed the measured selectivity still moves by up to
-$0.075$
-(Table~\ref{tab:split}), so the smaller split does not identify a
-configuration, it samples one. Every search also runs at one batch size,
-because batched greedy decoding is not invariant to it and the same MiMiC
-configuration measures $+0.288$ at $64$ and $+0.235$ at $32$. Each method's search is paired
-against a baseline generated in the same process, which is what config
-selection needs; the searches ran on different GPUs and their baselines differ
-by up to three \ocw{} out of 79, so we do not compare selectivities
-\emph{across} methods on this split. The equal-budget cross-method comparison
-is Table~\ref{tab:tuned}, where every winner is carried unchanged to five
-evaluation subsets and paired against one shared set of baseline rollouts per
-seed. We also report one configuration
-that is not part of any selection, the NP gate composed with the full-space
-affine map, because Theorem~\ref{thm:joint} predicts the gate composes with any
-transport and that is the cheapest way to test the prediction on the strongest
-unconditional action.
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{4pt}
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|c|l|cccc}
-\hline
-method & budget & selected configuration & $\Delta$acc & ocw\_rm & cr\_keep & Sel \\
-\hline
-\input{gen/parity_table}
-\end{tabular}}
-\caption{Equal-budget hyperparameter search on the tuning split.}
-\label{tab:parity}
-\end{table}
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{3pt}
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|lc|lcc}
-\hline
- & \multicolumn{2}{c|}{$n{=}400$ split} & \multicolumn{3}{c}{$n{=}1200$ split} \\
-method & winner & Sel & winner & Sel & $\Delta$ \\
-\hline
-\input{gen/split_table}
-\end{tabular}}
-\caption{The same search on a tuning split three times larger. Seven of the nine
-winners change; only additive CAA (\texttt{alpha-0.25}) and our gated ablation
-(\texttt{gl14\_q30\_ablate}) select the same configuration on both splits, and
-even for those two the measured selectivity moves by up to $0.075$. A
-$400$-question split does not identify a configuration reliably. Prompting and directional ablation carry no searchable
-configuration in our implementation and are run as published. The paper uses
-the $n{=}1200$ winners throughout.}
-\label{tab:split}
-\end{table}
-
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{4pt}
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|ccccc}
-\hline
-method (M4, MMLU, seeds mean$\pm$std) & $\Delta$acc & ECE & AURC & cr\_keep & Sel \\
-\hline
-\input{gen/tuned_table}
-\end{tabular}}
-\caption{\textbf{Matched-budget grid.} The same five evaluation subsets with
-every method carrying the configuration it won under the budget of this
-appendix; directional ablation carries no searchable configuration in our
-implementation and is shown at its published setting. The tuned additive dose
-reaches the highest mean, $+0.256\pm0.133$,
-by retaining $0.621$ of \crok{}; our score-proportional dose reaches
-$+0.231\pm0.120$ and our gated ablation $+0.206\pm0.059$ at retention $0.713$. The tuned CAST gate reaches
-$+0.227\pm0.082$ by removing $0.432$ of the \ocw{} it fires on. Those are the
-two ways Cor.~\ref{cor:additive} says a shift can trade.}
-\label{tab:tuned}
-\end{table}
-
-\section{Design ablations of the operator family}
-\label{app:ablation}
-
-\textbf{Spending the edit where the evidence is.} The same cost functional,
-asked for the best dose rather than the best event, gives the graded operator
-of Prop.~\ref{prop:dose}, tuned under the same budget. We find the selected
-configuration widens exposure instead of narrowing it, firing at the 10th
-percentile and scaling each edit by its margin, so grading the dose is what
-makes a permissive threshold affordable. On ARC-Challenge, off the split it was
-tuned on, it is the best member we have at $+0.342$ with retention $0.815$
-against $+0.290$ for the hard switch.\looseness=-1
-
-
-We tuned every member of the family Theorem~\ref{thm:ot} defines under the
-same budget and carried each unchanged to the five evaluation subsets. The point of
-the table is which design choices survive that carry. Raising the subspace
-dimension does not: the tuned $k$ falls to $+0.065$ on the subsets from
-$+0.186$ on the split. Making the action token-local rather than trace-local
-does not either, $+0.158$ from $+0.257$, and neither does weighting the dose
-by a posterior. Grading the dose by the gate margin does survive, $+0.231$
-from $+0.267$, and so does the plain $k{=}2$ gated ablation, $+0.206$ from
-$+0.245$. The two lose $0.036$ and $0.039$, which we read as
-indistinguishable on this axis. One member is worth reporting on its own terms. Theorem~\ref{thm:joint} gives
-the cost-minimal gated intervention as the transport map of the law
-\emph{conditioned} on the gate event, and every gated transport above uses the
-marginal law instead. We fitted the conditional moments on the extraction
-split, at each of the four gate quantiles, and compared the two maps under one
-budget. The conditional map is not better: $+0.155$ against $+0.183$ at the
-20th percentile, $+0.153$ against $+0.125$ at the 30th, and no systematic
-ordering across the four. We read that as Theorem~\ref{thm:joint} delivering
-what it claims and nothing else. It minimises displacement subject to reaching
-the target law, which is not the same objective as maximising selectivity, and
-selectivity here is bound by the detector rather than by the map
-(Thm.~\ref{thm:gate}b). Five attempts to buy more removal by changing the
-action --- a larger subspace, a full-rank map, a graded dose, a token-local
-clamp and the conditional map --- each bought it at the same rate in
-retention, which is what Cor.~\ref{cor:additive} predicts for a subpopulation
-pair separated by $d=0.049$.
-
-We report the members that did not carry because each one is an insight about
-the selection problem rather than a catalogue entry. Together they say that
-the more exposure or dose a configuration buys on a tuning split, the less of
-it survives a change of questions, and that the design choice which survives
-best is the one the theory singles out: a two-dimensional edit applied behind
-a gate.
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{4pt}
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|cccc}
-\hline
-member (M4, MMLU, seeds mean$\pm$std) & $\Delta$acc & ECE & cr\_keep & Sel \\
-\hline
-\input{gen/ablation_table}
-\end{tabular}}
-\caption{Members of the projection-transport family under the equal-budget
-protocol, each at the configuration it won on the $n{=}1200$ tuning split.}
-\label{tab:ablation}
-\end{table}
-
-\section{Full result tables}
-\label{app:fulltables}
-
-\textbf{The instruments disagree on the middle of the table, not on the head.}
-On the representative subset we measure gated ablation at $+0.304$ under the
-calibrated yes-probability readout and $+0.119$ under the letter-logit readout,
-whose baseline \ocw{} population is $124$ rather than $50$. Four conditions
-change the sign of their selectivity between the two grids and several
-middle-ranked methods swap places, but ours is the most selective of the
-published-configuration set under both
-(Appendix~\ref{app:fulltables}).
-
-
-\textbf{Robustness across instruments.} Absolute counts depend on the readout.
-On the representative subset gated ablation reaches selectivity $+0.304$ under
-the calibrated yes-probability readout M4 and $+0.119$ under the letter-logit
-readout M2, a factor of $2.6$. The two grids do not agree everywhere: four
-conditions change the sign of their selectivity and several middle-ranked
-methods swap places. Our operator is the most selective of the
-published-configuration set under both, and its accuracy column is within noise
-of zero under both.\looseness=-1
-
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{3.4pt}
-\centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|cc|cc|c|c}
-\hline
-condition (M4 readout) & $\Delta$acc & 95\% CI & ECE & \ocw{} after & cr\_keep & Sel [95\% CI] \\
-\hline
-\input{gen/main_table}
-\end{tabular}}
-\caption{MMLU, $n{=}300$, layer 14, M4 readout. The \ocw{} column is the
-post-intervention population, not the number removed: because selectivity is
-paired on the state a question started in, an operator can also move traces
-\emph{into} the target state, and quantile transport ends with $54$ against a
-baseline of $50$ while scoring $+0.029$. Gated ablation removes $29$ of the
-$50$ it starts with and ends at $35$.}
-\label{tab:main}
-\end{table}
-
-The full condition grids follow. Columns: condition, readout, $\Delta$accuracy with paired-bootstrap 95\% CI, ECE, count of \ocw{} after steering, \crok{}-retention, and selectivity with its interval.
-
-{\scriptsize\setlength{\tabcolsep}{2.6pt}
-\begin{longtable}{l|c|cc|cc|c}
-\caption{MMLU: all conditions, both readouts. \texttt{sweep\_ocwcr-crq50\_ablate} is the gated ablation of Table~\ref{tab:headtohead}, \texttt{m4\_conf\_otq\_nonocw} its quantile transport and \texttt{m4\_conf\_gate-ocw\_vs\_cr-cr\_q50\_clamp\_q50} its gated clamp; Appendix~\ref{app:defs} maps every run identifier to the name used in the text.}\label{tab:gridmmlu}\\
-\hline
-condition & r/o & $\Delta$acc [CI] & ECE & \ocw{} & cr\_keep & Sel [CI] \\
-\hline
-\endfirsthead
-\hline
-condition & r/o & $\Delta$acc [CI] & ECE & \ocw{} & cr\_keep & Sel [CI] \\
-\hline
-\endhead
-\input{gen/full_mmlu}
-\end{longtable}}
-
-{\scriptsize\setlength{\tabcolsep}{2.6pt}
-\begin{longtable}{l|c|cc|cc|c}
-\caption{ARC-Challenge (transfer): all conditions, both readouts.}\label{tab:gridarc}\\
-\hline
-condition & r/o & $\Delta$acc [CI] & ECE & \ocw{} & cr\_keep & Sel [CI] \\
-\hline
-\endfirsthead
-\hline
-condition & r/o & $\Delta$acc [CI] & ECE & \ocw{} & cr\_keep & Sel [CI] \\
-\hline
-\endhead
-\input{gen/full_arc}
-\end{longtable}}
-
-{\scriptsize\setlength{\tabcolsep}{2.6pt}
-\begin{longtable}{l|c|cc|cc|c}
-\caption{GSM8K-MCQ (transfer): all conditions, both readouts. The \ocw{}/\crok{} poles are small (6 and 11 of 300 at baseline), the model is underconfident on this domain, selectivity intervals are wide, and the conditional operators act near-identity.}\label{tab:gridgsm}\\
-\hline
-condition & r/o & $\Delta$acc [CI] & ECE & \ocw{} & cr\_keep & Sel [CI] \\
-\hline
-\endfirsthead
-\hline
-condition & r/o & $\Delta$acc [CI] & ECE & \ocw{} & cr\_keep & Sel [CI] \\
-\hline
-\endhead
-\input{gen/full_gsm8k}
-\end{longtable}}
-
-\section{Capability outside the target behavior}
+\section{Capability away from the target behavior}
 \label{app:capability}
 
-We fit the operators on multiple-choice reasoning traces, so the question
-is what they do to generation that has nothing to do with the target behavior.
-Table~\ref{tab:capability} reports code synthesis (HumanEval pass@1, greedy,
-$n{=}164$), held-out language modelling (WikiText-103 perplexity, $n{=}300$
-passages), and open-ended instruction following (200 AlpacaEval prompts, 384
-new tokens): fluency as the perplexity the unsteered model assigns to the
-continuation, repetition as distinct-3, and length in words. The last column is the fraction of open-ended prompts on which the sequential
-gate fires at all; it fires on none of HumanEval, and WikiText is scored
-teacher-forced, which gives the gate no generated prefix to read. We count a
-generation as degenerate when it fails to terminate or repeats a trigram cycle:
-$57.5\%$ of them under the published additive dose, none under any operator of
-ours.
+Table~\ref{tab:capability} measures code synthesis (HumanEval, 164 problems,
+greedy, pass@1), open-ended instruction following (200 AlpacaEval prompts, 384
+new tokens; distinct-3 and the unsteered model's perplexity of the
+continuation) and language modelling (300 WikiText-103 passages, teacher
+forced). Gated rows use the frozen Gemma decisions at the frozen threshold;
+each gated output is the unsteered output where the decision is silent and the
+ungated output where it fires. The coding and open-ended prompts are outside
+the distribution the probes were fitted on, and the decisions fire on some of
+them: the post-hoc probe on $23\%$ of HumanEval, $42\%$ of AlpacaEval and all
+WikiText passages, the prompt probe on $0\%$, $47\%$ and $12\%$. Where it fires
+on open-ended text the shift costs distinct-3 and fluency as it does ungated.
 
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{3pt}
 \centering
 \resizebox{\linewidth}{!}{%
-\begin{tabular}{l|c|c|ccc|c}
+\begin{tabular}{l|cc|cc|c}
 \hline
- & HumanEval & WikiText & \multicolumn{3}{c|}{open-ended (AlpacaEval prompts)} & \\
-method & pass@1 & ppl & fluency ppl & distinct-3 & win rate & gate fires \\
+ & \multicolumn{2}{c|}{HumanEval} & \multicolumn{2}{c|}{AlpacaEval prompts} & WikiText \\
+method & pass@1 & $\Delta$ [95\% CI] & distinct-3 & fluency ppl & ppl \\
 \hline
-\input{gen/capability_table}
+\inputtab{gen/capability_v4}
 \end{tabular}}
-\caption{\textbf{Capability away from the fitted behavior.} The published
-additive dose takes HumanEval pass@1 from $.396$ to $.128$ and makes $57.5\%$
-of open-ended generations degenerate; every projection-local operator and both
-gated operators sit at the unsteered value on every measurement available to them. The
-unconditional rows keep the action on for every token, so they bound what the
-gated operator can cost. We score WikiText teacher-forced, which gives a
-sequential gate no generated prefix to read, so that cell is not applicable.
-The win rate is order-consistent against the unsteered answer, judged by
-Qwen2.5-7B-Instruct in both presentation orders with ties counted as half, so
-$0.5$ means indistinguishable.}
+\caption{Capability under the Gemma operators. Intervals are paired bootstrap
+intervals over problems.}
 \label{tab:capability}
 \end{table}
 
-\section{Do steered activations stay on the manifold?}
-\label{app:manifold}
+@OODPARA@
 
-\textbf{Transfer does not push activations off the manifold.} We condition the
-edited coordinates on the untouched complement, which gives a statistic that is
-$\chi^2_k$ under the null, so the fraction of tokens outside the $99\%$
-conditional ellipsoid has a value to compare against: unsteered traces sit at
-$0.9$--$2.9\%$. The published additive shift puts $100\%$ of tokens outside it
-on all three domains and the equal-budget dose $40$--$70\%$, while clamping,
-quantile transport, MiMiC and Linear-AcT stay within a point or two of the
-unsteered level on domains their maps never saw
-(Table~\ref{tab:manifold}).\looseness=-1
+\section{Examples}
+\label{app:examples}
 
+The examples below are chosen by a rule fixed before we read any of them: among
+the confirmatory questions whose reasoning trace PTS post-hoc changed, the two
+with the lowest MMLU index in each of four cells, defined by the M5 state before
+and after the edit. The cells hold 474 (overconfident-wrong, state changed), 47
+(overconfident-wrong, unchanged), 33 (confident-right, kept) and 277
+(confident-right, lost) questions; confident-right questions the decision does
+not flag are not in these counts and keep their unsteered output. Each example
+shows the answer the model boxed, the $P(\mathrm{YES})$ it then stated and the
+resulting state, all from the same conversation, with the trace shortened in
+the middle.
 
-\textbf{Geometry and behavior disagree, and both matter.} The two diagnostics
-do not rank the operators the same way, so we report both. Measured
-by the KL the edit induces on the next-token distribution, the accepted
-locality criterion in this literature~\cite{arditi2024refusal}, the worst
-operator is a \emph{random} direction at the same norm as the additive dose:
-$0.44$ on MMLU against a $0.1$ threshold, where the additive dose itself sits
-at $0.032$ and the projection-local operators between $0.000$ and $0.010$. Yet
-that random direction is invisible to the conditional test, because it barely
-projects onto the behavioral coordinates the test watches. The conditional test
-asks whether the behavioral coordinates were moved to an implausible place and
-the KL asks whether the next token noticed. An operator has to pass both, and
-the transport maps do, ungated or gated. Directional ablation does not: it
-passes the KL test at $0.010$ and fails the conditional one at $29.5\%$, which
-is the geometric form of the retention it spends in
-Table~\ref{tab:headtohead}. The composed gated operator applies that action on
-the traces the gate fires on, so we do not claim a conditional-ellipsoid figure
-for it; what we report for it is the behavioral evidence of
-Appendix~\ref{app:capability}.\looseness=-1
+\inputtab{gen/examples}
 
-We teacher-force the unsteered traces, apply each operator to the layer-14
-residuals, and measure how far the result travels. Table~\ref{tab:manifold}
-reports the relative displacement $\lVert h'-h\rVert/\lVert h\rVert$, the 99th
-percentile of the norm ratio $\lVert h'\rVert/\lVert h\rVert$, and the distance
-to the nearest natural activation in a bank of 4{,}096 unsteered residuals
-relative to the unsteered nearest-neighbour distance. We include the transfer
-domains ARC and GSM8K because that is where a map fitted on MMLU could be
-expected to explode.
+\section{Transfer to other benchmarks}
+\label{app:transfer}
 
-We state one negative result here. A \emph{full-space}
-Mahalanobis distance is useless here: an operator that edits a $k$-dimensional
-projection leaves $d-k$ coordinates untouched, which dilute the statistic until
-it moves by under $1\%$ for every operator in the table, including the one that
-destroys generation. The same dilution has been reported
-independently~\cite{vogels2025ids}. We therefore condition instead. Writing
-$h=(q,h_\perp)$ with $q=Vh$, the law of $q$ given the 64 leading principal
-directions of the complement is Gaussian under the layer's fitted moments, and
-its squared Mahalanobis distance is $\chi^2_k$ under the null, so the natural
-readout is the fraction of tokens outside the $99\%$ conditional ellipsoid,
-against an expected $1\%$. We also report the behavioral check the refusal
-literature uses as a selection criterion, the mean KL between the unsteered and
-steered next-token distributions with $0.1$ as the accepted
-threshold~\cite{arditi2024refusal}, measured against a norm-matched random
-direction so that the number is interpretable~\cite{turner2023actadd}. We claim
-only that a projection-local edit lands closer to the states the model produces
-by itself, not that it lands on them: steered states are provably unreachable
-from any discrete prompt~\cite{mishra2026nonsurjective}.
+We ran the Gemma operators, with the directions, probes and thresholds fitted
+on MMLU, on 300 ARC-Challenge questions and 300 GSM8K questions converted to
+four-option multiple choice (Appendix~\ref{app:gsm}). These runs are
+exploratory and not part of the protocol. Table~\ref{tab:transfer} shows that
+the MMLU threshold does not carry to ARC: the post-hoc probe fires on 59 of 300
+questions and PTS reaches selectivity $0.100$, against $0.370$ for the ungated
+additive dose. On GSM8K PTS keeps $0.944$ of confident-right answers at
+selectivity $0.287$, while the additive dose reaches $0.319$ at retention
+$0.634$.
 
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{4pt}
+\centering
+\begin{tabular}{l|ccc|ccc}
+\hline
+ & \multicolumn{3}{c|}{ARC-Challenge ($n_{\ocw}=66$, $n_{\crok}=205$)} & \multicolumn{3}{c}{GSM8K-MCQ ($n_{\ocw}=35$, $n_{\crok}=161$)} \\
+method & $\Delta$acc & retention & Sel & $\Delta$acc & retention & Sel \\
+\hline
+additive CAA (tuned) & $+0.027$ & 0.810 & $+0.370$ & $+0.023$ & 0.634 & $+0.319$ \\
+CAST-style, trace condition & $-0.003$ & 0.863 & $+0.060$ & $-0.060$ & 0.516 & $+0.173$ \\
+CAST, prompt condition & $-0.017$ & 0.844 & $+0.223$ & $+0.023$ & 0.634 & $+0.319$ \\
+PTS, post-hoc & $-0.010$ & 0.888 & $+0.100$ & $+0.023$ & 0.944 & $+0.287$ \\
+PTS, decides at the prompt & $-0.013$ & 0.941 & $-0.013$ & $-0.040$ & 0.814 & $+0.128$ \\
+\hline
+\end{tabular}
+\caption{Transfer of the Gemma operators fitted on MMLU, M5 readout, 300
+questions each, no refitting.}
+\label{tab:transfer}
+\end{table}
+
+\section{Results under the earlier protocol}
+\label{app:legacy}
+\label{app:fulltables}\label{app:parity}\label{app:layers}\label{app:manifold}\label{app:serving}\label{sec:measure}
+
+An earlier version of this work used the verification readout M4
+(Appendix~\ref{app:prompts}) as its primary instrument, five evaluation subsets
+of 300 MMLU questions, a detector read off the extraction split, and
+configurations tuned on a 1{,}200-question split. We keep its results here as
+a record, with three qualifications that the confirmatory protocol removes.
+Under M4 the edited generations are the per-option verification traces, not
+the reasoning trace, so these results describe the verification task. Four of
+the five subsets share 7 to 14 questions with the extraction split (38 in
+total); the pooled numbers below drop them. The subsets also overlap each
+other in 54 questions, which are counted once.
+
+\textbf{Pooled comparison.} Table~\ref{tab:legacy} pools the five subsets
+(1{,}406 unique questions, 245 \ocw{} and 380 \crok{} under M4) and pairs every
+method with the tuned gated ablation of that protocol. No tuned baseline is
+above it at the $5\%$ level, and none is below it either except the
+single-pass gate; the tuned additive dose has the highest
+mean ($+0.271$ against $+0.203$, paired difference $+0.067$, $95\%$ CI
+$[-0.024,+0.156]$). Under M2 on the same traces every selectivity is below
+$0.11$.
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{4pt}
+\centering
+\begin{tabular}{l|cc|cc}
+\hline
+ & \multicolumn{2}{c|}{M4} & \multicolumn{2}{c}{M2} \\
+method (earlier protocol, tuned) & Sel [95\% CI] & $\Delta$ vs gated abl. & Sel [95\% CI] & $\Delta$acc \\
+\hline
+\inputtab{gen/legacy_pooled}
+\end{tabular}
+\caption{Earlier protocol, five subsets pooled with overlapping questions
+removed. Intervals are question-level paired bootstrap intervals ($10^4$
+resamples).}
+\label{tab:legacy}
+\end{table}
+
+\textbf{Earlier detector.} The two-dimensional LDA gate of the earlier
+version reached AUROC $0.77$--$0.80$ between \ocw{} and \crok{} on the 400
+extraction traces it was fitted to, and $0.59$ (layer 14) and $0.59$ (layer 16)
+on the 1{,}406 pooled evaluation questions; the one-dimensional detection
+direction reached $0.66$. This in-sample optimism is what motivated fitting the
+detector on a separate pool and reporting only held-out AUROC.
+
+\textbf{Scale, layers, geometry and cost.} Table~\ref{tab:ninetb} repeats the
+published configurations on \texttt{gemma-2-9b-it}; Table~\ref{tab:layers}
+refits the axes and the gate at nine depths; Table~\ref{tab:manifold} reports
+displacement, nearest-neighbour distance, the fraction of tokens outside the
+$99\%$ conditional ellipsoid and next-token KL; Table~\ref{tab:serving} gives
+end-to-end wall clock on one H100 for 300 questions.
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{4pt}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{l|cccccc}
+\hline
+method (M4, 9B, 3 subsets) & $\Delta$acc & ECE & ocw\_rm & cr\_keep & AURC & Sel \\
+\hline
+\inputtab{gen/table_9b}
+\end{tabular}}
+\caption{\texttt{gemma-2-9b-it}, layer 24, published configurations, mean
+$\pm$ standard deviation over three subsets of 300 questions.}
+\label{tab:ninetb}
+\end{table}
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{5pt}
+\centering
+\begin{tabular}{l|cc|cc}
+\hline
+layer & Cohen's $d$ conf. & Cohen's $d$ \ocw{}/\crok{} & gate AUROC & $2\mathrm{AUC}{-}1$ \\
+\hline
+\inputtab{gen/layer_table}
+\end{tabular}
+\caption{Layer sweep on the 400 extraction traces (in-sample AUROC).}
+\label{tab:layers}
+\end{table}
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{3pt}
 \centering
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{l|cccc|cccc|cccc}
@@ -1901,93 +1332,92 @@ from any discrete prompt~\cite{mishra2026nonsurjective}.
  & \multicolumn{4}{c|}{MMLU} & \multicolumn{4}{c|}{ARC} & \multicolumn{4}{c}{GSM8K} \\
 operator & disp. & NN & out\% & KL & disp. & NN & out\% & KL & disp. & NN & out\% & KL \\
 \hline
-\input{gen/manifold_table}
+\inputtab{gen/manifold_table}
 \end{tabular}}
-\caption{On-manifold diagnostics at layer 14. NN is the mean
-nearest-neighbour distance to a bank of natural activations relative to the
-unsteered value, so $1.00$ means the edit lands as close to the model's own
-states as the states it replaced; out\% is the fraction of tokens outside the
-$99\%$ conditional ellipsoid, against $1\%$ expected; KL is the mean divergence
-of the next-token distribution, with $0.1$ the accepted
-threshold~\cite{arditi2024refusal}.}
+\caption{Activation diagnostics at layer 14 under teacher forcing of unsteered
+traces. NN is the nearest-neighbour distance to 4{,}096 natural activations
+relative to the unsteered value; out\% is the share of tokens outside the
+$99\%$ conditional ellipsoid of the edited coordinate given the leading 64
+principal directions of the complement ($1\%$ expected); KL is the mean
+next-token divergence. These are measured distances, not a test of membership
+in a manifold.}
 \label{tab:manifold}
 \end{table}
 
-\section{End-to-end serving cost}
-\label{app:serving}
-
-Table~\ref{tab:serving} measures the whole 300-question workload on one H100,
-so the post-hoc gate is charged for its scoring pass and for regenerating what
-it flags.
-
-\begin{table}[!t]\footnotesize\setlength{\tabcolsep}{5pt}
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{5pt}
 \centering
 \begin{tabular}{l|c|cc}
 \hline
 method & passes & seconds & wall clock \\
 \hline
-\input{gen/serving_table}
+\inputtab{gen/serving_table}
 \end{tabular}
-\caption{End-to-end wall clock, MMLU $n{=}300$, batch 64, one H100.}
+\caption{End-to-end wall clock for 300 MMLU questions, batch 64, one H100, one
+run per method.}
 \label{tab:serving}
 \end{table}
 
-\section{Definitions used in the text}
+\section{Prompts}
 \label{app:defs}
+\label{app:prompts}
 
-\textbf{Weights.} 2B weights were served from the \texttt{unsloth/gemma-2-2b-it}
-mirror; all 288 tensors are bit-identical to the official
-\texttt{google/gemma-2-2b-it} release.
+All prompts are rendered with the model's chat template. Text in braces is
+filled per question; everything else is verbatim.
 
-\textbf{Confidence readout prompts.} The M4 yes-probability readout scores each
-option with \texttt{"Answer whether the given answer is the right
-answer\ldots{} Question: \{q\} Answer: \{option\}"}, one forward per option,
-reasoning in \texttt{<think>}, then \texttt{YES}/\texttt{NO}, and the four
-$P(\mathrm{YES})$ values are renormalised.
+\textbf{Reasoning prompt (all readouts).}
+\begin{quote}\small\ttfamily
+Given the following multiple choice question, choose the single best answer (A, B, C, or D).\\
+Please think step-by-step and put your thinking inside <think>...</think> tokens.\\
+After </think>, give ONLY your final answer in the format: \textbackslash{}boxed\{[letter]\}\\[3pt]
+Question: \{question\}\\
+Options:\\
+A. \{option A\}\\ B. \{option B\}\\ C. \{option C\}\\ D. \{option D\}
+\end{quote}
 
-\textbf{Hedge markers.} The lexicon counted in Sec.~\ref{sec:results} and
-Appendix~\ref{app:samples} is fixed in advance and case-insensitive:
-\emph{maybe, perhaps, might, possibly, however, wait, actually, hmm, unsure,
-unclear, guess, seems, probably, could, uncertain, confused}. The matching
-certainty lexicon is \emph{clearly, obviously, definitely, certainly, surely,
-undoubtedly, evidently, must, certain, sure}. A trace's hedge count is the
-number of token matches; rates are per trace.
+\textbf{M5 (primary).} After the model's reply, a second user turn is added to
+the same conversation and $P(\mathrm{YES})$ is read from the next-token logits,
+summing the probabilities of the single-token variants of YES and of NO and
+renormalising over the two:
+\begin{quote}\small\ttfamily
+You answered \{letter\}. Is that answer correct? Reply with only YES or NO.
+\end{quote}
+The letter is the one with the highest logit after the last
+\texttt{\textbackslash boxed\{} of the trace, which is appended when the trace
+has none ($6.1\%$ of unsteered confirmatory traces). On the unsteered
+confirmatory split this letter equals the written letter on $96.9\%$ of
+questions; the remainder are traces with several boxes or none.
+A question is confident iff $P(\mathrm{YES})\ge0.5$.
 
-\textbf{Calibrated zone.} The green ellipse in Fig.~\ref{fig:plane} is the
-$2\sigma$ contour of the empirical Gaussian fitted to the trace-mean
-projections of the \emph{calibrated} extraction-split states
-(\crok{} and nonconfident-wrong), i.e.\ the states the transport target is
-built from. It is a visual reference, not a decision boundary.
+\textbf{M2 (secondary).} The confidence of the same generated answer is the
+softmax over the four letter logits at the position after
+\texttt{\textbackslash boxed\{}.
 
-\textbf{Norm-matched spherical action.} The comparison action in
-Table~\ref{tab:postreview} is a spherical steering operator: activations are
-rotated along the fixed-azimuth shortest geodesic towards a unit prototype at
-constant norm, with the decision taken by an antipodal von~Mises--Fisher
-confidence at concentration $\kappa{=}20$. Its nine-cell grid
-($\alpha\in\{0.6,0.9,1\}$, $\beta\in\{0.6,0.9,0.99\}$) is selected on the
-observer split, and the reported comparison uses the selected cell, so the two
-conditions differ in the direction and the decision rule and not in how far
-they move activations. The five \emph{isotropic} controls replace the detector
-direction with a random unit direction at exactly the measured update norm;
-the \emph{unprompted} control refits the direction at last-token positions
-without the evaluation instruction. All are input-independent given the fit.
+\textbf{M4 (secondary; primary in the earlier version).} Each option is
+verified in a separate generation, with at most 192 new tokens:
+\begin{quote}\small\ttfamily
+Answer whether the given answer is the right answer for the following question.\\
+Please think step-by-step and put your thinking inside <think>...</think> tokens.\\
+After </think>, answer ONLY with "YES" or "NO".\\[3pt]
+Question:\\
+\{question\}\\
+Answer:\\
+\{option text\}
+\end{quote}
+$P(\mathrm{YES})$ is read at the answer word after \texttt{</think>}; the
+predicted answer is the option with the largest $P(\mathrm{YES})$ and its
+confidence is that value divided by the sum over options. When an M4 condition
+is steered, the hook is active in these four verification generations, not in
+the reasoning trace, so an M4 result describes the verification task.
 
-\textbf{Condition names.} The exhaustive grids in
-Appendix~\ref{app:fulltables} carry the run identifiers; the main text uses
-short names. \texttt{m4\_conf\_*} is an action on the confidence axis;
-\texttt{sweep\_ocwcr-crq50\_ablate} is gated ablation (gate fitted on the
-\ocw{}-versus-\crok{} contrast, threshold at the \crok{} median);
-\texttt{sweep\_lda-allq50\_ablate} is LDA-gated ablation (the two-dimensional
-LDA head of Sec.~\ref{sec:method}, threshold at the median of all extraction
-scores); \texttt{online\_d0p05\_q50\_L16\_ablate} is its sequential
-single-pass form at $\delta{=}0.05$; \texttt{probegate-*} gates on a full-$d$
-logistic probe; \texttt{cast\_gate-cr\_q50\_add-0.75} is the CAST-style
-reimplementation; \texttt{act\_l05}/\texttt{act\_l10} are Linear-AcT at
-$\lambda{=}0.5$/$1.0$; \texttt{mimic\_full} is MiMiC;
-\texttt{subspace-BW} is ungated subspace Bures--Wasserstein transport and
-\texttt{NP-gate}$\times$\texttt{BW} its gated form (\texttt{subbw} and
-\texttt{npbw} in the run identifiers, and \texttt{gated $k$-dim transport} and \texttt{gated full-rank transport} in the tables); \texttt{tuned\_ourspost} is the posterior-weighted dose of Appendix~\ref{app:ablation}; \texttt{self\_qXX} marks a threshold
-re-anchored, label-free, to the target domain's own score quantile; and
-\texttt{-think} marks steering confined to the \texttt{<think>} phase.
+\textbf{Prompting baseline.} The instruction below is prepended to the user
+turn (Gemma has no system role) or passed as the system message (Qwen):
+\begin{quote}\small\ttfamily
+Be careful and well-calibrated. Only answer confidently when you are sure; if you are uncertain, explicitly acknowledge the uncertainty in your reasoning and confidence.
+\end{quote}
+
+\textbf{Weights.} Gemma-2-2B weights were served from the
+\texttt{unsloth/gemma-2-2b-it} mirror, whose 288 tensors are bit-identical to
+\texttt{google/gemma-2-2b-it}; Qwen weights are \texttt{Qwen/Qwen2.5-7B-Instruct}.
+Decoding is greedy with at most 320 new tokens for the reasoning trace.
 
 \end{document}

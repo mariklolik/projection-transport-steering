@@ -19,6 +19,7 @@
 
 from __future__ import annotations
 
+import os
 import random
 from pathlib import Path
 
@@ -30,7 +31,7 @@ from general.inference import generate, get_trace_activations
 from general.paths import RESULTS_DIR
 from models_specific.active import chat_prompt
 
-DIRECTIONS_DIR = Path(__file__).parent / "directions"
+DIRECTIONS_DIR = Path(os.environ.get("PTS_DIRECTIONS", Path(__file__).parent / "directions"))
 PERSONA_ACTS = RESULTS_DIR / "features" / "persona_acts.pt"
 
 

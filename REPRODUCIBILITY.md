@@ -46,6 +46,38 @@ a file of job chains out over several hosts' GPUs, and
 `rebuttal/run/finalize.sh` re-analyses every run directory, pulls the outputs
 back and rebuilds the PDF.
 
+## Confirmatory protocol (answer-level readout M5)
+
+The paper's main results come from the protocol in `rebuttal/protocols/confirmatory-v19.md`.
+Each step below runs per shard; `rebuttal/run/dispatch.py` fans the shards out.
+
+    P="uv run python -m behaviour_specific.overconfidence"
+    # 1. unsteered answers, M2/M4/M5 labels and activation features for every split
+    for split in extraction tuning detector confirm; do $P.label_pool --split $split; done
+    # 2. decisions: trace, prefix and prompt probes, and the CAST condition vector
+    $P.fit_detector; $P.fit_detector --kind prefix; $P.fit_detector --kind prompt; $P.fit_detector --kind cast
+    # 3. ungated runs of every configuration on the tuning split, then one selection rule for all methods
+    $P.steer_v7_tuned --split tuning --methods plain_alpha-0.25 --readouts m5   # etc., see rebuttal/run/queue54.jobs
+    $P.select_configs --dir v4_tuning --out v4_parity_m5
+    # 4. confirmatory arms, then paired analysis and the identity check
+    python3 rebuttal/run/make_confirm_jobs.py --selection results/v4_parity_m5/selection.json --outdir v4_confirm \
+        --parity-dir v4_parity_m5 --jobs confirm.jobs --protocol results/v4_confirm/protocol.json
+    $P.analyze_pooled --dirs v4_confirm --conds <arms> --ref <PTS arm> --readouts m5,m5m2,m4 --out v4_pooled/confirm_gemma.json
+    $P.law_confirm --checks <arm:decision:ungated:config,...> --out v4_pooled/gate_law_confirm_m5.json
+    $P.decision_auroc --dirs v4_confirm --out v4_pooled/decision_auroc_gemma.json
+    # 5. capability, transfer and examples
+    $P.capability_v4 --task humaneval; $P.capability_v4 --task openended; $P.capability_v4 --task wikitext
+    $P.dump_examples
+
+For Qwen2.5-7B-Instruct set `MODEL_IMPL=qwen2_5_7b_it` and
+`PTS_DIRECTIONS=behaviour_specific/overconfidence/directions/qwen2_5_7b_it`, fit the
+directions with `extract_projection_stats --layer 14` and `diag_layers --layers 10,14,18
+--dump-moments`, and use `v5q_*` output directories. The SHA-256 hashes of the selected
+configurations and fitted detectors, recorded before the confirmatory runs, are in
+`rebuttal/protocols/confirmatory-v19-*.sha256`. Tables and figures:
+
+    python3 paper/make_confirm_tables.py; python3 paper/make_v4_figdata.py; python3 paper/make_examples.py
+
 ## Tables and paper
 
     uv run python paper/make_tables.py

@@ -18,11 +18,13 @@ from behaviour_specific.overconfidence.features_caa import DIRECTIONS_DIR
 from behaviour_specific.overconfidence.mmlu.data import mcq_prompt
 from behaviour_specific.overconfidence.steer_v2 import build_conditions, q_at
 from behaviour_specific.overconfidence.steer_v3_optimal import make_subspace_fn
+from behaviour_specific.overconfidence.steer_v4_sota import HEDGE_SYSTEM
 from behaviour_specific.overconfidence.steer_v6_online import load_gate
 from general.behavioral_subspace import displacement_subspace, projected_moments
 from behaviour_specific.overconfidence.steer_overconfidence import (
-    mean_activation_norm, score_m2_batch, score_m4_batch,
+    mean_activation_norm, score_m2_batch, score_m4_batch, score_m5_batch,
 )
+from general.inference import _length_buckets, get_activations_all_layers, get_trace_activations
 from general.online_gate import SequentialGate, posterior_dose
 from general.paths import RESULTS_DIR
 from general.steering import (
@@ -89,6 +91,13 @@ if __name__ == "__main__":
     ap.add_argument("--readouts", default="m2,m4")
     ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--outdir", default="v3_mmlu_s7")
+    ap.add_argument("--split")
+    ap.add_argument("--shard", type=int, default=0)
+    ap.add_argument("--nshards", type=int, default=1)
+    ap.add_argument("--detector", default="detector_v4")
+    ap.add_argument("--detector-configs", default="")
+    ap.add_argument("--prompt-configs", default="")
+    ap.add_argument("--cast-configs", default="")
     args = ap.parse_args()
 
     _selftest()
@@ -96,10 +105,14 @@ if __name__ == "__main__":
     from behaviour_specific.overconfidence.benchmarks import load_records
     from models_specific.active import load_model
 
-    winners = {}
+    winners = {f"det{'online' if 'at' in c else ''}_{c}": c for c in args.detector_configs.split(",") if c}
+    winners.update({f"detprompt_{c}": c for c in args.prompt_configs.split(",") if c})
+    winners.update({f"castdim_{c}": c for c in args.cast_configs.split(",") if c})
     for m in args.methods.split(","):
         p = RESULTS_DIR / args.parity_dir / f"parity_{m}.json"
-        if p.exists():
+        if m.startswith("plain_") or m in ("prompt", "published_gate"):
+            winners[m] = m[6:]
+        elif p.exists():
             winners[m] = json.loads(p.read_text())["winner"]
         else:
             print(f"  no tuning result for {m}, skipping", flush=True)
@@ -107,7 +120,6 @@ if __name__ == "__main__":
 
     pts = torch.load(DIRECTIONS_DIR / f"pts_L{args.layer}.pt")
     pstats = torch.load(DIRECTIONS_DIR / f"projection_stats_L{args.layer}.pt")
-    joint = torch.load(DIRECTIONS_DIR / f"joint_stats_L{args.layer}.pt")
     stats = pstats["stats"]["m4_conf"]
     tstats = pstats["trace_stats"]["ocw_vs_cr"]
 
@@ -115,16 +127,21 @@ if __name__ == "__main__":
     dev = model.device
     v = pts["dirs"]["m4_conf"].to(dev, torch.float32)
     u = pts["dirs"]["ocw_vs_cr"].float()
-    records = load_records(args.benchmark, n=args.n, seed=args.seed)
+    if args.split:
+        from behaviour_specific.overconfidence.label_pool import split_records
+        records = split_records(args.split)[args.shard::args.nshards]
+    else:
+        records = load_records(args.benchmark, n=args.n, seed=args.seed)
     by_id = {r["id"]: r for r in records}
     lids, ids4, bs = letter_token_ids(tok), yes_no_token_ids(tok), args.batch_size
-    scorers = {}
-    for m in args.readouts.split(","):
-        scorers[m] = (lambda recs: score_m2_batch(model, tok, recs, lids, bs)) if m == "m2" \
-            else (lambda recs: score_m4_batch(model, tok, recs, ids4, bs))
+    readers = {"m2": lambda recs, system=None: score_m2_batch(model, tok, recs, lids, bs, system=system),
+               "m4": lambda recs, system=None: score_m4_batch(model, tok, recs, ids4, bs, system=system),
+               "m5": lambda recs, system=None: score_m5_batch(model, tok, recs, lids, ids4, bs, system=system)}
+    scorers = {m: readers[m] for m in args.readouts.split(",")}
 
     out_dir = RESULTS_DIR / args.outdir / "rollouts"
-    baselines = {m: list(read_jsonl(out_dir / f"baseline_{m}__shard0.jsonl")) for m in scorers}
+    baselines = {m: list(read_jsonl(out_dir / f"baseline_{m}__shard{args.shard}.jsonl")) for m in scorers}
+    traces = baselines.get("m2") or baselines.get("m5")
     norm = mean_activation_norm(model, tok, records, args.layer,
                                 lambda r: chat_prompt(tok, mcq_prompt(r)))
     conds = build_conditions(stats, norm)
@@ -132,7 +149,7 @@ if __name__ == "__main__":
 
     def emit(tag: str, rows_by_id: dict, mname: str) -> None:
         merged = [rows_by_id.get(r["id"], r) for r in baselines[mname]]
-        write_jsonl(out_dir / f"{tag}_{mname}__shard0.jsonl", merged)
+        write_jsonl(out_dir / f"{tag}_{mname}__shard{args.shard}.jsonl", merged)
 
     def run_all(tag: str, fn, subset=None):
         for mname, scorer in scorers.items():
@@ -149,6 +166,22 @@ if __name__ == "__main__":
             emit(tag, {r["id"]: r for r in rows}, mname)
             print(f"  {tag}_{mname}: {len(rows)}/{len(baselines[mname])} ({time.time() - t0:.0f}s)", flush=True)
 
+    def ungated(name: str, w: dict):
+        if name == "ablate":
+            return lambda h: steer_ablate(h, v)
+        if name in conds:
+            return conds[name](v)
+        if "alpha" in w:
+            return lambda h, a=w["alpha"]: steer_add(h, v, a * norm)
+        if "reg" in w:
+            fm = torch.load(DIRECTIONS_DIR / f"fullspace_moments_L{w['layer']}.pt")
+            eye = torch.eye(fm["m_s"].shape[0], dtype=torch.float64)
+            A = bw_map(fm["S_s"].double() + w["reg"] * eye, fm["S_t"].double() + w["reg"] * eye).float().to(dev)
+            return lambda h: steer_fullspace_affine(h, fm["m_s"].to(dev), A, fm["m_t"].to(dev))
+        pn = torch.load(DIRECTIONS_DIR / f"perneuron_stats_L{w['layer']}.pt")
+        return lambda h: steer_perneuron_affine(h, pn["mu_s"].to(dev), pn["sig_s"].to(dev), pn["mu_t"].to(dev),
+                                                pn["sig_t"].to(dev), w["lam"])
+
     trace_scores = {}
 
     def gate_scores(vec):
@@ -158,7 +191,7 @@ if __name__ == "__main__":
             trace_scores[key] = {
                 r["id"]: float((token_projections(model, tok, r["generations"][0]["prompt"],
                                                  r["generations"][0]["text"], args.layer)[1] @ vec).mean())
-                for r in baselines["m2"]}
+                for r in traces}
         return trace_scores[key]
 
     def gate_scores_at(V, head, layer):
@@ -166,16 +199,67 @@ if __name__ == "__main__":
         key = ("lda", layer)
         if key not in trace_scores:
             sc = {}
-            for r in baselines["m2"]:
+            for r in traces:
                 g = r["generations"][0]
                 _, ht = token_projections(model, tok, g["prompt"], g["text"], layer)
                 sc[r["id"]] = float((ht @ V.T).mean(0) @ head[0] + head[1])
             trace_scores[key] = sc
         return trace_scores[key]
 
+    def detector_scores():
+        if "det" not in trace_scores:
+            det = torch.load(DIRECTIONS_DIR / f"{args.detector}.pt")
+            rows = list(det["layers"]) if det["layer"] is None else [det["layer"]]
+            trace_scores["det"] = (det, {
+                r["id"]: float(get_trace_activations(model, tok, r["generations"][0]["prompt"], r["generations"][0]["text"])
+                               [rows].flatten() @ det["w"].float() + det["b"])
+                for r in traces})
+        return trace_scores["det"]
+
+    def prompt_scores():
+        if "prompt" not in trace_scores:
+            det = torch.load(DIRECTIONS_DIR / f"{args.detector}_prompt.pt")
+            trace_scores["prompt"] = (det, {
+                r["id"]: float(get_activations_all_layers(model, tok, r["generations"][0]["prompt"], pos=det["pos"])
+                               [det["layer"]] @ det["w"].float() + det["b"])
+                for r in traces})
+        return trace_scores["prompt"]
+
     for method, winner in winners.items():
         w = parse(winner)
-        if method == "additive":
+        if method == "prompt":
+            for mname, scorer in scorers.items():
+                emit("prompt_hedge", {r["id"]: r for r in scorer(records, system=HEDGE_SYSTEM)}, mname)
+        elif method == "published_gate":
+            tau = q_at(tstats["confident_right"], 0.50)
+            flagged = [by_id[i] for i, x in gate_scores(u).items() if x > tau and i in by_id]
+            meta["gates"][method] = {"tau": float(tau), "n_flagged": len(flagged)}
+            run_all("sweep_ocwcr-crq50_ablate", lambda h: steer_ablate(h, v), flagged)
+        elif method.startswith("plain_"):
+            fn, args.layer = ungated(winner, w), w.get("layer", 14)
+            run_all(method, fn)
+            args.layer = 14
+        elif method.startswith("castdim_"):
+            cd = torch.load(DIRECTIONS_DIR / f"cast_condition_L{w['layer']}.pt")
+            c = cd["c"].float()
+            zs = {r["id"]: get_activations_all_layers(model, tok, r["generations"][0]["prompt"], pos="mean")[w["layer"]]
+                  for r in traces}
+            sc = {i: float(z @ c / (z.norm() * c.norm())) for i, z in zs.items()}
+            tau = q_at({"q": cd["score_quantiles"].tolist()}, w["q"])
+            flagged = [by_id[i] for i, x in sc.items() if x > tau and i in by_id]
+            meta["gates"][method] = {"tau": float(tau), "n_flagged": len(flagged)}
+            run_all(method, lambda h, a=w["alpha"]: steer_add(h, v, a * norm), flagged)
+        elif method.startswith("det_") or method.startswith("detprompt_"):
+            det, sc = detector_scores() if method.startswith("det_") else prompt_scores()
+            tau = q_at({"q": det["score_quantiles"].tolist()}, w["q"])
+            flagged = [by_id[i] for i, x in sc.items() if x > tau and i in by_id]
+            meta["gates"][method] = {"tau": float(tau), "n_flagged": len(flagged)}
+            if "alpha" in w:
+                fn = lambda h, a=w["alpha"]: steer_add(h, v, a * norm)
+            else:
+                fn = (lambda h: steer_ablate(h, v)) if w["action"] == "ablate" else conds[w["action"]](v)
+            run_all(method, fn, flagged)
+        elif method == "additive":
             run_all("tuned_additive", lambda h, a=w["alpha"]: steer_add(h, v, a * norm))
         elif method == "cast":
             sc = gate_scores(u)
@@ -219,7 +303,7 @@ if __name__ == "__main__":
             flagged = [by_id[i] for i, x in sc.items() if x > tau and i in by_id]
             fm = torch.load(DIRECTIONS_DIR / f"fullspace_moments_L{args.layer}.pt")
             Vk = displacement_subspace(fm["m_s"], fm["S_s"], fm["m_t"], fm["S_t"], w["k"],
-                                       seed=joint["V"].float()[: min(w["k"], 2)])
+                                       seed=torch.load(DIRECTIONS_DIR / f"joint_stats_L{args.layer}.pt")["V"].float()[: min(w["k"], 2)])
             ms, Ss, mt, St = projected_moments(Vk, fm["m_s"], fm["S_s"], fm["m_t"], fm["S_t"])
             meta["gates"]["oursk"] = {"tau": float(tau), "k": w["k"], "n_flagged": len(flagged)}
             run_all("tuned_oursk", make_subspace_fn(Vk.to(dev), ms.to(dev), Ss.to(dev),
@@ -303,6 +387,34 @@ if __name__ == "__main__":
                     lambda h, A=A, fm=fm: steer_fullspace_affine(h, fm["m_s"].to(dev), A, fm["m_t"].to(dev)),
                     flagged)
             args.layer = 14
+        elif method.startswith("detonline_"):
+            pdet = torch.load(DIRECTIONS_DIR / f"{args.detector}_prefix_t{int(w['at'])}.pt")
+            tau = q_at({"q": pdet["score_quantiles"].tolist()}, w["q"])
+            g = SequentialGate(pdet["w"].float()[None].to(dev), torch.ones(1, device=dev), pdet["b"], tau, 1.0,
+                               decide_at=int(w["at"]))
+            act = (lambda h, a=w["alpha"]: steer_add(h, v, a * norm)) if "alpha" in w else (lambda h: steer_ablate(h, v))
+            ha = steering_hook(model.model.layers[args.layer], g.actor(act))
+            hr = steering_hook(model.model.layers[pdet["layer"]], g.reader)
+            try:
+                m2 = score_m2_batch(model, tok, records, lids, bs)
+            finally:
+                ha.remove()
+                hr.remove()
+            prompts = [chat_prompt(tok, mcq_prompt(r)) for r in records]
+            order = [j for idx in _length_buckets(tok, prompts, bs) for j in idx]
+            fired = {records[j]["id"] for j, st in zip(order, g.fire_steps()[:len(records)]) if st is not None}
+            on, off = [r for r in m2 if r["id"] in fired], [r for r in m2 if r["id"] not in fired]
+            handle = steering_hook(model.model.layers[args.layer], act)
+            try:
+                rows = score_m5_batch(model, tok, [], lids, ids4, bs, m2_rows=on) if on else []
+            finally:
+                handle.remove()
+            rows += score_m5_batch(model, tok, [], lids, ids4, bs, m2_rows=off) if off else []
+            meta["gates"][method] = {"tau": float(tau), "layer": pdet["layer"], "fire_rate": len(fired) / len(records)}
+            for mname, got in (("m5", rows), ("m2", m2)):
+                if mname in scorers:
+                    emit(method, {r["id"]: r for r in got}, mname)
+            print(f"  {method}: fired {len(fired)}/{len(records)}", flush=True)
         elif method == "online":
             V_c, w_c, b_g, tau_g, sigma = load_gate(args.gate_layer, w["q"], 0.05, int(w["at"]))
             gate = SequentialGate(V_c.to(dev, torch.float32), w_c.to(dev, torch.float32), b_g, tau_g,
@@ -326,5 +438,5 @@ if __name__ == "__main__":
                 print(f"  tuned_online_{mname}: {len(rows)} ({time.time() - t0:.0f}s) "
                       f"{meta['gates'][f'online_{mname}']}", flush=True)
 
-    write_json(RESULTS_DIR / args.outdir / f"meta_v7_{args.benchmark}_s{args.seed}.json", meta)
+    write_json(RESULTS_DIR / args.outdir / f"meta_v7_{args.split or args.benchmark}_s{args.seed}_{args.shard}.json", meta)
     print("done ->", out_dir)
