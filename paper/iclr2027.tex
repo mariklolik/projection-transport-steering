@@ -92,12 +92,12 @@ optimal-transport map, and accounts exactly for each part: selectivity equals
 the decision's error rates weighted by the action's conversion rates on the
 inputs it flags. The account yields a reference every conditional method should
 beat, detecting the behavior and overriding its readout, and states when
-steering can beat it. On answer-level overconfidence, in a pre-registered
-comparison across two model families, PTS is the most selective steering method
-on one model and level with the best on the other. The account explains both
-results: the decision determines the outcome, and detect-and-override with the
-same decision matches the best gated edit on one model and far exceeds it on
-the other.
+steering can beat it. On answer-level overconfidence, in pre-registered
+comparisons on two model families and two benchmarks, PTS is the most selective
+method in one setting and level with or below the best in the other two. The
+account explains each outcome: the decision determines what a gated edit can
+reach, and detect-and-override with the same decision matches or exceeds the
+best gated edit in all three.
 \end{abstract}
 
 \section{Introduction}
@@ -146,9 +146,9 @@ characterization of projection-local actions as transport maps
 (Sec.~\ref{sec:method}).
 \item A pre-registered comparison in which every method is tuned under one rule
 and evaluated once on unseen questions, for two model families and a second
-benchmark. PTS is the most selective method on Gemma, significantly so against
-seven baselines, and level with the best methods on Qwen
-(Sec.~\ref{ssec:confirm}).
+benchmark. PTS is the most selective method on Gemma-MMLU, significantly so
+against seven baselines, level with the best methods on Qwen-MMLU, and below the
+best two, not significantly, on Gemma-ARC (Sec.~\ref{ssec:confirm}).
 \item Evidence that the decision determines the outcome. Across five
 decisions, the override reference is ordered by the decision's held-out AUROC,
 and gated edits reach it only when the action converts nearly every flagged
@@ -575,24 +575,26 @@ answer and every confident-right one, at a cost of $15.3$ accuracy points;
 smaller doses keep more of both (Appendix~\ref{app:tuning}). The tuned dose,
 $p-0.25\lVert h\rVert$, reaches selectivity $0.197$ there.
 
-\begin{table}[t]\scriptsize\setlength{\tabcolsep}{2.2pt}
+\begin{table}[t]\scriptsize\setlength{\tabcolsep}{1.6pt}
 \centering
-\begin{tabular}{l|cccc|cccc}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{l|cccc|cccc|ccc}
 \hline
- & \multicolumn{4}{c|}{Gemma-2-2B ($n_{\ocw}=963$, $n_{\crok}=1{,}399$)} & \multicolumn{4}{c}{Qwen2.5-7B ($n_{\ocw}=563$, $n_{\crok}=2{,}007$)} \\
-method & $\Delta$acc & ret. & Sel $\uparrow$ & $\Delta$Sel ($p$) & $\Delta$acc & ret. & Sel $\uparrow$ & $\Delta$Sel ($p$) \\
+ & \multicolumn{4}{c|}{Gemma-2-2B, MMLU ($n_{\ocw}{=}963$, $n_{\crok}{=}1{,}399$)} & \multicolumn{4}{c|}{Qwen2.5-7B, MMLU ($n_{\ocw}{=}563$, $n_{\crok}{=}2{,}007$)} & \multicolumn{3}{c}{Gemma-2-2B, ARC ($n_{\ocw}{=}228$, $n_{\crok}{=}780$)} \\
+method & $\Delta$acc & ret. & Sel $\uparrow$ & $\Delta$Sel ($p$) & $\Delta$acc & ret. & Sel $\uparrow$ & $\Delta$Sel ($p$) & $\Delta$acc & Sel $\uparrow$ & $\Delta$Sel ($p$) \\
 \hline
 \inputtab{gen/confirm_side}
 \hline
-\end{tabular}
-\caption{\textbf{PTS is the most selective method on Gemma and level with the
-best methods on Qwen, at unchanged accuracy.} Confirmatory split of 3{,}000 MMLU
-questions per model, each method at the configuration it won on the tuning
-split under one rule. Retention is over the questions that started
-confident-right. Sel intervals are question-level bootstrap intervals ($10^4$
-resamples); $\Delta$Sel is paired against PTS post-hoc, with Holm-adjusted $p$
-over the seven baselines. $^\dagger$: the $95\%$ interval of $\Delta$acc
-reaches below $-0.02$. Rows below the line are secondary.}
+\end{tabular}}
+\caption{\textbf{PTS is the most selective method on Gemma-MMLU, level with the
+best methods on Qwen-MMLU, and below the two best on Gemma-ARC, at unchanged
+accuracy.} Confirmatory splits of 3{,}000 MMLU questions per model and the
+1{,}165 ARC-Challenge test questions, each method at the configuration it won
+on its tuning split under one rule. Retention is over the questions that
+started confident-right. Sel intervals are question-level bootstrap intervals
+($10^4$ resamples); $\Delta$Sel is paired against PTS post-hoc, with
+Holm-adjusted $p$ over the seven baselines. $^\dagger$: the $95\%$ interval of
+$\Delta$acc reaches below $-0.02$. Rows below the line are secondary.}
 \label{tab:confirm}
 \end{table}
 
@@ -622,6 +624,16 @@ the CAST-style variant is significant. Its accuracy change, $-0.002$
 $[-0.014, 0.009]$, is inside the margin; the intervals of the tuned additive
 dose ($-0.015$ $[-0.027, -0.003]$) and of ablation reach below it.
 
+\textbf{On ARC the action alone is already selective.} The ARC replication
+selects a milder shift, $p-0.25\lVert h\rVert$, which applied everywhere changes
+$51\%$ of overconfident-wrong and $22\%$ of confident-right answers. A decision
+then forfeits more on the target answers it misses than it recovers on the
+protected answers it spares. PTS reaches $0.235$ $[0.168, 0.303]$, below the
+ungated dose ($0.294$) and the CAST-style shift ($0.289$) by differences that
+are not significant after Holm adjustment, and significantly above Linear-AcT
+and the CAST prompt condition, whose decision is at chance on ARC (AUROC
+$0.51$).
+
 \subsection{The decision decides}
 \label{ssec:decides}
 
@@ -629,7 +641,7 @@ dose ($-0.015$ $[-0.027, -0.003]$) and of ablation reach below it.
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=.62\linewidth, height=4.6cm, xlabel={held-out AUROC of the decision}, ylabel={selectivity},
-  xmin=0.49, xmax=0.8, ymin=0.0, ymax=0.42, grid=major, grid style={dashed,gray!20},
+  xmin=0.49, xmax=0.8, ymin=0.0, ymax=0.48, grid=major, grid style={dashed,gray!20},
   tick label style={font=\scriptsize}, every axis label/.append style={font=\footnotesize},
   legend style={font=\tiny, draw=none, fill=none, at={(1.03,0.5)}, anchor=west}]
 \addplot[only marks, mark=*, mark size=1.6pt, cgate, error bars/.cd, y dir=both, y explicit]
@@ -680,8 +692,10 @@ and the frozen PTS arm $0.294$. On Qwen the selected action is ablation, which
 converts $28\%$ of flagged overconfident-wrong and $15\%$ of flagged
 confident-right answers, and every
 gated edit stays between $0.13$ and $0.17$ while the override with the same
-probe reaches $0.433$ $[0.393, 0.472]$. The override also calibrates better:
-on Qwen it lowers ECE from $0.216$ to $0.139$ and Brier score from $0.230$ to
+probe reaches $0.433$ $[0.393, 0.472]$. On ARC, where the probe reaches AUROC $0.70$, the override
+reaches $0.278$ $[0.207, 0.348]$ and the best gated edit $0.297$. The override
+also calibrates better on Qwen:
+it lowers ECE from $0.216$ to $0.139$ and Brier score from $0.230$ to
 $0.195$, where PTS leaves both unchanged; on Gemma PTS lowers ECE from $0.354$ to
 $0.255$ and the override to $0.234$. The override analysis was added after the
 protocol and is not pre-registered.
@@ -938,6 +952,12 @@ non-inferior if the lower end of the $95\%$ interval of its accuracy change is
 above $-0.02$. The single-pass and prompt-decision variants, M4 and M2
 selectivities, removal, retention and ECE are secondary and reported without
 a claim.
+
+\textbf{Released records.} Every unsteered and steered answer of the tuning and
+confirmatory splits is released with its state, confidence and correctness
+(\texttt{results/release/records.csv.gz}); \texttt{paper/recompute\_from\_records.py}
+recomputes each selectivity and paired interval in Table~\ref{tab:confirm} from
+that file alone.
 
 \textbf{ARC replication.} A second protocol
 (\texttt{confirmatory-v20-arc.md}), frozen before any steered ARC rollout,
@@ -1324,6 +1344,24 @@ overconfident.
 \caption{State transitions of the frozen PTS arms on the confirmatory split
 (counts of questions).}
 \label{tab:transitions}
+\end{table}
+
+Table~\ref{tab:calibration} reports calibration of the stated confidence on
+the confirmatory split: expected calibration error (10 bins), Brier score, and
+the AUROC with which the confidence separates right from wrong answers.
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{4pt}
+\centering
+\begin{tabular}{l|ccc|ccc}
+\hline
+ & \multicolumn{3}{c|}{Gemma-2-2B} & \multicolumn{3}{c}{Qwen2.5-7B} \\
+arm & ECE $\downarrow$ & Brier $\downarrow$ & AUROC $\uparrow$ & ECE $\downarrow$ & Brier $\downarrow$ & AUROC $\uparrow$ \\
+\hline
+\inputtab{gen/calibration}
+\hline
+\end{tabular}
+\caption{Calibration of the stated confidence (M5) on the confirmatory split.}
+\label{tab:calibration}
 \end{table}
 
 \section{Capability away from the target behavior}

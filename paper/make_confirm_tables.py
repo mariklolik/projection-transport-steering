@@ -131,21 +131,25 @@ def secondary_table(key: str) -> None:
 
 def side_by_side() -> None:
     blocks = {}
-    for key in ("gemma", "qwen"):
-        proto = RES / {"gemma": "v4_confirm", "qwen": "v5q_confirm"}[key] / "protocol.json"
-        res = RES / "v4_pooled" / f"confirm_{key}.json"
+    for key, d in (("gemma", "v4_confirm"), ("qwen", "v5q_confirm"), ("arc", "v6a_confirm")):
+        proto, res = RES / d / "protocol.json", RES / "v4_pooled" / f"confirm_{key}.json"
         if not proto.exists() or not res.exists():
-            return
+            continue
         p, r = json.loads(proto.read_text()), json.loads(res.read_text())["m5"]
         extra = RES / "v4_pooled" / f"confirm_{key}_extra.json"
         if extra.exists():
             r["methods"] = {**json.loads(extra.read_text())["m5"]["methods"], **r["methods"]}
         adj = holm({a["tag"]: r["methods"][a["tag"]]["vs_ref"]["sel"]["p_two_sided"] for a in p["arms"] if a.get("primary")})
         blocks[key] = (p, r, adj)
+    short = {"prompt_hedge": "prompting", "tuned_additive": "additive CAA", "plain_ablate": "dir. ablation",
+             "tuned_mimic": "MiMiC", "tuned_act": "Linear-AcT", "tuned_cast": "CAST-style (trace)"}
     rows = []
+    ref_tag = blocks["gemma"][0]["ref"]
     for i, arm in enumerate(blocks["gemma"][0]["arms"]):
         cells = []
-        for key in ("gemma", "qwen"):
+        for key in ("gemma", "qwen", "arc"):
+            if key not in blocks:
+                continue
             p, r, adj = blocks[key]
             a = p["arms"][i]
             m = r["methods"][a["tag"]]
@@ -153,16 +157,17 @@ def side_by_side() -> None:
             vs = m.get("vs_ref", {}).get("sel")
             d = "---" if vs is None else f"${vs['point']:+.3f}$" + (f" ({pval(adj[a['tag']])})" if a["tag"] in adj else "")
             sel = m["sel"]
-            cells.append(f"${m['dacc']['point']:+.3f}${ok} & {m['cr_keep']['point']:.2f} & ${sel['point']:.3f}$ "
-                         f"{{\\tiny$[{sel['ci'][0]:.2f},{sel['ci'][1]:.2f}]$}} & {d}")
-        short = {"prompt_hedge": "prompting", "tuned_additive": "additive CAA", "plain_ablate": "dir. ablation",
-                 "tuned_mimic": "MiMiC", "tuned_act": "Linear-AcT", "tuned_cast": "CAST-style (trace)"}
+            sel_cell = f"${sel['point']:.3f}$ {{\\tiny$[{sel['ci'][0]:.2f},{sel['ci'][1]:.2f}]$}}"
+            if key == "arc":
+                cells.append(f"${m['dacc']['point']:+.3f}${ok} & {sel_cell} & {d}")
+            else:
+                cells.append(f"${m['dacc']['point']:+.3f}${ok} & {m['cr_keep']['point']:.2f} & {sel_cell} & {d}")
         t = arm["tag"]
         name = short.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PTS, prefix" if t.startswith("detonline")
                                 else "PTS, prompt" if t.startswith("detprompt") else "PTS, post-hoc")
-        name = f"\\textbf{{{name}}}" if arm["tag"] == blocks["gemma"][0]["ref"] else name
+        name = f"\\textbf{{{name}}}" if t == ref_tag else name
         rows.append(f"{name} & " + " & ".join(cells) + " \\\\")
-        if arm["tag"] == blocks["gemma"][0]["ref"]:
+        if t == ref_tag:
             rows.append("\\hline")
     (GEN / "confirm_side.tex").write_text("\n".join(rows) + "\n")
 
@@ -183,7 +188,32 @@ def transitions_table() -> None:
     (GEN / "transitions.tex").write_text("\n".join(rows) + "\n")
 
 
+def calibration_table() -> None:
+    rows = []
+    spec = {"gemma": [("unsteered", None), ("shift $-0.25$, ungated", "ungated | plain_alpha-0.25"),
+                      ("ablation, ungated", "ungated | plain_ablate"), ("PTS, post-hoc", "real | det_q60_alpha-0.375"),
+                      ("override, probe on answer", "probe, answer | override"),
+                      ("override, CAST condition", "CAST condition, prompt | override")],
+            "qwen": [("unsteered", None), ("shift $-0.25$, ungated", "ungated | plain_alpha-0.25"),
+                     ("ablation, ungated", "ungated | plain_ablate"), ("PTS, post-hoc", "real | det_q40_ablate"),
+                     ("override, probe on answer", "probe, answer | override"),
+                     ("override, CAST condition", "CAST condition, prompt | override")]}
+    data = {k: json.loads((RES / "v4_pooled" / f"matrix_{k}.json").read_text()) for k in spec
+            if (RES / "v4_pooled" / f"matrix_{k}.json").exists()}
+    if len(data) < 2:
+        return
+    for i in range(len(spec["gemma"])):
+        cells = []
+        for k in ("gemma", "qwen"):
+            name, arm = spec[k][i]
+            c = data[k]["baseline_calibration"] if arm is None else data[k]["arms"][arm]["calibration"]
+            cells.append(f"{c['ece']:.3f} & {c['brier']:.3f} & {c['auroc_conf']:.3f}")
+        rows.append(f"{spec['gemma'][i][0]} & " + " & ".join(cells) + " \\\\")
+    (GEN / "calibration.tex").write_text("\n".join(rows) + "\n")
+
+
 if __name__ == "__main__":
+    calibration_table()
     transitions_table()
     side_by_side()
     secondary_table("gemma")
