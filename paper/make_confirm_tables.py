@@ -136,7 +136,7 @@ SHORT = {"prompt_hedge": "prompting", "tuned_additive": "additive CAA", "plain_a
 
 def arm_name(t: str) -> str:
     return {"ref:null": "same decision, no edit", "ref:rand": "same decision, random direction",
-            "ref:randm": "same decision, random direction"}.get(t) or SHORT.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PTS, prefix" if t.startswith("detonline")
+            "ref:randm": "same decision, random direction", "ref:override": "same decision, override readout"}.get(t) or SHORT.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PTS, prefix" if t.startswith("detonline")
                             else "PTS, prompt" if t.startswith("detprompt") else "null: decision, no edit"
                             if t.startswith("detnull") else "null: decision, random dir." if t.startswith("detrand")
                             else "PTS, post-hoc")
@@ -187,6 +187,9 @@ def setting_cells(key: str, block, rh, full: bool) -> list[tuple[str, str]]:
              f"${nl['d_ece']['point']:+.3f}$" + star(nl["d_ece"])),
             ("ref:rand" + ("m" if key == "qwen" else ""), "---", {"point": dr["mean"], "ci": None},
              f"${-dense['vs_random']['point']:+.3f}$ ({pval(dense['vs_random']['p_one_sided'])})", "---")]
+    ov = ref["override_matched"]
+    refs.append(("ref:override", "$+0.000$", ov,
+                 f"${-ref['steer_minus_override']['point']:+.3f}$", "---"))
     for tag, dacc, sl, d, ece in refs:
         selc = f"${sl['point']:.3f}$" + ("" if sl["ci"] is None else f" {{\\tiny$[{sl['ci'][0]:.2f},{sl['ci'][1]:.2f}]$}}")
         out.append((tag, f"{dacc} & --- & --- & {selc} & {d} & --- & {ece}" if full else f"{dacc} & {selc} & {d} & {ece}"))
@@ -194,7 +197,7 @@ def setting_cells(key: str, block, rh, full: bool) -> list[tuple[str, str]]:
 
 
 def write_rows(fname: str, cols: list[list[tuple[str, str]]], ref_tag: str) -> None:
-    rows, n_arms = [], len(cols[0]) - 2
+    rows, n_arms = [], len(cols[0]) - 3
     for i in range(len(cols[0])):
         tag = cols[0][i][0]
         name = arm_name(tag)

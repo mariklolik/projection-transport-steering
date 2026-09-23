@@ -659,8 +659,9 @@ method & $\Delta$acc & removal & retention & Sel $\uparrow$ [95\% CI] & $\Delta$
 Gemma, 3{,}000 MMLU questions (unsteered accuracy $0.559$, ECE $0.354$;
 $n_{\ocw}{=}963$, $n_{\crok}{=}1{,}399$); $\Delta$Sel is the row minus PTS
 post-hoc, with Holm-adjusted $p$ over the seven baselines. The middle block
-holds the single-pass PTS decisions, and the last two rows keep the PTS decision with no
-edit and with a random direction at the PTS dose (mean of 100). $^*$: $95\%$
+holds the PTS decisions taken before the answer; the last three rows keep the
+PTS decision with no edit, with a random direction at the PTS dose (mean of
+100), and with the reported confidence overridden (Eq.~\eqref{eq:override}). $^*$: $95\%$
 interval excludes $0$; $^\dagger$: accuracy interval reaches $-0.02$.}
 \label{tab:confirm}
 \end{table}
@@ -706,7 +707,8 @@ method & $\Delta$acc & Sel $\uparrow$ [95\% CI] & $\Delta$Sel ($p$) & $\Delta$EC
 no-edit reference arm. Notation as in Table~\ref{tab:confirm}; unsteered
 accuracy $0.737$ (Qwen) and $0.744$ (ARC). The random-direction row averages
 100 directions on ARC and, on Qwen, 30 directions displaced as far as the
-selected ablation.}
+selected ablation; the last row overrides the reported confidence on the
+PTS decision.}
 \label{tab:confirm2}
 \end{table}
 
@@ -772,7 +774,11 @@ significantly above CAST, and on Mistral, where toxic continuations are rare,
 it lowers the toxic rate from $3.4\%$ to $1.4\%$ at selectivity $0.520$
 $[0.430, 0.605]$. For each of the seven gated arms we compared with refusal,
 Eq.~\eqref{eq:override} evaluated with tuning-split conversion rates predicts
-the held-out winner.
+the held-out winner. On a second, previously unused set of 3{,}000 prompts per
+model, under a protocol pushed before its runs, PTS again exceeds refusal on
+its own decision by $0.15$ to $0.17$ and a hundred random directions by $0.23$
+to $0.43$ in all three families, and prompting in all three
+(Appendix~\ref{app:fresh}).
 
 \subsection{The setting of PCHI}
 
@@ -799,10 +805,11 @@ $8.74$ seconds (Appendix~\ref{app:latency}).
 
 Where a behavior has a single readout, as multiple-choice confidence does,
 overriding that readout on every answer the post-hoc PTS decision flags is at
-least as selective as the action (Appendix~\ref{app:refs}). The evidence
-covers two behaviors in three model families of 2 to 7 billion parameters with
-one toxicity classifier, and the multiple-choice protocols became public only
-together with their results, so their precedence rests on local commit times.
+least as selective as the action (Appendix~\ref{app:refs}). On free text, a
+per-token gate without the input decision matches PTS on a fresh split
+(Appendix~\ref{app:fresh}). The evidence covers two behaviors in three model
+families of 2 to 7 billion parameters with one toxicity classifier, and the
+multiple-choice protocols became public together with their results.
 
 \section{Conclusion}
 
@@ -1600,6 +1607,39 @@ token, so that decision and edit share one pass, reaches $0.269$
 $[0.223, 0.315]$ on Gemma and $0.460$ $[0.418, 0.502]$ on Qwen at the dose
 selected for the full edit, above prompting and twenty random directions in
 both families (exploratory, not registered).
+
+\section{Fresh free-text split}
+\label{app:fresh}
+
+Protocol v26 (pushed before any steered rollout on the split) evaluates, on
+prompts 8000 to 11000 of the shuffled RealToxicityPrompts pool, the member of
+the PTS action family selected on the tuning split (prompt probe with a
+token-gated shift on Gemma and Qwen, with a shift on Mistral) against a
+DSAS-style token-gated shift without the input decision, a single-layer
+Linear-AcT per-neuron affine transport, the global shift, prompting, CAST and
+refusal on the PTS decision. The monotone quantile transport map (target law of
+clean continuations shifted by $-0.375\lVert h\rVert$) is compared on Gemma with a
+gated shift of equal mean displacement. Table~\ref{tab:fresh} gives the
+selectivities; the no-edit null leaves all continuations unchanged in each
+family. Against refusal and against the random directions, PTS passes in all
+three families; against prompting it passes in all three; against the global
+shift it passes on Qwen; against the token gate it does not pass in any family
+(Gemma $-0.048$, Qwen $+0.008$, Mistral $+0.087$, $p=0.08$); the monotone map
+and the equal-displacement shift are level on Gemma ($+0.003$).
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{4pt}
+\centering
+\begin{tabular}{l|ccc}
+\hline
+arm (fresh split) & Gemma-2-2B & Qwen2.5-7B & Mistral-7B \\
+\hline
+\inputtab{gen/fresh}
+\hline
+\end{tabular}
+\caption{Selectivity on the fresh free-text split (3{,}000 prompts per model;
+429, 604 and 88 toxic unsteered continuations).}
+\label{tab:fresh}
+\end{table}
 
 \section{PTS in the setting of PCHI}
 \label{app:pchi}
