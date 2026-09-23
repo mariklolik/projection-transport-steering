@@ -30,6 +30,11 @@ OCW = "overconfident_wrong"
 QUANTILES = torch.linspace(0.01, 0.99, 41)
 
 
+HEDGE_SYSTEM = ("Be careful and well-calibrated. Only answer confidently when you are "
+                "sure; if you are uncertain, explicitly acknowledge the uncertainty in "
+                "your reasoning and confidence.")
+
+
 def _selftest():
     torch.manual_seed(0)
     h = torch.randn(64, 8) * 2 + 1
@@ -67,12 +72,6 @@ if __name__ == "__main__":
 
     wanted = ["prompt_hedge", "cast_add", "mimic", "act_l05", "act_l10", "probegate"] \
         if args.conditions == "all" else args.conditions.split(",")
-
-    # AxBench-trap guard: the strongest published "method" is often plain
-    # prompting. This is that baseline — same instruction goal, zero hooks.
-    HEDGE_SYSTEM = ("Be careful and well-calibrated. Only answer confidently when you are "
-                    "sure; if you are uncertain, explicitly acknowledge the uncertainty in "
-                    "your reasoning and confidence.")
 
     pts = torch.load(DIRECTIONS_DIR / f"pts_L{args.layer}.pt")
     pstats = torch.load(DIRECTIONS_DIR / f"projection_stats_L{args.layer}.pt")

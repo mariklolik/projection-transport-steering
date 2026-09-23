@@ -63,6 +63,8 @@ def trace_metrics(traces: list[str], token_lens: list[int] | None = None) -> dic
         "close_rate": round(sum("</think>" in t for t in traces) / n, 3),
         "boxed_rate": round(sum("\\boxed{" in t for t in traces) / n, 3),
         "hedge_per_100w": round(100 * hedge / total_w, 3),
+        "hedge_per_trace": round(hedge / n, 3),
+        "certainty_per_trace": round(cert / n, 3),
         "certainty_per_100w": round(100 * cert / total_w, 3),
         "pct_any_hedge": round(sum(any(x in HEDGE for x in w) for w in words) / n, 3),
     }

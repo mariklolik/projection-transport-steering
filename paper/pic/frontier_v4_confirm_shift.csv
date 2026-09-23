@@ -1,0 +1,6 @@
+arm,group,removal,retention,sel
+plain_alpha-0.25,shift,0.5587,0.6612,0.2199
+plain_alpha-0.375,shift,0.8411,0.4153,0.2564
+plain_alpha-0.5,shift,0.9813,0.1279,0.1093
+plain_alpha-0.75,shift,1.0,0.0,0.0
+tuned_additive,shift,0.5587,0.6612,0.2199

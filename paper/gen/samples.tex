@@ -1,30 +1,37 @@
-Across the 226/300 gated questions, the intervention does \emph{not} inject
-hedging vocabulary --- hedge-marker frequency \emph{drops} ($0.57\to0.27$ per
-trace) --- and traces get shorter ($95\to78$ words). What changes is the mode
+Across the 223/300 gated questions, the intervention does \emph{not} inject
+hedging vocabulary --- hedge-marker frequency \emph{drops} ($0.25\to0.13$ per
+trace) --- and traces get shorter ($86\to71$ words). What changes is the mode
 of reasoning: assertive shortcut arguments are replaced by definitional,
-evidence-first ones, and the final answer changes on 83/226 gated questions
-(13 overconfident-wrong become \emph{correct} under M4; 32/48 gated
-confident-right survive intact). Ablating the confidence projection during
+evidence-first ones. Of the 50 overconfident-wrong traces, 29 leave that state
+and 12 come back \emph{correct} under M4, while 55 of the 76 confident-right
+traces keep their state. Ablating the confidence projection during
 the \texttt{think} phase appears to remove a ``commit early'' pressure rather
 than adding doubt. Three representative pairs (traces truncated):
 
 \noindent\textbf{Overconfident-wrong $\to$ corrected} (\texttt{mmlu-4592}; gold C
 , M4 state overconfident wrong $\to$ nonconfident wrong). The baseline trace jumps from a vague association to an answer; the steered trace states the definition and derives the (gold) answer.
 \begin{quote}\scriptsize\emph{Question:} If the price of firm A's cell phone service rises by 5 percent and the quantity demanded for firm B's cell phone service increases by 10 percent, we can say that Options: A. demand for firm B is price elastic. B. supply\\[2pt]
-\textbf{before:} \texttt{\textless{}think\textgreater{}The question asks about the relationship between the price of firm A's service and the quantity demanded for firm B's service. We know that the price of firm A's service increased and the quantity demanded for firm B's service increased. This suggests that the demand for firm B's service is likely to be price elastic. \textless{}/think\textgreater{} \textbackslash\{\}boxed\{A\}} $\to$ \texttt{A}\\[2pt]
-\textbf{after:} \texttt{\textless{}think\textgreater{}The cross-price elasticity of demand measures the percentage change in the quantity demanded of one good in response to a percentage change in the price of another good. Since the price of firm A's service increased and the quantity demanded for firm B increased, the cross-price elasticity is positive. We can conclude that the two goods are substitutes. \textless{}/think\textgreater{} \textbackslash\{\}boxed\{C\}} $\to$ \texttt{C}
+\textbf{before:} \texttt{\textless{}think\textgreater{}The question asks about the relationship between the price of firm A's service and the quantity demanded for firm B's service. We know that the price of firm A's service increased and the quantity demanded for firm B's service increased. This suggests that the demand for firm B's service is likely to be price elastic. \textless{}/think\textgreater{} \textbackslash boxed\{A\}} $\to$ \texttt{A}\\[2pt]
+\textbf{after:} \texttt{\textless{}think\textgreater{}The cross-price elasticity of demand measures the percentage change in the quantity demanded of one good in response to a percentage change in the price of another good. Since the price of firm A's service increased and the quantity demanded for firm B increased, the cross-price elasticity is positive. We can conclude that the two goods are substitutes. \textless{}/think\textgreater{} \textbackslash boxed\{C\}} $\to$ \texttt{C}
 \end{quote}
 
 \noindent\textbf{Overconfident-wrong $\to$ calibrated-right} (\texttt{mmlu-12923}; gold C
-, M4 state overconfident wrong $\to$ nonconfident right). The baseline burns its budget re-asserting; the steered trace weighs all four options tersely and lands on the same letter with calibrated confidence.
+, M4 state overconfident wrong $\to$ nonconfident right). The baseline reopens
+\texttt{<think>} three times and re-states the same elimination in each block, so it runs out
+of budget before reaching D; the steered trace weighs all four options once and lands on the
+same letter with calibrated confidence.
 \begin{quote}\scriptsize\emph{Question:} The best conclusion that can be drawn about the four-day ( compressed) workweek is that it has: Options: A. long-lasting positive effects on attitudes and productivity. B. long-lasting negative effects on attitudes and p\\[2pt]
 \textbf{before:} \texttt{\textless{}think\textgreater{}The question asks for the best conclusion about the four-day workweek. We need to consider the potential effects on attitudes and productivity. There's no mention of specific evidence or studies, so we need to consider the general impact of a compressed workweek. \textless{}/think\textgreater{} \textless{}think\textgreater{}Option A is too strong. We don't have enough information to say it has long-lasting positive effects on attitudes and productivity. \textless{}/think\textgreater{} \textless{}think\textgreater{}Option B is too strong. We don't have enough information to say it has long-las} $\to$ \texttt{D}\\[2pt]
-\textbf{after:} \texttt{\textless{}think\textgreater{}The question asks for the best conclusion about the four-day workweek. We need to consider the potential effects on attitudes and productivity. Option A is too strong, as we don't have enough information to guarantee long-lasting positive effects. Option B is too strong, as we don't have enough information to guarantee long-lasting negative effects. Option C is a possibility, but we don't know if it's the best conclusion. Option D is a possibility, but we don't know if it's the best conclusion. \textless{}/think\textgreater{} \textbackslash\{\}} $\to$ \texttt{D}
+\textbf{after:} \texttt{\textless{}think\textgreater{}The question asks for the best conclusion about the four-day workweek. We need to consider the potential effects on attitudes and productivity. Option A is too strong, as we don't have enough information to guarantee long-lasting positive effects. Option B is too strong, as we don't have enough information to guarantee long-lasting negative effects. Option C is a possibility, but we don't know if it's the best conclusion. Option D is a possibility, but we don't know if it's the best conclusion. \textless{}/think\textgreater{} \textbackslash boxed\{D\}} $\to$ \texttt{D}
 \end{quote}
 
 \noindent\textbf{Confident-right, gated but spared} (\texttt{mmlu-5125}; gold B
-, M4 state confident right $\to$ confident right). A false-flagged correct answer: the steered reasoning changes wording, the answer improves/stays correct, and the confident-right state survives.
+, M4 state confident right $\to$ confident right). A false-flagged trace whose state
+survives the intervention. The state label is the M4 readout, which puts its mass on the gold
+option B; the displayed rollout is the M2 trace, whose greedy letter is A, so instrument and
+greedy letter disagree here (Appendix~\ref{sec:measure}). Under steering the two agree: the
+trace states Pavlov's discovery and emits B.
 \begin{quote}\scriptsize\emph{Question:} Which one of the following best states Ivan Pavlov's accidental discovery? Options: A. While experimenting with rats, Pavlov discovered that if he repeatedly placed pellets of food in one side of a "T-maze," the rats wou\\[2pt]
 \textbf{before:} \texttt{\textless{}think\textgreater{}The question asks for Pavlov's accidental discovery. Let's look at the options and see which one describes an accidental discovery. Option B describes a learned response to a stimulus, which is not an accidental discovery. Option C describes a cat learning to press a lever, which is a learned behavior. Option D describes a pigeon learning to associate a key with food. Option A describes a rat learning to run to a specific side of a maze. This is a classic example of classical conditioning. Therefore,} $\to$ \texttt{A}\\[2pt]
-\textbf{after:} \texttt{\textless{}think\textgreater{}The question asks for the accidental discovery of Pavlov. Option B is the best choice because it describes Pavlov's accidental discovery of the dog's salivation response to the sight and sound of the attendant who brought them food. \textless{}/think\textgreater{} \textbackslash\{\}boxed\{B\}} $\to$ \texttt{B}
+\textbf{after:} \texttt{\textless{}think\textgreater{}The question asks for the accidental discovery of Pavlov. Option B is the best choice because it describes Pavlov's accidental discovery of the dog's salivation in response to the sight and sound of the attendant who brought them food. \textless{}/think\textgreater{} \textbackslash boxed\{B\}} $\to$ \texttt{B}
 \end{quote}

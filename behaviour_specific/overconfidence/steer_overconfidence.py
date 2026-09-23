@@ -141,6 +141,33 @@ def score_m4_batch(model, tok, records, ids, batch_size, system=None):
     return out
 
 
+VERIFY_TEMPLATE = "You answered {letter}. Is that answer correct? Reply with only YES or NO."
+
+
+def verification_text(tok, r: dict, system: str | None) -> str:
+    content = f"{system}\n\n{r['user_prompt']}" if system else r["user_prompt"]
+    return tok.apply_chat_template(
+        [{"role": "user", "content": content},
+         {"role": "assistant", "content": r["generations"][0]["text"]},
+         {"role": "user", "content": VERIFY_TEMPLATE.format(letter=r["final_answer"])}],
+        tokenize=False, add_generation_prompt=True)
+
+
+def score_m5_batch(model, tok, records, letter_ids, ids, batch_size, system=None, m2_rows=None):
+    from behaviour_specific.overconfidence.confidence_yesno import YESNO_CONF_THRESHOLD, p_yes
+
+    m2_rows = m2_rows or score_m2_batch(model, tok, records, letter_ids, batch_size, system=system)
+    logits = next_token_logits_batch(model, tok, [verification_text(tok, r, system) for r in m2_rows],
+                                     batch_size=batch_size)
+    out = []
+    for r, lg in zip(m2_rows, logits):
+        conf = p_yes(lg, *ids)
+        out.append({**r, "method": "ptrue", "m2_confidence": r["confidence"], "m2_state": r["state"],
+                    "confidence": conf,
+                    "state": label_from_score(conf, r["is_correct"], threshold=YESNO_CONF_THRESHOLD)})
+    return out
+
+
 def _mean_reasoning(results: list[dict], key: str) -> float | None:
     """Mean reasoning length over records that carry it (None if none do)."""
     vals = [r[key] for r in results if key in r]

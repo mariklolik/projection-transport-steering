@@ -1,0 +1,91 @@
+{
+  "method": "act",
+  "n": 1200,
+  "seed": 101,
+  "batch_size": 64,
+  "budget": 9,
+  "configs": {
+    "L10_lam0.25": {
+      "ocw_rm": 0.209,
+      "cr_keep": 0.9006,
+      "selectivity": 0.1096,
+      "d_acc": 0.0175,
+      "n_ocw": 201,
+      "n_cr": 312
+    },
+    "L10_lam0.5": {
+      "ocw_rm": 0.2637,
+      "cr_keep": 0.8686,
+      "selectivity": 0.1323,
+      "d_acc": -0.0008,
+      "n_ocw": 201,
+      "n_cr": 312
+    },
+    "L10_lam1.0": {
+      "ocw_rm": 0.2338,
+      "cr_keep": 0.8846,
+      "selectivity": 0.1184,
+      "d_acc": 0.0042,
+      "n_ocw": 201,
+      "n_cr": 312
+    },
+    "L14_lam0.25": {
+      "ocw_rm": 0.2189,
+      "cr_keep": 0.8942,
+      "selectivity": 0.1131,
+      "d_acc": 0.01,
+      "n_ocw": 201,
+      "n_cr": 312
+    },
+    "L14_lam0.5": {
+      "ocw_rm": 0.2488,
+      "cr_keep": 0.8494,
+      "selectivity": 0.0981,
+      "d_acc": 0.005,
+      "n_ocw": 201,
+      "n_cr": 312
+    },
+    "L14_lam1.0": {
+      "ocw_rm": 0.3184,
+      "cr_keep": 0.8654,
+      "selectivity": 0.1838,
+      "d_acc": 0.0258,
+      "n_ocw": 201,
+      "n_cr": 312
+    },
+    "L18_lam0.25": {
+      "ocw_rm": 0.204,
+      "cr_keep": 0.891,
+      "selectivity": 0.095,
+      "d_acc": 0.0083,
+      "n_ocw": 201,
+      "n_cr": 312
+    },
+    "L18_lam0.5": {
+      "ocw_rm": 0.209,
+      "cr_keep": 0.9006,
+      "selectivity": 0.1096,
+      "d_acc": 0.0108,
+      "n_ocw": 201,
+      "n_cr": 312
+    },
+    "L18_lam1.0": {
+      "ocw_rm": 0.2488,
+      "cr_keep": 0.8558,
+      "selectivity": 0.1045,
+      "d_acc": 0.0,
+      "n_ocw": 201,
+      "n_cr": 312
+    }
+  },
+  "winner": "L14_lam1.0",
+  "winner_stats": {
+    "ocw_rm": 0.3184,
+    "cr_keep": 0.8654,
+    "selectivity": 0.1838,
+    "d_acc": 0.0258,
+    "n_ocw": 201,
+    "n_cr": 312
+  },
+  "seconds": 3137.2
+}

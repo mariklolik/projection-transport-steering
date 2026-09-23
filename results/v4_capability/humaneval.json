@@ -1,0 +1,115 @@
+{
+  "task": "humaneval",
+  "n": 164,
+  "fire_posthoc": 0.23170731707317074,
+  "fire_prompt": 0.0,
+  "tau": -0.18853381811660175,
+  "ptau": -0.27728143862315596,
+  "methods": {
+    "unsteered": {
+      "pass": {
+        "mean": 0.3963,
+        "ci": [
+          0.3232,
+          0.4695
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      }
+    },
+    "shift -0.375 (ungated)": {
+      "pass": {
+        "mean": 0.3841,
+        "ci": [
+          0.311,
+          0.4573
+        ],
+        "delta": -0.0122,
+        "delta_ci": [
+          -0.0732,
+          0.0488
+        ],
+        "changed": 0.1463
+      }
+    },
+    "PTS post-hoc, shift -0.375": {
+      "pass": {
+        "mean": 0.4024,
+        "ci": [
+          0.3293,
+          0.4756
+        ],
+        "delta": 0.0061,
+        "delta_ci": [
+          0.0,
+          0.0183
+        ],
+        "changed": 0.0061
+      }
+    },
+    "PTS prompt, shift -0.375": {
+      "pass": {
+        "mean": 0.3963,
+        "ci": [
+          0.3232,
+          0.4695
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      }
+    },
+    "shift -0.5 (ungated)": {
+      "pass": {
+        "mean": 0.2805,
+        "ci": [
+          0.2134,
+          0.3476
+        ],
+        "delta": -0.1159,
+        "delta_ci": [
+          -0.1829,
+          -0.0488
+        ],
+        "changed": 0.189
+      }
+    },
+    "PTS post-hoc, shift -0.5": {
+      "pass": {
+        "mean": 0.3902,
+        "ci": [
+          0.3171,
+          0.4634
+        ],
+        "delta": -0.0061,
+        "delta_ci": [
+          -0.0305,
+          0.0122
+        ],
+        "changed": 0.0183
+      }
+    },
+    "PTS prompt, shift -0.5": {
+      "pass": {
+        "mean": 0.3963,
+        "ci": [
+          0.3232,
+          0.4695
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      }
+    }
+  }
+}

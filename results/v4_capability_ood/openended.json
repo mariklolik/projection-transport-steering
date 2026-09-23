@@ -1,0 +1,304 @@
+{
+  "task": "openended",
+  "n": 200,
+  "fire_posthoc": 0.0,
+  "fire_prompt": 0.0,
+  "tau": -0.2593777835320452,
+  "ptau": -0.24774156091651128,
+  "methods": {
+    "unsteered": {
+      "distinct3": {
+        "mean": 0.9532,
+        "ci": [
+          0.9466,
+          0.9596
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      },
+      "fluency_nll": {
+        "mean": 1.1963,
+        "ci": [
+          1.1257,
+          1.2762
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0,
+        "ppl": 3.308
+      },
+      "words": {
+        "mean": 206.395,
+        "ci": [
+          195.96,
+          216.085
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      }
+    },
+    "shift -0.375 (ungated)": {
+      "distinct3": {
+        "mean": 0.8888,
+        "ci": [
+          0.8722,
+          0.9049
+        ],
+        "delta": -0.0644,
+        "delta_ci": [
+          -0.079,
+          -0.0505
+        ],
+        "changed": 0.94
+      },
+      "fluency_nll": {
+        "mean": 1.3137,
+        "ci": [
+          1.2391,
+          1.4002
+        ],
+        "delta": 0.1174,
+        "delta_ci": [
+          0.0668,
+          0.1779
+        ],
+        "changed": 1.0,
+        "ppl": 3.72
+      },
+      "words": {
+        "mean": 204.6,
+        "ci": [
+          193.9497,
+          214.7651
+        ],
+        "delta": -1.795,
+        "delta_ci": [
+          -6.4305,
+          2.725
+        ],
+        "changed": 0.99
+      }
+    },
+    "PTS post-hoc, shift -0.375": {
+      "distinct3": {
+        "mean": 0.9532,
+        "ci": [
+          0.9466,
+          0.9596
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      },
+      "fluency_nll": {
+        "mean": 1.1963,
+        "ci": [
+          1.1257,
+          1.2762
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0,
+        "ppl": 3.308
+      },
+      "words": {
+        "mean": 206.395,
+        "ci": [
+          195.96,
+          216.085
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      }
+    },
+    "PTS prompt, shift -0.375": {
+      "distinct3": {
+        "mean": 0.9532,
+        "ci": [
+          0.9466,
+          0.9596
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      },
+      "fluency_nll": {
+        "mean": 1.1963,
+        "ci": [
+          1.1257,
+          1.2762
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0,
+        "ppl": 3.308
+      },
+      "words": {
+        "mean": 206.395,
+        "ci": [
+          195.96,
+          216.085
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      }
+    },
+    "shift -0.5 (ungated)": {
+      "distinct3": {
+        "mean": 0.8146,
+        "ci": [
+          0.7891,
+          0.8386
+        ],
+        "delta": -0.1385,
+        "delta_ci": [
+          -0.1628,
+          -0.1159
+        ],
+        "changed": 0.96
+      },
+      "fluency_nll": {
+        "mean": 1.3853,
+        "ci": [
+          1.316,
+          1.4655
+        ],
+        "delta": 0.1889,
+        "delta_ci": [
+          0.1361,
+          0.2498
+        ],
+        "changed": 1.0,
+        "ppl": 3.996
+      },
+      "words": {
+        "mean": 209.835,
+        "ci": [
+          199.0995,
+          219.9202
+        ],
+        "delta": 3.44,
+        "delta_ci": [
+          -1.5951,
+          8.6551
+        ],
+        "changed": 0.995
+      }
+    },
+    "PTS post-hoc, shift -0.5": {
+      "distinct3": {
+        "mean": 0.9532,
+        "ci": [
+          0.9466,
+          0.9596
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      },
+      "fluency_nll": {
+        "mean": 1.1963,
+        "ci": [
+          1.1257,
+          1.2762
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0,
+        "ppl": 3.308
+      },
+      "words": {
+        "mean": 206.395,
+        "ci": [
+          195.96,
+          216.085
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      }
+    },
+    "PTS prompt, shift -0.5": {
+      "distinct3": {
+        "mean": 0.9532,
+        "ci": [
+          0.9466,
+          0.9596
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      },
+      "fluency_nll": {
+        "mean": 1.1963,
+        "ci": [
+          1.1257,
+          1.2762
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0,
+        "ppl": 3.308
+      },
+      "words": {
+        "mean": 206.395,
+        "ci": [
+          195.96,
+          216.085
+        ],
+        "delta": 0.0,
+        "delta_ci": [
+          0.0,
+          0.0
+        ],
+        "changed": 0.0
+      }
+    }
+  }
+}

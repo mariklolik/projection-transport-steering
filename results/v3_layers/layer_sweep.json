@@ -1,0 +1,69 @@
+{
+  "layers": {
+    "4": {
+      "gate_auroc_ocw_vs_cr": 0.7827,
+      "gate_auroc_ocw_vs_rest": 0.7561,
+      "cohen_d_ocw_vs_cr_tokens": -0.0793,
+      "cohen_d_confident_vs_not_tokens": 0.5246,
+      "ceiling_selectivity": 0.5655
+    },
+    "7": {
+      "gate_auroc_ocw_vs_cr": 0.7556,
+      "gate_auroc_ocw_vs_rest": 0.7504,
+      "cohen_d_ocw_vs_cr_tokens": -0.0934,
+      "cohen_d_confident_vs_not_tokens": 0.5351,
+      "ceiling_selectivity": 0.5112
+    },
+    "10": {
+      "gate_auroc_ocw_vs_cr": 0.7412,
+      "gate_auroc_ocw_vs_rest": 0.7392,
+      "cohen_d_ocw_vs_cr_tokens": -0.1443,
+      "cohen_d_confident_vs_not_tokens": 0.5124,
+      "ceiling_selectivity": 0.4823
+    },
+    "12": {
+      "gate_auroc_ocw_vs_cr": 0.7423,
+      "gate_auroc_ocw_vs_rest": 0.7446,
+      "cohen_d_ocw_vs_cr_tokens": -0.1502,
+      "cohen_d_confident_vs_not_tokens": 0.5162,
+      "ceiling_selectivity": 0.4846
+    },
+    "14": {
+      "gate_auroc_ocw_vs_cr": 0.769,
+      "gate_auroc_ocw_vs_rest": 0.7616,
+      "cohen_d_ocw_vs_cr_tokens": -0.1549,
+      "cohen_d_confident_vs_not_tokens": 0.5889,
+      "ceiling_selectivity": 0.538
+    },
+    "16": {
+      "gate_auroc_ocw_vs_cr": 0.7993,
+      "gate_auroc_ocw_vs_rest": 0.7735,
+      "cohen_d_ocw_vs_cr_tokens": -0.1408,
+      "cohen_d_confident_vs_not_tokens": 0.6313,
+      "ceiling_selectivity": 0.5986
+    },
+    "18": {
+      "gate_auroc_ocw_vs_cr": 0.7791,
+      "gate_auroc_ocw_vs_rest": 0.7607,
+      "cohen_d_ocw_vs_cr_tokens": -0.1161,
+      "cohen_d_confident_vs_not_tokens": 0.6158,
+      "ceiling_selectivity": 0.5581
+    },
+    "22": {
+      "gate_auroc_ocw_vs_cr": 0.7909,
+      "gate_auroc_ocw_vs_rest": 0.7803,
+      "cohen_d_ocw_vs_cr_tokens": -0.1101,
+      "cohen_d_confident_vs_not_tokens": 0.6751,
+      "ceiling_selectivity": 0.5819
+    },
+    "25": {
+      "gate_auroc_ocw_vs_cr": 0.6491,
+      "gate_auroc_ocw_vs_rest": 0.7243,
+      "cohen_d_ocw_vs_cr_tokens": -0.1106,
+      "cohen_d_confident_vs_not_tokens": 0.7002,
+      "ceiling_selectivity": 0.2982
+    }
+  },
+  "n_traces": 400,
+  "best_layer_by_gate_auroc": 16
+}
