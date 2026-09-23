@@ -233,7 +233,11 @@ PCHI as well. Probes read after a few generated tokens predict whether steering
 will succeed~\citep{steerable2026}, detectors of a finished behavior forecast it
 worse from a prefix~\citep{fpcg2026}, and reading a direction off already-edited
 activations degrades it~\citep{luo2026yopo}; we measure the prefix cost
-directly and place the reader above the actor.
+directly and place the reader above the actor. Our detect-and-override
+reference is selective prediction with a correctness probe: that a model's
+activations predict whether its answer is right is well
+established~\citep{kadavath2022know,azaria2023lying}, and the identity makes it
+the baseline a conditional edit of a confidence readout has to beat.
 
 \section{Projection-Transport Steering}
 \label{sec:method}
@@ -414,7 +418,10 @@ then costs two $d$-dimensional dot products per token.
 \texttt{Qwen2.5-7B-Instruct}, a second model family, with its own directions,
 detector and tuning. Both reason inside \texttt{<think>...</think>} and answer
 \verb|\boxed{letter}| on MMLU~\citep{hendrycks2021mmlu}; decoding is greedy.
-The action is applied at layer 14 of 26 (Gemma) and 14 of 28 (Qwen).
+The action is applied at layer 14 of 26 (Gemma) and 14 of 28 (Qwen). A
+replication on ARC-Challenge~\citep{clark2018arc} reuses the Gemma directions,
+refits every decision on ARC training questions, and follows the same protocol
+with its own tuning and confirmatory splits (Appendix~\ref{app:protocol}).
 
 \textbf{Splits.} All splits are disjoint sets of MMLU test questions (ids in
 the released code): an \emph{extraction} split of 400 questions for the
@@ -642,8 +649,9 @@ dose ($-0.015$ $[-0.027, -0.003]$) and of ablation reach below it.
 \addlegendentry{ARC, override}
 \end{axis}
 \end{tikzpicture}
-\caption{\textbf{Gated edits are ordered by the held-out quality of their
-decision, and overriding the readout with the same decision is as selective.}
+\caption{\textbf{The override reference is ordered by the held-out quality of
+the decision, and gated edits reach it only when the action converts what the
+decision flags.}
 Each marker pair is one of five decisions (probes on the answer or the prompt,
 the CAST prompt condition, and a difference-of-means direction on the answer
 fitted on 400 or 4{,}400 labelled answers), paired with the action and threshold
@@ -716,24 +724,27 @@ $1.97\times$ for regenerating flagged answers (Appendix~\ref{app:legacy}).
 \section{Conclusion}
 \label{sec:conclusion}
 
-Our study has several limitations. First, the evidence covers one behavior on
-one benchmark family in two instruction-tuned models; an earlier form of the
-operator passed on one of three models on TruthfulQA, and in the one of six
-model--behavior cells that reached testing it helped one metric and hurt
-another (Appendix~\ref{app:postreview}). Second, the decision is a probe trained on
-labelled MMLU answers, and its threshold is tied to that distribution: it
-fires too rarely on ARC-Challenge (Appendix~\ref{app:transfer}), and
-without out-of-domain negatives it fires on open-ended instructions
-(Appendix~\ref{app:capability}). Third, the transport characterisation fixes the
-action for a target law but does not choose the target; we choose it on the
-tuning split.
-
 We have presented Projection-Transport Steering, which splits a conditional
-activation edit into an action and a decision and accounts for each. The
-selectivity identity turns the design of a conditional edit into two
-measurements, the conversion rates of an action and the held-out error rates
-of a decision, and in our experiments it is the decision, not the action, that
-separates the methods.
+activation edit into a decision and an action and accounts exactly for each.
+The accounting has a practical consequence for how conditional steering is
+evaluated. A gated edit should be compared not only with global steering but
+with detect-and-override under the same decision, and the identity says in
+advance when it can win: only if the action spares the protected answers the
+decision flags by mistake more often than it misses the target answers it flags
+correctly. In our experiments the decision determined the outcome, the best
+decision was a probe trained on held-out labels, and overriding the readout
+with it was as selective as steering on one model and far more selective on the
+other.
+
+Our study has limitations. The evidence covers one behavior, measured with one
+confidence readout, on two benchmarks and two instruction-tuned models; an
+earlier form of the operator passed on one of three models on TruthfulQA
+(Appendix~\ref{app:postreview}). The decision is a probe trained on labelled
+answers, and its threshold is tied to the distribution it was fitted on
+(Appendices~\ref{app:capability} and~\ref{app:transfer}). The override
+reference applies only where the behavior has a readout that can be
+overwritten; for behaviors expressed in free text, the conversion rates of the
+action become the whole question.
 
 \subsection*{AI use statement}
 
@@ -749,6 +760,10 @@ responsibility for the final content.
 Andy Arditi, Oscar Obeso, Aaquib Syed, Daniel Paleka, Nina Panickssery, Wes
   Gurnee, and Neel Nanda, \emph{Refusal in language models is mediated by a
   single direction}, Advances in Neural Information Processing Systems 37, 2024.
+
+\bibitem[Azaria \& Mitchell(2023)]{azaria2023lying}
+Amos Azaria and Tom Mitchell, \emph{The internal state of an LLM knows when it's
+  lying}, Findings of the Association for Computational Linguistics: EMNLP, 2023.
 
 \bibitem[Braun et al.(2025)]{braun2025unreliability}
 J.~Braun, C.~Eickhoff, D.~Krueger, S.~A.~Bahrainian, D.~Krasheninnikov.
@@ -786,6 +801,11 @@ Umair Haider, Hassan Sajjad, and A.~B. Siddique, \emph{GAPS: gated activation
 Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn Song,
   and Jacob Steinhardt, \emph{Measuring massive multitask language
   understanding}, International Conference on Learning Representations, 2021.
+
+\bibitem[Kadavath et al.(2022)]{kadavath2022know}
+Saurav Kadavath, Tom Conerly, Amanda Askell, Tom Henighan, Dawn Drain, Ethan
+  Perez, et al., \emph{Language models (mostly) know what they know},
+  arXiv:2207.05221, 2022.
 
 \bibitem[Kortukov et al.(2026)]{fpcg2026}
 Evgenii Kortukov, Piotr Komorowski, Florian Klein, Paula Engl, Gabriele Sarti,
@@ -918,6 +938,22 @@ non-inferior if the lower end of the $95\%$ interval of its accuracy change is
 above $-0.02$. The single-pass and prompt-decision variants, M4 and M2
 selectivities, removal, retention and ECE are secondary and reported without
 a claim.
+
+\textbf{ARC replication.} A second protocol
+(\texttt{confirmatory-v20-arc.md}), frozen before any steered ARC rollout,
+repeats the Gemma comparison on ARC-Challenge: a detector pool of 1{,}012 and a
+tuning split of 400 from the ARC training and validation questions, and the
+1{,}165-question test split as the confirmatory split. The directions, moments
+and action layer are those fitted on MMLU; every decision is refitted on the ARC
+pool together with the MMLU pool, and every configuration is selected on the
+ARC tuning split with the same rule and grids.
+
+\textbf{Analyses added after the protocol.} The detect-and-override reference,
+the difference-of-means decision fitted on 4{,}400 labels, the decision-by-action
+matrix (Sec.~\ref{ssec:decides}), the trace-only and confidence-turn-only edits
+(Sec.~\ref{ssec:where}), calibration and the out-of-domain negatives were run
+after the confirmatory results were known. They use the same splits and the
+frozen decisions, and we report them as exploratory.
 
 \section{An earlier operator on further models}
 \label{app:postreview}
