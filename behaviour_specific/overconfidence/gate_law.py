@@ -28,6 +28,8 @@ def published_detectors() -> dict[str, tuple]:
     tstats = torch.load(DIRECTIONS_DIR / "projection_stats_L14.pt")["trace_stats"]["ocw_vs_cr"]
     dets = {"u@L14": (lambda x: float(x[li[14]] @ u), q_at(tstats["confident_right"], 0.50))}
     for L, name in ((14, "joint_stats_L14"), (16, "layerfit_L16")):
+        if not (DIRECTIONS_DIR / f"{name}.pt").exists():
+            continue
         fit = torch.load(DIRECTIONS_DIR / f"{name}.pt")
         V, w, b = fit["V"].float(), fit["gate_lda"]["w"].float(), float(fit["gate_lda"]["b"])
         tau = q_at({"q": fit["gate_lda"]["score_quantiles"]["all"].tolist()}, 0.50)

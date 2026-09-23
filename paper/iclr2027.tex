@@ -344,29 +344,45 @@ flagged \ocw{} and a flagged \crok{} answer.
 \label{prop:account}
 For any decision and action that leave unflagged outputs unchanged,
 \begin{equation}
-\mathrm{Sel}=\mathrm{TPR}\cdot\rho_O-\mathrm{FPR}\cdot\rho_C .
+\mathrm{Sel}=\mathrm{TPR}\cdot\rho_O-\mathrm{FPR}\cdot\rho_C ,
 \label{eq:account}
 \end{equation}
+where $\rho_O$ and $\rho_C$ are conversion rates among flagged answers.
 \end{proposition}
 
 Eq.~\eqref{eq:account} is an identity, and it separates the two choices. The
-decision sets $(\mathrm{TPR},\mathrm{FPR})$ and the action sets
-$(\rho_O,\rho_C)$. If the action converts flagged and unflagged answers of the
-same state at the same rate, $\rho_O$ and $\rho_C$ can be read off an ungated
-run, and the equation predicts the selectivity of every gated variant before
-it is run. We use this prediction to select configurations cheaply and test it
-in Sec.~\ref{sec:results}.
-
-The decision term is bounded by how well $s$ separates the two states.
+decision sets $(\mathrm{TPR},\mathrm{FPR})$ and, through which answers it
+flags, the conversion rates the action achieves on them. Two consequences
+follow. First, if the action converts flagged and unflagged answers of the
+same state at the same rate, $\rho_O$ and $\rho_C$ can be read off one ungated
+run and the equation predicts the selectivity of every decision placed in
+front of that action. Second, the identity contains its own reference point.
+A decision that simply overrides the reported confidence of the answers it
+flags converts every one of them, $\rho_O=\rho_C=1$, and reaches
+$\mathrm{TPR}-\mathrm{FPR}$. A gated edit is more selective than this
+\emph{detect-and-override} reference exactly when
+\begin{equation}
+\mathrm{TPR}\,(1-\rho_O)<\mathrm{FPR}\,(1-\rho_C),
+\label{eq:override}
+\end{equation}
+that is, when the action spares the confident-right answers the decision
+flags by mistake more often than it fails on the overconfident-wrong answers
+it flags correctly. The decision term is bounded by how well $s$ separates the
+two states.
 
 \begin{theorem}[optimal decision and its ceiling]
 \label{thm:gate}
-(a) For any objective increasing in TPR and decreasing in FPR, including
-Eq.~\eqref{eq:account}, thresholding the likelihood ratio of $s$ between \ocw{}
-and \crok{} is optimal at every operating point. (b) If the concave ROC of $s$
-has area $\mathrm{AUC}$, then $\max_\tau(\mathrm{TPR}-\mathrm{FPR})\le2\,\mathrm{AUC}-1$;
-for an action with $\rho_O=\rho_C=\rho$ this gives
-$\mathrm{Sel}\le\rho\,(2\,\mathrm{AUC}-1)$.
+Suppose that within each state the action's conversion probability does not
+depend on $s$. (a) For any objective increasing in TPR and decreasing in FPR,
+including Eq.~\eqref{eq:account}, thresholding the likelihood ratio of $s$
+between \ocw{} and \crok{} is optimal at every operating point. Without the
+assumption, the optimal decision thresholds the conversion-weighted ratio
+$p_O(s)\,r_O(s)/\big(p_C(s)\,r_C(s)\big)$, where $p$ is the class-conditional
+density of $s$ and $r(s)$ the conversion probability given $s$. (b) If the
+concave ROC of $s$ has area $\mathrm{AUC}$, then
+$\max_\tau(\mathrm{TPR}-\mathrm{FPR})\le2\,\mathrm{AUC}-1$, so the
+detect-and-override reference is bounded by $2\,\mathrm{AUC}-1$, and so is any
+gated edit with $\rho_O=\rho_C$.
 \end{theorem}
 
 We therefore implement the decision as a logistic-regression probe, an estimate
@@ -464,7 +480,7 @@ above $-0.02$, a margin fixed in the protocol.
 \centering
 \begin{tikzpicture}
 \begin{axis}[name=law, width=.5\linewidth, height=4.8cm,
-  xlabel={predicted from ungated runs}, ylabel={measured selectivity},
+  xlabel={predicted from ungated rates}, ylabel={selectivity of the gated edit},
   xmin=-0.01, xmax=0.39, ymin=-0.01, ymax=0.39, grid=major, grid style={dashed,gray!20},
   tick label style={font=\scriptsize}, every axis label/.append style={font=\footnotesize},
   legend style={font=\tiny, draw=none, fill=white, fill opacity=.8, text opacity=1, at={(0.02,0.98)}, anchor=north west},
@@ -478,6 +494,8 @@ above $-0.02$, a margin fixed in the protocol.
 \addlegendentry{MiMiC}
 \addplot[only marks, mark=diamond*, mark size=0.9pt, cgate, opacity=.6] table[x=law, y=sim, col sep=comma]{pic/v4_law_clamp.csv};
 \addlegendentry{clamp}
+\addplot[only marks, mark=o, mark size=0.9pt, gray, opacity=.6] table[x=law, y=sim, col sep=comma]{pic/v4_law_qwen.csv};
+\addlegendentry{Qwen, all actions}
 \addplot[only marks, mark=star, mark size=2.6pt, black, thick] table[x=law, y=real, col sep=comma]{pic/v4_law_real.csv};
 \addlegendentry{confirmatory arms}
 \end{axis}
@@ -499,11 +517,12 @@ above $-0.02$, a margin fixed in the protocol.
 \end{axis}
 \end{tikzpicture}
 \caption{\textbf{The decision is the lever, and it can be taken early.}
-(a) Each point is a decision--action--threshold combination on the Gemma
-tuning split (240 in total). The horizontal axis is
-$\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ computed from the ungated run of the
-action; the vertical axis is the selectivity of the gated edit. Stars are the
-four gated arms of the confirmatory split, measured on real runs.
+(a) Each point is a decision--action--threshold combination on the tuning
+split (240 for Gemma in colour, 240 for Qwen in grey). The horizontal axis is
+$\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ with ungated conversion rates; the
+vertical axis is the selectivity of the gated edit, composed from the same
+ungated run. Stars are the four gated arms of the confirmatory split, measured
+on real gated runs.
 (b) AUROC between \ocw{} and \crok{} on the 3{,}000 confirmatory questions of
 a probe that reads the prompt, the first $t$ generated tokens, or the whole
 answer; bars are $95\%$ bootstrap intervals, and the dotted line is the
@@ -519,13 +538,16 @@ decision.} On the Gemma tuning split we measure the conversion rates of six
 actions once, compose each with two decisions at 20 thresholds, and compare
 the prediction $\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ with the measured
 selectivity (Fig.~\ref{fig:law}a). The two agree with correlation $0.97$ over
-240 combinations; the prediction is higher by $0.033$ on average, because the
-answers a detector flags are slightly harder to convert than the average
-answer of their state. With the flagged conversion rates in place of the
-ungated ones the identity is exact, and on the confirmatory split the four
-gated arms land within $0.010$ of the value composed from their ungated runs.
-We use this to score every gated configuration on the tuning split without
-running it (Appendix~\ref{app:protocol}).
+240 combinations, and with correlation $0.91$ over the 240 Qwen combinations,
+whose selectivities span a narrower range; the prediction is higher by $0.033$
+on average for Gemma and by $0.012$ for Qwen. The bias comes from the
+independence assumption: the answers a decision flags are converted more often
+than the average answer of their state, and more so in the protected state. With the flagged conversion rates in place of the
+ungated ones the identity is exact. Because a post-hoc gated arm is, question by
+question, either its unsteered or its ungated output, the gated selectivity can
+be composed from one ungated run; on the confirmatory split the four gated arms
+land within $0.010$ of that composition (Appendix~\ref{app:law}), which is how
+we score gated configurations during tuning.
 
 \textbf{The identity also says what each choice contributes.} The shift the
 selection rule picks for Gemma, $S(p)=p-0.375\lVert h\rVert$, changes the state
@@ -609,8 +631,8 @@ prompts altogether, and leaves the confirmatory selectivity within $0.015$.
 Fig.~\ref{fig:law}b plots the held-out AUROC of a probe fitted on each
 statistic. For Gemma the prompt alone reaches $0.720$ and the first 16 tokens
 $0.720$, against $0.741$ for the finished answer; for Qwen the prompt reaches
-$0.761$ against $0.785$. The single-pass operators in Table~\ref{tab:confirm}
-match the post-hoc one: deciding at token 32 gives selectivity $0.294$ and
+$0.761$ against $0.785$. On Gemma the single-pass operators in
+Table~\ref{tab:confirm} match the post-hoc one: deciding at token 32 gives selectivity $0.294$ and
 deciding at the prompt $0.306$, with paired differences to the post-hoc
 decision of $0.000$ and $+0.012$. On Qwen the gap in AUROC is larger, and the
 selected single-pass variants reach $0.109$ (token 16) and $0.120$ (prompt),
@@ -657,6 +679,11 @@ Andy Arditi, Oscar Obeso, Aaquib Syed, Daniel Paleka, Nina Panickssery, Wes
   Gurnee, and Neel Nanda, \emph{Refusal in language models is mediated by a
   single direction}, Advances in Neural Information Processing Systems 37, 2024.
 
+\bibitem[Braun et al.(2025)]{braun2025unreliability}
+J.~Braun, C.~Eickhoff, D.~Krueger, S.~A.~Bahrainian, D.~Krasheninnikov.
+  \emph{Understanding (un)reliability of steering vectors in language models}.
+  ICLR Workshop on Foundation Models in the Wild, 2025.
+
 \bibitem[Clark et al.(2018)]{clark2018arc}
 Peter Clark, Isaac Cowhey, Oren Etzioni, Tushar Khot, Ashish Sabharwal, Carissa
   Schoenick, and Oyvind Tafjord, \emph{Think you have solved question answering?
@@ -667,46 +694,33 @@ Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz
   Kaiser, et al., \emph{Training verifiers to solve math word problems},
   arXiv:2110.14168, 2021.
 
+\bibitem[Fan et al.(2026)]{steerable2026}
+Chenrui Fan, Yize Cheng, Ming Li, Soheil Feizi, and Tianyi Zhou, \emph{When is
+  your LLM steerable? Predicting steering success from internal states},
+  arXiv:2606.11599, 2026.
+
 \bibitem[Ferrando et al.(2026)]{ferrando2026dsas}
 Javier Ferrando, Xavier Suau, Pau Rodriguez, and Adri\`a Gonzalez,
   \emph{Dynamically scaled activation steering}, arXiv:2512.03661, 2026.
 
-\bibitem[Kortukov et al.(2026)]{fpcg2026}
-Evgenii Kortukov, Piotr Komorowski, Florian Klein, Paula Engl, Gabriele Sarti,
-  Seong Joon Oh, Sebastian Lapuschkin, and Wojciech Samek, \emph{Predicting
-  future behaviors in reasoning models enables better steering},
-  arXiv:2606.11172, 2026.
+\bibitem[Gemma Team(2024)]{gemma2024}
+Gemma Team, \emph{Gemma 2: Improving open language models at a practical size},
+  arXiv:2408.00118, 2024.
 
 \bibitem[Haider et al.(2026)]{gaps2026}
 Umair Haider, Hassan Sajjad, and A.~B. Siddique, \emph{GAPS: gated activation
   steering at dimension granularity}, arXiv:2609.01878, 2026.
-
-\bibitem[Gelbrich(1990)]{gelbrich1990formula}
-Matthias Gelbrich, \emph{On a formula for the $L^2$ Wasserstein metric between
-  measures on Euclidean and Hilbert spaces}, Mathematische Nachrichten
-  \textbf{147} (1990), no.~1, 185--203.
-
-\bibitem[Gemma Team(2024)]{gemma2024}
-Gemma Team, \emph{Gemma 2: Improving open language models at a practical size},
-  arXiv:2408.00118, 2024.
 
 \bibitem[Hendrycks et al.(2021)]{hendrycks2021mmlu}
 Dan Hendrycks, Collin Burns, Steven Basart, Andy Zou, Mantas Mazeika, Dawn Song,
   and Jacob Steinhardt, \emph{Measuring massive multitask language
   understanding}, International Conference on Learning Representations, 2021.
 
-\bibitem[Howard et al.(2020)]{howard2020supermartingale}
-Steven~R. Howard, Aaditya Ramdas, Jon McAuliffe, and Jasjeet Sekhon,
-  \emph{Time-uniform Chernoff bounds via nonnegative supermartingales},
-  Probability Surveys \textbf{17} (2020), 257--317.
-
-\bibitem[Howard et al.(2021)]{howard2021confseq}
-\bysame, \emph{Time-uniform, nonparametric, nonasymptotic confidence
-  sequences}, Annals of Statistics \textbf{49} (2021), no.~2, 1055--1080.
-
-\bibitem[Knott \& Smith(1984)]{knott1984optimal}
-Martin Knott and Cyril~S. Smith, \emph{On the optimal mapping of distributions},
-  Journal of Optimization Theory and Applications \textbf{43} (1984), 39--49.
+\bibitem[Kortukov et al.(2026)]{fpcg2026}
+Evgenii Kortukov, Piotr Komorowski, Florian Klein, Paula Engl, Gabriele Sarti,
+  Seong Joon Oh, Sebastian Lapuschkin, and Wojciech Samek, \emph{Predicting
+  future behaviors in reasoning models enables better steering},
+  arXiv:2606.11172, 2026.
 
 \bibitem[Lee et al.(2024)]{lee2024cast}
 Bruce~W. Lee, Inkit Padhi, Karthikeyan~Natesan Ramamurthy, Erik Miehling,
@@ -728,15 +742,6 @@ Ke Li, Chongzhe Zhang, Zifan Zeng, Feng Liu, Qunli Zhang, and Zheng Hu,
 Ziyang Luo, Zhongyao Chu, Xinjie He, Youting Wang, Xukui Qin, Runxiong Wu, and
   Yan-Syuan Chen, \emph{You only pass once: answering and abstaining together
   in a single forward pass of a frozen language model}, arXiv:2608.14465, 2026.
-
-\bibitem[Mishra et al.(2026)]{mishra2026nonsurjective}
-Aayush Mishra, Daniel Khashabi, and Anqi Liu, \emph{Steered LLM activations are
-  non-surjective}, arXiv:2604.09839, 2026.
-
-\bibitem[Skifstad et al.(2026)]{nguyen2026alqr}
-Julian Skifstad, Xinyue~Annie Yang, and Glen Chou, \emph{Local Linearity of
-  LLMs Enables Activation Steering via Model-Based Linear Optimal Control},
-  arXiv:2604.19018, 2026.
 
 \bibitem[Nguyen et al.(2026)]{nguyen2026coast}
 Tam Nguyen, Tu~Anh Nguyen, Sina Alemohammad, and Richard~G. Baraniuk,
@@ -771,20 +776,15 @@ Shashwat Singh, Shauli Ravfogel, Jonathan Herzig, Roee Aharoni, Ryan Cotterell,
   of affine steering}, Proceedings of the 41st International Conference on
   Machine Learning, 2024.
 
-\bibitem[Fan et al.(2026)]{steerable2026}
-Chenrui Fan, Yize Cheng, Ming Li, Soheil Feizi, and Tianyi Zhou, \emph{When is
-  your LLM steerable? Predicting steering success from internal states},
-  arXiv:2606.11599, 2026.
+\bibitem[Skifstad et al.(2026)]{nguyen2026alqr}
+Julian Skifstad, Xinyue~Annie Yang, and Glen Chou, \emph{Local Linearity of
+  LLMs Enables Activation Steering via Model-Based Linear Optimal Control},
+  arXiv:2604.19018, 2026.
 
 \bibitem[Tan et al.(2024)]{tan2024generalisation}
 D.~Tan, D.~Chanin, A.~Lynch, B.~Paige, D.~Kanoulas, A.~Garriga-Alonso, R.~Kirk.
   \emph{Analysing the generalisation and reliability of steering vectors}.
   NeurIPS, 2024.
-
-\bibitem[Braun et al.(2025)]{braun2025unreliability}
-J.~Braun, C.~Eickhoff, D.~Krueger, S.~A.~Bahrainian, D.~Krasheninnikov.
-  \emph{Understanding (un)reliability of steering vectors in language models}.
-  ICLR Workshop on Foundation Models in the Wild, 2025.
 
 \bibitem[Templeton et al.(2024)]{templeton2024scaling}
 Adly Templeton, Tom Conerly, Jonathan Marcus, et al., \emph{Scaling
@@ -795,15 +795,6 @@ Adly Templeton, Tom Conerly, Jonathan Marcus, et al., \emph{Scaling
 Alexander~Matt Turner, Lisa Thiergart, Gavin Leech, David Udell, Juan~J.
   Vazquez, Ulisse Mini, and Monte MacDiarmid, \emph{Steering language models
   with activation engineering}, arXiv:2308.10248, 2023.
-
-\bibitem[Vogels et al.(2025)]{vogels2025ids}
-Arthur Vogels, Benjamin Wong, Yann Choho, Annabelle Blangero, and Milan Bhan,
-  \emph{In-distribution steering: Balancing control and coherence in language
-  model generation}, arXiv:2510.13285, 2025.
-
-\bibitem[UK AI Safety Institute(2026)]{vllmlens}
-UK AI Safety Institute, \emph{vllm-lens: activation extraction and steering for
-  vLLM}, \url{https://github.com/UKGovernmentBEIS/vllm-lens}, 2026.
 
 \bibitem[Wang et al.(2025)]{wang2025sadi}
 Weixuan Wang, Jingyuan Yang, and Wei Peng, \emph{Semantics-adaptive activation
@@ -816,19 +807,11 @@ Zhengxuan Wu, Aryaman Arora, Atticus Geiger, Zheng Wang, Jing Huang, Dan
   Steering LLMs? Even simple baselines outperform sparse autoencoders},
   Proceedings of the 42nd International Conference on Machine Learning, 2025.
 
-\bibitem[Zhao et al.(2026)]{zhang2026wired}
-Tianyi Zhao, Yinhan He, Wendy Zheng, Yujie Zhang, and Chen Chen, \emph{Wired
-  for overconfidence: A mechanistic perspective on inflated verbalized
-  confidence in LLMs}, Conference on Language Modeling (COLM), 2026,
-  arXiv:2604.01457.
-
 \bibitem[Zou et al.(2023)]{zou2023repe}
 Andy Zou, Long Phan, Sarah Chen, James Campbell, et al., \emph{Representation
   engineering: A top-down approach to AI transparency}, arXiv:2310.01405, 2023.
 
 \end{thebibliography}
-
-
 
 \appendix
 
@@ -864,7 +847,6 @@ non-inferior if the lower end of the $95\%$ interval of its accuracy change is
 above $-0.02$. The single-pass and prompt-decision variants, M4 and M2
 selectivities, removal, retention and ECE are secondary and reported without
 a claim.
-
 
 \section{An earlier operator on further models}
 \label{app:postreview}
@@ -979,17 +961,31 @@ The post-hoc gate satisfies this by construction. The single-pass gate
 satisfies it for traces on which it never fires, since the action hook is the
 identity until the decision token.
 
-\textbf{Theorem~\ref{thm:gate}.} (a) is the Neyman--Pearson lemma applied to the
-class-conditional laws of $s$: among tests of size at most $\mathrm{FPR}$ the
-likelihood-ratio test maximises TPR, so every objective increasing in TPR and
-decreasing in FPR is maximised on the likelihood-ratio ROC curve. When $s$ has
-a monotone likelihood ratio this is a threshold on $s$. Our detector is a
+\textbf{Theorem~\ref{thm:gate}.} Write $p_O,p_C$ for the densities of $s$ on
+\ocw{} and \crok{} answers and $r_O(s),r_C(s)$ for the probabilities that the
+action converts an answer of each state with statistic $s$. For a decision
+region $\Gamma$, $\mathrm{TPR}\,\rho_O=\int_\Gamma p_O r_O$ and
+$\mathrm{FPR}\,\rho_C=\int_\Gamma p_C r_C$, so
+$\mathrm{Sel}(\Gamma)=\int_\Gamma(p_O r_O-p_C r_C)$. Among regions with a given
+value of $\int_\Gamma p_C r_C$, the Neyman--Pearson lemma applied to the
+nonnegative measures $p_O r_O$ and $p_C r_C$ shows that
+$\int_\Gamma p_O r_O$ is maximised by a superlevel set of their ratio, which is
+the general statement in (a). If $r_O$ and $r_C$ are constant in $s$, the ratio
+is a constant multiple of $p_O/p_C$, so every objective increasing in TPR and
+decreasing in FPR is maximised on the likelihood-ratio ROC curve, which is (a).
+The assumption matters: with $s\in\{a,b\}$, $p_O(a)=p_O(b)=\tfrac12$,
+$p_C(a)=\tfrac14$, $p_C(b)=\tfrac34$, $r_O(a)=0.2$, $r_O(b)=1$, $r_C(a)=1$ and
+$r_C(b)=0$, the likelihood ratio ranks $a$ above $b$, yet $\Gamma=\{b\}$ gives
+selectivity $0.5$, against $-0.15$ for $\{a\}$ and $0.35$ for $\{a,b\}$. On
+our data $r$ does depend on $s$: flagged answers are converted more often than
+unflagged answers of the same state (Appendix~\ref{app:law}). Our detector is a
 logistic-regression probe, a discriminative estimate of the log-likelihood
 ratio up to the prior term; (a) states what the probe approximates, not that
 the fitted probe is optimal. (b) The concavified ROC contains the path
 $(0,0)\to(\mathrm{FPR}^*,\mathrm{TPR}^*)\to(1,1)$ through the Youden-optimal
-point, whose area is $\tfrac12(1+J)$, so $J\le2\,\mathrm{AUC}-1$. With
-$\rho_O=\rho_C=\rho$, Eq.~\eqref{eq:account} gives $\mathrm{Sel}=\rho\,J$. \qed
+point, whose area is $\tfrac12(1+J)$, so $J\le2\,\mathrm{AUC}-1$. The override
+reference has selectivity $\mathrm{TPR}-\mathrm{FPR}\le J$, and with
+$\rho_O=\rho_C=\rho$, Eq.~\eqref{eq:account} gives $\mathrm{Sel}=\rho(\mathrm{TPR}-\mathrm{FPR})\le J$. \qed
 
 \begin{proposition}[transport under a fixed decision]
 \label{prop:joint}
@@ -1156,12 +1152,15 @@ conversion rates.}
 \label{tab:law-confirm}
 \end{table}
 
-The prediction is higher than the measurement in all four rows, by $0.017$ to
-$0.037$. The same bias appears on the tuning split (Fig.~\ref{fig:law}a): the
-answers a detector flags are converted less often than the average answer of
-their state, so the independence assumption of Prop.~\ref{prop:account} holds
-only approximately. The composition, which uses no such assumption, is what
-scores the gated configurations during selection.
+The prediction is higher than the real run in all four rows, by $0.017$ to
+$0.037$, and the same bias appears on the tuning split (Fig.~\ref{fig:law}a).
+Flagged answers are converted more often than the average answer of their state
+in both states: for PTS post-hoc, $0.91$ of flagged overconfident-wrong answers
+change state against $0.84$ ungated, and $0.89$ of flagged confident-right
+answers against $0.59$ ungated. The larger increase on the protected state
+lowers selectivity below the independence prediction. The composition, which
+uses no such assumption, is what scores the gated configurations during
+selection.
 
 \section{Secondary readouts}
 \label{app:secondary}
@@ -1265,7 +1264,7 @@ the middle.
 \label{app:transfer}
 
 We ran the Gemma operators, with the directions, probes and thresholds fitted
-on MMLU, on 300 ARC-Challenge questions and 300 GSM8K questions converted to
+on MMLU, on 300 ARC-Challenge questions~\citep{clark2018arc} and 300 GSM8K questions~\citep{cobbe2021gsm8k} converted to
 four-option multiple choice (Appendix~\ref{app:gsm}). These runs are
 exploratory and not part of the protocol. Table~\ref{tab:transfer} shows that
 the MMLU threshold does not carry to ARC: the post-hoc probe fires on 59 of 300

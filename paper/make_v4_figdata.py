@@ -30,6 +30,16 @@ def law() -> None:
         (PIC / "v4_law_real.csv").write_text("law,real\n" + "\n".join(rows) + "\n")
 
 
+def law_qwen() -> None:
+    src = RES / "gate_law_tuning_qwen.json"
+    if not src.exists():
+        return
+    r = json.loads(src.read_text())
+    rows = [f"{c['sel_law']:.4f},{c['sel_sim']:.4f}" for det in r["detectors"].values()
+            for a in det["actions"].values() for c in a["curve"][:-1]]
+    (PIC / "v4_law_qwen.csv").write_text("law,sim\n" + "\n".join(rows) + "\n")
+
+
 def decision() -> None:
     for model in ("gemma", "qwen"):
         src = RES / f"decision_auroc_{model}.json"
@@ -42,4 +52,5 @@ def decision() -> None:
 
 if __name__ == "__main__":
     law()
+    law_qwen()
     decision()

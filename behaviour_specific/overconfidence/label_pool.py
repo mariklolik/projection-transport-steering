@@ -34,6 +34,10 @@ def split_records(name: str) -> list[dict]:
         return extraction_records()
     if name == "tuning":
         return tuning_records(1200, 101)
+    if name.startswith("arcx_"):
+        from behaviour_specific.overconfidence.benchmarks import load_arc
+        pool = load_arc(seed=11, split="train") + load_arc(seed=11, split="validation")
+        return {"arcx_detector": pool[400:], "arcx_tuning": pool[:400], "arcx_confirm": load_arc(split="test")}[name]
     if name in ("arc", "gsm8k"):
         from behaviour_specific.overconfidence.benchmarks import load_records
         return load_records(name, n=300, seed=7)

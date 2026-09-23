@@ -98,6 +98,7 @@ if __name__ == "__main__":
     ap.add_argument("--detector-configs", default="")
     ap.add_argument("--prompt-configs", default="")
     ap.add_argument("--cast-configs", default="")
+    ap.add_argument("--phase-configs", default="")
     args = ap.parse_args()
 
     _selftest()
@@ -108,6 +109,7 @@ if __name__ == "__main__":
     winners = {f"det{'online' if 'at' in parse(c) else ''}_{c}": c for c in args.detector_configs.split(",") if c}
     winners.update({f"detprompt_{c}": c for c in args.prompt_configs.split(",") if c})
     winners.update({f"castdim_{c}": c for c in args.cast_configs.split(",") if c})
+    winners.update({f"det{c.split(':')[0]}_{c.split(':')[1]}": c.split(":")[1] for c in args.phase_configs.split(",") if c})
     for m in args.methods.split(","):
         p = RESULTS_DIR / args.parity_dir / f"parity_{m}.json"
         if m.startswith("plain_") or m in ("prompt", "published_gate"):
@@ -249,6 +251,25 @@ if __name__ == "__main__":
             flagged = [by_id[i] for i, x in sc.items() if x > tau and i in by_id]
             meta["gates"][method] = {"tau": float(tau), "n_flagged": len(flagged)}
             run_all(method, lambda h, a=w["alpha"]: steer_add(h, v, a * norm), flagged)
+        elif method.startswith("dettrace_") or method.startswith("detquery_"):
+            det, sc = detector_scores()
+            tau = q_at({"q": det["score_quantiles"].tolist()}, w["q"])
+            flagged = [by_id[i] for i, x in sc.items() if x > tau and i in by_id]
+            fn = (lambda h, a=w["alpha"]: steer_add(h, v, a * norm)) if "alpha" in w else (lambda h: steer_ablate(h, v))
+            base_m2 = {r["id"]: r for r in read_jsonl(out_dir / f"baseline_m2__shard{args.shard}.jsonl")}
+            trace_phase = method.startswith("dettrace_")
+            handle = steering_hook(model.model.layers[args.layer], fn)
+            try:
+                m2 = score_m2_batch(model, tok, flagged, lids, bs) if trace_phase and flagged else \
+                    [base_m2[r["id"]] for r in flagged]
+                if not trace_phase and m2:
+                    rows = score_m5_batch(model, tok, [], lids, ids4, bs, m2_rows=m2)
+            finally:
+                handle.remove()
+            if trace_phase and m2:
+                rows = score_m5_batch(model, tok, [], lids, ids4, bs, m2_rows=m2)
+            meta["gates"][method] = {"tau": float(tau), "n_flagged": len(flagged)}
+            emit(method, {r["id"]: r for r in (rows if flagged else [])}, "m5")
         elif method.startswith("det_") or method.startswith("detprompt_"):
             det, sc = detector_scores() if method.startswith("det_") else prompt_scores()
             tau = q_at({"q": det["score_quantiles"].tolist()}, w["q"])

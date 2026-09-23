@@ -28,22 +28,22 @@ def _load_cached(name: str, build_rows) -> list[dict]:
     return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
 
 
-def load_arc(n: int | None = None, seed: int = 0) -> list[dict]:
-    """ARC-Challenge test split, 4-option records only (~92% of the split)."""
+def load_arc(n: int | None = None, seed: int = 0, split: str = "test") -> list[dict]:
+    """ARC-Challenge, 4-option records only (~92% of the split)."""
     def build():
         from datasets import load_dataset
 
-        ds = load_dataset("allenai/ai2_arc", "ARC-Challenge", split="test")
+        ds = load_dataset("allenai/ai2_arc", "ARC-Challenge", split=split)
         rows = []
         for i, r in enumerate(ds):
             labels, texts = r["choices"]["label"], r["choices"]["text"]
             if len(texts) != 4 or r["answerKey"] not in labels:
                 continue
-            rows.append({"id": f"arc-{i}", "subject": "arc_challenge", "question": r["question"],
-                         "options": texts, "answer_idx": labels.index(r["answerKey"])})
+            rows.append({"id": f"arc-{i}" if split == "test" else f"arc{split}-{i}", "subject": "arc_challenge",
+                         "question": r["question"], "options": texts, "answer_idx": labels.index(r["answerKey"])})
         return rows
 
-    records = _load_cached("arc_challenge_test", build)
+    records = _load_cached("arc_challenge_test" if split == "test" else f"arc_challenge_{split}", build)
     random.Random(seed).shuffle(records)
     return records if n is None else records[:n]
 
