@@ -312,8 +312,8 @@ def dense_table() -> None:
 
 
 def tox_table() -> None:
-    names = [("prompt", "prompting"), ("ungated", "global shift"), ("cast", "CAST (prompt condition)"),
-             ("probe", "\\textbf{PTS, one pass}"), ("post", "PTS, post-hoc")]
+    names = [("prompt", "prompting"), ("ungated", "global shift"), ("cast", "CAST (prompt)"),
+             ("probe", "\\textbf{PTS, prompt}"), ("post", "PTS, post-hoc")]
     blocks = []
     for m in ("gemma_2_2b_it", "qwen2_5_7b_it"):
         d = json.loads((RES / "toxicity" / m / "confirm.json").read_text())["arms"]
