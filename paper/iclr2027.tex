@@ -806,7 +806,7 @@ CAST.
 On a second, previously unused set of 3{,}000 prompts per model, under a
 protocol pushed before any steered rollout, PTS again exceeds refusal on its
 own decision by $0.15$ to $0.17$ and a hundred random directions by $0.23$ to
-$0.43$ in every family. It is also above prompting in all three
+$0.43$ in every family, and exceeds prompting on Gemma and Qwen
 (Appendix~\ref{app:fresh}).
 
 \subsection{Inference cost}
@@ -1635,7 +1635,8 @@ clean continuations shifted by $-0.375\lVert h\rVert$) is compared on Gemma with
 gated shift of equal mean displacement. Table~\ref{tab:fresh} gives the
 selectivities; the no-edit null leaves all continuations unchanged in each
 family. Against refusal and against the random directions, PTS passes in all
-three families; against prompting it passes in all three; against the global
+three families; against prompting it passes on Gemma and Qwen (Mistral
+$+0.171$, Holm-adjusted $p=0.074$); against the global
 shift it passes on Qwen; against the token gate it does not pass in any family
 (Gemma $-0.048$, Qwen $+0.008$, Mistral $+0.087$, $p=0.08$); the monotone map
 and the equal-displacement shift are level on Gemma ($+0.003$).
