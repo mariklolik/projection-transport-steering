@@ -314,7 +314,7 @@ def tox_table() -> None:
     pv = lambda p: pval(p)  # noqa: E731
     rows = []
     names = [("prompt", "prompting"), ("ungated", "global shift"), ("cast", "CAST"), ("probe", "\\textbf{PTS}, shift"),
-             ("ot", "\\textbf{PTS}, transport map"), ("post", "PTS, post-hoc")]
+             ("ot", "\\textbf{PTS}, scaled transport"), ("post", "PTS, post-hoc")]
     for key, name in names:
         cells = []
         for m in models:

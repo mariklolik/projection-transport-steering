@@ -99,8 +99,8 @@ the most selective of eight methods on held-out questions and lowers
 calibration error at non-inferior accuracy. On free-text toxicity in three
 model families, PTS is more selective than refusal and random directions on its
 own decision and, in two families, than a global shift and prompting; where the
-tuning rule selects the quantile transport map, it outperforms a shift of
-equal displacement.
+tuning rule selects an edit along the displacement field of the quantile
+transport map, it outperforms a shift of equal mean displacement.
 \end{abstract}
 
 \section{Introduction}
@@ -161,8 +161,8 @@ on 3{,}000 MMLU questions for Gemma, lowers the share of overconfident-wrong ans
 through the same decision (Sec.~\ref{sec:results}).
 \item Free-text control of toxic continuation in three model families, where
 PTS is more selective than refusal on its own decision in each family and the
-quantile transport map chosen by the tuning rule outperforms a shift of equal
-mean displacement; and a head-to-head in the setting of PCHI, where PTS is more
+edit along the transport displacement chosen by the tuning rule outperforms a
+shift of equal mean displacement; and a head-to-head in the setting of PCHI, where PTS is more
 selective than the learned head rescaling under the same probe
 (Sec.~\ref{sec:transfer}).
 \end{itemize}
@@ -246,8 +246,8 @@ same retention. Each marker is one method at its tuned configuration on
 Gemma, on held-out questions (a) and prompts (b); up and to the right is
 better, and dotted lines mark equal selectivity. The orange curve is one shift
 at increasing dose, gray points send random directions through the PTS
-decision, and the star is the main PTS arm (post-hoc shift in a, quantile
-transport map in b).}
+decision, and the star is the main PTS arm (post-hoc shift in a, scaled
+transport displacement in b).}
 \label{fig:frontier}
 \end{figure}
 
@@ -376,8 +376,8 @@ the edit changes the state of both at the same rate.
 two states we must tell apart look alike to the action. Overconfident-wrong
 (\ocw{}) and confident-right (\crok{}) answers are both confident, and their
 laws on the confidence coordinate nearly coincide (Sec.~\ref{sec:results}), so
-by Corollary~\ref{cor:additive}(b) any transfer function of that coordinate
-changes both at similar rates, as the global shift does
+Corollary~\ref{cor:additive}(b) suggests that a transfer function of that
+coordinate changes both at similar rates, as the global shift largely does
 (Fig.~\ref{fig:frontier}). A decision therefore reads a second statistic $s$ of
 the input and runs the action on an event $\Gamma$ determined by $s$, in
 practice $\{s>\tau\}$ for a scalar score; off $\Gamma$ the output is exactly
@@ -530,8 +530,9 @@ post-hoc, from the finished unsteered answer, and regenerates the flagged
 questions; at the prompt, in one forward pass over it before generation; or at
 a prefix of $t\in\{16,32,64,128\}$ generated tokens, which keeps decision and
 edit in one pass. Its action is a transport map of Theorem~\ref{thm:ot} on the
-projection: shifts at several doses and ablation, and on free text
-also the quantile map onto the projection law of clean continuations. One rule
+projection: shifts at several doses and ablation, and on free text also the
+displacement field of the quantile map onto the projection law of clean
+continuations, scaled by $\lambda\in\{1,2,3,4,6\}$. One rule
 selects every configuration on the tuning split: the highest selectivity among
 configurations whose accuracy change is at least $-0.01$, or the highest
 overall when none meets that floor; every confirmatory number is a real run.
@@ -617,8 +618,7 @@ answer tokens.}
 A learned detection statistic lifts the selectivity ceiling of a threshold
 decision above that of the confidence coordinate on both models. A global
 shift of that coordinate removes overconfident-wrong answers only together with
-confident-right ones (Fig.~\ref{fig:frontier}a), as
-Corollary~\ref{cor:additive}(b) predicts: on the held-out questions the two
+confident-right ones (Fig.~\ref{fig:frontier}a): on the held-out questions the two
 confident states overlap on the coordinate, and the best threshold there
 separates them by $\max(\mathrm{TPR}-\mathrm{FPR})=0.216$ on Gemma and $0.072$
 on Qwen. The PTS probe, fitted on a separate pool of 4{,}000 labeled answers,
@@ -633,7 +633,7 @@ Proposition~\ref{prop:account} turns one ungated run into a prediction for
 every decision placed in front of it. On the tuning split we measured the
 conversion rates of six actions once, composed each with two decisions at 20
 thresholds, and compared $\mathrm{TPR}\,\rho_O-\mathrm{FPR}\,\rho_C$ with the
-measured gated selectivity (Fig.~\ref{fig:law}a): the correlation is $0.97$
+gated selectivity composed from the same run (Fig.~\ref{fig:law}a): the correlation is $0.97$
 over 240 configurations on Gemma and $0.91$ over 240 on Qwen. Because a gated
 arm with a post-hoc or prompt decision returns, question by question, either
 the unsteered or the ungated output, its selectivity can also be composed
@@ -740,7 +740,7 @@ families. 3{,}000 held-out RealToxicityPrompts prompts per model; rem./kept is
 the percent of toxic continuations removed and of clean continuations kept
 (clean and within embedding cosine $0.5$ of the unsteered text), and $\Delta$Sel
 is the row minus PTS with the shift. Post-hoc PTS regenerates the prompts it
-flags, the transport map is the tuning-rule choice on Gemma, and the last two
+flags, the scaled transport displacement is the tuning-rule choice on Gemma, and the last two
 rows keep the PTS decision.}
 \label{tab:toxicity}
 \end{table}
@@ -761,9 +761,9 @@ selective in every family than refusing on its own decision, which gives up
 every clean continuation the decision flags, and lies above the 95th
 percentile of a hundred random directions sent through that decision; on Gemma
 and Qwen it is also more selective than the global shift and prompting. On
-Gemma the tuning rule selects the quantile transport map of
-Theorem~\ref{thm:ot}, from the law of the projection over toxic continuations
-to its law over clean ones. The map reaches selectivity $0.584$
+Gemma the tuning rule selects $h+3V^\top(S(Vh)-Vh)$, three times the
+displacement of the quantile map $S$ from the law of the projection over toxic
+continuations to its law over clean ones. This edit reaches selectivity $0.584$
 $[0.542, 0.624]$, lowers the toxic rate from $15.0\%$ to $3.5\%$ while keeping
 $79\%$ of clean continuations, and is above a shift of the same mean
 displacement by $0.043$ $[0.012, 0.076]$ and above CAST by $0.069$
@@ -1432,6 +1432,12 @@ arm & ECE $\downarrow$ & Brier $\downarrow$ & AUROC $\uparrow$ & ECE $\downarrow
 \label{tab:calibration}
 \end{table}
 
+\textbf{Where the edit acts.} Rerunning the frozen PTS decision with the action
+applied only during the reasoning trace or only during the confidence turn
+gives, on Gemma (shift), $0.159$ and $0.274$ $[0.237, 0.312]$ against $0.294$
+for both turns, and on Qwen (ablation) $0.172$ and $0.006$ against $0.172$
+(exploratory).
+
 \section{Net effects of every arm}
 \label{app:net}
 
@@ -1569,7 +1575,10 @@ continuations of the extraction split (41 quantiles), and PTS applies
 $h+\lambda V^\top(S(Vh)-Vh)$ on the rows its prompt decision flags. On the
 Gemma tuning split $\lambda=1,2,3,4,6$ gives selectivity $0.373$, $0.577$,
 $0.605$, $0.586$ and $0.552$, against $0.594$ for the tuned shift, so the
-selection rule picks the map at $\lambda=3$. Its mean displacement on toxic
+selection rule picks $\lambda=3$. For $\lambda>1$ the edit extrapolates the
+displacement of the map and is not itself monotone on the whole source law, so
+it is an edit along the transport displacement rather than the map of
+Theorem~\ref{thm:ot}, which ($\lambda=1$) reaches $0.373$. Its mean displacement on toxic
 tokens equals a shift of $-0.432\lVert h\rVert$. On the held-out prompts it
 reaches $0.584$ $[0.542, 0.624]$ against $0.540$ $[0.495, 0.584]$ for that
 matched shift, removes $79\%$ of toxic continuations and keeps $79\%$ of clean
@@ -1583,6 +1592,14 @@ $0.520$ $[0.430, 0.605]$, removes $74\%$ of toxic continuations and keeps
 $78\%$ of clean ones; refusal on the same decision reaches $0.305$, and a
 hundred random directions average $0.247$ with a 95th percentile of $0.343$.
 Post-hoc PTS reaches $0.712$ and lowers the toxic rate to $0.4\%$.
+
+\textbf{Edit on generated positions only.} In the prompt-decision arms the
+decision reads the prompt in a forward pass of its own and the edit then acts
+on every position. A variant that starts the edit at the first generated
+token, so that decision and edit share one pass, reaches $0.269$
+$[0.223, 0.315]$ on Gemma and $0.460$ $[0.418, 0.502]$ on Qwen at the dose
+selected for the full edit, above prompting and twenty random directions in
+both families (exploratory, not registered).
 
 \section{PTS in the setting of PCHI}
 \label{app:pchi}
@@ -1630,7 +1647,10 @@ and PCHI above its permuted coefficients.}
 
 At dose 8 the PTS shift turns every flagged readout to \emph{no}; unlike an
 override of the readout it moves the stated probability rather than replacing
-it, and it reaches the lowest calibration error of all arms ($0.188$). The
+it, and it reaches the lowest calibration error of all arms ($0.188$). At this dose
+an edit of the readout state along a random direction also flips many flagged
+readouts: 45 of 100 random directions reach the same selectivity, with a mean
+calibration error of $0.254$. The
 learned coefficients of PCHI carry its effect: permuting them across heads
 lowers its selectivity to $0.033$.
 
