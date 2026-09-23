@@ -1,0 +1,114 @@
+{
+  "method": "ourspost",
+  "n": 400,
+  "seed": 101,
+  "budget": 8,
+  "configs": {
+    "rho1": {
+      "ocw_rm": 0.0506,
+      "cr_keep": 0.9412,
+      "selectivity": -0.0082,
+      "d_acc": 0.0025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 38,
+      "mean_dose": 0.0117
+    },
+    "rho2": {
+      "ocw_rm": 0.038,
+      "cr_keep": 0.9412,
+      "selectivity": -0.0208,
+      "d_acc": -0.005,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 38,
+      "mean_dose": 0.0233
+    },
+    "rho3": {
+      "ocw_rm": 0.038,
+      "cr_keep": 0.951,
+      "selectivity": -0.011,
+      "d_acc": 0.0,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 38,
+      "mean_dose": 0.0344
+    },
+    "rho4": {
+      "ocw_rm": 0.0506,
+      "cr_keep": 0.9412,
+      "selectivity": -0.0082,
+      "d_acc": -0.005,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 38,
+      "mean_dose": 0.043
+    },
+    "rho6": {
+      "ocw_rm": 0.038,
+      "cr_keep": 0.9216,
+      "selectivity": -0.0405,
+      "d_acc": -0.01,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 38,
+      "mean_dose": 0.0564
+    },
+    "rho8": {
+      "ocw_rm": 0.038,
+      "cr_keep": 0.9216,
+      "selectivity": -0.0405,
+      "d_acc": -0.0075,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 38,
+      "mean_dose": 0.064
+    },
+    "rho12": {
+      "ocw_rm": 0.038,
+      "cr_keep": 0.9216,
+      "selectivity": -0.0405,
+      "d_acc": -0.005,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 38,
+      "mean_dose": 0.0719
+    },
+    "rho1e+06": {
+      "ocw_rm": 0.0506,
+      "cr_keep": 0.9118,
+      "selectivity": -0.0376,
+      "d_acc": -0.0075,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 38,
+      "mean_dose": 0.095
+    }
+  },
+  "winner": "rho1",
+  "full_dose": {
+    "ocw_rm": 0.5443,
+    "cr_keep": 0.6078,
+    "selectivity": 0.1521,
+    "d_acc": 0.0125,
+    "n_ocw": 79,
+    "n_cr": 102
+  },
+  "posterior": {
+    "a": 1.2432,
+    "c": -1.6027,
+    "tau": 0.4188,
+    "mean_pi": 0.1789
+  },
+  "winner_stats": {
+    "ocw_rm": 0.0506,
+    "cr_keep": 0.9412,
+    "selectivity": -0.0082,
+    "d_acc": 0.0025,
+    "n_ocw": 79,
+    "n_cr": 102,
+    "n_flagged": 38,
+    "mean_dose": 0.0117
+  },
+  "seconds": 587.8
+}

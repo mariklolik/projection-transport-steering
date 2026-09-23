@@ -1,0 +1,92 @@
+{
+  "method": "online",
+  "n": 1200,
+  "seed": 101,
+  "batch_size": 64,
+  "budget": 8,
+  "configs": {
+    "q30_at16": {
+      "ocw_rm": 0.3234,
+      "cr_keep": 0.7885,
+      "selectivity": 0.1118,
+      "d_acc": 0.015,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "fire_rate": 0.3224
+    },
+    "q30_at32": {
+      "ocw_rm": 0.2836,
+      "cr_keep": 0.8494,
+      "selectivity": 0.1329,
+      "d_acc": 0.0075,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "fire_rate": 0.3324
+    },
+    "q30_at64": {
+      "ocw_rm": 0.0995,
+      "cr_keep": 0.9583,
+      "selectivity": 0.0578,
+      "d_acc": 0.0008,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "fire_rate": 0.2303
+    },
+    "q30_at128": {
+      "ocw_rm": 0.0348,
+      "cr_keep": 0.9872,
+      "selectivity": 0.022,
+      "d_acc": -0.0008,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "fire_rate": 0.0571
+    },
+    "q50_at16": {
+      "ocw_rm": 0.2388,
+      "cr_keep": 0.875,
+      "selectivity": 0.1138,
+      "d_acc": 0.0225,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "fire_rate": 0.2146
+    },
+    "q50_at32": {
+      "ocw_rm": 0.2189,
+      "cr_keep": 0.9167,
+      "selectivity": 0.1356,
+      "d_acc": 0.0142,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "fire_rate": 0.2193
+    },
+    "q50_at64": {
+      "ocw_rm": 0.0697,
+      "cr_keep": 0.9679,
+      "selectivity": 0.0376,
+      "d_acc": 0.0033,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "fire_rate": 0.1559
+    },
+    "q50_at128": {
+      "ocw_rm": 0.0348,
+      "cr_keep": 0.9872,
+      "selectivity": 0.022,
+      "d_acc": 0.0,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "fire_rate": 0.0289
+    }
+  },
+  "winner": "q50_at32",
+  "winner_stats": {
+    "ocw_rm": 0.2189,
+    "cr_keep": 0.9167,
+    "selectivity": 0.1356,
+    "d_acc": 0.0142,
+    "n_ocw": 201,
+    "n_cr": 312,
+    "fire_rate": 0.2193
+  },
+  "seconds": 3105.5
+}

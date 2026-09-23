@@ -1,28 +1,3 @@
-# Steer the overconfidence direction DURING REASONING and measure the effect on
-# BEHAVIOR (the 4-state label) and CAPABILITY (accuracy + ECE).
-#
-#   RQ2 — does steering the reasoning change behavior?  -> positive vs negative
-#         4-state changes between unsteered and steered runs.
-#   RQ3 — does steering hurt accuracy / calibration?     -> accuracy + ECE.
-#   RQ4 — does the ANSWER depend on the REASONING trace? -> phase-split steering:
-#         steer ONLY the <think> tokens; if the (unsteered) answer moves, the
-#         answer causally depends on the trace.
-#
-# Scoring: M2 (logit at the trace's \boxed{ cut) AND M4 (yes/no) — a direction
-# that only moves the M2 reading is probably an artifact of M2's scale; a real
-# behavioral feature should move BOTH readouts. Steering modes:
-#   always-on   add / ablate / conditional (hook active for prompt+trace+readout)
-#   phase-split think-only / answer-only (generation split at </think>; M2 only,
-#               run for the FIRST direction in --directions)
-#
-# This module is a data-parallel WORKER: --shard i --num-shards k takes records
-# [i::k] and streams every condition's rollouts to
-# results/steering/rollouts/<condition>__shard<i>.jsonl. The alpha scale (mean
-# activation norm) is computed on the FULL record set so all shards steer
-# identically. Merge + tables: analyze_steering. Launcher: run_steer.sh.
-#
-# `python -m ...steer_overconfidence [--n N] [--layer L] [--directions a,b,c]`
-
 from __future__ import annotations
 
 import argparse
@@ -47,27 +22,18 @@ from models_specific.active import chat_prompt
 
 
 def score_set(model, tok, records, method=logit_method, **kw):
-    """Measure every record with `method` (whatever hooks are active apply)."""
     return [method.measure(model, tok, r, **kw) for r in records]
 
 
 def _reasoning_len(tok, trace: str) -> dict:
-    """Chars + tokens of a reasoning trace, logged on every record."""
     return {"reasoning_chars": len(trace), "reasoning_tokens": len(tok(trace, add_special_tokens=False).input_ids)}
 
 
 def score_m2_batch(model, tok, records, letter_ids, batch_size, system=None):
-    """Batched M2: generate all MCQ traces at once, read letter logits at the \\boxed{ cut.
-
-    Identical to logit_method.measure per record, but generation and readout run
-    over the whole batch (one hook, one forward) — the speed lever on CUDA.
-    Whatever steering hook is installed applies to the whole batch. `system`
-    prepends a system instruction (the prompting-baseline lever).
-    """
     from behaviour_specific.overconfidence.confidence_logit import cut_at_box, probs_over_letters
 
     prompts = [chat_prompt(tok, mcq_prompt(r), system=system) for r in records]
-    traces = generate_batch_chunked(model, tok, prompts, batch_size=batch_size)  # greedy
+    traces = generate_batch_chunked(model, tok, prompts, batch_size=batch_size)
     cut_texts, forced = [], []
     for prompt, trace in zip(prompts, traces):
         prefix, f = cut_at_box(trace)
@@ -96,13 +62,11 @@ def score_m2_batch(model, tok, records, letter_ids, batch_size, system=None):
 
 
 def score_m4_batch(model, tok, records, ids, batch_size, system=None):
-    """Batched M4: all 4 yes/no option traces per question, generated + read in batches."""
     from behaviour_specific.overconfidence.confidence_yesno import (
         MAX_NEW_TOKENS, YESNO_CONF_THRESHOLD, YESNO_TEMPLATE, p_yes, predict, yesno_cut,
     )
 
     yes_ids, no_ids = ids
-    opts_per = [len(r["options"]) for r in records]
     prompts, owner = [], []
     for k, r in enumerate(records):
         for opt in r["options"]:
@@ -141,14 +105,39 @@ def score_m4_batch(model, tok, records, ids, batch_size, system=None):
     return out
 
 
+VERIFY_TEMPLATE = "You answered {letter}. Is that answer correct? Reply with only YES or NO."
+
+
+def verification_text(tok, r: dict, system: str | None) -> str:
+    content = f"{system}\n\n{r['user_prompt']}" if system else r["user_prompt"]
+    return tok.apply_chat_template(
+        [{"role": "user", "content": content},
+         {"role": "assistant", "content": r["generations"][0]["text"]},
+         {"role": "user", "content": VERIFY_TEMPLATE.format(letter=r["final_answer"])}],
+        tokenize=False, add_generation_prompt=True)
+
+
+def score_m5_batch(model, tok, records, letter_ids, ids, batch_size, system=None, m2_rows=None):
+    from behaviour_specific.overconfidence.confidence_yesno import YESNO_CONF_THRESHOLD, p_yes
+
+    m2_rows = m2_rows or score_m2_batch(model, tok, records, letter_ids, batch_size, system=system)
+    logits = next_token_logits_batch(model, tok, [verification_text(tok, r, system) for r in m2_rows],
+                                     batch_size=batch_size)
+    out = []
+    for r, lg in zip(m2_rows, logits):
+        conf = p_yes(lg, *ids)
+        out.append({**r, "method": "ptrue", "m2_confidence": r["confidence"], "m2_state": r["state"],
+                    "confidence": conf,
+                    "state": label_from_score(conf, r["is_correct"], threshold=YESNO_CONF_THRESHOLD)})
+    return out
+
+
 def _mean_reasoning(results: list[dict], key: str) -> float | None:
-    """Mean reasoning length over records that carry it (None if none do)."""
     vals = [r[key] for r in results if key in r]
     return sum(vals) / len(vals) if vals else None
 
 
 def summary(results: list[dict]) -> dict:
-    """Accuracy, ECE, mean confidence, mean rank, reasoning length, state histogram."""
     states = [r["state"] for r in results]
     return {
         "accuracy": sum(r["is_correct"] for r in results) / len(results),
@@ -162,7 +151,6 @@ def summary(results: list[dict]) -> dict:
 
 
 def compare(before: list[dict], after: list[dict]) -> dict:
-    """Diff two scored sets (matched by id): behavior changes + capability."""
     after_by_id = {r["id"]: r for r in after}
     changes = Counter(behavior_change(b["state"], after_by_id[b["id"]]["state"]) for b in before)
     sb, sa = summary(before), summary(after)
@@ -171,7 +159,6 @@ def compare(before: list[dict], after: list[dict]) -> dict:
 
 
 def make_operator(v, operator, alpha, tau):
-    """Build the residual-stream transform h -> h' for an always-on operator."""
     if operator == "add":
         return lambda h: steer_add(h, v, alpha)
     if operator == "ablate":
@@ -182,11 +169,6 @@ def make_operator(v, operator, alpha, tau):
 
 
 def run_steered(model, tok, records, v, layer, scorer, operator="add", alpha=0.0, tau=0.0):
-    """Score `records` with an always-on steering operator installed at `layer`.
-
-    `scorer(records) -> list[dict]` runs while the hook is live (so its generation
-    and readout are both steered).
-    """
     v = v.to(model.device, torch.float32)
     handle = steering_hook(model.model.layers[layer], make_operator(v, operator, alpha, tau))
     try:
@@ -196,11 +178,6 @@ def run_steered(model, tok, records, v, layer, scorer, operator="add", alpha=0.0
 
 
 def measure_phase_steered(model, tok, record, v, layer, alpha, phase, letter_ids):
-    """M2's measurement with additive steering applied to ONE phase only.
-
-    phase="think":  steer while generating up to </think>; answer + readout unsteered.
-    phase="answer": thought unsteered; steer the continuation after </think> + readout.
-    """
     if phase not in ("think", "answer"):
         raise ValueError(f"unknown phase: {phase}")
     v = v.to(model.device, torch.float32)
@@ -241,12 +218,10 @@ def measure_phase_steered(model, tok, record, v, layer, alpha, phase, letter_ids
 
 
 def run_phase_steered(model, tok, records, v, layer, alpha, phase, letter_ids):
-    """measure_phase_steered over a record set."""
     return [measure_phase_steered(model, tok, r, v, layer, alpha, phase, letter_ids) for r in records]
 
 
 def mean_activation_norm(model, tok, records, layer, prompt_fn) -> float:
-    """Mean L2 norm of the last-token residual at `layer` over `records`."""
     from general.inference import get_activations
     return sum(get_activations(model, tok, prompt_fn(r), layer).norm().item() for r in records) / len(records)
 
@@ -305,7 +280,6 @@ if __name__ == "__main__":
         else:
             raise ValueError(f"unknown method: {m}")
 
-    # alpha scale from the FULL eval set so every shard steers identically
     norm = mean_activation_norm(model, tok, all_records, args.layer, lambda r: chat_prompt(tok, mcq_prompt(r)))
     n_cond = len(scorers) * (1 + len(dir_names) * (len(alphas) + 1)) + 2
     print(f"shard {args.shard}/{args.num_shards}: {len(records)} records, layer {args.layer}, "

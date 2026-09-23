@@ -1,28 +1,32 @@
 # Projection-Transport Steering
 
-Minimal reproducibility package for **Projection-Transport Steering: Conditional Control of Reasoning Behavior in LLMs**.
+Reproducibility package for **Projection-Transport Steering: Conditional Control of Reasoning Behavior in LLMs**.
 
-- [Paper PDF](paper/paper.pdf)
-- [LaTeX source](paper/paper.tex)
+- [Paper PDF](paper/iclr2027_upd_proposal.pdf)
+- [LaTeX source](paper/iclr2027_upd_proposal.tex)
 - [Reproducibility guide](REPRODUCIBILITY.md)
 
 ## Method
 
-![Measured activation movement under additive steering and gated ablation](docs/assets/measured-trace-movement.png)
+PTS splits an activation edit into an action and a decision. The action is the optimal-transport map of a projection onto a behavioral subspace. Shifts, ablation, clamps and quantile maps are all members of this family. The decision is a likelihood-ratio test on a learned detection statistic, read after the answer (post-hoc) or from the prompt (single pass).
 
-*Measured trace movement on the representative MMLU subset. Additive steering moves harmful and useful confidence together; gated ablation moves most overconfident-wrong traces toward the calibrated region while leaving part of the confident-right population untouched.*
+The selectivity of the composed operator is `TPR * rho_O - FPR * rho_C`. This caps what any decision can buy from unsteered answers alone, and it predicts every gated configuration from one ungated run.
 
 ## Results
 
-Projection-Transport Steering separates two decisions that fixed-vector methods conflate: when the model should be changed and how its activations should move. Across five resampled MMLU subsets, gated ablation reaches **+0.266 selectivity with no detectable accuracy change**. The fixed additive edit is essentially nonselective and lowers accuracy, showing that stronger global steering is not a substitute for targeted control.
+The frozen protocols are in `rebuttal/protocols/`.
 
-![Selectivity and accuracy trade-off across steering methods](docs/assets/selectivity-accuracy-frontier.png)
+- **Overconfidence, Gemma-2-2B, 3,000 held-out MMLU questions.**
+  - Selectivity is 0.294 [0.256, 0.334], the highest of eight methods.
+  - The share of overconfident-wrong answers falls by 15.0 points, and ECE falls from 0.354 to 0.255.
+  - PTS scores above all 100 random directions sent through the same decision.
+- **Replications.** Qwen2.5-7B reaches 0.172 and ARC-Challenge reaches 0.235.
+- **Free-text toxicity, 3,000 held-out prompts per model.**
+  - Single-pass PTS reaches 0.526 on Gemma and 0.534 on Qwen.
+  - It scores above the global shift, prompting, and refusing on the same decision, and above CAST on Qwen.
+- **Latency.** Single-pass PTS runs at 1.01x the unsteered wall clock.
 
-*Selectivity-accuracy trade-off on the representative MMLU subset; right and up are better. Gated ablation achieves the strongest observed selectivity without the accuracy loss of additive and CAST-style actions. The paragraph above reports the five-subset mean.*
-
-The held-out confirmation reaches the same conclusion beyond Gemma. On OLMo-2/TruthfulQA, the detector-axis action improves calibrated truthfulness by **+0.137** over a norm-matched action, also improves correct-answer selection, and passes all seven predeclared construction controls.
-
-The practical result is simple: detect whether intervention is warranted, then apply an input-dependent edit confined to the behavioral projection. Claims remain limited to the evaluated settings; the appendix and rebuttal packet preserve the full stress-test boundary.
+`paper/recompute_from_records.py` recomputes the multiple-choice table cells from `results/release/records.csv.gz`.
 
 ## Repository map
 
@@ -33,7 +37,7 @@ The practical result is simple: detect whether intervention is warranted, then a
 | models_specific/ | Gemma-2B and Gemma-2-9B adapters |
 | results/ | Paper-level summaries and compressed per-question rollouts |
 | behaviour_specific/overconfidence/directions/ | Released fitted directions and projection statistics |
-| paper/ | Complete paper source, generated tables, figures, and compiled PDF |
+| paper/ | ICLR submission source, generated tables, figure data, and compiled PDF |
 | rebuttal/ | Frozen protocols, audit reports, and per-question post-review evidence |
 
 ## Quick verification

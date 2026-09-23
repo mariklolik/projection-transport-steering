@@ -1,11 +1,15 @@
 % seeds: 7,11,23,31,47 (n=300 each, M4 readout)
-baseline & --- & $0.110\pm0.021$ & $0.410\pm0.014$ & --- \\
-additive $-0.75$ \cite{rimsky2024caa} & $-0.078\pm0.015$ & $0.112\pm0.016$ & $0.534\pm0.026$ & $+0.003\pm0.006$ \\
-CAST-style gate$+$add \cite{lee2024cast} & $-0.043\pm0.029$ & $0.100\pm0.018$ & $0.448\pm0.039$ & $+0.214\pm0.111$ \\
-MiMiC full-space affine \cite{singh2024mimic} & $+0.009\pm0.048$ & $0.110\pm0.017$ & $0.391\pm0.056$ & $+0.194\pm0.084$ \\
-clamp $q_{50}$ (ours) & $+0.007\pm0.032$ & $0.104\pm0.012$ & $0.404\pm0.034$ & $+0.199\pm0.071$ \\
-quantile-OT non-\ocw{} (ours) & $-0.005\pm0.019$ & $0.102\pm0.018$ & $0.415\pm0.032$ & $+0.141\pm0.083$ \\
-gated clamp (ours) & $+0.011\pm0.027$ & $0.109\pm0.012$ & $0.405\pm0.028$ & $+0.208\pm0.106$ \\
-gated ablation (ours) & $+0.009\pm0.036$ & $0.093\pm0.021$ & $0.387\pm0.045$ & $+0.266\pm0.112$ \\
-LDA-gated ablation (ours) & $+0.013$ & $0.068$ & $0.375$ & $+0.261$ \\
+baseline & acc $0.473\pm0.026$ & $0.099\pm0.019$ & $0.404\pm0.029$ & --- \\
+prompting & $-0.005\pm0.020$ & $0.118\pm0.018$ & $0.392\pm0.023$ & $+0.198\pm0.086$ \\
+additive $-0.75$ \cite{rimsky2024caa} & $-0.087\pm0.053$ & $0.108\pm0.044$ & $0.556\pm0.056$ & $+0.000\pm0.000$ \\
+CAST-style gate$+$add \cite{lee2024cast} & $-0.049\pm0.039$ & $0.099\pm0.021$ & $0.450\pm0.040$ & $+0.222\pm0.055$ \\
+MiMiC full-space affine \cite{singh2024mimic} & $-0.001\pm0.041$ & $0.116\pm0.026$ & $0.401\pm0.048$ & $+0.200\pm0.107$ \\
+Linear-AcT $\lambda{=}0.5$ \cite{rodriguez2025act} & $-0.006\pm0.036$ & $0.104\pm0.015$ & $0.412\pm0.018$ & $+0.120\pm0.080$ \\
+Linear-AcT $\lambda{=}1.0$ \cite{rodriguez2025act} & $+0.001\pm0.032$ & $0.101\pm0.011$ & $0.410\pm0.027$ & $+0.146\pm0.141$ \\
+clamp $q_{50}$ (ours) & $+0.001\pm0.034$ & $0.110\pm0.033$ & $0.408\pm0.020$ & $+0.145\pm0.039$ \\
+quantile transport (ours) & $-0.001\pm0.029$ & $0.108\pm0.017$ & $0.408\pm0.015$ & $+0.119\pm0.086$ \\
+gated clamp (ours) & $-0.001\pm0.039$ & $0.096\pm0.021$ & $0.404\pm0.024$ & $+0.224\pm0.065$ \\
+gated ablation (ours) & $-0.003\pm0.050$ & $0.094\pm0.030$ & $0.395\pm0.038$ & $+0.279\pm0.090$ \\
+LDA-gated ablation (ours) & $-0.009\pm0.032$ & $0.091\pm0.010$ & $0.402\pm0.028$ & $+0.198\pm0.094$ \\
+online-gated ablation (ours, single pass) & $-0.000\pm0.016$ & $0.109\pm0.016$ & $0.405\pm0.040$ & $+0.035\pm0.048$ \\
 \hline

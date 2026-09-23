@@ -1,0 +1,87 @@
+{
+  "task": "openended",
+  "layer": 14,
+  "methods": {
+    "baseline": {
+      "fluency_ppl": 2.997,
+      "distinct3": 0.9532,
+      "pct_degenerate": 0.0,
+      "mean_words": 206.4,
+      "n": 200
+    },
+    "additive": {
+      "fluency_ppl": 3.358,
+      "distinct3": 0.48,
+      "pct_degenerate": 0.575,
+      "mean_words": 204.6,
+      "n": 200
+    },
+    "clamp_q50": {
+      "fluency_ppl": 2.972,
+      "distinct3": 0.9463,
+      "pct_degenerate": 0.0,
+      "mean_words": 206.3,
+      "n": 200
+    },
+    "quantile-OT": {
+      "fluency_ppl": 2.986,
+      "distinct3": 0.9514,
+      "pct_degenerate": 0.0,
+      "mean_words": 206.4,
+      "n": 200
+    },
+    "ablation": {
+      "fluency_ppl": 3.055,
+      "distinct3": 0.9384,
+      "pct_degenerate": 0.0,
+      "mean_words": 205.6,
+      "n": 200
+    },
+    "MiMiC": {
+      "fluency_ppl": 3.01,
+      "distinct3": 0.9489,
+      "pct_degenerate": 0.0,
+      "mean_words": 206.6,
+      "n": 200
+    },
+    "Linear-AcT": {
+      "fluency_ppl": 2.982,
+      "distinct3": 0.9501,
+      "pct_degenerate": 0.0,
+      "mean_words": 207.7,
+      "n": 200
+    },
+    "online-gated ablation": {
+      "fluency_ppl": 3.009,
+      "distinct3": 0.946,
+      "pct_degenerate": 0.0,
+      "mean_words": 208.7,
+      "n": 200,
+      "fire_rate": 0.68,
+      "fire_step_median": 16
+    },
+    "additive (tuned)": {
+      "fluency_ppl": 3.137,
+      "distinct3": 0.9222,
+      "pct_degenerate": 0.0,
+      "mean_words": 208.8,
+      "n": 200
+    },
+    "MiMiC (tuned)": {
+      "fluency_ppl": 3.02,
+      "distinct3": 0.9484,
+      "pct_degenerate": 0.0,
+      "mean_words": 206.0,
+      "n": 200
+    },
+    "gated full-rank transport": {
+      "fluency_ppl": 3.02,
+      "distinct3": 0.9535,
+      "pct_degenerate": 0.0,
+      "mean_words": 207.9,
+      "n": 200,
+      "fire_rate": 0.5862,
+      "fire_step_median": 16
+    }
+  }
+}
