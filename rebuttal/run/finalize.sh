@@ -3,7 +3,7 @@
 # coordinates, pull everything back, regenerate all tables and the PDF.
 #   bash rebuttal/run/finalize.sh [host]
 set -uo pipefail
-HOST="${1:-avi-gn-fsk39}"
+HOST="${1:-avi-gn-fsk40}"
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 

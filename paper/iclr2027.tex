@@ -92,11 +92,14 @@ the activation to a target law, and a decision that says when the action runs.
 We show that the selectivity of any such edit factors exactly into the
 decision's error rates and the action's conversion rates, and that the
 decision's share is bounded by its held-out AUROC. The factorization predicts
-measured selectivity without running the gated edit and identifies detection
-as the lever. On answer-level overconfidence in multiple-choice reasoning, PTS
-is more selective than every baseline tuned under the same budget in a
-pre-registered comparison on two model families, at unchanged accuracy, and it
-can decide from the prompt or a short prefix in a single pass.
+measured selectivity without running the gated edit, and it predicts when a
+decision is worth adding: when the action alone changes the protected state
+often. On answer-level overconfidence in multiple-choice reasoning, in a
+pre-registered comparison with baselines tuned under the same budget, PTS is
+the most selective method on Gemma-2-2B and is statistically level with the
+best methods on Qwen2.5-7B, at unchanged accuracy on both. On Gemma the
+decision can be taken from the prompt or a short prefix without losing
+selectivity, so the edit runs in a single pass.
 \end{abstract}
 
 \section{Introduction}
@@ -146,12 +149,15 @@ edits across detectors, actions and thresholds, which lets every gated
 configuration be selected without running it (Sec.~\ref{ssec:law}).
 \item A pre-registered comparison in which every method is tuned under one rule
 and evaluated once on 3{,}000 unseen questions for \texttt{gemma-2-2b-it} and
-\texttt{Qwen2.5-7B-Instruct}. PTS is more selective than prompting, additive
-steering, directional ablation, MiMiC, Linear-AcT and two CAST variants, with
-accuracy non-inferior at a two-point margin (Sec.~\ref{ssec:confirm}).
-\item A single-pass operator: the decision reaches nearly its full-trace
-detection quality from the prompt or from the first tokens of the answer, so
-PTS runs in one generation at the cost of two dot products per token
+\texttt{Qwen2.5-7B-Instruct}. On Gemma, PTS is more selective than prompting,
+additive steering, directional ablation, MiMiC, Linear-AcT and two CAST
+variants; on Qwen, where the selected action already spares the protected
+state, it is level with the best of them, as the identity predicts. Accuracy
+is non-inferior at a two-point margin on both (Sec.~\ref{ssec:confirm}).
+\item A single-pass operator: the decision reaches most of its full-trace
+detection quality from the prompt or from the first tokens of the answer, and
+on Gemma a decision taken there matches the post-hoc one, so PTS runs in one
+generation at the cost of two dot products per token
 (Sec.~\ref{ssec:onepass-results}).
 \end{itemize}
 
@@ -251,15 +257,15 @@ confident and nonconfident answers on an extraction split
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[font=\footnotesize, >=Stealth,
+\begin{tikzpicture}[font=\footnotesize, >=Stealth, node distance=0.55cm,
   box/.style={draw, rounded corners=2pt, align=center, inner sep=4pt, minimum height=1.05cm},
   lab/.style={font=\scriptsize\itshape, text=gray!70!black}]
 \node[box, fill=gray!8, minimum width=2.2cm] (x) {question\\[1pt]\scriptsize prompt tokens};
-\node[box, fill=cgate!12, right=0.7cm of x, minimum width=3.4cm] (dec) {\textbf{decision}\\[1pt]
+\node[box, fill=cgate!12, right=0.55cm of x, minimum width=3.1cm] (dec) {\textbf{decision}\\[1pt]
   \scriptsize probe $s$ on prompt, prefix or answer\\ \scriptsize fire iff $s>\tau$};
-\node[box, fill=cot!12, right=0.7cm of dec, minimum width=3.9cm] (act) {\textbf{action} at layer $\ell$\\[1pt]
+\node[box, fill=cot!12, right=0.55cm of dec, minimum width=3.5cm] (act) {\textbf{action} at layer $\ell$\\[1pt]
   \scriptsize $h\leftarrow h+V^{\top}\!\big(S(Vh)-Vh\big)$\\ \scriptsize $S$: transport map to $\nu$};
-\node[box, fill=gray!8, right=0.7cm of act, minimum width=2.1cm] (y) {answer and\\ stated confidence};
+\node[box, fill=gray!8, right=0.55cm of act, minimum width=2.1cm] (y) {answer and\\ stated confidence};
 \draw[->, thick] (x) -- (dec);
 \draw[->, thick] (dec) -- node[above, lab]{fires} (act);
 \draw[->, thick] (act) -- (y);
@@ -446,7 +452,7 @@ prefix, and acts from then on.
 
 \textbf{Statistics.} The unit of analysis is the question. Intervals are
 question-level paired bootstrap intervals with $10^4$ resamples; comparisons
-between methods resample the same questions for both. The six primary
+between methods resample the same questions for both. The seven primary
 comparisons of post-hoc PTS against the baselines are Holm-adjusted. We call
 an accuracy change non-inferior when the lower end of its $95\%$ interval is
 above $-0.02$, a margin fixed in the protocol.
@@ -541,23 +547,24 @@ answer and every confident-right one, at a cost of $15.3$ accuracy points;
 smaller doses keep more of both (Appendix~\ref{app:tuning}). The tuned dose,
 $p-0.25\lVert h\rVert$, reaches selectivity $0.197$ there.
 
-\begin{table}[t]\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{table}[t]\scriptsize\setlength{\tabcolsep}{2.2pt}
 \centering
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{l|c|c|cc|c|c}
+\begin{tabular}{l|cccc|cccc}
 \hline
-method & configs & $\Delta$acc [95\% CI] & removal $\uparrow$ & retention $\uparrow$ & Sel $\uparrow$ [95\% CI] & $\Delta$Sel vs PTS (Holm $p$) \\
+ & \multicolumn{4}{c|}{Gemma-2-2B ($n_{\ocw}=963$, $n_{\crok}=1{,}399$)} & \multicolumn{4}{c}{Qwen2.5-7B ($n_{\ocw}=563$, $n_{\crok}=2{,}007$)} \\
+method & $\Delta$acc & ret. & Sel $\uparrow$ & $\Delta$Sel ($p$) & $\Delta$acc & ret. & Sel $\uparrow$ & $\Delta$Sel ($p$) \\
 \hline
-\inputtab{gen/confirm_table}
-\end{tabular}}
-\caption{\textbf{PTS is the most selective method on Gemma at unchanged
-accuracy.} Confirmatory split of 3{,}000 MMLU questions, each method at the
-configuration it won on the tuning split under one rule; removal is over the
-questions that started overconfident-wrong, retention over those that started
-confident-right. Intervals are question-level paired bootstrap intervals
-($10^4$ resamples); $\Delta$Sel is paired against PTS post-hoc, with $p$ Holm-adjusted
-over the seven baselines. The single-pass rows are secondary and are compared
-without adjustment.}
+\inputtab{gen/confirm_side}
+\hline
+\end{tabular}
+\caption{\textbf{PTS is the most selective method on Gemma and level with the
+best methods on Qwen, at unchanged accuracy.} Confirmatory split of 3{,}000 MMLU
+questions per model, each method at the configuration it won on the tuning
+split under one rule. Retention is over the questions that started
+confident-right. Sel intervals are question-level bootstrap intervals ($10^4$
+resamples); $\Delta$Sel is paired against PTS post-hoc, with Holm-adjusted $p$
+over the seven baselines. $^\dagger$: the $95\%$ interval of $\Delta$acc
+reaches below $-0.02$. Rows below the line are secondary.}
 \label{tab:confirm}
 \end{table}
 
@@ -573,14 +580,27 @@ $[-0.009, 0.015]$, inside the two-point margin, as it does for every baseline.
 PTS and the tuned additive dose use the same kind of action; the gate is what
 separates them, with retention $0.80$ against $0.66$.
 
-\textbf{On Qwen the identity predicts where the gate helps.} @QWENPARA@
+\textbf{On Qwen the identity predicts where the gate helps.} On Qwen the tuning split selects ablation as
+the action, and ablation applied everywhere changes $24\%$ of
+overconfident-wrong but only $8\%$ of confident-right answers. By
+Prop.~\ref{prop:account}, a decision can recover at most that $8\%$ on each
+answer it leaves alone, so there is little for it to add: the probe raises
+selectivity from $0.156$ for ungated ablation to $0.172$ $[0.136, 0.210]$.
+PTS is level with prompting ($0.212$, paired difference $-0.040$
+$[-0.083, 0.004]$), additive steering, ablation and MiMiC, and above
+Linear-AcT and both CAST variants; after Holm adjustment only the difference to
+the CAST-style variant is significant. Its accuracy change, $-0.002$
+$[-0.014, 0.009]$, is inside the margin; the intervals of the tuned additive
+dose ($-0.015$ $[-0.027, -0.003]$) and of ablation reach below it.
 
 \textbf{The gate also protects unrelated tasks.} Applied to every input, the
 shift $p-0.5\lVert h\rVert$ lowers HumanEval pass@1 from $0.396$ to $0.280$; with
 the post-hoc decision in front of it the change is $-0.006$
 $[-0.030, 0.012]$, and with the prompt decision the output is unchanged,
 because the probe fires on $23\%$ and $0\%$ of coding prompts
-(Appendix~\ref{app:capability}).
+(Appendix~\ref{app:capability}). Refitting the probes with out-of-domain
+instructions as negatives stops them from firing on coding and open-ended
+prompts altogether, and leaves the confirmatory selectivity within $0.015$.
 
 \subsection{Deciding in one pass}
 \label{ssec:onepass-results}
@@ -592,7 +612,9 @@ $0.720$, against $0.741$ for the finished answer; for Qwen the prompt reaches
 $0.761$ against $0.785$. The single-pass operators in Table~\ref{tab:confirm}
 match the post-hoc one: deciding at token 32 gives selectivity $0.294$ and
 deciding at the prompt $0.306$, with paired differences to the post-hoc
-decision of $0.000$ and $+0.012$. A decision at the prompt costs one dot
+decision of $0.000$ and $+0.012$. On Qwen the gap in AUROC is larger, and the
+selected single-pass variants reach $0.109$ (token 16) and $0.120$ (prompt),
+below the post-hoc $0.172$. A decision at the prompt costs one dot
 product on an activation the forward pass already computes, so the operator
 adds no generation; in an end-to-end measurement of the earlier prefix gate the
 single-pass operator ran at $1.05\times$ the unsteered wall clock, against
@@ -607,9 +629,9 @@ operator passed on one of three models on TruthfulQA, and in the one of six
 model--behavior cells that reached testing it helped one metric and hurt
 another (Appendix~\ref{app:postreview}). Second, the decision is a probe trained on
 labelled MMLU answers, and its threshold is tied to that distribution: it
-fires on part of the open-ended instructions it should leave alone
-(Appendix~\ref{app:capability}) and too rarely on ARC-Challenge
-(Appendix~\ref{app:transfer}). Third, the transport characterisation fixes the
+fires too rarely on ARC-Challenge (Appendix~\ref{app:transfer}), and
+without out-of-domain negatives it fires on open-ended instructions
+(Appendix~\ref{app:capability}). Third, the transport characterisation fixes the
 action for a target law but does not choose the target; we choose it on the
 tuning split.
 
@@ -844,7 +866,7 @@ selectivities, removal, retention and ECE are secondary and reported without
 a claim.
 
 
-\section{An earlier operator on other models and behaviors}
+\section{An earlier operator on further models}
 \label{app:postreview}
 
 Before the present protocol we froze a simplified operator, an action along a
@@ -1153,16 +1175,31 @@ which is expected for a decision fitted to M5 labels.
 
 \begin{table}[h]\footnotesize\setlength{\tabcolsep}{3pt}
 \centering
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{l|cc|cc}
 \hline
  & \multicolumn{2}{c|}{M2 (letter logit)} & \multicolumn{2}{c}{M4 (verification)} \\
 method (Gemma, confirmatory) & Sel [95\% CI] & $\Delta$ vs PTS & Sel [95\% CI] & $\Delta$ vs PTS \\
 \hline
 \inputtab{gen/secondary_gemma}
-\end{tabular}
+\end{tabular}}
 \caption{Secondary readouts on the confirmatory split; paired bootstrap
 intervals, no multiplicity adjustment.}
 \label{tab:secondary}
+\end{table}
+
+\begin{table}[h]\footnotesize\setlength{\tabcolsep}{3pt}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{l|cc|cc}
+\hline
+ & \multicolumn{2}{c|}{M2 (letter logit)} & \multicolumn{2}{c}{M4 (verification)} \\
+method (Qwen, confirmatory) & Sel [95\% CI] & $\Delta$ vs PTS & Sel [95\% CI] & $\Delta$ vs PTS \\
+\hline
+\inputtab{gen/secondary_qwen}
+\end{tabular}}
+\caption{Secondary readouts on the Qwen confirmatory split.}
+\label{tab:secondary-qwen}
 \end{table}
 
 \section{Capability away from the target behavior}
@@ -1195,7 +1232,18 @@ intervals over problems.}
 \label{tab:capability}
 \end{table}
 
-@OODPARA@
+\textbf{A decision that abstains out of domain.} The false firing on
+open-ended instructions is a property of the probe's training data, not of the
+operator. We refit both probes with 600 AlpacaEval instructions and their
+unsteered answers added as negatives (instructions disjoint from the 200 used
+above) and set the threshold to fire on the same fraction of tuning questions.
+The refitted probes fire on none of the HumanEval and AlpacaEval prompts, so
+the gated outputs there equal the unsteered ones; on WikiText the prompt probe
+fires on none and the post-hoc probe on $48\%$ of passages. On the
+confirmatory split their held-out AUROC is $0.735$ (answer) and $0.719$
+(prompt), and composing them with the frozen actions gives selectivity $0.280$
+$[0.242, 0.319]$ and $0.300$ $[0.261, 0.339]$, within $0.015$ of the frozen
+probes. This analysis was not part of the protocol.
 
 \section{Examples}
 \label{app:examples}
@@ -1228,6 +1276,7 @@ $0.634$.
 
 \begin{table}[h]\footnotesize\setlength{\tabcolsep}{4pt}
 \centering
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{l|ccc|ccc}
 \hline
  & \multicolumn{3}{c|}{ARC-Challenge ($n_{\ocw}=66$, $n_{\crok}=205$)} & \multicolumn{3}{c}{GSM8K-MCQ ($n_{\ocw}=35$, $n_{\crok}=161$)} \\
@@ -1239,7 +1288,7 @@ CAST, prompt condition & $-0.017$ & 0.844 & $+0.223$ & $+0.023$ & 0.634 & $+0.31
 PTS, post-hoc & $-0.010$ & 0.888 & $+0.100$ & $+0.023$ & 0.944 & $+0.287$ \\
 PTS, decides at the prompt & $-0.013$ & 0.941 & $-0.013$ & $-0.040$ & 0.814 & $+0.128$ \\
 \hline
-\end{tabular}
+\end{tabular}}
 \caption{Transfer of the Gemma operators fitted on MMLU, M5 readout, 300
 questions each, no refitting.}
 \label{tab:transfer}
@@ -1271,13 +1320,14 @@ $0.11$.
 
 \begin{table}[h]\footnotesize\setlength{\tabcolsep}{4pt}
 \centering
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{l|cc|cc}
 \hline
  & \multicolumn{2}{c|}{M4} & \multicolumn{2}{c}{M2} \\
 method (earlier protocol, tuned) & Sel [95\% CI] & $\Delta$ vs gated abl. & Sel [95\% CI] & $\Delta$acc \\
 \hline
 \inputtab{gen/legacy_pooled}
-\end{tabular}
+\end{tabular}}
 \caption{Earlier protocol, five subsets pooled with overlapping questions
 removed. Intervals are question-level paired bootstrap intervals ($10^4$
 resamples).}

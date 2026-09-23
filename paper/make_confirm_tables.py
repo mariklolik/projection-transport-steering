@@ -129,7 +129,46 @@ def secondary_table(key: str) -> None:
     (GEN / f"secondary_{key}.tex").write_text("\n".join(rows) + "\n")
 
 
+def side_by_side() -> None:
+    blocks = {}
+    for key in ("gemma", "qwen"):
+        proto = RES / {"gemma": "v4_confirm", "qwen": "v5q_confirm"}[key] / "protocol.json"
+        res = RES / "v4_pooled" / f"confirm_{key}.json"
+        if not proto.exists() or not res.exists():
+            return
+        p, r = json.loads(proto.read_text()), json.loads(res.read_text())["m5"]
+        extra = RES / "v4_pooled" / f"confirm_{key}_extra.json"
+        if extra.exists():
+            r["methods"] = {**json.loads(extra.read_text())["m5"]["methods"], **r["methods"]}
+        adj = holm({a["tag"]: r["methods"][a["tag"]]["vs_ref"]["sel"]["p_two_sided"] for a in p["arms"] if a.get("primary")})
+        blocks[key] = (p, r, adj)
+    rows = []
+    for i, arm in enumerate(blocks["gemma"][0]["arms"]):
+        cells = []
+        for key in ("gemma", "qwen"):
+            p, r, adj = blocks[key]
+            a = p["arms"][i]
+            m = r["methods"][a["tag"]]
+            ok = "" if m["dacc"]["ci"][0] > -0.02 else "$^\\dagger$"
+            vs = m.get("vs_ref", {}).get("sel")
+            d = "---" if vs is None else f"${vs['point']:+.3f}$" + (f" ({pval(adj[a['tag']])})" if a["tag"] in adj else "")
+            sel = m["sel"]
+            cells.append(f"${m['dacc']['point']:+.3f}${ok} & {m['cr_keep']['point']:.2f} & ${sel['point']:.3f}$ "
+                         f"{{\\tiny$[{sel['ci'][0]:.2f},{sel['ci'][1]:.2f}]$}} & {d}")
+        short = {"prompt_hedge": "prompting", "tuned_additive": "additive CAA", "plain_ablate": "dir. ablation",
+                 "tuned_mimic": "MiMiC", "tuned_act": "Linear-AcT", "tuned_cast": "CAST-style (trace)"}
+        t = arm["tag"]
+        name = short.get(t) or ("CAST (prompt)" if t.startswith("castdim") else "PTS, prefix" if t.startswith("detonline")
+                                else "PTS, prompt" if t.startswith("detprompt") else "PTS, post-hoc")
+        name = f"\\textbf{{{name}}}" if arm["tag"] == blocks["gemma"][0]["ref"] else name
+        rows.append(f"{name} & " + " & ".join(cells) + " \\\\")
+        if arm["tag"] == blocks["gemma"][0]["ref"]:
+            rows.append("\\hline")
+    (GEN / "confirm_side.tex").write_text("\n".join(rows) + "\n")
+
+
 if __name__ == "__main__":
+    side_by_side()
     secondary_table("gemma")
     secondary_table("qwen")
     legacy_table()

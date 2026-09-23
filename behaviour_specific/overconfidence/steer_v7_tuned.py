@@ -105,7 +105,7 @@ if __name__ == "__main__":
     from behaviour_specific.overconfidence.benchmarks import load_records
     from models_specific.active import load_model
 
-    winners = {f"det{'online' if 'at' in c else ''}_{c}": c for c in args.detector_configs.split(",") if c}
+    winners = {f"det{'online' if 'at' in parse(c) else ''}_{c}": c for c in args.detector_configs.split(",") if c}
     winners.update({f"detprompt_{c}": c for c in args.prompt_configs.split(",") if c})
     winners.update({f"castdim_{c}": c for c in args.cast_configs.split(",") if c})
     for m in args.methods.split(","):

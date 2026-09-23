@@ -3,7 +3,7 @@
 # figure fragment, and rebuild the PDF.
 #   bash rebuttal/run/pull_and_build.sh [host]
 set -euo pipefail
-HOST="${1:-avi-gn-fsk39}"
+HOST="${1:-avi-gn-fsk40}"
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 

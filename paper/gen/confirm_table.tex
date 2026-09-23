@@ -11,4 +11,16 @@ CAST-style, trace condition & 16 & $-0.005$\,{\scriptsize$[-0.017,+0.009]$} & $0
 PTS, decides at token 32 (one pass) & 16 & $-0.008$\,{\scriptsize$[-0.019,+0.003]$} & $0.562$ & $0.733$ & $+0.294$\,{\scriptsize$[+0.256,+0.333]$} & $+0.000$\,{\scriptsize$[-0.033,+0.034]$} \\
 PTS, decides at the prompt (one pass) & 16 & $-0.012$\,{\scriptsize$[-0.025,+0.001]$} & $0.548$ & $0.758$ & $+0.306$\,{\scriptsize$[+0.267,+0.345]$} & $+0.012$\,{\scriptsize$[-0.024,+0.047]$} \\
 \hline
-\multicolumn{7}{l}{\texttt{Qwen2.5-7B-Instruct}: pending} \\
+\multicolumn{7}{l}{\texttt{Qwen2.5-7B-Instruct}, $n=3000$, $n_{\ocw}=563$, $n_{\crok}=2007$, unsteered accuracy $0.737$} \\
+\hline
+prompting & 1 & $-0.003$\,{\scriptsize$[-0.014,+0.009]$} & $0.320$ & $0.892$ & $+0.212$\,{\scriptsize$[+0.172,+0.253]$} & $+0.040$\,{\scriptsize$[-0.004,+0.083]$} (0.313) \\
+additive CAA \citep{rimsky2024caa} & 8 & $-0.015$\,{\scriptsize$[-0.027,-0.003]$} & $0.236$ & $0.915$ & $+0.151$\,{\scriptsize$[+0.115,+0.189]$} & $-0.021$\,{\scriptsize$[-0.063,+0.021]$} (0.998) \\
+directional ablation \citep{arditi2024refusal} & 1 & $-0.009$\,{\scriptsize$[-0.021,+0.003]$} & $0.240$ & $0.916$ & $+0.156$\,{\scriptsize$[+0.120,+0.194]$} & $-0.016$\,{\scriptsize$[-0.050,+0.017]$} (0.998) \\
+MiMiC \citep{singh2024mimic} & 9 & $-0.002$\,{\scriptsize$[-0.014,+0.010]$} & $0.238$ & $0.916$ & $+0.154$\,{\scriptsize$[+0.117,+0.192]$} & $-0.018$\,{\scriptsize$[-0.062,+0.025]$} (0.998) \\
+Linear-AcT \citep{rodriguez2025act} & 9 & $-0.003$\,{\scriptsize$[-0.013,+0.007]$} & $0.188$ & $0.935$ & $+0.123$\,{\scriptsize$[+0.091,+0.158]$} & $-0.049$\,{\scriptsize$[-0.091,-0.007]$} (0.133) \\
+CAST, prompt condition \citep{lee2024cast} & 16 & $-0.011$\,{\scriptsize$[-0.023,+0.000]$} & $0.201$ & $0.922$ & $+0.122$\,{\scriptsize$[+0.087,+0.159]$} & $-0.050$\,{\scriptsize$[-0.093,-0.007]$} (0.133) \\
+CAST-style, trace condition & 16 & $-0.007$\,{\scriptsize$[-0.014,-0.000]$} & $0.062$ & $0.978$ & $+0.040$\,{\scriptsize$[+0.020,+0.061]$} & $-0.132$\,{\scriptsize$[-0.173,-0.093]$} ($<$0.001) \\
+\textbf{PTS, post-hoc (two passes)} & 16 & $-0.002$\,{\scriptsize$[-0.014,+0.009]$} & $0.245$ & $0.927$ & $+0.172$\,{\scriptsize$[+0.136,+0.210]$} & --- \\
+PTS, decides at a prefix (one pass) & 16 & $-0.008$\,{\scriptsize$[-0.018,+0.001]$} & $0.172$ & $0.937$ & $+0.109$\,{\scriptsize$[+0.076,+0.142]$} & $-0.063$\,{\scriptsize$[-0.106,-0.021]$} \\
+PTS, decides at the prompt (one pass) & 16 & $-0.034$\,{\scriptsize$[-0.048,-0.020]$} & $0.226$ & $0.894$ & $+0.120$\,{\scriptsize$[+0.083,+0.158]$} & $-0.052$\,{\scriptsize$[-0.097,-0.008]$} \\
+\hline

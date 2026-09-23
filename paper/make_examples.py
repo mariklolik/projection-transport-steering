@@ -28,7 +28,7 @@ def clip(s: str, head: int = 420, tail: int = 160) -> str:
 
 def side(label: str, v: dict) -> str:
     return (f"\\textbf{{{label}}} (answer {v['answer']}, $P(\\mathrm{{YES}})={v['p_yes']:.2f}$, {STATE[v['state']]}): "
-            f"\\texttt{{{tex(clip(v['trace']))}}}")
+            f"{{\\ttfamily {tex(clip(v['trace']))}}}")
 
 
 if __name__ == "__main__":
