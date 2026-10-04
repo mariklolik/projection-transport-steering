@@ -1,7 +1,3 @@
-# Head-to-head baselines on the identical protocol: prompting, CAST-style
-# gate+additive, MiMiC full-space affine, Linear-AcT, probe-gated actions.
-# Run: python -m behaviour_specific.overconfidence.steer_v4_sota [--conditions all|list]
-
 from __future__ import annotations
 
 import argparse
@@ -28,6 +24,11 @@ from models_specific.active import chat_prompt
 
 OCW = "overconfident_wrong"
 QUANTILES = torch.linspace(0.01, 0.99, 41)
+
+
+HEDGE_SYSTEM = ("Be careful and well-calibrated. Only answer confidently when you are "
+                "sure; if you are uncertain, explicitly acknowledge the uncertainty in "
+                "your reasoning and confidence.")
 
 
 def _selftest():
@@ -67,12 +68,6 @@ if __name__ == "__main__":
 
     wanted = ["prompt_hedge", "cast_add", "mimic", "act_l05", "act_l10", "probegate"] \
         if args.conditions == "all" else args.conditions.split(",")
-
-    # AxBench-trap guard: the strongest published "method" is often plain
-    # prompting. This is that baseline — same instruction goal, zero hooks.
-    HEDGE_SYSTEM = ("Be careful and well-calibrated. Only answer confidently when you are "
-                    "sure; if you are uncertain, explicitly acknowledge the uncertainty in "
-                    "your reasoning and confidence.")
 
     pts = torch.load(DIRECTIONS_DIR / f"pts_L{args.layer}.pt")
     pstats = torch.load(DIRECTIONS_DIR / f"projection_stats_L{args.layer}.pt")
@@ -141,7 +136,6 @@ if __name__ == "__main__":
             write_jsonl(out_dir / f"prompt_hedge_{mname}__shard0.jsonl", rows)
             print(f"  prompt_hedge_{mname}: {len(rows)} ({time.time() - t0:.0f}s)", flush=True)
 
-    # trace gate scores on the 1-D ocw_vs_cr statistic (for CAST)
     need_1d_gate = "cast_add" in wanted
     if need_1d_gate:
         print("gate pass (1-D ocw_vs_cr) ...", flush=True)

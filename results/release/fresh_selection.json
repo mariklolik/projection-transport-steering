@@ -1,0 +1,40 @@
+{
+ "gemma_2_2b_it": {
+  "pts": "probe|q50|dsas-1.0",
+  "dsas": "dsas-2.0",
+  "lact": "lact1.5",
+  "ot": "probe|q50|otm-0.375",
+  "otmatch": "probe|q50|add-0.52",
+  "frozen_v23": {
+   "ungated": "add-0.5",
+   "prompt": "prompt",
+   "probe": "probe|q50|add-0.5",
+   "post": "post|q50|add-1.0",
+   "cast": "cast|q30|add-0.5"
+  }
+ },
+ "qwen2_5_7b_it": {
+  "pts": "probe|q50|dsas-2.0",
+  "dsas": "dsas-2.0",
+  "lact": "lact1.5",
+  "frozen_v23": {
+   "ungated": "add-0.75",
+   "prompt": "prompt",
+   "probe": "probe|q50|add-1.0",
+   "post": "post|q70|add-1.0",
+   "cast": "cast|q50|add-1.0"
+  }
+ },
+ "mistral_7b_it": {
+  "pts": "probe|q50|add-0.75",
+  "dsas": "dsas-2.0",
+  "lact": "lact1.0",
+  "frozen_v23": {
+   "ungated": "add-0.5",
+   "prompt": "prompt",
+   "probe": "probe|q50|add-0.75",
+   "post": "post|q70|add-1.0",
+   "cast": "cast|q30|add-0.5"
+  }
+ }
+}

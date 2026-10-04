@@ -15,7 +15,7 @@ SEED ?= 7
 NFLAG := $(if $(N),--n $(N),)
 SEEDFLAG := --seed $(SEED)
 
-PY := PYTHONPATH=. uv run python
+PY := PYTHONPATH=. uv run --frozen python
 B  := behaviour_specific.overconfidence
 BASE := $(notdir $(CURDIR))
 
@@ -27,7 +27,7 @@ help:
 	@echo "options: N=<k> (default: full MMLU)   SEED=<s> (default: 7)"
 
 sync:                       ## create the environment from pyproject via uv
-	uv sync
+	uv sync --frozen
 
 smoke:                      ## run every module's light self-test (no model, no GPU)
 	@for m in general.paths general.reasoning general.inference general.steering general.metrics \
@@ -39,7 +39,7 @@ smoke:                      ## run every module's light self-test (no model, no 
 	          $(B).compare_methods $(B).features_caa $(B).features_probe \
 	          $(B).features_caa_behavioral $(B).features_sae $(B).steer_overconfidence \
 	          $(B).analyze_methods $(B).analyze_features $(B).analyze_steering $(B).analyze_sae; do \
-	  PYTHONPATH=. uv run python -c "import importlib,sys; m=importlib.import_module('$$m'); \
+	  PYTHONPATH=. uv run --frozen python -c "import importlib,sys; m=importlib.import_module('$$m'); \
 	    t=getattr(m,'_selftest',None); t() if t else print('$$m import OK')" || exit 1; \
 	done
 
