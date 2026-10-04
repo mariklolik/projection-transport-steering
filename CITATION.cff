@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the paper."
+title: "Projection-Transport Steering: Conditional Control of Reasoning Behavior in LLMs"
+type: software
+authors:
+  - family-names: Kashirskiy
+    given-names: Mark
+  - family-names: Sergeev
+    given-names: Daniil
+  - family-names: Ter-Hovhannisyan
+    given-names: Tatevik
+  - family-names: Piontkovskaya
+    given-names: Irina
+repository-code: "https://github.com/mariklolik/projection-transport-steering"
+date-released: "2026-09-18"

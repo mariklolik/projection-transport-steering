@@ -1,0 +1,14 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+data_cache/
+models_specific/*/weights/
+behaviour_specific/overconfidence/directions/
+results/*
+!results/recompute_from_records.py
+paper/*
+!paper/paper.tex
+!paper/paper.pdf

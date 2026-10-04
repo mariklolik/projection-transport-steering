@@ -1,0 +1,239 @@
+from __future__ import annotations
+
+from collections import Counter
+
+import torch
+
+from behaviour_specific.overconfidence import confidence_logit as logit_method
+from behaviour_specific.overconfidence.confidence_logit import cut_at_box, probs_over_letters
+from behaviour_specific.overconfidence.labeling import behavior_change, label_from_score, rank
+from behaviour_specific.overconfidence.mmlu.data import LETTERS, correct_letter, mcq_prompt, parse_boxed_letter
+from general.inference import (
+    generate, generate_batch_chunked, next_token_logits, next_token_logits_batch,
+)
+from general.metrics import ece
+from general.reasoning import THINK_CLOSE
+from general.steering import steer_add, steer_ablate, steer_conditional, steered, steering_hook
+from models_specific.active import chat_prompt
+
+
+def score_set(model, tok, records, method=logit_method, **kw):
+    return [method.measure(model, tok, r, **kw) for r in records]
+
+
+def _reasoning_len(tok, trace: str) -> dict:
+    return {"reasoning_chars": len(trace), "reasoning_tokens": len(tok(trace, add_special_tokens=False).input_ids)}
+
+
+def score_m2_batch(model, tok, records, letter_ids, batch_size, system=None):
+    from behaviour_specific.overconfidence.confidence_logit import cut_at_box, probs_over_letters
+
+    prompts = [chat_prompt(tok, mcq_prompt(r), system=system) for r in records]
+    traces = generate_batch_chunked(model, tok, prompts, batch_size=batch_size)
+    cut_texts, forced = [], []
+    for prompt, trace in zip(prompts, traces):
+        prefix, f = cut_at_box(trace)
+        cut_texts.append(prompt + prefix)
+        forced.append(f)
+    logits = next_token_logits_batch(model, tok, cut_texts, batch_size=batch_size)
+
+    out = []
+    for r, prompt, trace, lg, f in zip(records, prompts, traces, logits, forced):
+        probs = probs_over_letters(lg, letter_ids)
+        idx = int(probs.argmax())
+        pred, conf = LETTERS[idx], float(probs[idx])
+        is_correct = pred == correct_letter(r)
+        out.append({
+            "id": r["id"], "subject": r["subject"], "method": "logit",
+            "system_prompt": None, "user_prompt": mcq_prompt(r),
+            "final_answer": pred, "gold": correct_letter(r),
+            "confidence": conf, "is_correct": is_correct,
+            "state": label_from_score(conf, is_correct, threshold=logit_method.LOGIT_CONF_THRESHOLD),
+            "probs": [round(p, 4) for p in probs.tolist()],
+            "trace_answer": parse_boxed_letter(trace), "forced_box": f,
+            **_reasoning_len(tok, trace),
+            "generations": [{"role": "answer", "prompt": prompt, "text": trace}],
+        })
+    return out
+
+
+def score_m4_batch(model, tok, records, ids, batch_size, system=None):
+    from behaviour_specific.overconfidence.confidence_yesno import (
+        MAX_NEW_TOKENS, YESNO_CONF_THRESHOLD, YESNO_TEMPLATE, p_yes, predict, yesno_cut,
+    )
+
+    yes_ids, no_ids = ids
+    prompts, owner = [], []
+    for k, r in enumerate(records):
+        for opt in r["options"]:
+            prompts.append(chat_prompt(tok, YESNO_TEMPLATE.format(question=r["question"], option=opt),
+                                       system=system))
+            owner.append(k)
+    traces = generate_batch_chunked(model, tok, prompts, batch_size=batch_size, max_new_tokens=MAX_NEW_TOKENS)
+    cut_texts = [p + yesno_cut(t)[0] for p, t in zip(prompts, traces)]
+    forced = [yesno_cut(t)[1] for t in traces]
+    logits = next_token_logits_batch(model, tok, cut_texts, batch_size=batch_size)
+
+    grp: dict[int, list] = {k: [] for k in range(len(records))}
+    for j, k in enumerate(owner):
+        grp[k].append(j)
+    out = []
+    for k, r in enumerate(records):
+        js = grp[k]
+        scores = [p_yes(logits[j], yes_ids, no_ids) for j in js]
+        gens = [{"role": "yesno", "option": r["options"][t], "prompt": prompts[js[t]],
+                 "text": traces[js[t]], "p_yes": round(scores[t], 4), "forced": forced[js[t]]}
+                for t in range(len(js))]
+        pred_idx, conf = predict(scores)
+        pred = LETTERS[pred_idx]
+        is_correct = pred == correct_letter(r)
+        trace_join = " ".join(traces[j] for j in js)
+        out.append({
+            "id": r["id"], "subject": r["subject"], "method": "yesno",
+            "system_prompt": None, "user_prompt": [prompts[j] for j in js],
+            "final_answer": pred, "gold": correct_letter(r),
+            "confidence": conf, "is_correct": is_correct,
+            "state": label_from_score(conf, is_correct, threshold=YESNO_CONF_THRESHOLD),
+            "p_yes": [round(s, 4) for s in scores], "forced_cuts": sum(forced[j] for j in js),
+            **_reasoning_len(tok, trace_join),
+            "generations": gens,
+        })
+    return out
+
+
+VERIFY_TEMPLATE = "You answered {letter}. Is that answer correct? Reply with only YES or NO."
+
+
+def verification_text(tok, r: dict, system: str | None) -> str:
+    content = f"{system}\n\n{r['user_prompt']}" if system else r["user_prompt"]
+    return tok.apply_chat_template(
+        [{"role": "user", "content": content},
+         {"role": "assistant", "content": r["generations"][0]["text"]},
+         {"role": "user", "content": VERIFY_TEMPLATE.format(letter=r["final_answer"])}],
+        tokenize=False, add_generation_prompt=True)
+
+
+def score_m5_batch(model, tok, records, letter_ids, ids, batch_size, system=None, m2_rows=None):
+    from behaviour_specific.overconfidence.confidence_yesno import YESNO_CONF_THRESHOLD, p_yes
+
+    m2_rows = m2_rows or score_m2_batch(model, tok, records, letter_ids, batch_size, system=system)
+    logits = next_token_logits_batch(model, tok, [verification_text(tok, r, system) for r in m2_rows],
+                                     batch_size=batch_size)
+    out = []
+    for r, lg in zip(m2_rows, logits):
+        conf = p_yes(lg, *ids)
+        out.append({**r, "method": "ptrue", "m2_confidence": r["confidence"], "m2_state": r["state"],
+                    "confidence": conf,
+                    "state": label_from_score(conf, r["is_correct"], threshold=YESNO_CONF_THRESHOLD)})
+    return out
+
+
+def _mean_reasoning(results: list[dict], key: str) -> float | None:
+    vals = [r[key] for r in results if key in r]
+    return sum(vals) / len(vals) if vals else None
+
+
+def summary(results: list[dict]) -> dict:
+    states = [r["state"] for r in results]
+    return {
+        "accuracy": sum(r["is_correct"] for r in results) / len(results),
+        "ece": ece([r["confidence"] for r in results], [r["is_correct"] for r in results]),
+        "mean_confidence": sum(r["confidence"] for r in results) / len(results),
+        "mean_rank": sum(rank(s) for s in states) / len(states),
+        "mean_reasoning_chars": _mean_reasoning(results, "reasoning_chars"),
+        "mean_reasoning_tokens": _mean_reasoning(results, "reasoning_tokens"),
+        "states": dict(Counter(states)),
+    }
+
+
+def compare(before: list[dict], after: list[dict]) -> dict:
+    after_by_id = {r["id"]: r for r in after}
+    changes = Counter(behavior_change(b["state"], after_by_id[b["id"]]["state"]) for b in before)
+    sb, sa = summary(before), summary(after)
+    return {"positive_changes": changes["positive"], "negative_changes": changes["negative"],
+            "before": sb, "after": sa}
+
+
+def make_operator(v, operator, alpha, tau):
+    if operator == "add":
+        return lambda h: steer_add(h, v, alpha)
+    if operator == "ablate":
+        return lambda h: steer_ablate(h, v)
+    if operator == "conditional":
+        return lambda h: steer_conditional(h, v, alpha, tau)
+    raise ValueError(f"unknown operator: {operator}")
+
+
+def run_steered(model, tok, records, v, layer, scorer, operator="add", alpha=0.0, tau=0.0):
+    v = v.to(model.device, torch.float32)
+    handle = steering_hook(model.model.layers[layer], make_operator(v, operator, alpha, tau))
+    try:
+        return scorer(records)
+    finally:
+        handle.remove()
+
+
+def measure_phase_steered(model, tok, record, v, layer, alpha, phase, letter_ids):
+    if phase not in ("think", "answer"):
+        raise ValueError(f"unknown phase: {phase}")
+    v = v.to(model.device, torch.float32)
+    fn = lambda h: steer_add(h, v, alpha)  # noqa: E731
+    user = mcq_prompt(record)
+    prompt = chat_prompt(tok, user)
+
+    if phase == "think":
+        with steered(model, layer, fn):
+            think_part = generate(model, tok, prompt, stop_strings=[THINK_CLOSE])
+        rest = generate(model, tok, prompt + think_part)
+        trace = think_part + rest
+        prefix, forced = cut_at_box(trace)
+        logits = next_token_logits(model, tok, prompt + prefix)
+    else:
+        think_part = generate(model, tok, prompt, stop_strings=[THINK_CLOSE])
+        with steered(model, layer, fn):
+            rest = generate(model, tok, prompt + think_part)
+            trace = think_part + rest
+            prefix, forced = cut_at_box(trace)
+            logits = next_token_logits(model, tok, prompt + prefix)
+
+    probs = probs_over_letters(logits, letter_ids)
+    idx = int(probs.argmax())
+    pred, conf = LETTERS[idx], float(probs[idx])
+    is_correct = pred == correct_letter(record)
+    return {
+        "id": record["id"], "subject": record["subject"], "method": f"logit_steer_{phase}",
+        "system_prompt": None, "user_prompt": user,
+        "final_answer": pred, "gold": correct_letter(record),
+        "confidence": conf, "is_correct": is_correct,
+        "state": label_from_score(conf, is_correct, threshold=logit_method.LOGIT_CONF_THRESHOLD),
+        "probs": [round(p, 4) for p in probs.tolist()],
+        "trace_answer": parse_boxed_letter(trace), "forced_box": forced,
+        **_reasoning_len(tok, trace),
+        "generations": [{"role": f"steer_{phase}", "prompt": prompt, "text": trace}],
+    }
+
+
+def run_phase_steered(model, tok, records, v, layer, alpha, phase, letter_ids):
+    return [measure_phase_steered(model, tok, r, v, layer, alpha, phase, letter_ids) for r in records]
+
+
+def mean_activation_norm(model, tok, records, layer, prompt_fn) -> float:
+    from general.inference import get_activations
+    return sum(get_activations(model, tok, prompt_fn(r), layer).norm().item() for r in records) / len(records)
+
+
+def _selftest():
+    before = [{"id": "a", "state": "overconfident_wrong", "is_correct": False, "confidence": 0.9},
+              {"id": "b", "state": "confident_right", "is_correct": True, "confidence": 0.9}]
+    after = [{"id": "a", "state": "nonconfident_wrong", "is_correct": False, "confidence": 0.4},
+             {"id": "b", "state": "confident_right", "is_correct": True, "confidence": 0.9}]
+    c = compare(before, after)
+    assert c["positive_changes"] == 1 and c["negative_changes"] == 1
+    v, h = torch.randn(8), torch.randn(2, 3, 8)
+    assert make_operator(v, "add", -1.0, 0.0)(h).shape == h.shape
+    try:
+        make_operator(v, "nope", 0.0, 0.0)
+        raise AssertionError
+    except ValueError:
+        pass
+    print("steer_overconfidence self-test passed")
