@@ -1,0 +1,90 @@
+{
+  "method": "act",
+  "n": 400,
+  "seed": 101,
+  "budget": 9,
+  "configs": {
+    "L10_lam0.25": {
+      "ocw_rm": 0.1772,
+      "cr_keep": 0.9216,
+      "selectivity": 0.0988,
+      "d_acc": 0.02,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "L10_lam0.5": {
+      "ocw_rm": 0.2152,
+      "cr_keep": 0.8725,
+      "selectivity": 0.0877,
+      "d_acc": 0.0125,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "L10_lam1.0": {
+      "ocw_rm": 0.1392,
+      "cr_keep": 0.8922,
+      "selectivity": 0.0314,
+      "d_acc": -0.0075,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "L14_lam0.25": {
+      "ocw_rm": 0.1646,
+      "cr_keep": 0.9118,
+      "selectivity": 0.0763,
+      "d_acc": 0.01,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "L14_lam0.5": {
+      "ocw_rm": 0.2025,
+      "cr_keep": 0.8725,
+      "selectivity": 0.0751,
+      "d_acc": -0.005,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "L14_lam1.0": {
+      "ocw_rm": 0.2532,
+      "cr_keep": 0.8529,
+      "selectivity": 0.1061,
+      "d_acc": -0.0125,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "L18_lam0.25": {
+      "ocw_rm": 0.1646,
+      "cr_keep": 0.9216,
+      "selectivity": 0.0861,
+      "d_acc": 0.0075,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "L18_lam0.5": {
+      "ocw_rm": 0.1266,
+      "cr_keep": 0.8922,
+      "selectivity": 0.0187,
+      "d_acc": 0.015,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "L18_lam1.0": {
+      "ocw_rm": 0.1519,
+      "cr_keep": 0.8824,
+      "selectivity": 0.0343,
+      "d_acc": 0.0225,
+      "n_ocw": 79,
+      "n_cr": 102
+    }
+  },
+  "winner": "L10_lam0.25",
+  "winner_stats": {
+    "ocw_rm": 0.1772,
+    "cr_keep": 0.9216,
+    "selectivity": 0.0988,
+    "d_acc": 0.02,
+    "n_ocw": 79,
+    "n_cr": 102
+  },
+  "seconds": 1041.1
+}

@@ -1,0 +1,3 @@
+arm,group,removal,retention,sel
+detonline_q50_at32_alpha-0.375,pts_onepass,0.5618,0.7327,0.2945
+detprompt_q60_alpha-0.5,pts_onepass,0.5483,0.7577,0.306

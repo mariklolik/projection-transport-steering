@@ -1,29 +1,7 @@
-# Experiment 1 — what steering does to the REASONING TRACE itself.
-#
-# Beyond "did confidence/accuracy move" (analyze_steering), a paper wants to know
-# whether the reasoning DEGRADED and whether textual PATTERNS appeared or vanished
-# when we steer. For every M2-readout condition (its trace is the MCQ reasoning)
-# we compute, over the traces, before (baseline / α=0) vs after (each α):
-#
-#   length      : chars, words, tokens (tokens only if the run logged them);
-#   integrity   : close-rate (trace emits </think>), boxed-rate (emits \boxed{);
-#   degeneration: distinct-3 (unique trigrams / trigrams; low = repetitive),
-#                 % degenerate (distinct-3 < 0.5);
-#   patterns    : hedging vs certainty lexicon rate (per 100 words) — steering
-#                 toward caution should RAISE hedging, and the degeneration
-#                 regime should collapse close-rate.
-#
-# CPU-only, reads results/<steer-dir>/rollouts/*.jsonl (derives length from the
-# saved trace text, so it works on runs that predate reasoning-length logging).
-# Writes results/<steer-dir>/trace_analysis.json + a couple of example excerpts.
-#
-# `python -m behaviour_specific.overconfidence.exp1_trace_analysis [--steer-dir steering_exp1]`
-
 from __future__ import annotations
 
 import re
 from collections import defaultdict
-from pathlib import Path
 from statistics import mean, median
 
 from general.paths import RESULTS_DIR
@@ -37,7 +15,6 @@ WORD = re.compile(r"[a-z']+")
 
 
 def distinct3(words: list[str]) -> float:
-    """Unique-trigram ratio; 1.0 = no repetition, →0 = highly repetitive."""
     if len(words) < 3:
         return 1.0
     tri = [tuple(words[i:i + 3]) for i in range(len(words) - 2)]
@@ -45,7 +22,6 @@ def distinct3(words: list[str]) -> float:
 
 
 def trace_metrics(traces: list[str], token_lens: list[int] | None = None) -> dict:
-    """Length / integrity / degeneration / lexicon stats over a set of traces."""
     n = len(traces)
     words = [WORD.findall(t.lower()) for t in traces]
     wlen = [len(w) for w in words]
@@ -63,6 +39,8 @@ def trace_metrics(traces: list[str], token_lens: list[int] | None = None) -> dic
         "close_rate": round(sum("</think>" in t for t in traces) / n, 3),
         "boxed_rate": round(sum("\\boxed{" in t for t in traces) / n, 3),
         "hedge_per_100w": round(100 * hedge / total_w, 3),
+        "hedge_per_trace": round(hedge / n, 3),
+        "certainty_per_trace": round(cert / n, 3),
         "certainty_per_100w": round(100 * cert / total_w, 3),
         "pct_any_hedge": round(sum(any(x in HEDGE for x in w) for w in words) / n, 3),
     }
@@ -72,14 +50,12 @@ def trace_metrics(traces: list[str], token_lens: list[int] | None = None) -> dic
 
 
 def condition_traces(rows: list[dict]) -> tuple[list[str], list[int] | None]:
-    """Extract the reasoning trace text (+ logged token lengths if present) per record."""
     traces = [r["generations"][0]["text"] for r in rows]
     toks = [r["reasoning_tokens"] for r in rows if "reasoning_tokens" in r]
     return traces, (toks if len(toks) == len(rows) else None)
 
 
 def parse_alpha(tag: str) -> str:
-    """'exp1_caa_m1_a-1.00_m2' -> '-1.00'; 'exp1_caa_m1_ablate_m2' -> 'ablate'; baseline -> '0'."""
     if tag.startswith("baseline"):
         return "0"
     m = re.search(r"_a([+-]\d+\.\d+)_", tag)
@@ -98,8 +74,8 @@ def _selftest():
     m = trace_metrics(["<think>maybe it is A, wait no</think> \\boxed{A}", "a a a a a a"])
     assert m["n"] == 2 and 0 <= m["mean_distinct3"] <= 1
     assert m["close_rate"] == 0.5 and m["boxed_rate"] == 0.5
-    assert m["hedge_per_100w"] > 0                      # "maybe"/"wait" counted
-    assert distinct3(["a"] * 8) < 0.5                   # repetitive (1 unique trigram of 6)
+    assert m["hedge_per_100w"] > 0
+    assert distinct3(["a"] * 8) < 0.5
     assert parse_alpha("exp1_caa_m1_a-1.00_m2") == "-1.00" and parse_alpha("baseline_m2") == "0"
     print("exp1_trace_analysis self-test passed")
 
@@ -114,7 +90,7 @@ if __name__ == "__main__":
     _selftest()
 
     roll = RESULTS_DIR / args.steer_dir / "rollouts"
-    files = sorted(roll.glob("*_m2__shard*.jsonl"))    # M2 conditions carry the MCQ reasoning trace
+    files = sorted(roll.glob("*_m2__shard*.jsonl"))
     if not files:
         raise SystemExit(f"no *_m2 rollouts under {roll}")
     pooled: dict[str, list[dict]] = defaultdict(list)
@@ -126,7 +102,6 @@ if __name__ == "__main__":
         traces, toks = condition_traces(rows)
         metrics[tag] = {"alpha": parse_alpha(tag), **trace_metrics(traces, toks)}
 
-    # group by steering vector, ordered by alpha, baseline first
     def vec_of(tag: str) -> str:
         return "baseline" if tag.startswith("baseline") else tag.rsplit("_", 1)[0].rsplit("_a", 1)[0] \
             .replace("_ablate", "").replace("_think", "").replace("_answer", "")
@@ -145,10 +120,6 @@ if __name__ == "__main__":
               f"{m['boxed_rate']:>6.2f} {m['mean_distinct3']:>6.2f} {m['pct_degenerate']:>7.2f} "
               f"{m['hedge_per_100w']:>6.2f} {m['certainty_per_100w']:>7.2f}")
 
-    # ---- concrete reasoning examples for the paper ----
-    # Conditions that best show "successful steering" (the lexical shift before
-    # the trace degrades): +0.5 raises certainty, -0.5 raises hedging; plus a
-    # degeneration case to show the failure mode.
     SHOWCASE = ["baseline_m2", "exp1_caa_m3_a+0.50_m2", "exp1_caa_m1_a+0.50_m2",
                 "exp1_caa_m3_a-0.50_m2", "exp1_caa_m4_a-0.50_m2", "exp1_caa_m1_a-1.00_m2"]
     CLIP = 900
@@ -157,7 +128,6 @@ if __name__ == "__main__":
         w = WORD.findall(trace.lower())
         return sum(x in HEDGE for x in w), sum(x in CERTAINTY for x in w)
 
-    # (a) the SAME question shown across showcase conditions (aligned by id)
     same_q = {}
     if pooled.get("baseline_m2"):
         for qi in range(min(3, len(pooled["baseline_m2"]))):
@@ -169,7 +139,6 @@ if __name__ == "__main__":
                     row[tag] = r["generations"][0]["text"][:CLIP]
             same_q[qid] = row
 
-    # (b) strongest exemplars: the trace with the most hedging / certainty words
     exemplars = {}
     for tag in SHOWCASE:
         rows = pooled.get(tag, [])

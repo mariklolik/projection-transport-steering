@@ -1,0 +1,10 @@
+{
+ "confidence": {
+  "auroc": 0.53,
+  "ceiling": 0.072
+ },
+ "probe": {
+  "auroc": 0.785,
+  "ceiling": 0.449
+ }
+}

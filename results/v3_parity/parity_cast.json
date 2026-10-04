@@ -1,0 +1,82 @@
+{
+  "method": "cast",
+  "n": 400,
+  "seed": 101,
+  "budget": 8,
+  "configs": {
+    "tau_cr_q30_alpha-0.375": {
+      "ocw_rm": 0.6203,
+      "cr_keep": 0.549,
+      "selectivity": 0.1693,
+      "d_acc": -0.0275,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "tau_cr_q30_alpha-0.75": {
+      "ocw_rm": 0.8861,
+      "cr_keep": 0.1667,
+      "selectivity": 0.0527,
+      "d_acc": -0.0525,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "tau_cr_q50_alpha-0.375": {
+      "ocw_rm": 0.5063,
+      "cr_keep": 0.6471,
+      "selectivity": 0.1534,
+      "d_acc": -0.04,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "tau_cr_q50_alpha-0.75": {
+      "ocw_rm": 0.6962,
+      "cr_keep": 0.3922,
+      "selectivity": 0.0884,
+      "d_acc": -0.0475,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "tau_cr_q70_alpha-0.375": {
+      "ocw_rm": 0.4304,
+      "cr_keep": 0.7353,
+      "selectivity": 0.1657,
+      "d_acc": -0.015,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "tau_cr_q70_alpha-0.75": {
+      "ocw_rm": 0.5443,
+      "cr_keep": 0.6373,
+      "selectivity": 0.1816,
+      "d_acc": -0.01,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "tau_cr_q90_alpha-0.375": {
+      "ocw_rm": 0.2278,
+      "cr_keep": 0.8137,
+      "selectivity": 0.0416,
+      "d_acc": -0.015,
+      "n_ocw": 79,
+      "n_cr": 102
+    },
+    "tau_cr_q90_alpha-0.75": {
+      "ocw_rm": 0.3418,
+      "cr_keep": 0.7941,
+      "selectivity": 0.1359,
+      "d_acc": -0.0025,
+      "n_ocw": 79,
+      "n_cr": 102
+    }
+  },
+  "winner": "tau_cr_q70_alpha-0.75",
+  "winner_stats": {
+    "ocw_rm": 0.5443,
+    "cr_keep": 0.6373,
+    "selectivity": 0.1816,
+    "d_acc": -0.01,
+    "n_ocw": 79,
+    "n_cr": 102
+  },
+  "seconds": 629.8
+}

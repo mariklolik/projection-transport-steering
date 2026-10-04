@@ -1,0 +1,39 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 7,
+    "layer": 14,
+    "gate_layer": 16,
+    "benchmark": "mmlu",
+    "tau_q": 0.5,
+    "deltas": "0.05",
+    "kappas": "0",
+    "actions": "ablate",
+    "methods": "m2,m4",
+    "warmup": 8,
+    "decide_at": 64,
+    "read_prompt": false,
+    "batch_size": 64,
+    "outdir": "v3_mmlu_s7"
+  },
+  "tau": -0.1620795726776123,
+  "sigma": 2.355,
+  "runs": {
+    "online_d0p05_q50_L16_t64_ablate_m2": {
+      "seconds": 44.5,
+      "n": 300,
+      "n_sequences": 600,
+      "fire_rate": 0.2,
+      "fire_step_median": 64,
+      "fire_step_mean": 64.0
+    },
+    "online_d0p05_q50_L16_t64_ablate_m4": {
+      "seconds": 92.3,
+      "n": 300,
+      "n_sequences": 2400,
+      "fire_rate": 0.15,
+      "fire_step_median": 64,
+      "fire_step_mean": 64.0
+    }
+  }
+}

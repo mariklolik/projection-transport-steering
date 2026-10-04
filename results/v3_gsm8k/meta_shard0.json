@@ -1,0 +1,29 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 7,
+    "layer": 14,
+    "benchmark": "gsm8k",
+    "direction": "m4_conf",
+    "conditions": "all",
+    "methods": "m2,m4",
+    "think_only": "",
+    "batch_size": 64,
+    "outdir": "v3_gsm8k"
+  },
+  "norm": 194.27139587402343,
+  "n_records": 300,
+  "clamp_thresholds": {
+    "0.7": 40.871212005615234,
+    "0.5": 31.53280258178711,
+    "0.3": 18.19547462463379
+  },
+  "src_moments": {
+    "mu": 29.29323959350586,
+    "sig": 21.069955825805664
+  },
+  "tgt_cal_moments": {
+    "mu": 28.692306518554688,
+    "sig": 21.927064895629883
+  }
+}

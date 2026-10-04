@@ -1,0 +1,55 @@
+{
+  "method": "gatedmimic",
+  "n": 400,
+  "seed": 101,
+  "budget": 4,
+  "configs": {
+    "L14_q30_mimic": {
+      "ocw_rm": 0.2658,
+      "cr_keep": 0.8725,
+      "selectivity": 0.1384,
+      "d_acc": 0.005,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 277
+    },
+    "L14_q50_mimic": {
+      "ocw_rm": 0.2658,
+      "cr_keep": 0.8824,
+      "selectivity": 0.1482,
+      "d_acc": 0.0025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 190
+    },
+    "L18_q30_mimic": {
+      "ocw_rm": 0.443,
+      "cr_keep": 0.8431,
+      "selectivity": 0.2862,
+      "d_acc": 0.0175,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 277
+    },
+    "L18_q50_mimic": {
+      "ocw_rm": 0.3418,
+      "cr_keep": 0.8627,
+      "selectivity": 0.2045,
+      "d_acc": 0.0125,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 190
+    }
+  },
+  "winner": "L18_q30_mimic",
+  "winner_stats": {
+    "ocw_rm": 0.443,
+    "cr_keep": 0.8431,
+    "selectivity": 0.2862,
+    "d_acc": 0.0175,
+    "n_ocw": 79,
+    "n_cr": 102,
+    "n_flagged": 277
+  },
+  "seconds": 279.6
+}

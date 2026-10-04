@@ -1,0 +1,67 @@
+{
+ "ref": "det_q30_alpha-0.25",
+ "readout": "m5",
+ "split": "arcx_confirm",
+ "arms": [
+  {
+   "tag": "prompt_hedge",
+   "name": "prompting",
+   "budget": "1",
+   "primary": true
+  },
+  {
+   "tag": "tuned_additive",
+   "name": "additive CAA \\citep{rimsky2024caa}",
+   "budget": "8",
+   "primary": true
+  },
+  {
+   "tag": "plain_ablate",
+   "name": "directional ablation \\citep{arditi2024refusal}",
+   "budget": "1",
+   "primary": true
+  },
+  {
+   "tag": "tuned_mimic",
+   "name": "MiMiC \\citep{singh2024mimic}",
+   "budget": "9",
+   "primary": true
+  },
+  {
+   "tag": "tuned_act",
+   "name": "Linear-AcT \\citep{rodriguez2025act}",
+   "budget": "9",
+   "primary": true
+  },
+  {
+   "tag": "castdim_L14_q50_alpha-0.25",
+   "name": "CAST, prompt condition \\citep{lee2024cast}",
+   "budget": "16",
+   "primary": true
+  },
+  {
+   "tag": "tuned_cast",
+   "name": "CAST-style, trace condition",
+   "budget": "16",
+   "primary": true
+  },
+  {
+   "tag": "det_q30_alpha-0.25",
+   "name": "PTS, post-hoc (two passes)",
+   "budget": "16",
+   "primary": false
+  },
+  {
+   "tag": "detonline_q30_at32_alpha-0.375",
+   "name": "PTS, decides at a prefix (one pass)",
+   "budget": "16",
+   "primary": false
+  },
+  {
+   "tag": "detprompt_q40_alpha-0.5",
+   "name": "PTS, decides at the prompt (one pass)",
+   "budget": "16",
+   "primary": false
+  }
+ ]
+}

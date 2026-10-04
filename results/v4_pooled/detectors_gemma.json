@@ -1,0 +1,68 @@
+{
+  "detector_m5": {
+    "layer": 18,
+    "pos": null,
+    "t": null,
+    "auroc_train": 0.8205,
+    "n_train": 3517,
+    "auroc_select": 0.7418,
+    "n_select": 950,
+    "auroc_heldout": 0.7411,
+    "n_heldout": 2362
+  },
+  "detector_m5_prompt": {
+    "layer": 14,
+    "pos": "last",
+    "t": null,
+    "auroc_train": 0.7642,
+    "n_train": 3517,
+    "auroc_select": 0.724,
+    "n_select": 950,
+    "auroc_heldout": 0.7203,
+    "n_heldout": 2362
+  },
+  "detector_m5_prefix_t16": {
+    "layer": 14,
+    "pos": null,
+    "t": 16,
+    "auroc_train": 0.8198,
+    "n_train": 3517,
+    "auroc_select": 0.7169,
+    "n_select": 950,
+    "auroc_heldout": 0.7198,
+    "n_heldout": 2362
+  },
+  "detector_m5_prefix_t32": {
+    "layer": 18,
+    "pos": null,
+    "t": 32,
+    "auroc_train": 0.812,
+    "n_train": 3517,
+    "auroc_select": 0.724,
+    "n_select": 950,
+    "auroc_heldout": 0.7155,
+    "n_heldout": 2362
+  },
+  "detector_m5_prefix_t64": {
+    "layer": 18,
+    "pos": null,
+    "t": 64,
+    "auroc_train": 0.8176,
+    "n_train": 3517,
+    "auroc_select": 0.7343,
+    "n_select": 950,
+    "auroc_heldout": 0.7285,
+    "n_heldout": 2362
+  },
+  "detector_m5_prefix_t128": {
+    "layer": 16,
+    "pos": null,
+    "t": 128,
+    "auroc_train": 0.823,
+    "n_train": 3517,
+    "auroc_select": 0.7406,
+    "n_select": 950,
+    "auroc_heldout": 0.7436,
+    "n_heldout": 2362
+  }
+}

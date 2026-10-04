@@ -1,0 +1,91 @@
+{
+  "method": "oursk",
+  "n": 400,
+  "seed": 101,
+  "budget": 8,
+  "configs": {
+    "k1_q30": {
+      "ocw_rm": 0.1974,
+      "cr_keep": 0.8922,
+      "selectivity": 0.0895,
+      "d_acc": 0.0025,
+      "n_ocw": 76,
+      "n_cr": 102,
+      "n_flagged": 274
+    },
+    "k1_q50": {
+      "ocw_rm": 0.1184,
+      "cr_keep": 0.951,
+      "selectivity": 0.0694,
+      "d_acc": 0.0075,
+      "n_ocw": 76,
+      "n_cr": 102,
+      "n_flagged": 196
+    },
+    "k2_q30": {
+      "ocw_rm": 0.1974,
+      "cr_keep": 0.9216,
+      "selectivity": 0.1189,
+      "d_acc": -0.0025,
+      "n_ocw": 76,
+      "n_cr": 102,
+      "n_flagged": 274
+    },
+    "k2_q50": {
+      "ocw_rm": 0.1184,
+      "cr_keep": 0.9314,
+      "selectivity": 0.0498,
+      "d_acc": 0.02,
+      "n_ocw": 76,
+      "n_cr": 102,
+      "n_flagged": 196
+    },
+    "k8_q30": {
+      "ocw_rm": 0.25,
+      "cr_keep": 0.8922,
+      "selectivity": 0.1422,
+      "d_acc": 0.01,
+      "n_ocw": 76,
+      "n_cr": 102,
+      "n_flagged": 274
+    },
+    "k8_q50": {
+      "ocw_rm": 0.1842,
+      "cr_keep": 0.9118,
+      "selectivity": 0.096,
+      "d_acc": -0.0025,
+      "n_ocw": 76,
+      "n_cr": 102,
+      "n_flagged": 196
+    },
+    "k32_q30": {
+      "ocw_rm": 0.2632,
+      "cr_keep": 0.902,
+      "selectivity": 0.1651,
+      "d_acc": 0.0,
+      "n_ocw": 76,
+      "n_cr": 102,
+      "n_flagged": 274
+    },
+    "k32_q50": {
+      "ocw_rm": 0.1579,
+      "cr_keep": 0.9216,
+      "selectivity": 0.0795,
+      "d_acc": -0.0025,
+      "n_ocw": 76,
+      "n_cr": 102,
+      "n_flagged": 196
+    }
+  },
+  "winner": "k32_q30",
+  "winner_stats": {
+    "ocw_rm": 0.2632,
+    "cr_keep": 0.902,
+    "selectivity": 0.1651,
+    "d_acc": 0.0,
+    "n_ocw": 76,
+    "n_cr": 102,
+    "n_flagged": 274
+  },
+  "seconds": 938.5
+}

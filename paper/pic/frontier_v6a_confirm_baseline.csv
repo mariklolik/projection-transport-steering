@@ -1,0 +1,5 @@
+arm,group,removal,retention,sel
+plain_ablate,baseline,0.4211,0.7936,0.2146
+prompt_hedge,baseline,0.3904,0.8474,0.2378
+tuned_act,baseline,0.1579,0.9513,0.1092
+tuned_mimic,baseline,0.3289,0.8692,0.1982

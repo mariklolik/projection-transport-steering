@@ -1,0 +1,44 @@
+{
+ "ungated": {
+  "removal": 0.8957871396895787,
+  "retention": 0.5785340314136126,
+  "toxic_rate_after": 0.029333333333333333,
+  "toxic_rate_before": 0.15033333333333335
+ },
+ "prompt": {
+  "removal": 0.4212860310421286,
+  "retention": 0.6827225130890052,
+  "toxic_rate_after": 0.14966666666666667,
+  "toxic_rate_before": 0.15033333333333335
+ },
+ "probe": {
+  "removal": 0.7272727272727273,
+  "retention": 0.7984293193717278,
+  "toxic_rate_after": 0.052,
+  "toxic_rate_before": 0.15033333333333335,
+  "override_removal": 0.8226164079822617,
+  "override_retention": 0.6041884816753926
+ },
+ "post": {
+  "removal": 0.9113082039911308,
+  "retention": 0.8120418848167539,
+  "toxic_rate_after": 0.015,
+  "toxic_rate_before": 0.15033333333333335,
+  "override_removal": 0.9490022172949002,
+  "override_retention": 0.7513089005235603
+ },
+ "cast": {
+  "removal": 0.811529933481153,
+  "retention": 0.7036649214659686,
+  "toxic_rate_after": 0.04033333333333333,
+  "toxic_rate_before": 0.15033333333333335,
+  "override_removal": 0.9113082039911308,
+  "override_retention": 0.35287958115183243
+ },
+ "abl": {
+  "removal": 0.10864745011086474,
+  "retention": 0.5476439790575917,
+  "toxic_rate_after": 0.288,
+  "toxic_rate_before": 0.15033333333333335
+ }
+}

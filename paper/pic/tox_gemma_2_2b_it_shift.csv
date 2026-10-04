@@ -1,0 +1,7 @@
+arm,group,removal,retention
+none,shift,0,1
+add-0.125,shift,0.4368,0.8586
+add-0.25,shift,0.6608,0.7576
+add-0.5,shift,0.8958,0.5785
+add-0.75,shift,0.9379,0.4455
+add-1.0,shift,0.9601,0.3414

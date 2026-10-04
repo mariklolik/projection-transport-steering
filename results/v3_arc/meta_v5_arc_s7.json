@@ -1,0 +1,31 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 7,
+    "layer": 14,
+    "benchmark": "arc",
+    "gates": "ocwcr_crq50,lda_allq50",
+    "actions": "ablate,clamp_q30,clamp_q50",
+    "methods": "m2,m4",
+    "batch_size": 64,
+    "outdir": "v3_arc"
+  },
+  "gates": {
+    "ocwcr-crq50": {
+      "tau": -10.081700325012207,
+      "n_flagged": 153,
+      "flag_rate": 0.51,
+      "p_ocw_given_flagged": 0.3137,
+      "ocw_recall": 0.6154,
+      "cr_false_flag_rate": 0.4751
+    },
+    "lda-allq50": {
+      "tau": -0.12791788578033447,
+      "n_flagged": 93,
+      "flag_rate": 0.31,
+      "p_ocw_given_flagged": 0.3011,
+      "ocw_recall": 0.359,
+      "cr_false_flag_rate": 0.2941
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 11,
+    "layer": 14,
+    "gate_layer": 16,
+    "benchmark": "mmlu",
+    "tau_q": 0.5,
+    "deltas": "0.05",
+    "kappas": "0,2",
+    "actions": "ablate,clamp_q50",
+    "methods": "m2,m4",
+    "warmup": 8,
+    "read_prompt": false,
+    "batch_size": 64,
+    "outdir": "v3_mmlu_s11"
+  },
+  "tau": -0.20987534523010254,
+  "sigma": 2.355,
+  "runs": {
+    "online_d0p05_q50_L16_ablate_m2": {
+      "seconds": 43.3,
+      "n": 300,
+      "n_sequences": 600,
+      "fire_rate": 0.2,
+      "fire_step_median": 48,
+      "fire_step_mean": 51.8
+    },
+    "online_d0p05_q50_L16_ablate_m4": {
+      "seconds": 102.5,
+      "n": 300,
+      "n_sequences": 2400,
+      "fire_rate": 0.1479,
+      "fire_step_median": 36,
+      "fire_step_mean": 41.3
+    },
+    "online_d0p05_q50_L16_clamp_q50_m2": {
+      "seconds": 42.3,
+      "n": 300,
+      "n_sequences": 600,
+      "fire_rate": 0.2,
+      "fire_step_median": 48,
+      "fire_step_mean": 51.8
+    },
+    "online_d0p05_q50_L16_clamp_q50_m4": {
+      "seconds": 106.4,
+      "n": 300,
+      "n_sequences": 2400,
+      "fire_rate": 0.1479,
+      "fire_step_median": 36,
+      "fire_step_mean": 41.3
+    },
+    "online_d0p05_q50_L16_k2p0_ablate_m2": {
+      "seconds": 57.3,
+      "n": 300,
+      "n_sequences": 600,
+      "fire_rate": 0.2,
+      "fire_step_median": 48,
+      "fire_step_mean": 51.8
+    },
+    "online_d0p05_q50_L16_k2p0_ablate_m4": {
+      "seconds": 81.2,
+      "n": 300,
+      "n_sequences": 2400,
+      "fire_rate": 0.1479,
+      "fire_step_median": 36,
+      "fire_step_mean": 41.3
+    },
+    "online_d0p05_q50_L16_k2p0_clamp_q50_m2": {
+      "seconds": 49.2,
+      "n": 300,
+      "n_sequences": 600,
+      "fire_rate": 0.2,
+      "fire_step_median": 48,
+      "fire_step_mean": 51.8
+    },
+    "online_d0p05_q50_L16_k2p0_clamp_q50_m4": {
+      "seconds": 96.7,
+      "n": 300,
+      "n_sequences": 2400,
+      "fire_rate": 0.1479,
+      "fire_step_median": 36,
+      "fire_step_mean": 41.3
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "method": "oursk",
+  "n": 1200,
+  "seed": 101,
+  "batch_size": 64,
+  "budget": 8,
+  "configs": {
+    "k1_q30": {
+      "ocw_rm": 0.1741,
+      "cr_keep": 0.8846,
+      "selectivity": 0.0587,
+      "d_acc": -0.0017,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 821
+    },
+    "k1_q50": {
+      "ocw_rm": 0.1244,
+      "cr_keep": 0.9231,
+      "selectivity": 0.0475,
+      "d_acc": -0.0075,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 572
+    },
+    "k2_q30": {
+      "ocw_rm": 0.2786,
+      "cr_keep": 0.9071,
+      "selectivity": 0.1857,
+      "d_acc": 0.005,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 821
+    },
+    "k2_q50": {
+      "ocw_rm": 0.1841,
+      "cr_keep": 0.9263,
+      "selectivity": 0.1104,
+      "d_acc": -0.0008,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 572
+    },
+    "k8_q30": {
+      "ocw_rm": 0.2537,
+      "cr_keep": 0.8942,
+      "selectivity": 0.148,
+      "d_acc": 0.0033,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 821
+    },
+    "k8_q50": {
+      "ocw_rm": 0.194,
+      "cr_keep": 0.9135,
+      "selectivity": 0.1075,
+      "d_acc": -0.0067,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 572
+    },
+    "k32_q30": {
+      "ocw_rm": 0.2637,
+      "cr_keep": 0.8846,
+      "selectivity": 0.1483,
+      "d_acc": 0.0092,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 821
+    },
+    "k32_q50": {
+      "ocw_rm": 0.209,
+      "cr_keep": 0.891,
+      "selectivity": 0.1,
+      "d_acc": 0.0033,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 572
+    }
+  },
+  "winner": "k2_q30",
+  "winner_stats": {
+    "ocw_rm": 0.2786,
+    "cr_keep": 0.9071,
+    "selectivity": 0.1857,
+    "d_acc": 0.005,
+    "n_ocw": 201,
+    "n_cr": 312,
+    "n_flagged": 821
+  },
+  "seconds": 1658.4
+}

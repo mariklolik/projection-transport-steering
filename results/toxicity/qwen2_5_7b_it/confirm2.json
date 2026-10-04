@@ -1,0 +1,174 @@
+{
+ "n_toxic": 604,
+ "n_clean": 1909,
+ "arms": {
+  "pts": {
+   "arm": "probe|q50|dsas-2.0",
+   "sel": {
+    "point": 0.6015,
+    "ci": [
+     0.5648,
+     0.6371
+    ]
+   },
+   "removal": 0.8063,
+   "retention": 0.7952,
+   "toxic_after": 0.046
+  },
+  "dsas": {
+   "arm": "dsas-2.0",
+   "sel": {
+    "point": 0.5937,
+    "ci": [
+     0.5629,
+     0.6232
+    ]
+   },
+   "removal": 0.9205,
+   "retention": 0.6731,
+   "toxic_after": 0.0257,
+   "pts_minus": {
+    "point": 0.0078,
+    "ci": [
+     -0.0222,
+     0.0373
+    ],
+    "p_one_sided": 0.306
+   }
+  },
+  "lact": {
+   "arm": "lact1.5",
+   "sel": {
+    "point": 0.2051,
+    "ci": [
+     0.1629,
+     0.2478
+    ]
+   },
+   "removal": 0.3758,
+   "retention": 0.8292,
+   "toxic_after": 0.1527,
+   "pts_minus": {
+    "point": 0.3964,
+    "ci": [
+     0.3432,
+     0.4491
+    ],
+    "p_one_sided": 0.0
+   }
+  },
+  "global": {
+   "arm": "add-0.75",
+   "sel": {
+    "point": 0.4016,
+    "ci": [
+     0.3645,
+     0.4379
+    ]
+   },
+   "removal": 0.8411,
+   "retention": 0.5605,
+   "toxic_after": 0.0473,
+   "pts_minus": {
+    "point": 0.1999,
+    "ci": [
+     0.152,
+     0.2479
+    ],
+    "p_one_sided": 0.0
+   }
+  },
+  "prompt": {
+   "arm": "prompt",
+   "sel": {
+    "point": 0.4395,
+    "ci": [
+     0.3974,
+     0.4819
+    ]
+   },
+   "removal": 0.6391,
+   "retention": 0.8004,
+   "toxic_after": 0.096,
+   "pts_minus": {
+    "point": 0.162,
+    "ci": [
+     0.1082,
+     0.2154
+    ],
+    "p_one_sided": 0.0
+   }
+  },
+  "cast": {
+   "arm": "cast|q50|add-1.0",
+   "sel": {
+    "point": 0.4389,
+    "ci": [
+     0.3977,
+     0.4789
+    ]
+   },
+   "removal": 0.7417,
+   "retention": 0.6972,
+   "toxic_after": 0.0573,
+   "pts_minus": {
+    "point": 0.1625,
+    "ci": [
+     0.1201,
+     0.2042
+    ],
+    "p_one_sided": 0.0
+   }
+  },
+  "pts_v23": {
+   "arm": "probe|q50|add-1.0",
+   "sel": {
+    "point": 0.5266,
+    "ci": [
+     0.4888,
+     0.5637
+    ]
+   },
+   "removal": 0.8079,
+   "retention": 0.7187,
+   "toxic_after": 0.047,
+   "pts_minus": {
+    "point": 0.0748,
+    "ci": [
+     0.0449,
+     0.105
+    ],
+    "p_one_sided": 0.0
+   }
+  }
+ },
+ "refusal": {
+  "point": 0.4541,
+  "pts_minus": {
+   "point": 0.1473,
+   "ci": [
+    0.1196,
+    0.1751
+   ],
+   "p_one_sided": 0.0
+  }
+ },
+ "random": {
+  "mean": 0.1717,
+  "p95": 0.3579,
+  "max": 0.423,
+  "ge": 0,
+  "pts_minus": {
+   "point": 0.4298,
+   "ci": [
+    0.4005,
+    0.4588
+   ],
+   "p_one_sided": 0.0
+  }
+ },
+ "null": {
+  "sel": 0.0,
+  "identical": 3000
+ }
+}

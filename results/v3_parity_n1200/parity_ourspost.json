@@ -1,0 +1,114 @@
+{
+  "method": "ourspost",
+  "n": 1200,
+  "seed": 101,
+  "budget": 8,
+  "configs": {
+    "rho1": {
+      "ocw_rm": 0.0647,
+      "cr_keep": 0.9551,
+      "selectivity": 0.0198,
+      "d_acc": 0.005,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 159,
+      "mean_dose": 0.0181
+    },
+    "rho2": {
+      "ocw_rm": 0.0796,
+      "cr_keep": 0.9551,
+      "selectivity": 0.0347,
+      "d_acc": 0.0033,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 159,
+      "mean_dose": 0.0361
+    },
+    "rho3": {
+      "ocw_rm": 0.0697,
+      "cr_keep": 0.9487,
+      "selectivity": 0.0184,
+      "d_acc": 0.0042,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 159,
+      "mean_dose": 0.0534
+    },
+    "rho4": {
+      "ocw_rm": 0.0547,
+      "cr_keep": 0.9455,
+      "selectivity": 0.0002,
+      "d_acc": -0.0017,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 159,
+      "mean_dose": 0.0668
+    },
+    "rho6": {
+      "ocw_rm": 0.0796,
+      "cr_keep": 0.9295,
+      "selectivity": 0.0091,
+      "d_acc": 0.0017,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 159,
+      "mean_dose": 0.0834
+    },
+    "rho8": {
+      "ocw_rm": 0.0746,
+      "cr_keep": 0.9327,
+      "selectivity": 0.0073,
+      "d_acc": -0.0092,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 159,
+      "mean_dose": 0.0921
+    },
+    "rho12": {
+      "ocw_rm": 0.0796,
+      "cr_keep": 0.9391,
+      "selectivity": 0.0187,
+      "d_acc": -0.0058,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 159,
+      "mean_dose": 0.1025
+    },
+    "rho1e+06": {
+      "ocw_rm": 0.0995,
+      "cr_keep": 0.9423,
+      "selectivity": 0.0418,
+      "d_acc": 0.0017,
+      "n_ocw": 201,
+      "n_cr": 312,
+      "n_flagged": 159,
+      "mean_dose": 0.1325
+    }
+  },
+  "winner": "rho1e+06",
+  "full_dose": {
+    "ocw_rm": 0.6567,
+    "cr_keep": 0.6058,
+    "selectivity": 0.2625,
+    "d_acc": 0.0058,
+    "n_ocw": 201,
+    "n_cr": 312
+  },
+  "posterior": {
+    "a": 1.2432,
+    "c": -1.6027,
+    "tau": 0.3751,
+    "mean_pi": 0.1818
+  },
+  "winner_stats": {
+    "ocw_rm": 0.0995,
+    "cr_keep": 0.9423,
+    "selectivity": 0.0418,
+    "d_acc": 0.0017,
+    "n_ocw": 201,
+    "n_cr": 312,
+    "n_flagged": 159,
+    "mean_dose": 0.1325
+  },
+  "seconds": 1294.9
+}

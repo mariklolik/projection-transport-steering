@@ -1,0 +1,30 @@
+{
+  "q10": {
+    "tau": -1.5672,
+    "n_flagged": 356,
+    "n_calibrated_in_gate": 197,
+    "src_tokens": 43827,
+    "tgt_tokens": 23812
+  },
+  "q20": {
+    "tau": -0.9321,
+    "n_flagged": 317,
+    "n_calibrated_in_gate": 171,
+    "src_tokens": 39259,
+    "tgt_tokens": 21069
+  },
+  "q30": {
+    "tau": -0.6503,
+    "n_flagged": 278,
+    "n_calibrated_in_gate": 146,
+    "src_tokens": 35029,
+    "tgt_tokens": 18707
+  },
+  "q50": {
+    "tau": -0.2099,
+    "n_flagged": 200,
+    "n_calibrated_in_gate": 94,
+    "src_tokens": 25342,
+    "tgt_tokens": 11920
+  }
+}

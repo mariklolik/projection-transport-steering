@@ -1,0 +1,91 @@
+{
+  "method": "ours",
+  "n": 400,
+  "seed": 101,
+  "budget": 8,
+  "configs": {
+    "gl14_q30_ablate": {
+      "ocw_rm": 0.5063,
+      "cr_keep": 0.7255,
+      "selectivity": 0.2318,
+      "d_acc": 0.025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 287
+    },
+    "gl14_q30_bw": {
+      "ocw_rm": 0.2532,
+      "cr_keep": 0.8725,
+      "selectivity": 0.1257,
+      "d_acc": 0.005,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 287
+    },
+    "gl14_q50_ablate": {
+      "ocw_rm": 0.3418,
+      "cr_keep": 0.7941,
+      "selectivity": 0.1359,
+      "d_acc": -0.0025,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 195
+    },
+    "gl14_q50_bw": {
+      "ocw_rm": 0.1392,
+      "cr_keep": 0.902,
+      "selectivity": 0.0412,
+      "d_acc": -0.005,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 195
+    },
+    "gl16_q30_ablate": {
+      "ocw_rm": 0.481,
+      "cr_keep": 0.7353,
+      "selectivity": 0.2163,
+      "d_acc": 0.0,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 277
+    },
+    "gl16_q30_bw": {
+      "ocw_rm": 0.1646,
+      "cr_keep": 0.8824,
+      "selectivity": 0.0469,
+      "d_acc": 0.0275,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 277
+    },
+    "gl16_q50_ablate": {
+      "ocw_rm": 0.3544,
+      "cr_keep": 0.8137,
+      "selectivity": 0.1682,
+      "d_acc": -0.0075,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 190
+    },
+    "gl16_q50_bw": {
+      "ocw_rm": 0.1266,
+      "cr_keep": 0.9314,
+      "selectivity": 0.058,
+      "d_acc": 0.0,
+      "n_ocw": 79,
+      "n_cr": 102,
+      "n_flagged": 190
+    }
+  },
+  "winner": "gl14_q30_ablate",
+  "winner_stats": {
+    "ocw_rm": 0.5063,
+    "cr_keep": 0.7255,
+    "selectivity": 0.2318,
+    "d_acc": 0.025,
+    "n_ocw": 79,
+    "n_cr": 102,
+    "n_flagged": 287
+  },
+  "seconds": 582.1
+}

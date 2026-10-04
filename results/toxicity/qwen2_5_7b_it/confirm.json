@@ -1,0 +1,226 @@
+{
+  "n": 3000,
+  "n_toxic": 608,
+  "n_clean": 1907,
+  "arms": {
+    "ungated": {
+      "arm": "add-0.75",
+      "sel": {
+        "point": 0.4029,
+        "ci": [
+          0.3655,
+          0.4397
+        ]
+      },
+      "vs_pgs": {
+        "point": -0.1308,
+        "ci": [
+          -0.1769,
+          -0.0835
+        ],
+        "p_two_sided": 0.0
+      }
+    },
+    "prompt": {
+      "arm": "prompt",
+      "sel": {
+        "point": 0.386,
+        "ci": [
+          0.343,
+          0.4297
+        ]
+      },
+      "vs_pgs": {
+        "point": -0.1476,
+        "ci": [
+          -0.201,
+          -0.0919
+        ],
+        "p_two_sided": 0.0
+      }
+    },
+    "probe": {
+      "arm": "probe|q50|add-1.0",
+      "sel": {
+        "point": 0.5337,
+        "ci": [
+          0.4961,
+          0.57
+        ]
+      },
+      "vs_pgs": {
+        "point": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ],
+        "p_two_sided": 2.0
+      },
+      "null": {
+        "point": 0.0,
+        "identical": 3000
+      },
+      "random": {
+        "n": 100,
+        "mean": 0.1844,
+        "p95": 0.4791,
+        "max": 0.5834,
+        "rank": 3
+      },
+      "vs_random": {
+        "point": 0.3493,
+        "ci": [
+          0.3222,
+          0.3751
+        ],
+        "p_one_sided": 0.0
+      },
+      "override": {
+        "point": 0.4566,
+        "ci": [
+          0.4201,
+          0.491
+        ]
+      },
+      "steer_minus_override": {
+        "point": 0.0771,
+        "ci": [
+          0.0539,
+          0.0994
+        ],
+        "p_one_sided": 0.0
+      },
+      "eq2_predicted": 0.1055,
+      "eq2_agrees": true,
+      "rates_real": {
+        "tpr": 0.8634868421052632,
+        "fpr": 0.4069218668065024,
+        "rho_t": 0.8157894736842105,
+        "rho_c": 0.2821185107498689
+      },
+      "auroc_confirm": 0.8059306790177786
+    },
+    "post": {
+      "arm": "post|q70|add-1.0",
+      "sel": {
+        "point": 0.6476,
+        "ci": [
+          0.6105,
+          0.6838
+        ]
+      },
+      "vs_pgs": {
+        "point": 0.1139,
+        "ci": [
+          0.0755,
+          0.1539
+        ],
+        "p_two_sided": 0.0
+      },
+      "null": {
+        "point": 0.0,
+        "identical": 3000
+      },
+      "random": {
+        "n": 20,
+        "mean": 0.3056,
+        "p95": 0.56,
+        "max": 0.6329,
+        "rank": 0
+      },
+      "vs_random": {
+        "point": 0.342,
+        "ci": [
+          0.3158,
+          0.3682
+        ],
+        "p_one_sided": 0.0
+      },
+      "override": {
+        "point": 0.6342,
+        "ci": [
+          0.5981,
+          0.6692
+        ]
+      },
+      "steer_minus_override": {
+        "point": 0.0133,
+        "ci": [
+          -0.0065,
+          0.0319
+        ],
+        "p_one_sided": 0.0896
+      },
+      "eq2_predicted": 0.0131,
+      "eq2_agrees": true,
+      "rates_real": {
+        "tpr": 0.8009868421052632,
+        "fpr": 0.16675406397482959,
+        "rho_t": 0.7582236842105263,
+        "rho_c": 0.11064499213424227
+      },
+      "auroc_confirm": 0.890963298715015
+    },
+    "cast": {
+      "arm": "cast|q50|add-1.0",
+      "sel": {
+        "point": 0.4428,
+        "ci": [
+          0.4024,
+          0.4827
+        ]
+      },
+      "vs_pgs": {
+        "point": -0.0909,
+        "ci": [
+          -0.1272,
+          -0.0539
+        ],
+        "p_two_sided": 0.0
+      },
+      "null": {
+        "point": 0.0,
+        "identical": 3000
+      },
+      "random": {
+        "n": 20,
+        "mean": 0.13,
+        "p95": 0.4295,
+        "max": 0.4749,
+        "rank": 1
+      },
+      "vs_random": {
+        "point": 0.3128,
+        "ci": [
+          0.2851,
+          0.3402
+        ],
+        "p_one_sided": 0.0
+      },
+      "override": {
+        "point": 0.3573,
+        "ci": [
+          0.3175,
+          0.397
+        ]
+      },
+      "steer_minus_override": {
+        "point": 0.0855,
+        "ci": [
+          0.0635,
+          0.1057
+        ],
+        "p_one_sided": 0.0
+      },
+      "eq2_predicted": 0.1248,
+      "eq2_agrees": true,
+      "rates_real": {
+        "tpr": 0.7763157894736842,
+        "fpr": 0.41898269533298377,
+        "rho_t": 0.7401315789473685,
+        "rho_c": 0.29732564237021497
+      },
+      "auroc_confirm": 0.7242191625594085
+    }
+  }
+}

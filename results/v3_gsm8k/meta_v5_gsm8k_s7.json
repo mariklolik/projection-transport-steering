@@ -1,0 +1,31 @@
+{
+  "config": {
+    "n": 300,
+    "seed": 7,
+    "layer": 14,
+    "benchmark": "gsm8k",
+    "gates": "ocwcr_crq50,lda_allq50",
+    "actions": "ablate,clamp_q30,clamp_q50",
+    "methods": "m2,m4",
+    "batch_size": 64,
+    "outdir": "v3_gsm8k"
+  },
+  "gates": {
+    "ocwcr-crq50": {
+      "tau": -10.081700325012207,
+      "n_flagged": 279,
+      "flag_rate": 0.93,
+      "p_ocw_given_flagged": 0.2903,
+      "ocw_recall": 0.931,
+      "cr_false_flag_rate": 0.9326
+    },
+    "lda-allq50": {
+      "tau": -0.12791788578033447,
+      "n_flagged": 0,
+      "flag_rate": 0.0,
+      "p_ocw_given_flagged": null,
+      "ocw_recall": 0.0,
+      "cr_false_flag_rate": 0.0
+    }
+  }
+}
